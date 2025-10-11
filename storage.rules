@@ -1,0 +1,144 @@
+rules_version = '2';
+
+/**
+ * Firebase Storage Security Rules for Lorenzo Dry Cleaners
+ *
+ * This file defines security rules for Cloud Storage.
+ * Controls who can upload, download, and delete files.
+ */
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // ============================================
+    // HELPER FUNCTIONS
+    // ============================================
+
+    /**
+     * Check if user is authenticated
+     */
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    /**
+     * Get user's role from custom claims
+     */
+    function getUserRole() {
+      return request.auth.token.role;
+    }
+
+    /**
+     * Check if user has a specific role
+     */
+    function hasRole(role) {
+      return isAuthenticated() && getUserRole() == role;
+    }
+
+    /**
+     * Check if user has any of the specified roles
+     */
+    function hasAnyRole(roles) {
+      return isAuthenticated() && getUserRole() in roles;
+    }
+
+    /**
+     * Check if user is staff
+     */
+    function isStaff() {
+      return hasAnyRole(['admin', 'manager', 'front_desk', 'workstation', 'driver']);
+    }
+
+    /**
+     * Validate image file type
+     */
+    function isImage() {
+      return request.resource.contentType.matches('image/.*');
+    }
+
+    /**
+     * Validate file size (max 5MB)
+     */
+    function isValidSize() {
+      return request.resource.size < 5 * 1024 * 1024;
+    }
+
+    // ============================================
+    // GARMENT IMAGES
+    // ============================================
+
+    match /garments/{imageId} {
+      // Staff can upload garment images
+      allow create: if isAuthenticated() &&
+        isStaff() &&
+        isImage() &&
+        isValidSize();
+
+      // Authenticated users can read garment images
+      allow read: if isAuthenticated();
+
+      // Only admins and managers can delete images
+      allow delete: if hasAnyRole(['admin', 'manager']);
+
+      // Staff can update/replace images
+      allow update: if isAuthenticated() &&
+        isStaff() &&
+        isImage() &&
+        isValidSize();
+    }
+
+    // ============================================
+    // ORDER DOCUMENTS (Receipts, Invoices)
+    // ============================================
+
+    match /documents/{documentId} {
+      // Staff can upload documents
+      allow create: if isAuthenticated() &&
+        isStaff() &&
+        request.resource.contentType.matches('application/pdf') &&
+        isValidSize();
+
+      // Authenticated users can read documents
+      allow read: if isAuthenticated();
+
+      // Only admins can delete documents
+      allow delete: if hasRole('admin');
+    }
+
+    // ============================================
+    // PROFILE IMAGES
+    // ============================================
+
+    match /profiles/{userId}/{imageId} {
+      // Users can upload their own profile image
+      // Staff can upload any profile image
+      allow create: if isAuthenticated() && (
+        request.auth.uid == userId || isStaff()
+      ) && isImage() && isValidSize();
+
+      // Anyone authenticated can read profile images
+      allow read: if isAuthenticated();
+
+      // Users can delete their own profile image
+      // Admins can delete any profile image
+      allow delete: if isAuthenticated() && (
+        request.auth.uid == userId || hasRole('admin')
+      );
+
+      // Users can update their own profile image
+      // Staff can update any profile image
+      allow update: if isAuthenticated() && (
+        request.auth.uid == userId || isStaff()
+      ) && isImage() && isValidSize();
+    }
+
+    // ============================================
+    // DENY ALL OTHER ACCESS
+    // ============================================
+
+    // Explicitly deny access to any other paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

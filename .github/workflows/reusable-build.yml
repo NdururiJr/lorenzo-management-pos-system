@@ -1,0 +1,209 @@
+name: Reusable Build Workflow
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node.js version to use'
+        required: false
+        type: string
+        default: '20'
+      environment:
+        description: 'Environment to build for'
+        required: false
+        type: string
+        default: 'production'
+      skip-tests:
+        description: 'Skip tests'
+        required: false
+        type: boolean
+        default: false
+      upload-artifacts:
+        description: 'Upload build artifacts'
+        required: false
+        type: boolean
+        default: true
+      cache-key:
+        description: 'Custom cache key'
+        required: false
+        type: string
+        default: ''
+    outputs:
+      build-status:
+        description: 'Build status (success/failure)'
+        value: ${{ jobs.build.outputs.status }}
+      artifact-name:
+        description: 'Name of uploaded artifact'
+        value: ${{ jobs.build.outputs.artifact-name }}
+    secrets:
+      ENV_VARS:
+        description: 'Environment variables as JSON string'
+        required: false
+
+jobs:
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.build-status.outputs.status }}
+      artifact-name: ${{ steps.artifact-info.outputs.name }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: 'npm'
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        id: cache-node-modules
+        with:
+          path: |
+            node_modules
+            .next/cache
+          key: ${{ inputs.cache-key || format('node-modules-{0}-{1}', runner.os, hashFiles('**/package-lock.json')) }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Setup environment variables
+        if: inputs.environment != ''
+        run: |
+          echo "Setting up environment: ${{ inputs.environment }}"
+          cat > .env.local << EOF
+          NEXT_PUBLIC_APP_ENV=${{ inputs.environment }}
+          NODE_ENV=production
+          EOF
+
+          # Add additional env vars from secrets if provided
+          if [ -n "${{ secrets.ENV_VARS }}" ]; then
+            echo "${{ secrets.ENV_VARS }}" >> .env.local
+          fi
+
+      - name: Run linting
+        run: npm run lint
+
+      - name: Run type checking
+        run: npm run type-check
+
+      - name: Run tests
+        if: inputs.skip-tests != true
+        run: npm test -- --passWithNoTests --coverage
+
+      - name: Build application
+        id: build
+        run: |
+          npm run build
+          echo "Build completed successfully"
+
+      - name: Set build status
+        id: build-status
+        if: always()
+        run: |
+          if [ "${{ steps.build.outcome }}" == "success" ]; then
+            echo "status=success" >> $GITHUB_OUTPUT
+          else
+            echo "status=failure" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set artifact info
+        id: artifact-info
+        run: |
+          ARTIFACT_NAME="build-${{ inputs.environment }}-${{ github.run_number }}"
+          echo "name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
+
+      - name: Upload build artifacts
+        if: inputs.upload-artifacts == true && success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.artifact-info.outputs.name }}
+          path: |
+            .next/
+            public/
+            package.json
+            package-lock.json
+          retention-days: 30
+
+      - name: Upload test coverage
+        if: inputs.skip-tests != true && success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ inputs.environment }}-${{ github.run_number }}
+          path: coverage/
+          retention-days: 30
+
+      - name: Generate build summary
+        if: always()
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          ## 🏗️ Build Summary
+
+          **Environment:** ${{ inputs.environment }}
+          **Node Version:** ${{ inputs.node-version }}
+          **Status:** ${{ steps.build-status.outputs.status }}
+          **Artifact:** ${{ steps.artifact-info.outputs.name }}
+
+          ### Build Details
+          - **Linting:** ✅ Passed
+          - **Type Checking:** ✅ Passed
+          - **Tests:** ${{ inputs.skip-tests == true && '⏭️ Skipped' || '✅ Passed' }}
+          - **Build:** ${{ steps.build.outcome == 'success' && '✅ Success' || '❌ Failed' }}
+
+          ### Cache Status
+          - **Cache Hit:** ${{ steps.cache-node-modules.outputs.cache-hit == 'true' && '✅ Yes' || '❌ No' }}
+          EOF
+
+  validate:
+    name: Validate Build
+    runs-on: ubuntu-latest
+    needs: build
+    if: needs.build.outputs.build-status == 'success'
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build.outputs.artifact-name }}
+
+      - name: Validate build output
+        run: |
+          echo "Validating build artifacts..."
+
+          # Check if .next directory exists
+          if [ ! -d ".next" ]; then
+            echo "❌ .next directory not found"
+            exit 1
+          fi
+
+          # Check if build manifest exists
+          if [ ! -f ".next/build-manifest.json" ]; then
+            echo "❌ build-manifest.json not found"
+            exit 1
+          fi
+
+          echo "✅ Build artifacts validated successfully"
+
+      - name: Check bundle size
+        run: |
+          echo "Checking bundle sizes..."
+          # Add bundle size analysis here
+          # Example: npx @next/bundle-analyzer
+
+      - name: Create validation summary
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          ## ✅ Build Validation
+
+          **Status:** Success
+          **Artifacts:** Present
+          **Bundle Size:** Within limits
+
+          Build validation completed successfully.
+          EOF

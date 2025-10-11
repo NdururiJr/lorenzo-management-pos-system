@@ -1,0 +1,323 @@
+rules_version = '2';
+
+/**
+ * Firestore Security Rules for Lorenzo Dry Cleaners
+ *
+ * This file defines comprehensive security rules with role-based access control (RBAC)
+ * for all collections in the database.
+ *
+ * User Roles:
+ * - admin: Full system access
+ * - manager: Branch-level management access
+ * - front_desk: Order creation and payment processing
+ * - workstation: Order status updates
+ * - driver: Delivery management
+ * - customer: Personal data access only
+ */
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ============================================
+    // HELPER FUNCTIONS
+    // ============================================
+
+    /**
+     * Check if user is authenticated
+     */
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    /**
+     * Get the authenticated user's UID
+     */
+    function currentUserId() {
+      return request.auth.uid;
+    }
+
+    /**
+     * Get user's custom claims
+     */
+    function getUserRole() {
+      return request.auth.token.role;
+    }
+
+    /**
+     * Get user's branch ID from custom claims
+     */
+    function getUserBranch() {
+      return request.auth.token.branchId;
+    }
+
+    /**
+     * Check if user has a specific role
+     */
+    function hasRole(role) {
+      return isAuthenticated() && getUserRole() == role;
+    }
+
+    /**
+     * Check if user has any of the specified roles
+     */
+    function hasAnyRole(roles) {
+      return isAuthenticated() && getUserRole() in roles;
+    }
+
+    /**
+     * Check if user is admin
+     */
+    function isAdmin() {
+      return hasRole('admin');
+    }
+
+    /**
+     * Check if user is admin or manager
+     */
+    function isManagement() {
+      return hasAnyRole(['admin', 'manager']);
+    }
+
+    /**
+     * Check if user is staff (any role except customer)
+     */
+    function isStaff() {
+      return hasAnyRole(['admin', 'manager', 'front_desk', 'workstation', 'driver']);
+    }
+
+    /**
+     * Check if user belongs to a specific branch
+     */
+    function belongsToBranch(branchId) {
+      return isAuthenticated() && getUserBranch() == branchId;
+    }
+
+    /**
+     * Check if user can access branch data
+     * Admins can access all branches, others only their own
+     */
+    function canAccessBranch(branchId) {
+      return isAdmin() || belongsToBranch(branchId);
+    }
+
+    /**
+     * Check if document exists
+     */
+    function documentExists(path) {
+      return exists(/databases/$(database)/documents/$(path));
+    }
+
+    // ============================================
+    // USERS COLLECTION
+    // ============================================
+
+    match /users/{userId} {
+      // Users can read their own profile
+      // Admins can read all profiles
+      // Staff can read other staff profiles in their branch
+      allow read: if isAuthenticated() && (
+        currentUserId() == userId ||
+        isAdmin() ||
+        (isStaff() && belongsToBranch(resource.data.branchId))
+      );
+
+      // Only admins can create new users
+      allow create: if isAdmin();
+
+      // Users can update their own profile (limited fields)
+      // Admins can update any profile
+      allow update: if isAuthenticated() && (
+        (currentUserId() == userId &&
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['name', 'phone', 'email'])) ||
+        isAdmin()
+      );
+
+      // Only admins can delete users
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // CUSTOMERS COLLECTION
+    // ============================================
+
+    match /customers/{customerId} {
+      // Customers can read their own data
+      // Staff can read all customers
+      allow read: if isAuthenticated() && (
+        resource.data.phone == request.auth.token.phone ||
+        isStaff()
+      );
+
+      // Staff can create customers
+      // Customers can create their own profile
+      allow create: if isAuthenticated() && (
+        isStaff() ||
+        request.resource.data.phone == request.auth.token.phone
+      );
+
+      // Customers can update their own data
+      // Staff can update customer data
+      allow update: if isAuthenticated() && (
+        resource.data.phone == request.auth.token.phone ||
+        isStaff()
+      );
+
+      // Only admins can delete customers
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // ORDERS COLLECTION
+    // ============================================
+
+    match /orders/{orderId} {
+      // Customers can read their own orders
+      // Staff can read orders from their branch
+      // Admins can read all orders
+      allow read: if isAuthenticated() && (
+        resource.data.customerId == currentUserId() ||
+        canAccessBranch(resource.data.branchId) ||
+        isAdmin()
+      );
+
+      // Front desk and management can create orders
+      allow create: if isAuthenticated() &&
+        hasAnyRole(['admin', 'manager', 'front_desk']) &&
+        canAccessBranch(request.resource.data.branchId);
+
+      // Staff can update orders (status, payment, etc.)
+      // Workstation can only update status
+      // Drivers can update delivery status
+      allow update: if isAuthenticated() && (
+        (hasAnyRole(['admin', 'manager', 'front_desk']) &&
+          canAccessBranch(resource.data.branchId)) ||
+        (hasRole('workstation') &&
+          canAccessBranch(resource.data.branchId) &&
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['status', 'garments'])) ||
+        (hasRole('driver') &&
+          resource.data.driverId == currentUserId() &&
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['status']))
+      );
+
+      // Only admins can delete orders
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // BRANCHES COLLECTION
+    // ============================================
+
+    match /branches/{branchId} {
+      // All authenticated users can read branch info
+      allow read: if isAuthenticated();
+
+      // Only admins can create, update, or delete branches
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ============================================
+    // DELIVERIES COLLECTION
+    // ============================================
+
+    match /deliveries/{deliveryId} {
+      // Drivers can read their assigned deliveries
+      // Management can read all deliveries in their branch
+      allow read: if isAuthenticated() && (
+        resource.data.driverId == currentUserId() ||
+        isManagement()
+      );
+
+      // Management can create deliveries
+      allow create: if isManagement();
+
+      // Drivers can update their assigned deliveries
+      // Management can update all deliveries
+      allow update: if isAuthenticated() && (
+        resource.data.driverId == currentUserId() ||
+        isManagement()
+      );
+
+      // Only admins can delete deliveries
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // INVENTORY COLLECTION
+    // ============================================
+
+    match /inventory/{itemId} {
+      // Staff can read inventory from their branch
+      allow read: if isAuthenticated() && (
+        canAccessBranch(resource.data.branchId) ||
+        isAdmin()
+      );
+
+      // Management can create and update inventory
+      allow create, update: if isManagement() && (
+        canAccessBranch(request.resource.data.branchId) ||
+        isAdmin()
+      );
+
+      // Only admins can delete inventory items
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // TRANSACTIONS COLLECTION
+    // ============================================
+
+    match /transactions/{transactionId} {
+      // Customers can read their own transactions
+      // Staff can read transactions from their branch
+      allow read: if isAuthenticated() && (
+        resource.data.customerId == currentUserId() ||
+        isStaff() ||
+        isAdmin()
+      );
+
+      // Front desk and management can create transactions
+      allow create: if hasAnyRole(['admin', 'manager', 'front_desk']);
+
+      // Only management can update transactions
+      allow update: if isManagement();
+
+      // Only admins can delete transactions
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // NOTIFICATIONS COLLECTION
+    // ============================================
+
+    match /notifications/{notificationId} {
+      // Users can read their own notifications
+      // Staff can read all notifications
+      allow read: if isAuthenticated() && (
+        resource.data.recipientId == currentUserId() ||
+        isStaff()
+      );
+
+      // Staff can create notifications
+      allow create: if isStaff();
+
+      // Only system (via admin SDK) can update notification status
+      // Front-end can mark as read (if we add that field)
+      allow update: if isStaff();
+
+      // Only admins can delete notifications
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // DENY ALL OTHER ACCESS
+    // ============================================
+
+    // Explicitly deny access to any other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

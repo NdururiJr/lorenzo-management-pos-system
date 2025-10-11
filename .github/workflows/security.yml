@@ -1,0 +1,273 @@
+name: Security Audit
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+  pull_request:
+    branches:
+      - main
+      - master
+  schedule:
+    # Run daily at 2:00 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  security-audit:
+    name: NPM Security Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        id: npm-audit
+        run: |
+          echo "Running npm audit..."
+          npm audit --audit-level=moderate > audit-output.txt 2>&1 || true
+          cat audit-output.txt
+
+          # Check if vulnerabilities were found
+          if grep -q "found 0 vulnerabilities" audit-output.txt; then
+            echo "vulnerabilities=false" >> $GITHUB_OUTPUT
+            echo "severity=none" >> $GITHUB_OUTPUT
+          else
+            echo "vulnerabilities=true" >> $GITHUB_OUTPUT
+
+            # Determine severity
+            if grep -q "critical" audit-output.txt; then
+              echo "severity=critical" >> $GITHUB_OUTPUT
+            elif grep -q "high" audit-output.txt; then
+              echo "severity=high" >> $GITHUB_OUTPUT
+            elif grep -q "moderate" audit-output.txt; then
+              echo "severity=moderate" >> $GITHUB_OUTPUT
+            else
+              echo "severity=low" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Generate JSON audit report
+        run: |
+          npm audit --json > audit-report.json || true
+
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-report-${{ github.run_number }}
+          path: |
+            audit-output.txt
+            audit-report.json
+          retention-days: 90
+
+      - name: Auto-fix vulnerabilities (scheduled runs only)
+        if: github.event_name == 'schedule' && steps.npm-audit.outputs.vulnerabilities == 'true'
+        run: |
+          echo "Attempting to auto-fix vulnerabilities..."
+          npm audit fix || true
+          npm audit fix --force || true
+
+      - name: Create issue for critical vulnerabilities
+        if: steps.npm-audit.outputs.severity == 'critical' || steps.npm-audit.outputs.severity == 'high'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const auditOutput = fs.readFileSync('audit-output.txt', 'utf8');
+            const severity = '${{ steps.npm-audit.outputs.severity }}';
+
+            const issueTitle = `🚨 ${severity.toUpperCase()} Security Vulnerabilities Detected`;
+            const issueBody = `## Security Alert
+
+            **Severity:** ${severity.toUpperCase()}
+            **Detected on:** ${new Date().toISOString()}
+            **Workflow:** [${context.workflow}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
+
+            ### Audit Report
+            \`\`\`
+            ${auditOutput}
+            \`\`\`
+
+            ### Action Required
+            - [ ] Review the vulnerabilities
+            - [ ] Update affected packages
+            - [ ] Test the application
+            - [ ] Deploy the fixes
+
+            ### Automated Fixes
+            Run \`npm audit fix\` to attempt automatic fixes.
+            For breaking changes, use \`npm audit fix --force\` (with caution).
+
+            ---
+            🤖 This issue was automatically created by the Security Audit workflow.`;
+
+            // Check if an issue already exists
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'security,vulnerability'
+            });
+
+            const existingIssue = issues.data.find(issue =>
+              issue.title.includes('Security Vulnerabilities Detected')
+            );
+
+            if (existingIssue) {
+              // Update existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: `## Updated Security Scan\n\n${issueBody}`
+              });
+            } else {
+              // Create new issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle,
+                body: issueBody,
+                labels: ['security', 'vulnerability', severity]
+              });
+            }
+
+      - name: Fail workflow on critical vulnerabilities
+        if: steps.npm-audit.outputs.severity == 'critical' && github.event_name == 'pull_request'
+        run: |
+          echo "❌ Critical security vulnerabilities detected!"
+          echo "This PR cannot be merged until vulnerabilities are resolved."
+          exit 1
+
+      - name: Create summary
+        if: always()
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          ## 🔒 Security Audit Summary
+
+          **Status:** ${{ steps.npm-audit.outputs.vulnerabilities == 'true' && '⚠️ Vulnerabilities Found' || '✅ No Vulnerabilities' }}
+          **Severity:** ${{ steps.npm-audit.outputs.severity }}
+          **Scan Date:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+
+          ### Report
+          \`\`\`
+          $(cat audit-output.txt)
+          \`\`\`
+
+          ### Next Steps
+          ${{ steps.npm-audit.outputs.vulnerabilities == 'true' && '- Review and fix vulnerabilities\n- Run npm audit fix\n- Update dependencies' || '- Continue monitoring\n- Keep dependencies updated' }}
+          EOF
+
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+          deny-licenses: GPL-3.0, AGPL-3.0
+          comment-summary-in-pr: always
+
+  codeql-analysis:
+    name: CodeQL Security Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['javascript', 'typescript']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: '/language:${{ matrix.language }}'
+
+  secret-scanning:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: TruffleHog Secret Scan
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+
+      - name: GitGuardian scan
+        uses: GitGuardian/ggshield-action@v1
+        env:
+          GITHUB_PUSH_BEFORE_SHA: ${{ github.event.before }}
+          GITHUB_PUSH_BASE_SHA: ${{ github.event.base }}
+          GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
+        with:
+          args: '--all-policies'
+
+  license-check:
+    name: License Compliance Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check licenses
+        run: |
+          npx license-checker --summary
+          npx license-checker --json > licenses.json
+
+      - name: Upload license report
+        uses: actions/upload-artifact@v4
+        with:
+          name: license-report
+          path: licenses.json
+          retention-days: 30
