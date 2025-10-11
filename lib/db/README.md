@@ -5,9 +5,11 @@ This directory contains all database-related code for the Lorenzo Dry Cleaners a
 ## Files
 
 ### `schema.ts`
+
 Contains TypeScript interfaces for all Firestore collections. These types ensure type safety throughout the application.
 
 **Collections:**
+
 - `User` - System users (staff and customers)
 - `Customer` - Customer profiles and preferences
 - `Order` - Order details and garments
@@ -18,15 +20,18 @@ Contains TypeScript interfaces for all Firestore collections. These types ensure
 - `Notification` - System notifications
 
 **Helper Functions:**
+
 - `isStaffRole(role)` - Check if user is staff
 - `isManagementRole(role)` - Check if user is admin/manager
 - `isOrderInProgress(status)` - Check if order is being processed
 - `isOrderReady(status)` - Check if order is ready for customer
 
 ### `index.ts`
+
 Contains helper functions for database operations. All functions are type-safe and include error handling.
 
 **Generic Operations:**
+
 - `getDocument<T>(collection, id)` - Get single document
 - `getDocuments<T>(collection, ...constraints)` - Query documents
 - `createDocument<T>(collection, data)` - Create with auto-ID
@@ -35,6 +40,7 @@ Contains helper functions for database operations. All functions are type-safe a
 - `deleteDocument(collection, id)` - Delete document
 
 **Collection-Specific Helpers:**
+
 - `getUserById(uid)` - Get user by UID
 - `getCustomerById(customerId)` - Get customer
 - `getCustomerByPhone(phone)` - Find customer by phone
@@ -53,11 +59,13 @@ Contains helper functions for database operations. All functions are type-safe a
 - `updateOrderStatus(orderId, status)` - Update order with timestamp
 
 **Transaction Helpers:**
+
 - `runDatabaseTransaction(callback)` - Run atomic transaction
 - `createBatch()` - Create batch write
 - `commitBatch(batch)` - Commit batch write
 
 **Pagination:**
+
 - `getPaginatedDocuments(options)` - Get paginated results with cursor
 
 ## Usage Examples
@@ -65,6 +73,7 @@ Contains helper functions for database operations. All functions are type-safe a
 ### Basic CRUD Operations
 
 #### Create an Order
+
 ```typescript
 import { createDocument } from '@/lib/db';
 import type { Order } from '@/lib/db/schema';
@@ -83,6 +92,7 @@ const orderId = await createDocument<Order>('orders', {
 ```
 
 #### Get Orders with Filters
+
 ```typescript
 import { getDocuments } from '@/lib/db';
 import { where, orderBy, limit } from 'firebase/firestore';
@@ -98,6 +108,7 @@ const pendingOrders = await getDocuments<Order>(
 ```
 
 #### Update Order Status
+
 ```typescript
 import { updateOrderStatus } from '@/lib/db';
 
@@ -106,6 +117,7 @@ await updateOrderStatus('order-123', 'delivered');
 ```
 
 #### Update Specific Fields
+
 ```typescript
 import { updateDocument } from '@/lib/db';
 import { Timestamp } from 'firebase/firestore';
@@ -209,20 +221,22 @@ const { documents: firstPage, lastDoc } = await getPaginatedDocuments<Order>({
 });
 
 // Next page
-const { documents: secondPage, lastDoc: newLastDoc } = await getPaginatedDocuments<Order>({
-  collectionName: 'orders',
-  constraints: [
-    where('branchId', '==', 'branch-001'),
-    orderBy('createdAt', 'desc'),
-  ],
-  pageSize: 20,
-  lastDoc: lastDoc, // Pass the last document from previous page
-});
+const { documents: secondPage, lastDoc: newLastDoc } =
+  await getPaginatedDocuments<Order>({
+    collectionName: 'orders',
+    constraints: [
+      where('branchId', '==', 'branch-001'),
+      orderBy('createdAt', 'desc'),
+    ],
+    pageSize: 20,
+    lastDoc: lastDoc, // Pass the last document from previous page
+  });
 ```
 
 ### Collection-Specific Helpers
 
 #### Find Customer by Phone
+
 ```typescript
 import { getCustomerByPhone } from '@/lib/db';
 
@@ -233,6 +247,7 @@ if (!customer) {
 ```
 
 #### Get Customer Order History
+
 ```typescript
 import { getOrdersByCustomer } from '@/lib/db';
 
@@ -240,6 +255,7 @@ const orders = await getOrdersByCustomer('customer-123', 10);
 ```
 
 #### Get Low Stock Items
+
 ```typescript
 import { getLowStockItems } from '@/lib/db';
 
@@ -250,10 +266,14 @@ if (lowStock.length > 0) {
 ```
 
 #### Get Driver's Active Deliveries
+
 ```typescript
 import { getDeliveriesByDriver } from '@/lib/db';
 
-const activeDeliveries = await getDeliveriesByDriver('driver-456', 'in_progress');
+const activeDeliveries = await getDeliveriesByDriver(
+  'driver-456',
+  'in_progress'
+);
 ```
 
 ## Error Handling
@@ -261,11 +281,7 @@ const activeDeliveries = await getDeliveriesByDriver('driver-456', 'in_progress'
 All database functions throw typed errors:
 
 ```typescript
-import {
-  getDocument,
-  DocumentNotFoundError,
-  DatabaseError
-} from '@/lib/db';
+import { getDocument, DocumentNotFoundError, DatabaseError } from '@/lib/db';
 
 try {
   const order = await getDocument('orders', orderId);
@@ -288,6 +304,7 @@ try {
 ## Best Practices
 
 ### 1. Always Use Types
+
 ```typescript
 // Good
 const order = await getDocument<Order>('orders', orderId);
@@ -297,6 +314,7 @@ const order = await getDocument('orders', orderId);
 ```
 
 ### 2. Handle Errors Properly
+
 ```typescript
 // Good
 try {
@@ -312,6 +330,7 @@ const order = await getDocument<Order>('orders', orderId); // Unhandled promise 
 ```
 
 ### 3. Use Collection-Specific Helpers
+
 ```typescript
 // Good
 const customer = await getCustomerByPhone('+254712345678');
@@ -326,6 +345,7 @@ const customer = customers[0] || null;
 ```
 
 ### 4. Use Transactions for Related Updates
+
 ```typescript
 // Good - Atomic operation
 await runDatabaseTransaction(async (transaction) => {
@@ -339,10 +359,11 @@ await updateDocument('customers', customerId, { orderCount: newCount });
 ```
 
 ### 5. Implement Optimistic UI Updates
+
 ```typescript
 // Update UI immediately
 setOrders((prev) =>
-  prev.map((o) => o.id === orderId ? { ...o, status: 'completed' } : o)
+  prev.map((o) => (o.id === orderId ? { ...o, status: 'completed' } : o))
 );
 
 // Then sync with database
@@ -351,7 +372,7 @@ try {
 } catch (error) {
   // Revert UI on error
   setOrders((prev) =>
-    prev.map((o) => o.id === orderId ? { ...o, status: originalStatus } : o)
+    prev.map((o) => (o.id === orderId ? { ...o, status: originalStatus } : o))
   );
   showErrorToast('Failed to update order');
 }
@@ -360,6 +381,7 @@ try {
 ## Testing
 
 ### Mock Data for Development
+
 ```typescript
 import { Timestamp } from 'firebase/firestore';
 import type { Order, Customer } from '@/lib/db/schema';
@@ -409,6 +431,7 @@ const mockOrder: Order = {
 ```
 
 ### Using Firebase Emulator
+
 ```bash
 # Start emulators
 firebase emulators:start
@@ -432,11 +455,13 @@ if (process.env.NODE_ENV === 'development') {
 ## Security
 
 All database access is controlled by:
+
 1. **Firestore Security Rules** (`firestore.rules`) - Enforced at the database level
 2. **TypeScript Types** - Compile-time type checking
 3. **Helper Functions** - Consistent error handling and validation
 
 Always ensure:
+
 - Users can only access data they're authorized to see
 - Client-side code never bypasses security rules
 - Sensitive operations use Firebase Admin SDK on the server
