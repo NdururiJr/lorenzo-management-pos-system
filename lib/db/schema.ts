@@ -419,3 +419,76 @@ export function isOrderReady(status: OrderStatus): boolean {
     status
   );
 }
+
+/**
+ * Pricing document structure for garment types
+ * Collection: pricing
+ */
+export interface Pricing {
+  /** Unique pricing ID */
+  pricingId: string;
+  /** Branch reference */
+  branchId: string;
+  /** Garment type (e.g., "Shirt", "Dress", "Suit") */
+  garmentType: string;
+  /** Service prices */
+  services: {
+    /** Wash service price */
+    wash: number;
+    /** Dry clean service price */
+    dryClean: number;
+    /** Iron service price */
+    iron: number;
+    /** Starch service price */
+    starch: number;
+    /** Express service surcharge (percentage) */
+    express: number;
+  };
+  /** Whether this pricing is active */
+  active: boolean;
+  /** Creation timestamp */
+  createdAt: Timestamp;
+  /** Last update timestamp */
+  updatedAt: Timestamp;
+}
+
+/**
+ * Status history entry for orders
+ */
+export interface StatusHistoryEntry {
+  /** Order status */
+  status: OrderStatus;
+  /** Timestamp of status change */
+  timestamp: Timestamp;
+  /** UID of user who made the change */
+  updatedBy: string;
+}
+
+/**
+ * Extended Order interface with denormalized fields and status history
+ */
+export interface OrderExtended extends Order {
+  /** Customer name (denormalized for quick display) */
+  customerName: string;
+  /** Customer phone (denormalized for quick display) */
+  customerPhone: string;
+  /** Last update timestamp */
+  updatedAt: Timestamp;
+  /** Status change history */
+  statusHistory: StatusHistoryEntry[];
+}
+
+/**
+ * Extended Transaction interface with additional metadata
+ */
+export interface TransactionExtended extends Transaction {
+  /** Additional payment gateway metadata */
+  metadata?: {
+    /** M-Pesa transaction code */
+    mpesaTransactionCode?: string;
+    /** Card last 4 digits */
+    cardLast4?: string;
+    /** Payment gateway response */
+    gatewayResponse?: string;
+  };
+}

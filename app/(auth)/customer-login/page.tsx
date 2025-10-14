@@ -17,6 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { customerLoginSchema, type CustomerLoginFormData } from '@/lib/validations/auth';
 import { signInWithPhone } from '@/app/(auth)/actions';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -25,6 +26,7 @@ import { Loader2, ArrowLeft } from 'lucide-react';
 
 export default function CustomerLoginPage() {
   const router = useRouter();
+  const { signIn } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -53,6 +55,30 @@ export default function CustomerLoginPage() {
       }
     } catch (_error) {
       toast.error('An unexpected error occurred');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  /**
+   * Dev Login - Quick login for development (redirects to customer portal)
+   */
+  const handleDevLogin = async () => {
+    const devEmail = process.env.NEXT_PUBLIC_DEV_LOGIN_EMAIL;
+    const devPassword = process.env.NEXT_PUBLIC_DEV_LOGIN_PASSWORD;
+
+    if (!devEmail || !devPassword) {
+      toast.error('Dev login credentials not configured');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await signIn(devEmail, devPassword, true);
+      toast.success('Dev login successful! Redirecting to customer portal... 🚀');
+      router.push('/portal');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Dev login failed');
     } finally {
       setIsLoading(false);
     }
@@ -145,6 +171,37 @@ export default function CustomerLoginPage() {
               console. In production, it will be sent via SMS.
             </p>
           </div>
+
+          {/* Developer Quick Login */}
+          {process.env.NODE_ENV === 'development' && (
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-medium text-gray-700">Developer Quick Login</h3>
+                <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                  Dev Only
+                </span>
+              </div>
+              <Button
+                type="button"
+                onClick={handleDevLogin}
+                disabled={isLoading}
+                variant="outline"
+                className="w-full border-gray-300 hover:bg-gray-50"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Logging in...
+                  </>
+                ) : (
+                  'Quick Login to Customer Portal'
+                )}
+              </Button>
+              <p className="text-xs text-gray-500 mt-2 text-center">
+                Skip OTP and login directly to customer portal
+              </p>
+            </div>
+          )}
         </CardContent>
       </Card>
     </>

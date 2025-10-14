@@ -9,7 +9,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -26,9 +26,14 @@ export default function SetupDevPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'development') {
+      router.replace('/login');
+    }
+  }, [router]);
+
   // Only allow in development
   if (process.env.NODE_ENV !== 'development') {
-    router.push('/login');
     return null;
   }
 
@@ -41,6 +46,9 @@ export default function SetupDevPage() {
 
     try {
       const auth = getAuthInstance();
+      if (!auth) {
+        throw new Error('Firebase Auth instance is not initialized. Please verify Firebase config.');
+      }
       const db = getFirestore();
 
       // Create authentication user

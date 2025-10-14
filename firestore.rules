@@ -312,6 +312,18 @@ service cloud.firestore {
     }
 
     // ============================================
+    // PRICING COLLECTION
+    // ============================================
+
+    match /pricing/{pricingId} {
+      // All authenticated users can read pricing
+      allow read: if isAuthenticated();
+
+      // Only admins can create, update, or delete pricing
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ============================================
     // DENY ALL OTHER ACCESS
     // ============================================
 

@@ -7,7 +7,6 @@
  */
 
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 import type { UserRole } from '@/lib/validations/auth';
 import Cookies from 'js-cookie';
 
@@ -46,7 +45,16 @@ const roleHierarchy: Record<UserRole, number> = {
  */
 export async function getUserRole(uid: string): Promise<UserData | null> {
   try {
-    const userDoc = await getDoc(doc(db, 'users', uid));
+    // Import getDbInstance to ensure we get the initialized instance
+    const { getDbInstance } = await import('@/lib/firebase');
+    const dbInstance = getDbInstance();
+
+    if (!dbInstance) {
+      console.error('Firebase Firestore is not initialized');
+      return null;
+    }
+
+    const userDoc = await getDoc(doc(dbInstance, 'users', uid));
 
     if (!userDoc.exists()) {
       console.warn(`User document not found for UID: ${uid}`);

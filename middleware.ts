@@ -25,7 +25,7 @@ const publicRoutes = [
 /**
  * Routes that require authentication
  */
-const protectedRoutes = ['/dashboard'];
+const protectedRoutes = ['/dashboard', '/portal', '/orders', '/profile', '/pipeline'];
 
 /**
  * Check if path matches a protected route

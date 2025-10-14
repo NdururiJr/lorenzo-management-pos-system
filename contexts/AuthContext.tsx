@@ -188,6 +188,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       try {
         const auth = getAuthInstance();
+        if (!auth) {
+          throw new Error('Firebase Auth instance is not initialized. Please verify Firebase config.');
+        }
         const userCredential = await signInWithEmailAndPassword(
           auth,
           email,
@@ -237,6 +240,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     try {
       const auth = getAuthInstance();
+      if (!auth) {
+        throw new Error('Firebase Auth instance is not initialized. Please verify Firebase config.');
+      }
       await firebaseSignOut(auth);
       removeAuthToken();
       setState({
@@ -262,6 +268,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const sendPasswordReset = useCallback(async (email: string) => {
     try {
       const auth = getAuthInstance();
+      if (!auth) {
+        throw new Error('Firebase Auth instance is not initialized. Please verify Firebase config.');
+      }
       await sendPasswordResetEmail(auth, email);
     } catch (error: unknown) {
       let errorMessage = 'Failed to send password reset email';
@@ -360,4 +369,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
+
+/**
+ * Hook to use authentication context
+ *
+ * @throws {Error} If used outside of AuthProvider
+ * @returns {AuthContextValue} Authentication context value
+ *
+ * @example
+ * const { user, signIn, signOut } = useAuth();
+ */
+export function useAuth(): AuthContextValue {
+  const context = React.useContext(AuthContext);
+
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  return context;
 }

@@ -94,14 +94,14 @@ function getApp(): FirebaseApp | null {
  * const user = auth.currentUser;
  * await signInWithEmailAndPassword(auth, email, password);
  */
-export const getAuthInstance = (): Auth => {
+export const getAuthInstance = (): Auth | null => {
   if (!authInstance && typeof window !== 'undefined') {
     const firebaseApp = getApp();
     if (firebaseApp) {
       authInstance = getAuth(firebaseApp);
     }
   }
-  return authInstance as Auth;
+  return authInstance;
 };
 
 /**
@@ -113,14 +113,14 @@ export const getAuthInstance = (): Auth => {
  * const ordersRef = collection(db, 'orders');
  * const snapshot = await getDocs(ordersRef);
  */
-export const getDbInstance = (): Firestore => {
+export const getDbInstance = (): Firestore | null => {
   if (!dbInstance && typeof window !== 'undefined') {
     const firebaseApp = getApp();
     if (firebaseApp) {
       dbInstance = getFirestore(firebaseApp);
     }
   }
-  return dbInstance as Firestore;
+  return dbInstance;
 };
 
 /**
@@ -132,14 +132,14 @@ export const getDbInstance = (): Firestore => {
  * const storageRef = ref(storage, 'garments/image.jpg');
  * await uploadBytes(storageRef, file);
  */
-export const getStorageInstance = (): FirebaseStorage => {
+export const getStorageInstance = (): FirebaseStorage | null => {
   if (!storageInstance && typeof window !== 'undefined') {
     const firebaseApp = getApp();
     if (firebaseApp) {
       storageInstance = getStorage(firebaseApp);
     }
   }
-  return storageInstance as FirebaseStorage;
+  return storageInstance;
 };
 
 // Export getters as default exports with lazy initialization
@@ -151,6 +151,9 @@ let _storage: FirebaseStorage | null = null;
 export const auth: Auth = new Proxy({} as Auth, {
   get(target, prop) {
     if (!_auth) _auth = getAuthInstance();
+    if (!_auth) {
+      throw new Error('Firebase Auth is not initialized. Make sure Firebase is properly configured.');
+    }
     return _auth[prop as keyof Auth];
   }
 });
@@ -158,6 +161,9 @@ export const auth: Auth = new Proxy({} as Auth, {
 export const db: Firestore = new Proxy({} as Firestore, {
   get(target, prop) {
     if (!_db) _db = getDbInstance();
+    if (!_db) {
+      throw new Error('Firebase Firestore is not initialized. Make sure Firebase is properly configured.');
+    }
     return _db[prop as keyof Firestore];
   }
 });
@@ -165,6 +171,9 @@ export const db: Firestore = new Proxy({} as Firestore, {
 export const storage: FirebaseStorage = new Proxy({} as FirebaseStorage, {
   get(target, prop) {
     if (!_storage) _storage = getStorageInstance();
+    if (!_storage) {
+      throw new Error('Firebase Storage is not initialized. Make sure Firebase is properly configured.');
+    }
     return _storage[prop as keyof FirebaseStorage];
   }
 });
