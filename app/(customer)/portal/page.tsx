@@ -26,12 +26,17 @@ export default function CustomerPortalPage() {
 
   // Fetch all orders for this customer
   const { data: allOrders, isLoading, error } = useQuery<OrderExtended[]>({
-    queryKey: ['customer-orders', user?.uid],
+    queryKey: ['customer-orders', user?.uid, userData?.role],
     queryFn: async () => {
       if (!user?.uid) return [];
+      // If user is staff (not customer), return empty array for development testing
+      if (userData?.role && userData.role !== 'customer') {
+        console.log('Staff user accessing customer portal (dev mode) - No customer orders to show');
+        return [];
+      }
       return getOrdersByCustomer(user.uid, 50);
     },
-    enabled: !!user?.uid,
+    enabled: !!user?.uid && !!userData,
   });
 
   // Filter active orders (not delivered or collected)
@@ -68,6 +73,17 @@ export default function CustomerPortalPage() {
 
   return (
     <div className="space-y-8">
+      {/* Dev Mode Notice for Staff Users */}
+      {userData?.role && userData.role !== 'customer' && process.env.NODE_ENV === 'development' && (
+        <Alert>
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            <strong>Development Mode:</strong> You are viewing the customer portal as a <strong>{userData.role}</strong> user.
+            In production, only customers can access this portal. To test with customer data, create a customer account or use customer OTP login.
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Welcome Header */}
       <WelcomeHeader
         customerName={userData?.name || 'Customer'}

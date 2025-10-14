@@ -15,6 +15,7 @@ import { Package, History, User, Phone } from 'lucide-react';
 
 const ACTIONS = [
   {
+    id: 'track-order',
     href: '/orders',
     label: 'Track Order',
     description: 'View order status',
@@ -22,6 +23,7 @@ const ACTIONS = [
     color: 'bg-blue-50 text-blue-600 border-blue-200',
   },
   {
+    id: 'order-history',
     href: '/orders',
     label: 'History',
     description: 'Past orders',
@@ -29,6 +31,7 @@ const ACTIONS = [
     color: 'bg-purple-50 text-purple-600 border-purple-200',
   },
   {
+    id: 'profile',
     href: '/profile',
     label: 'Profile',
     description: 'Edit details',
@@ -46,7 +49,7 @@ export function QuickActions() {
         {ACTIONS.map((action) => {
           const Icon = action.icon;
           return (
-            <Link key={action.href} href={action.href}>
+            <Link key={action.id} href={action.href}>
               <Card
                 className={`p-4 hover:shadow-md transition-shadow cursor-pointer border ${action.color}`}
               >
