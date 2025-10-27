@@ -14,6 +14,12 @@ import { Timestamp } from 'firebase/firestore';
  */
 export type UserRole =
   | 'admin'
+  | 'director'
+  | 'general_manager'
+  | 'store_manager'
+  | 'workstation_manager'
+  | 'workstation_staff'
+  | 'satellite_staff'
   | 'manager'
   | 'front_desk'
   | 'workstation'
@@ -47,15 +53,19 @@ export interface User {
  * Address structure for customers
  */
 export interface Address {
-  /** Address label (e.g., "Home", "Office") */
+  /** Address label (e.g., "Home", "Office", "Shared via WhatsApp") */
   label: string;
   /** Full address string */
   address: string;
   /** Geographic coordinates */
-  coordinates: {
+  coordinates?: {
     lat: number;
     lng: number;
   };
+  /** Source of the address (manual, whatsapp, google_autocomplete) */
+  source?: 'manual' | 'whatsapp' | 'google_autocomplete';
+  /** Timestamp when address was added (for WhatsApp addresses) */
+  receivedAt?: Timestamp;
 }
 
 /**
@@ -98,6 +108,7 @@ export interface Customer {
  */
 export type OrderStatus =
   | 'received'
+  | 'inspection'
   | 'queued'
   | 'washing'
   | 'drying'
@@ -118,6 +129,40 @@ export type PaymentStatus = 'pending' | 'partial' | 'paid';
  * Payment method types
  */
 export type PaymentMethod = 'cash' | 'mpesa' | 'card' | 'credit';
+
+/**
+ * Stain detail structure
+ */
+export interface StainDetail {
+  /** Location on garment (e.g., "collar", "sleeve", "front") */
+  location: string;
+  /** Type of stain (e.g., "oil", "wine", "ink") */
+  type: string;
+  /** Severity of stain */
+  severity: 'light' | 'medium' | 'heavy';
+}
+
+/**
+ * Rip/tear detail structure
+ */
+export interface RipDetail {
+  /** Location on garment */
+  location: string;
+  /** Size of rip (e.g., "2cm", "small", "large") */
+  size: string;
+}
+
+/**
+ * Staff handler record for stage tracking
+ */
+export interface StaffHandler {
+  /** Staff UID */
+  uid: string;
+  /** Staff name */
+  name: string;
+  /** Timestamp when stage was completed */
+  completedAt: Timestamp;
+}
 
 /**
  * Garment item in an order
@@ -141,6 +186,59 @@ export interface Garment {
   specialInstructions?: string;
   /** Photo URLs of the garment */
   photos?: string[];
+
+  // ===== Initial Inspection (at POS - Stage 1) =====
+  /** Whether notable damage was detected during initial inspection */
+  hasNotableDamage?: boolean;
+  /** Notes from initial inspection at POS */
+  initialInspectionNotes?: string;
+  /** Photos from initial inspection */
+  initialInspectionPhotos?: string[];
+
+  // ===== Workstation Inspection (Stage 2) =====
+  /** Whether detailed workstation inspection is completed */
+  inspectionCompleted?: boolean;
+  /** UID of staff who completed inspection */
+  inspectionCompletedBy?: string;
+  /** Timestamp when inspection was completed */
+  inspectionCompletedAt?: Timestamp;
+  /** Overall condition assessment */
+  conditionAssessment?: 'good' | 'minor_issues' | 'major_issues';
+  /** Number of missing buttons */
+  missingButtonsCount?: number;
+  /** Detailed stain information */
+  stainDetails?: StainDetail[];
+  /** Detailed rip/tear information */
+  ripDetails?: RipDetail[];
+  /** Photos of damage (required for major issues) */
+  damagePhotos?: string[];
+  /** Recommended actions for processing */
+  recommendedActions?: ('repair' | 'special_treatment' | 'standard_process' | 'other')[];
+  /** Additional notes if "other" is selected in recommended actions (max 200 words) */
+  recommendedActionsOther?: string;
+  /** Estimated additional time needed (in hours) */
+  estimatedAdditionalTime?: number;
+
+  // ===== Process Stage Tracking =====
+  /** Staff who handled each stage (supports multiple staff per stage) */
+  stageHandlers?: {
+    inspection?: StaffHandler[];
+    washing?: StaffHandler[];
+    drying?: StaffHandler[];
+    ironing?: StaffHandler[];
+    quality_check?: StaffHandler[];
+    packaging?: StaffHandler[];
+  };
+
+  /** Time spent at each stage (in seconds) for performance metrics */
+  stageDurations?: {
+    inspection?: number;
+    washing?: number;
+    drying?: number;
+    ironing?: number;
+    quality_check?: number;
+    packaging?: number;
+  };
 }
 
 /**
@@ -152,6 +250,10 @@ export interface Order {
   orderId: string;
   /** Reference to customer */
   customerId: string;
+  /** Customer name (denormalized for quick display) */
+  customerName?: string;
+  /** Customer phone (denormalized for quick display) */
+  customerPhone?: string;
   /** Reference to branch */
   branchId: string;
   /** Current order status */
@@ -174,10 +276,62 @@ export interface Order {
   createdAt: Timestamp;
   /** UID of user who created the order */
   createdBy: string;
-  /** Assigned driver UID (for deliveries) */
+
+  // ===== Garment Collection =====
+  /** How garments are collected: customer drops off or staff picks up */
+  collectionMethod: 'dropped_off' | 'pickup_required';
+  /** Address for pickup (only if collectionMethod === 'pickup_required') */
+  pickupAddress?: Address;
+  /** Special instructions for pickup */
+  pickupInstructions?: string;
+  /** Scheduled pickup time */
+  pickupScheduledTime?: Timestamp;
+  /** Actual pickup completion time */
+  pickupCompletedTime?: Timestamp;
+  /** Employee ID assigned to pickup */
+  pickupAssignedTo?: string;
+
+  // ===== Garment Return =====
+  /** How garments are returned: customer collects or staff delivers */
+  returnMethod: 'customer_collects' | 'delivery_required';
+  /** Address for delivery (only if returnMethod === 'delivery_required') */
+  deliveryAddress?: Address;
+  /** Special instructions for delivery */
+  deliveryInstructions?: string;
+  /** Scheduled delivery time */
+  deliveryScheduledTime?: Timestamp;
+  /** Actual delivery completion time */
+  deliveryCompletedTime?: Timestamp;
+  /** Employee ID assigned to delivery */
+  deliveryAssignedTo?: string;
+
+  // ===== Satellite Store Transfer =====
+  /** Original branch ID (if created at satellite store) */
+  originBranchId?: string;
+  /** Destination main store branch ID */
+  destinationBranchId?: string;
+  /** Reference to transfer batch ID */
+  transferBatchId?: string;
+  /** Timestamp when transferred from satellite */
+  transferredAt?: Timestamp;
+  /** Timestamp when received at main store */
+  receivedAtMainStoreAt?: Timestamp;
+
+  // ===== Workstation Status =====
+  /** Whether major issues were detected during inspection */
+  majorIssuesDetected?: boolean;
+  /** UID of Workstation Manager who reviewed major issues */
+  majorIssuesReviewedBy?: string;
+  /** Timestamp when major issues were approved */
+  majorIssuesApprovedAt?: Timestamp;
+
+  // ===== Processing Batch =====
+  /** Reference to processing batch ID (for washing/drying batches) */
+  processingBatchId?: string;
+
+  // ===== Legacy/Deprecated Fields =====
+  /** @deprecated Use deliveryAssignedTo instead */
   driverId?: string;
-  /** Delivery address */
-  deliveryAddress?: string;
   /** Special instructions for the order */
   specialInstructions?: string;
 }
@@ -191,6 +345,12 @@ export interface Branch {
   branchId: string;
   /** Branch name */
   name: string;
+  /** Branch type: main store (with workstation) or satellite (collection point only) */
+  branchType: 'main' | 'satellite';
+  /** Main store ID (for satellite stores - which main store they transfer to) */
+  mainStoreId?: string;
+  /** Driver carrying capacity for auto-assignment algorithm */
+  driverAvailability?: number;
   /** Branch location details */
   location: {
     /** Full address */
@@ -491,4 +651,241 @@ export interface TransactionExtended extends Transaction {
     /** Payment gateway response */
     gatewayResponse?: string;
   };
+}
+
+/**
+ * Employee shift types
+ */
+export type ShiftType = 'morning' | 'afternoon' | 'night';
+
+/**
+ * Attendance status types
+ */
+export type AttendanceStatus = 'present' | 'absent' | 'late' | 'half_day';
+
+/**
+ * Employee document structure
+ * Collection: employees
+ */
+export interface Employee {
+  /** Unique employee identifier */
+  employeeId: string;
+  /** Firebase Auth UID (links to users collection) */
+  uid: string;
+  /** Employee's full name */
+  name: string;
+  /** Employee's role */
+  role: UserRole;
+  /** Branch assignment */
+  branchId: string;
+  /** Employee's phone number */
+  phone: string;
+  /** Employee's email */
+  email: string;
+  /** Scheduled shift */
+  shift: ShiftType;
+  /** Hourly wage (in KES) */
+  hourlyWage: number;
+  /** Date of hire */
+  hireDate: Timestamp;
+  /** Whether employee is active */
+  active: boolean;
+  /** Emergency contact information */
+  emergencyContact?: {
+    name: string;
+    phone: string;
+    relationship: string;
+  };
+  /** Employee photo URL */
+  photoUrl?: string;
+  /** Last attendance timestamp */
+  lastAttendance?: Timestamp;
+}
+
+/**
+ * Attendance record document structure
+ * Collection: attendance
+ */
+export interface AttendanceRecord {
+  /** Unique attendance record ID */
+  attendanceId: string;
+  /** Reference to employee */
+  employeeId: string;
+  /** Employee name (denormalized) */
+  employeeName: string;
+  /** Reference to branch */
+  branchId: string;
+  /** Attendance date */
+  date: Timestamp;
+  /** Check-in timestamp */
+  checkIn?: Timestamp;
+  /** Check-out timestamp */
+  checkOut?: Timestamp;
+  /** Attendance status */
+  status: AttendanceStatus;
+  /** Hours worked (calculated on checkout) */
+  hoursWorked?: number;
+  /** Notes about the attendance */
+  notes?: string;
+  /** Recorded by (UID of manager/admin) */
+  recordedBy: string;
+}
+
+/**
+ * Inventory usage/transaction types
+ */
+export type InventoryTransactionType = 'usage' | 'restock' | 'adjustment' | 'waste';
+
+/**
+ * Inventory transaction document structure
+ * Collection: inventory_transactions
+ */
+export interface InventoryTransaction {
+  /** Unique transaction ID */
+  transactionId: string;
+  /** Reference to inventory item */
+  itemId: string;
+  /** Reference to branch */
+  branchId: string;
+  /** Transaction type */
+  type: InventoryTransactionType;
+  /** Quantity change (positive for restock, negative for usage) */
+  quantityChange: number;
+  /** Quantity after transaction */
+  quantityAfter: number;
+  /** Related order ID (for usage transactions) */
+  orderId?: string;
+  /** Notes about the transaction */
+  notes?: string;
+  /** Transaction timestamp */
+  timestamp: Timestamp;
+  /** UID of user who performed the transaction */
+  performedBy: string;
+}
+
+/**
+ * Receipt document structure
+ * Collection: receipts
+ */
+export interface Receipt {
+  /** Unique receipt identifier */
+  receiptId: string;
+  /** Reference to order */
+  orderId: string;
+  /** Reference to customer */
+  customerId: string;
+  /** PDF file URL in Firebase Storage */
+  pdfUrl: string;
+  /** Receipt generation timestamp */
+  generatedAt: Timestamp;
+  /** Whether receipt was emailed */
+  emailSent: boolean;
+  /** Email sent timestamp */
+  emailSentAt?: Timestamp;
+  /** UID of user who generated the receipt */
+  generatedBy: string;
+}
+
+/**
+ * Transfer batch status types
+ */
+export type TransferBatchStatus = 'pending' | 'in_transit' | 'received';
+
+/**
+ * Transfer batch document structure
+ * Collection: transferBatches
+ *
+ * Manages batches of orders transferred from satellite stores to main stores
+ */
+export interface TransferBatch {
+  /** Unique batch identifier (format: TRF-[SATELLITE]-[YYYYMMDD]-[####]) */
+  batchId: string;
+  /** Source satellite branch ID */
+  satelliteBranchId: string;
+  /** Destination main store branch ID */
+  mainStoreBranchId: string;
+  /** Array of order IDs in this batch */
+  orderIds: string[];
+  /** Current batch status */
+  status: TransferBatchStatus;
+  /** UID of driver assigned to transport this batch */
+  assignedDriverId?: string;
+  /** Batch creation timestamp */
+  createdAt: Timestamp;
+  /** Timestamp when batch was dispatched from satellite */
+  dispatchedAt?: Timestamp;
+  /** Timestamp when batch was received at main store */
+  receivedAt?: Timestamp;
+  /** Total number of orders in batch */
+  totalOrders: number;
+  /** UID of user who created the batch */
+  createdBy: string;
+}
+
+/**
+ * Processing batch status types
+ */
+export type ProcessingBatchStatus = 'pending' | 'in_progress' | 'completed';
+
+/**
+ * Processing batch stage types
+ */
+export type ProcessingBatchStage = 'washing' | 'drying' | 'ironing';
+
+/**
+ * Processing batch document structure
+ * Collection: processingBatches
+ *
+ * Manages batches of orders processed together through washing/drying stages
+ */
+export interface ProcessingBatch {
+  /** Unique batch identifier (format: PROC-[STAGE]-[YYYYMMDD]-[####]) */
+  batchId: string;
+  /** Processing stage for this batch */
+  stage: ProcessingBatchStage;
+  /** Array of order IDs in this batch */
+  orderIds: string[];
+  /** Total number of garments in batch */
+  garmentCount: number;
+  /** Array of staff UIDs assigned to process this batch */
+  assignedStaffIds: string[];
+  /** Current batch status */
+  status: ProcessingBatchStatus;
+  /** UID of user (Workstation Manager) who created the batch */
+  createdBy: string;
+  /** Batch creation timestamp */
+  createdAt: Timestamp;
+  /** Timestamp when batch processing started */
+  startedAt?: Timestamp;
+  /** Timestamp when batch processing completed */
+  completedAt?: Timestamp;
+  /** Branch ID where batch is being processed */
+  branchId: string;
+}
+
+/**
+ * Workstation assignment document structure
+ * Collection: workstationAssignments
+ *
+ * Manages permanent staff assignments to workstation stages
+ */
+export interface WorkstationAssignment {
+  /** Unique assignment identifier */
+  assignmentId: string;
+  /** UID of assigned staff member */
+  staffId: string;
+  /** Name of assigned staff member */
+  staffName: string;
+  /** Permanently assigned stage (null if no permanent assignment) */
+  permanentStage?: 'inspection' | 'washing' | 'drying' | 'ironing' | 'quality_check' | 'packaging';
+  /** Branch ID where staff is assigned */
+  branchId: string;
+  /** Whether this assignment is currently active */
+  isActive: boolean;
+  /** Assignment creation timestamp */
+  createdAt: Timestamp;
+  /** UID of user (Workstation Manager) who created the assignment */
+  createdBy: string;
+  /** Timestamp when assignment was last modified */
+  updatedAt?: Timestamp;
 }

@@ -13,3 +13,9 @@ export {
   emailReceipt,
   shareReceiptWhatsApp,
 } from './receipt-generator';
+
+export {
+  sendReceiptEmail,
+  sendOrderConfirmationEmail,
+  sendOrderReadyEmail,
+} from './email-service';

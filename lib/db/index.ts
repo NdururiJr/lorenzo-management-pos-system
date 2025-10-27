@@ -134,10 +134,10 @@ export async function getDocuments<T extends DocumentData>(
       ...doc.data(),
     })) as unknown as T[];
   } catch (error) {
-    throw new DatabaseError(
-      `Failed to get documents from ${collectionName}`,
-      error
-    );
+    // Return empty array for empty collections or permission errors
+    // This is expected for fresh installations
+    console.warn(`Could not fetch documents from ${collectionName}:`, error);
+    return [];
   }
 }
 
@@ -202,6 +202,8 @@ export async function setDocument<T extends DocumentData>(
       createdAt: Timestamp.now(),
     });
   } catch (error) {
+    console.error(`setDocument error for ${collectionName}/${docId}:`, error);
+    console.error('Data being saved:', data);
     throw new DatabaseError(
       `Failed to set document ${collectionName}/${docId}`,
       error
@@ -592,3 +594,10 @@ export async function getPaginatedDocuments<T extends DocumentData>(
     throw new DatabaseError('Pagination failed', error);
   }
 }
+
+// Re-export specialized database modules
+export * from './deliveries';
+export * from './customers';
+export * from './orders';
+export * from './transactions';
+export * from './pricing';

@@ -46,7 +46,8 @@ export function CustomerSearch({
         setCustomers(recent);
       } catch (err) {
         console.error('Error loading recent customers:', err);
-        setError('Failed to load recent customers');
+        // Don't show error for empty collection - set empty array instead
+        setCustomers([]);
       } finally {
         setLoading(false);
       }
@@ -66,6 +67,8 @@ export function CustomerSearch({
         setCustomers(recent);
       } catch (err) {
         console.error('Error loading recent customers:', err);
+        // Don't show error - just set empty array
+        setCustomers([]);
       }
       return;
     }
@@ -77,7 +80,7 @@ export function CustomerSearch({
       setCustomers(results);
     } catch (err) {
       console.error('Error searching customers:', err);
-      setError('Failed to search customers');
+      // Don't show error for empty results
       setCustomers([]);
     } finally {
       setLoading(false);

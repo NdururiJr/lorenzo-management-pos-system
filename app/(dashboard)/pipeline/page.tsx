@@ -16,6 +16,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2 } from 'lucide-react';
 import type { OrderExtended, OrderStatus } from '@/lib/db/schema';
 import { updateOrderStatus } from '@/lib/db/orders';
@@ -37,6 +38,14 @@ export default function PipelinePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState<OrderExtended | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Check if user is manager (pipeline is manager-only)
+  const isManager =
+    userData?.role === 'workstation_manager' ||
+    userData?.role === 'store_manager' ||
+    userData?.role === 'director' ||
+    userData?.role === 'general_manager' ||
+    userData?.role === 'manager';
 
   // Use filters hook
   const {
@@ -181,6 +190,22 @@ export default function PipelinePage() {
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-gray-400" />
           <p className="text-gray-600">Loading...</p>
         </div>
+      </div>
+    );
+  }
+
+  // Restrict access to managers only
+  if (!isManager) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-50 p-6">
+        <Card className="max-w-md w-full p-6">
+          <Alert variant="destructive">
+            <AlertDescription>
+              <strong>Access Restricted:</strong> The Order Pipeline is only accessible to
+              management roles. Please contact your administrator if you need access.
+            </AlertDescription>
+          </Alert>
+        </Card>
       </div>
     );
   }

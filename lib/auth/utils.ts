@@ -32,9 +32,17 @@ export interface UserData {
 const roleHierarchy: Record<UserRole, number> = {
   customer: 1,
   driver: 2,
+  satellite_staff: 3,
+  workstation_staff: 3,
   cashier: 3,
+  front_desk: 4,
+  workstation: 4,
   manager: 4,
-  admin: 5,
+  workstation_manager: 5,
+  store_manager: 6,
+  general_manager: 7,
+  director: 8,
+  admin: 9,
 };
 
 /**
@@ -257,7 +265,15 @@ export function isAuthenticated(): boolean {
 export function getRoleDisplayName(role: UserRole): string {
   const displayNames: Record<UserRole, string> = {
     admin: 'Administrator',
+    director: 'Director',
+    general_manager: 'General Manager',
+    store_manager: 'Store Manager',
+    workstation_manager: 'Workstation Manager',
+    workstation_staff: 'Workstation Staff',
+    satellite_staff: 'Satellite Staff',
     manager: 'Branch Manager',
+    front_desk: 'Front Desk',
+    workstation: 'Workstation',
     cashier: 'Cashier',
     driver: 'Delivery Driver',
     customer: 'Customer',
@@ -275,7 +291,15 @@ export function getRoleDisplayName(role: UserRole): string {
 export function getRoleBadgeColor(role: UserRole): string {
   const colors: Record<UserRole, string> = {
     admin: 'bg-black text-white',
+    director: 'bg-purple-900 text-white',
+    general_manager: 'bg-purple-700 text-white',
+    store_manager: 'bg-indigo-700 text-white',
+    workstation_manager: 'bg-blue-700 text-white',
+    workstation_staff: 'bg-blue-500 text-white',
+    satellite_staff: 'bg-teal-600 text-white',
     manager: 'bg-gray-700 text-white',
+    front_desk: 'bg-gray-600 text-white',
+    workstation: 'bg-gray-600 text-white',
     cashier: 'bg-gray-500 text-white',
     driver: 'bg-gray-600 text-white',
     customer: 'bg-gray-400 text-white',

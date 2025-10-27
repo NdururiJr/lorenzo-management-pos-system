@@ -63,7 +63,7 @@ export async function createCustomer(
     },
     orderCount: 0,
     totalSpent: 0,
-    createdAt: new Date(),
+    createdAt: Timestamp.now(),
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

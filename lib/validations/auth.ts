@@ -92,7 +92,15 @@ export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
  */
 export const userRoles = [
   'admin',
+  'director',
+  'general_manager',
+  'store_manager',
+  'workstation_manager',
+  'workstation_staff',
+  'satellite_staff',
   'manager',
+  'front_desk',
+  'workstation',
   'cashier',
   'driver',
   'customer',

@@ -158,13 +158,39 @@ export const auth: Auth = new Proxy({} as Auth, {
   }
 });
 
-export const db: Firestore = new Proxy({} as Firestore, {
-  get(target, prop) {
-    if (!_db) _db = getDbInstance();
-    if (!_db) {
-      throw new Error('Firebase Firestore is not initialized. Make sure Firebase is properly configured.');
+// Get db instance - initialize eagerly on client side for proper type checking
+function getDb(): Firestore {
+  if (!_db && typeof window !== 'undefined') {
+    const firebaseApp = getApp();
+    if (!firebaseApp) {
+      throw new Error('Firebase App is not initialized. Make sure Firebase is properly configured.');
     }
-    return _db[prop as keyof Firestore];
+    _db = getFirestore(firebaseApp);
+  }
+  if (!_db) {
+    throw new Error('Firebase Firestore is not initialized. Make sure you are on the client side.');
+  }
+  return _db;
+}
+
+// Export the actual Firestore instance (not a Proxy)
+// This is required for Firestore SDK's instanceof checks to work
+export const db = new Proxy({} as Firestore, {
+  get(target, prop) {
+    const instance = getDb();
+    const value = instance[prop as keyof Firestore];
+    return typeof value === 'function' ? value.bind(instance) : value;
+  },
+  // Allow instanceof checks to work
+  getPrototypeOf() {
+    return Object.getPrototypeOf(getDb());
+  },
+  // Allow Object.keys() and other operations
+  ownKeys(target) {
+    return Reflect.ownKeys(getDb());
+  },
+  has(target, prop) {
+    return prop in getDb();
   }
 });
 

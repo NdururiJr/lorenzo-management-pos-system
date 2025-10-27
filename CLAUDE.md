@@ -104,21 +104,48 @@ A comprehensive, AI-powered dry cleaning management system that handles:
 - Authentication system
 - User roles and permissions
 
-### Phase 2: Core Modules (Weeks 3-4) 🔄
-- **POS System** (Priority: P0)
+### Phase 2: Core Modules (Weeks 3-4) ✅
+- **POS System** (Priority: P0) ✅
   - Order creation with customer management
   - Payment processing (Cash, M-Pesa, Pesapal)
   - Pricing management
-  
-- **Order Pipeline** (Priority: P0)
+  - Receipt PDF generation with draggable/resizable modal
+  - Initial garment inspection (notable damages)
+
+- **Order Pipeline** (Priority: P0) ✅
   - Visual pipeline board (Kanban-style)
   - Manual status updates by staff
   - Real-time pipeline statistics
-  
-- **Customer Portal** (Priority: P1)
+
+- **Pickup & Delivery System** (Priority: P0) ✅
+  - Collection methods (drop-off/pickup)
+  - Return methods (customer collects/delivery)
+  - Address management with WhatsApp placeholder
+  - Pickup and delivery tracking
+
+- **Customer Portal** (Priority: P1) ✅
   - Customer registration and login (Phone OTP)
   - Order tracking
   - Profile management
+
+### Phase 2.5: Workstation Management System (In Progress) 🔄
+- **Workstation Processing** (Priority: P0)
+  - Initial inspection at POS (Stage 1 - notable damages)
+  - Detailed workstation inspection (Stage 2 - comprehensive)
+  - Batch processing management
+  - Stage-specific interfaces (inspection, washing, drying, ironing, quality check, packaging)
+  - Staff assignments and tracking
+  - Performance metrics per staff
+
+- **Satellite Store Integration** (Priority: P0)
+  - Transfer batch management
+  - Auto driver assignment
+  - Multi-branch order tracking
+
+- **Major Issues Workflow** (Priority: P1)
+  - Photo documentation requirements
+  - Workstation manager approval system
+  - Automated notifications
 
 ### Phase 3: Advanced Features (Week 5) 🔄
 - **Driver Route Optimization** (Priority: P1)
@@ -165,7 +192,9 @@ A comprehensive, AI-powered dry cleaning management system that handles:
   uid: string;              // Firebase Auth UID
   email: string;
   phone: string;
-  role: 'admin' | 'manager' | 'front_desk' | 'workstation' | 'driver' | 'customer';
+  role: 'admin' | 'director' | 'general_manager' | 'store_manager' |
+        'workstation_manager' | 'workstation_staff' | 'satellite_staff' |
+        'front_desk' | 'driver' | 'customer';
   name: string;
   branchId: string;
   createdAt: timestamp;
@@ -238,6 +267,9 @@ A comprehensive, AI-powered dry cleaning management system that handles:
 {
   branchId: string;
   name: string;
+  branchType: 'main' | 'satellite';
+  mainStoreId?: string;        // For satellites - which main store they transfer to
+  driverAvailability?: number;  // Carrying capacity for driver assignment
   location: {
     address: string;
     coordinates: { lat: number, lng: number }

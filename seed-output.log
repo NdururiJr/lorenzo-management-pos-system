@@ -1,0 +1,59 @@
+
+> lorenzo-dry-cleaners@0.1.0 seed:test-orders
+> tsx scripts/seed-test-orders.ts
+
+
+🌱 Starting seed process...
+
+Branch: WESTLANDS
+Customers to create: 10
+Orders to create: 20
+
+📋 Creating customers...
+[2025-10-19T08:32:10.326Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793b3 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:32:10.573Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793b4 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:32:12.059Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793b5 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:32:14.293Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793b6 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:32:15.920Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793b7 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:32:17.414Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793b8 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:32:23.492Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793b9 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:32:34.644Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793ba error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:32:44.874Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793bb error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:33:03.899Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793bc error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:33:26.739Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793bd error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:34:13.705Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793be error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:35:26.339Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793bf error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:36:30.184Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793c0 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:37:13.386Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793c1 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:38:33.009Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793c2 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:39:40.611Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793c3 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:40:50.176Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793c4 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:42:15.718Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793c5 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:43:12.161Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793c6 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:44:06.354Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793c7 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:45:23.083Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793c8 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:46:30.401Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793c9 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:47:08.181Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793ca error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:48:15.421Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793cb error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:49:19.645Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793cc error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:50:12.576Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793cd error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:50:49.350Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793ce error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:52:18.159Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793cf error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:53:14.559Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793d0 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T08:54:32.861Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793d1 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T09:26:22.294Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793d2 error. Code: 14 Message: 14 UNAVAILABLE: read ECONNRESET
+[2025-10-19T09:27:11.454Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793d3 error. Code: 14 Message: 14 UNAVAILABLE: No connection established. Last error: connect EHOSTUNREACH 172.217.170.202:443 (2025-10-19T09:27:11.452Z)
+[2025-10-19T09:28:15.604Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793d4 error. Code: 14 Message: 14 UNAVAILABLE: No connection established. Last error: connect EHOSTUNREACH 172.217.170.202:443 (2025-10-19T09:27:11.452Z)
+[2025-10-19T09:29:08.590Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793d5 error. Code: 14 Message: 14 UNAVAILABLE: No connection established. Last error: connect EHOSTUNREACH 172.217.170.202:443 (2025-10-19T09:27:11.452Z)
+[2025-10-19T09:29:53.645Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793d6 error. Code: 14 Message: 14 UNAVAILABLE: No connection established. Last error: connect EHOSTUNREACH 172.217.170.202:443 (2025-10-19T09:27:11.452Z)
+[2025-10-19T09:31:16.123Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793d7 error. Code: 14 Message: 14 UNAVAILABLE: No connection established. Last error: connect EHOSTUNREACH 172.217.170.202:443 (2025-10-19T09:27:11.452Z)
+[2025-10-19T09:32:44.845Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793d8 error. Code: 14 Message: 14 UNAVAILABLE: No connection established. Last error: connect EHOSTUNREACH 172.217.170.202:443 (2025-10-19T09:27:11.452Z)
+[2025-10-19T09:33:40.872Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793d9 error. Code: 14 Message: 14 UNAVAILABLE: No connection established. Last error: connect EHOSTUNREACH 172.217.170.202:443 (2025-10-19T09:27:11.452Z)
+[2025-10-19T09:34:32.872Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793da error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T09:35:15.161Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793db error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T09:36:25.453Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793dc error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T09:37:40.450Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793dd error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T09:38:31.860Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793de error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T09:39:49.782Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793df error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T09:40:56.547Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793e0 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.
+[2025-10-19T09:41:56.276Z]  @firebase/firestore: Firestore (12.4.0): GrpcConnection RPC 'Write' stream 0x335793e1 error. Code: 3 Message: 3 INVALID_ARGUMENT: Invalid resource field value in the request.

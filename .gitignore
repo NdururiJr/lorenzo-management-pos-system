@@ -44,3 +44,6 @@ nul
 # prettier cache
 .prettier-cache
 node_modules/.cache
+
+# firebase admin credentials
+*-firebase-adminsdk-*.json

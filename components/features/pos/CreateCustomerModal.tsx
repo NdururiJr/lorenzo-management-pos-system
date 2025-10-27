@@ -55,6 +55,12 @@ export function CreateCustomerModal({
     watch,
   } = useForm<CreateCustomerInput>({
     resolver: zodResolver(createCustomerSchema),
+    defaultValues: {
+      preferences: {
+        notifications: true,
+        language: 'en',
+      },
+    },
   });
 
   const notifications = watch('preferences.notifications');

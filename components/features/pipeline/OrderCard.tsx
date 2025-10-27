@@ -18,7 +18,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { StatusBadge, type OrderStatus } from '@/components/ui/status-badge';
 import { PaymentBadge } from '@/components/ui/payment-badge';
-import { ChevronDown, User, Package, DollarSign, Clock, Calendar } from 'lucide-react';
+import { ChevronDown, User, Package, DollarSign, Clock, Calendar, Users } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -65,6 +65,32 @@ export const OrderCard = memo(function OrderCard({
     () => getUrgencyColorClass(order),
     [order]
   );
+
+  // Get current stage handlers (for workstation stages)
+  const currentStageHandlers = useMemo(() => {
+    const workstationStages: Array<'inspection' | 'washing' | 'drying' | 'ironing' | 'quality_check' | 'packaging'> = [
+      'inspection',
+      'washing',
+      'drying',
+      'ironing',
+      'quality_check',
+      'packaging',
+    ];
+
+    if (!workstationStages.includes(order.status as any)) return null;
+
+    // Get handlers for current stage from garments
+    const handlersSet = new Set<string>();
+    order.garments.forEach((garment) => {
+      if (garment.stageHandlers?.[order.status as 'inspection']) {
+        garment.stageHandlers[order.status as 'inspection'].forEach((handler) => {
+          handlersSet.add(handler.name);
+        });
+      }
+    });
+
+    return handlersSet.size > 0 ? Array.from(handlersSet) : null;
+  }, [order]);
 
   return (
     <Card
@@ -132,6 +158,22 @@ export const OrderCard = memo(function OrderCard({
             Due: {formatTimeUntilDue(order.estimatedCompletion)}
           </span>
         </div>
+
+        {/* Staff Handlers (for workstation stages) */}
+        {currentStageHandlers && currentStageHandlers.length > 0 && (
+          <div className="flex items-center gap-2 text-sm pt-2 border-t border-gray-200">
+            <Users className="w-4 h-4 text-blue-600 flex-shrink-0" />
+            <div className="flex-1">
+              <div className="text-xs text-gray-500 mb-1">Staff Assigned:</div>
+              <div className="text-gray-900 text-xs">
+                {currentStageHandlers.slice(0, 2).join(', ')}
+                {currentStageHandlers.length > 2 && (
+                  <span className="text-gray-500"> +{currentStageHandlers.length - 2} more</span>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Change Status Button */}

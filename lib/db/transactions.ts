@@ -49,18 +49,27 @@ export async function createTransaction(
 ): Promise<string> {
   const transactionId = generateTransactionId();
 
-  const transaction = {
+  // Create transaction object with required fields only
+  const transaction: Record<string, any> = {
     transactionId,
     orderId: data.orderId,
     customerId: data.customerId,
     amount: data.amount,
     method: data.method,
     status: data.status || 'pending',
-    pesapalRef: data.pesapalRef,
-    processedBy: data.processedBy,
-    metadata: data.metadata,
     timestamp: Timestamp.now(),
   };
+
+  // Add optional fields only if they are defined
+  if (data.pesapalRef !== undefined) {
+    transaction.pesapalRef = data.pesapalRef;
+  }
+  if (data.processedBy !== undefined) {
+    transaction.processedBy = data.processedBy;
+  }
+  if (data.metadata !== undefined) {
+    transaction.metadata = data.metadata;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await setDocument<TransactionExtended>('transactions', transactionId, transaction as any);

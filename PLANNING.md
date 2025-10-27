@@ -40,12 +40,14 @@ To build a comprehensive, AI-powered dry cleaning management system that streaml
   - Customer portal registration: 60% within 3 months
 
 ### Core User Personas
-1. **Front Desk Staff** - Order creation, customer management, payment processing
-2. **Workstation Staff** - Order pipeline management, status updates
-3. **Branch Manager** - Operations oversight, reporting, staff management
-4. **System Admin** - Full system control, user management, configuration
-5. **Drivers** - Delivery route optimization, customer communication
-6. **Customers** - Order tracking, profile management, payment
+1. **Director / General Manager** - Multi-store oversight, strategic decisions, full system access
+2. **Store Manager** - Branch operations oversight, reporting, staff management, full branch access
+3. **Workstation Manager** - Workstation operations, staff assignment, major issues approval
+4. **Workstation Staff** - Garment inspection, processing, status updates (inspection, washing, drying, ironing, QC, packaging)
+5. **Satellite Staff** - Order creation at satellite stores, transfer batch management
+6. **Front Desk Staff** - Order creation, customer management, payment processing at main store
+7. **Drivers** - Pickup/delivery route optimization, batch transfers, customer communication
+8. **Customers** - Order tracking, profile management, payment
 
 ---
 

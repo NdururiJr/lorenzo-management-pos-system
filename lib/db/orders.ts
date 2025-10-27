@@ -144,8 +144,8 @@ export async function createOrder(
     },
   ];
 
-  // Create order object
-  const order = {
+  // Create order object (filtering out undefined values for Firestore)
+  const order: Record<string, any> = {
     orderId,
     customerId: data.customerId,
     customerName: customer.name,
@@ -156,15 +156,23 @@ export async function createOrder(
     totalAmount: data.totalAmount,
     paidAmount: data.paidAmount,
     paymentStatus: data.paymentStatus,
-    paymentMethod: data.paymentMethod,
     estimatedCompletion,
     createdBy: data.createdBy,
-    deliveryAddress: data.deliveryAddress,
-    specialInstructions: data.specialInstructions,
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
     statusHistory,
   };
+
+  // Add optional fields only if they are defined
+  if (data.paymentMethod !== undefined) {
+    order.paymentMethod = data.paymentMethod;
+  }
+  if (data.deliveryAddress !== undefined) {
+    order.deliveryAddress = data.deliveryAddress;
+  }
+  if (data.specialInstructions !== undefined) {
+    order.specialInstructions = data.specialInstructions;
+  }
 
   // Save order
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -458,4 +466,86 @@ export async function getPipelineStats(branchId: string): Promise<{
   });
 
   return stats;
+}
+
+/**
+ * Mark pickup as completed
+ * Called when staff have successfully collected garments from customer location
+ *
+ * @param orderId - Order ID
+ * @returns Promise<void>
+ */
+export async function markPickupCompleted(orderId: string): Promise<void> {
+  const updates: Partial<OrderExtended> = {
+    pickupCompletedTime: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  };
+
+  await updateDocument<OrderExtended>('orders', orderId, updates);
+}
+
+/**
+ * Mark delivery as completed
+ * Called when staff have successfully delivered clean garments to customer location
+ *
+ * @param orderId - Order ID
+ * @returns Promise<void>
+ */
+export async function markDeliveryCompleted(orderId: string): Promise<void> {
+  const updates: Partial<OrderExtended> = {
+    deliveryCompletedTime: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+  };
+
+  // Also update order status to 'delivered'
+  const order = await getOrder(orderId);
+  const statusHistory = [
+    ...order.statusHistory,
+    {
+      status: 'delivered' as OrderStatus,
+      timestamp: Timestamp.now(),
+      updatedBy: 'system', // Can be parameterized later
+    },
+  ];
+
+  await updateDocument<OrderExtended>('orders', orderId, {
+    ...updates,
+    status: 'delivered',
+    statusHistory,
+    actualCompletion: Timestamp.now(),
+  });
+}
+
+/**
+ * Assign driver to pickup
+ *
+ * @param orderId - Order ID
+ * @param driverId - Employee/driver ID
+ * @returns Promise<void>
+ */
+export async function assignPickupDriver(
+  orderId: string,
+  driverId: string
+): Promise<void> {
+  await updateDocument<OrderExtended>('orders', orderId, {
+    pickupAssignedTo: driverId,
+    updatedAt: Timestamp.now(),
+  });
+}
+
+/**
+ * Assign driver to delivery
+ *
+ * @param orderId - Order ID
+ * @param driverId - Employee/driver ID
+ * @returns Promise<void>
+ */
+export async function assignDeliveryDriver(
+  orderId: string,
+  driverId: string
+): Promise<void> {
+  await updateDocument<OrderExtended>('orders', orderId, {
+    deliveryAssignedTo: driverId,
+    updatedAt: Timestamp.now(),
+  });
 }

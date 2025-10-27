@@ -17,7 +17,7 @@ import { getTransactionsByOrder } from '../db/transactions';
 const COMPANY_INFO = {
   name: 'LORENZO DRY CLEANERS',
   address: 'Kilimani, Nairobi',
-  phone: '+254 XXX XXX XXX', // TODO: Replace with actual phone
+  phone: '+254 700 075 810', // TODO: Replace with actual phone
   email: 'info@lorenzo-dry-cleaners.com',
   website: 'www.lorenzo-dry-cleaners.com',
 };
@@ -309,23 +309,20 @@ export async function printReceipt(orderId: string): Promise<void> {
 }
 
 /**
- * Email receipt (future feature)
+ * Email receipt using Resend service
  */
 export async function emailReceipt(
-  _orderId: string,
-  _email: string
+  orderId: string,
+  email: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    // TODO: Implement email sending with Resend
-    // const blob = await generateReceipt(orderId);
-    // Send email with blob as attachment
+    // Import email service dynamically to avoid circular dependencies
+    const { sendReceiptEmail } = await import('./email-service');
 
-    console.warn('Email receipt functionality not yet implemented');
+    // Send receipt email with PDF attachment
+    const result = await sendReceiptEmail(orderId, email);
 
-    return {
-      success: false,
-      error: 'Email functionality not yet implemented',
-    };
+    return result;
   } catch (error) {
     console.error('Receipt email error:', error);
     return {
@@ -339,20 +336,26 @@ export async function emailReceipt(
  * Share receipt via WhatsApp (future feature)
  */
 export async function shareReceiptWhatsApp(
-  _orderId: string,
-  _phone: string
+  orderId: string,
+  phone: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    // TODO: Implement WhatsApp sharing with Wati.io
-    // const blob = await generateReceipt(orderId);
-    // Upload to storage and send link via WhatsApp
-
-    console.warn('WhatsApp receipt sharing not yet implemented');
-
-    return {
-      success: false,
-      error: 'WhatsApp sharing not yet implemented',
-    };
+    // Remove any non-digit characters from phone
+    const cleanPhone = phone.replace(/\D/g, '');
+    
+    // Add Kenya country code if not present
+    const formattedPhone = cleanPhone.startsWith('254') 
+      ? cleanPhone 
+      : `254${cleanPhone.startsWith('0') ? cleanPhone.slice(1) : cleanPhone}`;
+    
+    // Create message with order details
+    const message = `Lorenzo Dry Cleaners Receipt\n\nOrder ID: ${orderId}\n\nYour garments have been received and are being processed.\n\nThank you for choosing Lorenzo Dry Cleaners!`;
+    
+    // Open WhatsApp Web
+    const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    
+    return { success: true };
   } catch (error) {
     console.error('WhatsApp share error:', error);
     return {

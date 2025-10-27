@@ -1,7 +1,7 @@
 /**
  * Dashboard Layout
  *
- * Protected layout for authenticated users.
+ * Protected layout for authenticated users with sidebar navigation.
  * Redirects to login if not authenticated.
  *
  * @module app/(dashboard)/layout
@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
+import { Sidebar } from '@/components/layout/Sidebar';
 
 export default function DashboardLayout({
   children,
@@ -47,10 +48,15 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Simple layout - will be enhanced with sidebar later */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {children}
-      </div>
+      {/* Sidebar Navigation */}
+      <Sidebar />
+
+      {/* Main Content Area */}
+      <main className="lg:pl-64">
+        <div className="px-4 sm:px-6 lg:px-8 py-8 pt-20 lg:pt-8">
+          {children}
+        </div>
+      </main>
     </div>
   );
 }
