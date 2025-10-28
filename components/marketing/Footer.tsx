@@ -34,6 +34,7 @@ const supportLinks = [
   { name: 'FAQs', href: '/faq' },
   { name: 'Privacy Policy', href: '/privacy' },
   { name: 'Terms of Service', href: '/terms' },
+  { name: 'Staff Only', href: '/login' },
 ];
 
 const socialLinks = [
