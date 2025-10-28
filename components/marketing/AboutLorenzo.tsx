@@ -88,12 +88,14 @@ export function AboutLorenzo() {
 
   return (
     <section className="relative py-24 overflow-hidden">
-      {/* Blue Gradient Background - Enhanced with #22BBFF */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-blue-100 via-brand-blue-50 to-white" />
+      {/* Enhanced Blue Gradient Background with #22BBFF */}
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-blue via-brand-blue-100 via-40% to-white" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue-50 via-transparent to-brand-blue-100 opacity-60" />
 
       {/* Decorative blur elements with more blue */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-brand-blue rounded-full blur-3xl opacity-30" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-blue-light rounded-full blur-3xl opacity-25" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-brand-blue rounded-full blur-3xl opacity-40" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-blue-light rounded-full blur-3xl opacity-35" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-blue/20 rounded-full blur-3xl" />
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={ref} className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-end">
@@ -104,7 +106,20 @@ export function AboutLorenzo() {
             animate={inView ? 'visible' : 'hidden'}
             className="relative order-2 lg:order-1"
           >
-            <div className="relative aspect-[3/4] max-w-md mx-auto lg:max-w-md rounded-3xl overflow-hidden shadow-2xl">
+            <motion.div
+              className="relative aspect-[3/4] max-w-md mx-auto lg:max-w-md rounded-3xl overflow-hidden"
+              style={{
+                boxShadow: '0 20px 60px rgba(34, 187, 255, 0.4), 0 10px 30px rgba(0, 0, 0, 0.15)'
+              }}
+              animate={{
+                y: [0, -15, 0],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
               {/* Image */}
               <Image
                 src="/images/marketing/about-hero.jpg"
@@ -131,7 +146,7 @@ export function AboutLorenzo() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Floating decorative elements */}
             <motion.div
