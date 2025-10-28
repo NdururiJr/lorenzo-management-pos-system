@@ -51,6 +51,7 @@ export function HeroVideo({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [videoError, setVideoError] = useState<string | null>(null);
 
   // Attempt to play video on mount
   useEffect(() => {
@@ -63,10 +64,12 @@ export function HeroVideo({
         playPromise
           .then(() => {
             setIsVideoPlaying(true);
+            console.log('✅ Video is playing successfully');
           })
           .catch((error) => {
-            console.log('Autoplay was prevented:', error);
-            // Video autoplay was prevented, show poster instead
+            console.error('❌ Video autoplay was prevented:', error);
+            console.log('💡 Tip: Check browser address bar for autoplay settings');
+            setVideoError('Video autoplay blocked by browser. Click to enable.');
           });
       }
     }
@@ -105,20 +108,26 @@ export function HeroVideo({
         <>
           <video
             ref={videoRef}
-            className={cn(
-              'absolute inset-0 w-full h-full object-cover',
-              isVideoLoaded ? 'opacity-100' : 'opacity-0',
-              'transition-opacity duration-1000'
-            )}
+            className="absolute inset-0 w-full h-full object-cover"
             autoPlay
             muted
             loop
             playsInline
-            poster={posterImage}
-            onLoadedData={() => setIsVideoLoaded(true)}
+            onLoadedData={() => {
+              setIsVideoLoaded(true);
+              console.log('✅ Video loaded successfully');
+            }}
+            onError={(e) => {
+              console.error('❌ Video failed to load:', e);
+              setVideoError('Failed to load video file');
+            }}
+            onCanPlay={() => {
+              console.log('✅ Video can play');
+            }}
           >
             {videoSrcWebm && <source src={videoSrcWebm} type="video/webm" />}
             {videoSrcMp4 && <source src={videoSrcMp4} type="video/mp4" />}
+            Your browser does not support the video tag.
           </video>
 
           {/* Gradient Overlay for text legibility */}

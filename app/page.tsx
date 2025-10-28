@@ -8,6 +8,7 @@
  */
 
 import { HeroVideo } from '@/components/marketing/HeroVideo';
+import { AboutLorenzo } from '@/components/marketing/AboutLorenzo';
 import { FeaturesGrid } from '@/components/marketing/FeaturesGrid';
 import { ProcessSteps } from '@/components/marketing/ProcessSteps';
 import { Testimonials } from '@/components/marketing/Testimonials';
@@ -24,8 +25,6 @@ export default function Home() {
       {/* Hero Section */}
       <HeroVideo
         videoSrcMp4="/videos/hero-video.mp4"
-        videoSrcWebm="/videos/hero-video.webm"
-        posterImage="/images/hero-poster.jpg"
         headline="Premium Dry Cleaning"
         subheading="Professional garment care"
         primaryCtaText="Get Started"
@@ -33,6 +32,9 @@ export default function Home() {
         secondaryCtaText="Learn More"
         secondaryCtaHref="#services"
       />
+
+      {/* About Lorenzo Section */}
+      <AboutLorenzo />
 
       {/* Features Section */}
       <FeaturesGrid />
