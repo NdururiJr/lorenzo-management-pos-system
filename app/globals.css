@@ -46,6 +46,12 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-blue: #22BBFF;
+  --color-brand-blue-dark: #12A4EA;
+  --color-brand-blue-light: #7FD8FF;
+  --color-brand-blue-50: #E6F7FF;
+  --color-brand-blue-100: #BAE7FF;
+  --color-brand-blue-900: #002766;
   --font-sans: var(--font-inter);
 }
 

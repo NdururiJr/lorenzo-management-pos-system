@@ -1,8 +1,8 @@
 /**
  * Testimonials Component
  *
- * Customer testimonials carousel with ratings and photos.
- * Auto-scrolls with pause on hover.
+ * Customer testimonials carousel showing 2 cards at a time with modern glassmorphism design.
+ * Features: horizontal scrolling, customer images, ratings, and trust badges.
  *
  * @module components/marketing/Testimonials
  */
@@ -13,9 +13,9 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
-import { GlassCardSolid } from './GlassCard';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 const testimonials = [
   {
@@ -60,39 +60,81 @@ const testimonials = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] },
+  },
+};
+
 export function Testimonials() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [direction, setDirection] = useState(0);
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
+  // Calculate how many cards to show per page
+  const cardsPerPage = 2;
+  const totalPages = Math.ceil(testimonials.length / cardsPerPage);
+
+  // Get current testimonials for the page
+  const getCurrentTestimonials = () => {
+    const start = currentPage * cardsPerPage;
+    const end = start + cardsPerPage;
+    const visible = testimonials.slice(start, end);
+
+    if (visible.length < cardsPerPage) {
+      visible.push(...testimonials.slice(0, cardsPerPage - visible.length));
+    }
+
+    return visible;
+  };
+
   // Auto-advance carousel
   useEffect(() => {
     if (!isPaused && inView) {
       const interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-      }, 5000); // Change every 5 seconds
+        setDirection(1);
+        setCurrentPage((prev) => (prev + 1) % totalPages);
+      }, 7000); // Change every 7 seconds
 
       return () => clearInterval(interval);
     }
-  }, [isPaused, inView]);
+  }, [isPaused, inView, totalPages]);
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    setDirection(1);
+    setCurrentPage((prev) => (prev + 1) % totalPages);
   };
 
   const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setDirection(-1);
+    setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
   };
 
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
+  const goToPage = (page: number) => {
+    setDirection(page > currentPage ? 1 : -1);
+    setCurrentPage(page);
   };
 
   return (
-    <section className="py-20 bg-white" ref={ref}>
+    <section className="py-24 bg-white" ref={ref}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -101,7 +143,7 @@ export function Testimonials() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-brand-blue-50 text-brand-blue text-sm font-medium mb-4">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-md text-brand-blue text-sm font-medium mb-4 border-2 border-white/60">
             HAPPY CLIENTS
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mb-4">
@@ -115,50 +157,78 @@ export function Testimonials() {
 
         {/* Carousel Container */}
         <div
-          className="relative max-w-4xl mx-auto"
+          className="relative"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Main Testimonial Card */}
-          <div className="relative h-[400px] sm:h-[350px] lg:h-[300px]">
-            <AnimatePresence mode="wait">
+          {/* Testimonial Cards Grid */}
+          <div className="relative min-h-[480px]">
+            <AnimatePresence mode="wait" initial={false} custom={direction}>
               <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.5 }}
-                className="absolute inset-0"
+                key={currentPage}
+                custom={direction}
+                variants={{
+                  enter: (direction: number) => ({
+                    x: direction > 0 ? 1000 : -1000,
+                    opacity: 0,
+                  }),
+                  center: {
+                    x: 0,
+                    opacity: 1,
+                  },
+                  exit: (direction: number) => ({
+                    x: direction > 0 ? -1000 : 1000,
+                    opacity: 0,
+                  }),
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: 'spring', stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.4 },
+                }}
+                className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
               >
-                <TestimonialCard testimonial={testimonials[currentIndex]} />
+                {getCurrentTestimonials().map((testimonial, index) => (
+                  <TestimonialCard
+                    key={testimonial.id}
+                    testimonial={testimonial}
+                    index={index}
+                  />
+                ))}
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* Navigation Arrows */}
-          <div className="flex items-center justify-center gap-4 mt-8">
+          {/* Navigation Controls */}
+          <div className="flex items-center justify-center gap-4 mt-12">
             <Button
               variant="outline"
               size="icon"
               onClick={goToPrevious}
-              className="rounded-full border-gray-300 hover:border-brand-blue hover:text-brand-blue"
+              className="rounded-full border-2 bg-white/70 backdrop-blur-md hover:bg-white hover:scale-110 transition-all duration-300"
+              style={{ borderColor: '#22BBFF', color: '#22BBFF' }}
             >
               <ChevronLeft className="w-5 h-5" />
             </Button>
 
             {/* Dots Indicator */}
             <div className="flex items-center gap-2">
-              {testimonials.map((_, index) => (
+              {[...Array(totalPages)].map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => goToSlide(index)}
+                  onClick={() => goToPage(index)}
                   className={cn(
-                    'w-2.5 h-2.5 rounded-full transition-all duration-300',
-                    index === currentIndex
-                      ? 'bg-brand-blue w-8'
-                      : 'bg-gray-300 hover:bg-gray-400'
+                    'rounded-full transition-all duration-300',
+                    index === currentPage
+                      ? 'w-8 h-3'
+                      : 'w-3 h-3 hover:scale-125'
                   )}
-                  aria-label={`Go to testimonial ${index + 1}`}
+                  style={{
+                    backgroundColor: index === currentPage ? '#22BBFF' : 'rgba(255, 255, 255, 0.5)',
+                  }}
+                  aria-label={`Go to page ${index + 1}`}
                 />
               ))}
             </div>
@@ -167,7 +237,8 @@ export function Testimonials() {
               variant="outline"
               size="icon"
               onClick={goToNext}
-              className="rounded-full border-gray-300 hover:border-brand-blue hover:text-brand-blue"
+              className="rounded-full border-2 bg-white/70 backdrop-blur-md hover:bg-white hover:scale-110 transition-all duration-300"
+              style={{ borderColor: '#22BBFF', color: '#22BBFF' }}
             >
               <ChevronRight className="w-5 h-5" />
             </Button>
@@ -182,23 +253,29 @@ export function Testimonials() {
           className="mt-16 flex flex-wrap items-center justify-center gap-8 text-center"
         >
           <div className="flex flex-col items-center">
-            <div className="text-4xl font-bold text-brand-blue mb-1">5.0</div>
+            <div className="text-4xl font-bold mb-1" style={{ color: '#22BBFF' }}>
+              5.0
+            </div>
             <div className="flex gap-0.5 mb-1">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <Star key={i} className="w-4 h-4 text-white" style={{ fill: '#22BBFF' }} />
               ))}
             </div>
-            <div className="text-sm text-gray-600">Average Rating</div>
+            <div className="text-sm text-gray-600 font-medium">Average Rating</div>
           </div>
-          <div className="hidden sm:block w-px h-12 bg-gray-300" />
+          <div className="hidden sm:block w-px h-12 bg-white/40" />
           <div className="flex flex-col items-center">
-            <div className="text-4xl font-bold text-brand-blue mb-1">500+</div>
-            <div className="text-sm text-gray-600">Happy Customers</div>
+            <div className="text-4xl font-bold mb-1" style={{ color: '#22BBFF' }}>
+              500+
+            </div>
+            <div className="text-sm text-gray-600 font-medium">Happy Customers</div>
           </div>
-          <div className="hidden sm:block w-px h-12 bg-gray-300" />
+          <div className="hidden sm:block w-px h-12 bg-white/40" />
           <div className="flex flex-col items-center">
-            <div className="text-4xl font-bold text-brand-blue mb-1">98%</div>
-            <div className="text-sm text-gray-600">Satisfaction Rate</div>
+            <div className="text-4xl font-bold mb-1" style={{ color: '#22BBFF' }}>
+              98%
+            </div>
+            <div className="text-sm text-gray-600 font-medium">Satisfaction Rate</div>
           </div>
         </motion.div>
       </div>
@@ -208,46 +285,77 @@ export function Testimonials() {
 
 interface TestimonialCardProps {
   testimonial: {
+    id: number;
     name: string;
     role: string;
     image: string;
     rating: number;
     text: string;
   };
+  index: number;
 }
 
-function TestimonialCard({ testimonial }: TestimonialCardProps) {
+function TestimonialCard({ testimonial, index }: TestimonialCardProps) {
   return (
-    <GlassCardSolid className="p-8 sm:p-10 h-full flex flex-col">
-      {/* Quote Icon */}
-      <div className="mb-6">
-        <Quote className="w-12 h-12 text-brand-blue/30" />
+    <motion.article
+      whileHover={{
+        scale: 1.03,
+        rotate: index % 2 === 0 ? -1 : 1,
+        transition: { duration: 0.3 },
+      }}
+      className={cn(
+        'group relative rounded-3xl p-8',
+        'bg-white/70 backdrop-blur-xl',
+        'border-2 border-white/60',
+        'shadow-card hover:shadow-2xl',
+        'transition-all duration-300',
+        'overflow-hidden',
+        'cursor-default',
+        'h-full flex flex-col'
+      )}
+    >
+      {/* Animated gradient on hover */}
+      <motion.div className="absolute inset-0 bg-gradient-to-br from-brand-blue/10 via-brand-blue-light/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col h-full">
+        {/* Quote Icon */}
+        <div className="mb-4">
+          <Quote className="w-12 h-12" style={{ color: '#22BBFF' }} />
+        </div>
+
+        {/* Testimonial Text */}
+        <blockquote className="text-base text-gray-700 leading-relaxed mb-6 flex-grow">
+          &ldquo;{testimonial.text}&rdquo;
+        </blockquote>
+
+        {/* Author Info */}
+        <div className="flex items-center gap-4 pt-6 border-t border-gray-200">
+          {/* Avatar */}
+          <div className="relative w-14 h-14 rounded-full flex-shrink-0 overflow-hidden shadow-lg">
+            <div
+              className="w-full h-full flex items-center justify-center text-white text-xl font-semibold"
+              style={{ backgroundColor: '#22BBFF' }}
+            >
+              {testimonial.name.charAt(0)}
+            </div>
+          </div>
+
+          <div className="flex-grow">
+            <div className="font-bold text-black text-base group-hover:text-brand-blue transition-colors duration-300">
+              {testimonial.name}
+            </div>
+            <div className="text-gray-600 text-sm">{testimonial.role}</div>
+          </div>
+
+          {/* Rating */}
+          <div className="flex gap-0.5">
+            {[...Array(testimonial.rating)].map((_, i) => (
+              <Star key={i} className="w-4 h-4" style={{ fill: '#22BBFF', color: '#22BBFF' }} />
+            ))}
+          </div>
+        </div>
       </div>
-
-      {/* Testimonial Text */}
-      <blockquote className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 flex-grow">
-        &ldquo;{testimonial.text}&rdquo;
-      </blockquote>
-
-      {/* Author Info */}
-      <div className="flex items-center gap-4 pt-6 border-t border-gray-200">
-        {/* Avatar */}
-        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-brand-blue to-brand-blue-dark flex items-center justify-center text-white text-xl font-semibold flex-shrink-0">
-          {testimonial.name.charAt(0)}
-        </div>
-
-        <div className="flex-grow">
-          <div className="font-semibold text-black text-lg">{testimonial.name}</div>
-          <div className="text-gray-600 text-sm">{testimonial.role}</div>
-        </div>
-
-        {/* Rating */}
-        <div className="flex gap-0.5">
-          {[...Array(testimonial.rating)].map((_, i) => (
-            <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-          ))}
-        </div>
-      </div>
-    </GlassCardSolid>
+    </motion.article>
   );
 }
