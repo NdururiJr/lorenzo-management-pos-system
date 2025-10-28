@@ -12,13 +12,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ChevronDown, User, Phone } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'Services', href: '/services' },
+  { name: 'Blog', href: '/blog' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];
@@ -26,7 +27,6 @@ const navigation = [
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoginDropdownOpen, setIsLoginDropdownOpen] = useState(false);
   const pathname = usePathname();
 
   // Handle scroll for sticky header effect
@@ -42,7 +42,6 @@ export function Header() {
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    setIsLoginDropdownOpen(false);
   }, [pathname]);
 
   return (
@@ -91,55 +90,6 @@ export function Header() {
               </Link>
             ))}
 
-            {/* Login Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setIsLoginDropdownOpen(!isLoginDropdownOpen)}
-                className={cn(
-                  "flex items-center space-x-1 text-base font-medium transition-colors",
-                  isScrolled
-                    ? "text-gray-700 hover:text-brand-blue"
-                    : "text-white hover:text-brand-blue-light"
-                )}
-              >
-                <span>Login</span>
-                <ChevronDown className={cn(
-                  'w-4 h-4 transition-transform',
-                  isLoginDropdownOpen && 'rotate-180'
-                )} />
-              </button>
-
-              {/* Dropdown Menu */}
-              {isLoginDropdownOpen && (
-                <div className="absolute top-full right-0 mt-2 w-56 rounded-xl bg-white shadow-lift border border-gray-100 overflow-hidden animate-fade-in-down">
-                  <Link
-                    href="/login"
-                    className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-brand-blue-50 flex items-center justify-center">
-                      <User className="w-5 h-5 text-brand-blue" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-sm text-gray-900">Staff Login</p>
-                      <p className="text-xs text-gray-500">Management system</p>
-                    </div>
-                  </Link>
-                  <Link
-                    href="/customer-login"
-                    className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-brand-blue-50 flex items-center justify-center">
-                      <Phone className="w-5 h-5 text-brand-blue" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-sm text-gray-900">Customer Login</p>
-                      <p className="text-xs text-gray-500">Track your orders</p>
-                    </div>
-                  </Link>
-                </div>
-              )}
-            </div>
-
             {/* Primary CTA */}
             <Button
               asChild
@@ -151,7 +101,7 @@ export function Header() {
                   : "border-2 border-white/50 text-white bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-white"
               )}
             >
-              <Link href="/contact">Book Now</Link>
+              <Link href="/customer-login">Book Now</Link>
             </Button>
           </nav>
 
@@ -193,40 +143,12 @@ export function Header() {
                 </Link>
               ))}
 
-              {/* Mobile Login Options */}
-              <div className="pt-4 border-t border-gray-200 space-y-2">
-                <Link
-                  href="/login"
-                  className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-full bg-brand-blue-50 flex items-center justify-center">
-                    <User className="w-5 h-5 text-brand-blue" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm text-gray-900">Staff Login</p>
-                    <p className="text-xs text-gray-500">Management system</p>
-                  </div>
-                </Link>
-                <Link
-                  href="/customer-login"
-                  className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-full bg-brand-blue-50 flex items-center justify-center">
-                    <Phone className="w-5 h-5 text-brand-blue" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm text-gray-900">Customer Login</p>
-                    <p className="text-xs text-gray-500">Track your orders</p>
-                  </div>
-                </Link>
-              </div>
-
               {/* Mobile CTA */}
               <Button
                 asChild
                 className="w-full mt-4 bg-brand-blue hover:bg-brand-blue-dark text-white"
               >
-                <Link href="/contact">Book Now</Link>
+                <Link href="/customer-login">Book Now</Link>
               </Button>
             </nav>
           </div>
