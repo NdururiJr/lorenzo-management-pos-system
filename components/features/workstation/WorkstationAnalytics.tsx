@@ -16,7 +16,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { getOrdersByBranch } from '@/lib/db/orders';
-import { getActiveProcessingBatches } from '@/lib/db/workstation';
+import { getActiveBatchesByBranch } from '@/lib/db/processing-batches';
 import type { Order } from '@/lib/db/schema';
 
 const STAGES = [
@@ -53,7 +53,7 @@ export function WorkstationAnalytics() {
     queryKey: ['active-batches', userData?.branchId],
     queryFn: () => {
       if (!userData?.branchId) return [];
-      return getActiveProcessingBatches(userData.branchId);
+      return getActiveBatchesByBranch(userData.branchId);
     },
     enabled: !!userData?.branchId,
   });
