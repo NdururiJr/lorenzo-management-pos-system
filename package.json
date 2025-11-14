@@ -21,6 +21,9 @@
     "seed:dev": "tsx scripts/seed-dev-user.ts",
     "seed:milestone2": "tsx scripts/seed-milestone2.ts",
     "seed:test-orders": "tsx scripts/seed-test-orders.ts",
+    "test:wati": "tsx scripts/test-wati.ts",
+    "test:email": "tsx scripts/test-email-service.ts",
+    "test:maps": "tsx scripts/test-google-maps.ts",
     "analyze:bundle": "node scripts/analyze-bundle.js",
     "lighthouse": "npm run build && npx lighthouse http://localhost:3000 --view",
     "perf:audit": "npm run build && npm run analyze:bundle"

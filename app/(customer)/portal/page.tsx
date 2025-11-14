@@ -79,7 +79,7 @@ export default function CustomerPortalPage() {
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
             <strong>Development Mode:</strong> You are viewing the customer portal as a <strong>{userData.role}</strong> user.
-            In production, only customers can access this portal. To test with customer data, create a customer account or use customer OTP login.
+            In production, only customers can access this portal. To test with customer data, create a customer account.
           </AlertDescription>
         </Alert>
       )}

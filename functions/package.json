@@ -1,0 +1,35 @@
+{
+  "name": "lorenzo-dry-cleaners-functions",
+  "version": "1.0.0",
+  "description": "Firebase Cloud Functions for Lorenzo Dry Cleaners",
+  "main": "lib/index.js",
+  "private": true,
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test": "jest"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.5.0",
+    "firebase-functions": "^6.3.0",
+    "axios": "^1.12.2",
+    "date-fns": "^4.1.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.0.0",
+    "firebase-functions-test": "^3.0.0"
+  }
+}

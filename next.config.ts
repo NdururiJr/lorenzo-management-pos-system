@@ -41,18 +41,18 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 
-  // ESLint configuration (relaxed for build)
+  // ESLint configuration (strict mode enabled)
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors. Use with caution.
-    ignoreDuringBuilds: true,
+    // Enable linting during builds to catch code quality issues
+    // This ensures consistent code quality across the codebase
+    ignoreDuringBuilds: false,
   },
 
-  // TypeScript configuration (relaxed for build)
+  // TypeScript configuration (strict mode enabled)
   typescript: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has type errors. Use with caution.
-    ignoreBuildErrors: true,
+    // Enable strict type checking for production builds
+    // This ensures type safety and catches errors at build time
+    ignoreBuildErrors: false,
   },
 
   // Compression

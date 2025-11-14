@@ -153,8 +153,17 @@ export function formatPhoneNumber(phone: string): string | null {
   return null;
 }
 
+// ============================================================================
+// OTP FUNCTIONS (DISABLED - KEPT FOR REFERENCE)
+// ============================================================================
+// Customer authentication has been changed from phone/OTP to email/password
+// These functions are kept for reference but should not be used
+// ============================================================================
+
 /**
  * Generate a random 6-digit OTP
+ *
+ * NOTE: This function is disabled. Customers now login with email/password.
  *
  * @returns 6-digit OTP as string
  */
@@ -165,11 +174,15 @@ export function generateOTP(): string {
 /**
  * Store OTP in memory (for development)
  * In production, this should be stored in Redis or similar
+ *
+ * NOTE: This is disabled. Customers now login with email/password.
  */
 const otpStorage = new Map<string, { otp: string; expiresAt: number }>();
 
 /**
  * Store OTP with expiration time
+ *
+ * NOTE: This function is disabled. Customers now login with email/password.
  *
  * @param phone - Phone number
  * @param otp - OTP code
@@ -182,6 +195,8 @@ export function storeOTP(phone: string, otp: string, expiryMinutes = 10): void {
 
 /**
  * Verify OTP
+ *
+ * NOTE: This function is disabled. Customers now login with email/password.
  *
  * @param phone - Phone number
  * @param otp - OTP to verify
@@ -206,6 +221,10 @@ export function verifyStoredOTP(phone: string, otp: string): boolean {
 
   return isValid;
 }
+
+// ============================================================================
+// END OF DISABLED OTP FUNCTIONS
+// ============================================================================
 
 /**
  * Session management constants

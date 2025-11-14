@@ -47,14 +47,19 @@ export const loginSchema = z.object({
 export type LoginFormData = z.infer<typeof loginSchema>;
 
 /**
- * Customer Phone Login Schema
- * Phone number authentication for customers (Kenya format)
+ * Customer Login Schema (Email/Password)
+ * Email and password authentication for customers
  */
 export const customerLoginSchema = z.object({
-  phone: z
+  email: z
     .string()
-    .min(1, 'Phone number is required')
-    .regex(kenyaPhoneRegex, 'Please enter a valid Kenya phone number (e.g., +254712345678)'),
+    .min(1, 'Email is required')
+    .regex(emailRegex, 'Please enter a valid email address'),
+  password: z
+    .string()
+    .min(1, 'Password is required')
+    .min(8, 'Password must be at least 8 characters'),
+  rememberMe: z.boolean().optional(),
 });
 
 export type CustomerLoginFormData = z.infer<typeof customerLoginSchema>;

@@ -1,8 +1,8 @@
 /**
  * Customer Login Page
  *
- * Phone OTP login for customers.
- * Two-step flow: Enter phone -> Enter OTP
+ * Email/Password login for customers.
+ * Same authentication method as staff but for customer accounts.
  *
  * @module app/(auth)/customer-login/page
  */
@@ -16,12 +16,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { customerLoginSchema, type CustomerLoginFormData } from '@/lib/validations/auth';
-import { signInWithPhone } from '@/app/(auth)/actions';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Loader2, ArrowLeft } from 'lucide-react';
 
 export default function CustomerLoginPage() {
@@ -29,32 +29,34 @@ export default function CustomerLoginPage() {
   const { signIn } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
+  const form = useForm<CustomerLoginFormData>({
+    resolver: zodResolver(customerLoginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CustomerLoginFormData>({
-    resolver: zodResolver(customerLoginSchema),
-    defaultValues: {
-      phone: '+254',
-    },
-  });
+    setValue,
+    watch,
+  } = form;
+
+  const rememberMe = watch('rememberMe');
 
   const onSubmit = async (data: CustomerLoginFormData) => {
     setIsLoading(true);
 
     try {
-      const result = await signInWithPhone(data);
-
-      if (result.success) {
-        toast.success(result.data?.message || 'OTP sent successfully');
-        // Navigate to OTP verification page with phone number
-        router.push(`/verify-otp?phone=${encodeURIComponent(data.phone)}`);
-      } else {
-        toast.error(result.error || 'Failed to send OTP');
-      }
-    } catch (_error) {
-      toast.error('An unexpected error occurred');
+      await signIn(data.email, data.password, data.rememberMe || false);
+      toast.success('Signed in successfully');
+      router.push('/portal');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to sign in');
     } finally {
       setIsLoading(false);
     }
@@ -101,38 +103,88 @@ export default function CustomerLoginPage() {
             Customer Login
           </CardTitle>
           <CardDescription className="text-gray-600">
-            Enter your phone number to receive an OTP
+            Sign in with your email and password
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* Phone Field */}
+            {/* Email Field */}
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-black">
-                Phone Number
+              <Label htmlFor="email" className="text-black">
+                Email Address
               </Label>
               <Input
-                id="phone"
-                type="tel"
-                placeholder="+254712345678"
+                id="email"
+                type="email"
+                placeholder="you@example.com"
                 disabled={isLoading}
                 className="border-gray-300 focus:border-black focus:ring-black"
-                aria-invalid={errors.phone ? 'true' : 'false'}
-                aria-describedby={errors.phone ? 'phone-error' : undefined}
-                {...register('phone')}
+                aria-invalid={errors.email ? 'true' : 'false'}
+                aria-describedby={errors.email ? 'email-error' : undefined}
+                {...register('email')}
               />
-              <p className="text-xs text-gray-500">
-                Enter your Kenya phone number starting with +254
-              </p>
-              {errors.phone && (
+              {errors.email && (
                 <p
-                  id="phone-error"
+                  id="email-error"
                   className="text-sm text-red-600"
                   role="alert"
                 >
-                  {errors.phone.message}
+                  {errors.email.message}
                 </p>
               )}
+            </div>
+
+            {/* Password Field */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password" className="text-black">
+                  Password
+                </Label>
+                <Link
+                  href="/forgot-password"
+                  className="text-sm text-gray-600 hover:text-black transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                disabled={isLoading}
+                className="border-gray-300 focus:border-black focus:ring-black"
+                aria-invalid={errors.password ? 'true' : 'false'}
+                aria-describedby={errors.password ? 'password-error' : undefined}
+                {...register('password')}
+              />
+              {errors.password && (
+                <p
+                  id="password-error"
+                  className="text-sm text-red-600"
+                  role="alert"
+                >
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            {/* Remember Me */}
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="rememberMe"
+                checked={rememberMe}
+                onCheckedChange={(checked) =>
+                  setValue('rememberMe', checked as boolean)
+                }
+                disabled={isLoading}
+                className="border-gray-300 data-[state=checked]:bg-black data-[state=checked]:border-black"
+              />
+              <Label
+                htmlFor="rememberMe"
+                className="text-sm text-gray-700 cursor-pointer"
+              >
+                Remember me for 30 days
+              </Label>
             </div>
 
             {/* Submit Button */}
@@ -144,10 +196,10 @@ export default function CustomerLoginPage() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Sending OTP...
+                  Signing in...
                 </>
               ) : (
-                'Send OTP'
+                'Sign In'
               )}
             </Button>
           </form>
@@ -155,25 +207,16 @@ export default function CustomerLoginPage() {
           {/* Info Box */}
           <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
             <h3 className="text-sm font-medium text-black mb-2">
-              How it works:
+              New Customer?
             </h3>
-            <ol className="text-sm text-gray-600 space-y-1 list-decimal list-inside">
-              <li>Enter your phone number</li>
-              <li>Receive a 6-digit OTP via SMS</li>
-              <li>Enter the OTP to access your account</li>
-            </ol>
-          </div>
-
-          {/* Development Note */}
-          <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <p className="text-xs text-yellow-800">
-              <strong>Development Mode:</strong> OTP will be displayed in the
-              console. In production, it will be sent via SMS.
+            <p className="text-sm text-gray-600">
+              Contact your nearest Lorenzo Dry Cleaners branch to create a customer account.
             </p>
           </div>
 
           {/* Developer Quick Login */}
-          {process.env.NODE_ENV === 'development' && (
+          {process.env.NODE_ENV === 'development' &&
+           process.env.NEXT_PUBLIC_DEV_LOGIN_EMAIL && (
             <div className="mt-6 pt-6 border-t border-gray-200">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-medium text-gray-700">Developer Quick Login</h3>
@@ -186,7 +229,7 @@ export default function CustomerLoginPage() {
                 onClick={handleDevLogin}
                 disabled={isLoading}
                 variant="outline"
-                className="w-full border-gray-300 hover:bg-gray-50"
+                className="w-full border-2 border-dashed border-gray-300 hover:border-gray-400 hover:bg-gray-50 text-gray-700"
               >
                 {isLoading ? (
                   <>
@@ -194,11 +237,13 @@ export default function CustomerLoginPage() {
                     Logging in...
                   </>
                 ) : (
-                  'Quick Login to Customer Portal'
+                  <>
+                    🚀 Dev Quick Login
+                  </>
                 )}
               </Button>
               <p className="text-xs text-gray-500 mt-2 text-center">
-                Skip OTP and login directly to customer portal
+                Quick login directly to customer portal
               </p>
             </div>
           )}

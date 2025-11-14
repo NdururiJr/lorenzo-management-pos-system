@@ -223,7 +223,7 @@ export default function LoginPage() {
               href="/customer-login"
               className="font-medium text-black hover:underline"
             >
-              Login with Phone Number
+              Login Here
             </Link>
           </p>
         </div>

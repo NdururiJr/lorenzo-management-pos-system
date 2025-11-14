@@ -11,16 +11,17 @@
 
 import { adminAuth, adminDb } from '@/lib/firebase-admin';
 import {
-  generateOTP,
-  storeOTP,
-  verifyStoredOTP,
   formatPhoneNumber,
+  // OTP functions disabled - kept for reference
+  // generateOTP,
+  // storeOTP,
+  // verifyStoredOTP,
 } from '@/lib/auth/utils';
 import { getUserRoleServer } from '@/lib/auth/server-utils';
 import type {
   LoginFormData,
-  CustomerLoginFormData,
-  OTPFormData,
+  // CustomerLoginFormData, // Now uses email/password like staff
+  // OTPFormData, // OTP disabled
   ForgotPasswordFormData,
   RegisterFormData,
 } from '@/lib/validations/auth';
@@ -83,12 +84,15 @@ export async function signInWithEmail(
 }
 
 /**
- * Send OTP to phone number
- * Generates and stores OTP for phone verification
+ * Send OTP to phone number (DISABLED - OTP authentication removed)
+ *
+ * This function has been disabled as customers now login with email/password.
+ * Kept for reference but should not be used.
  *
  * @param data - Customer login form data with phone number
  * @returns Action result with success status
  */
+/*
 export async function signInWithPhone(
   data: CustomerLoginFormData
 ): Promise<ActionResult<{ message: string }>> {
@@ -148,14 +152,18 @@ export async function signInWithPhone(
     };
   }
 }
+*/
 
 /**
- * Verify OTP code
- * Validates OTP and creates custom token for authentication
+ * Verify OTP code (DISABLED - OTP authentication removed)
+ *
+ * This function has been disabled as customers now login with email/password.
+ * Kept for reference but should not be used.
  *
  * @param data - OTP form data
  * @returns Action result with custom token
  */
+/*
 export async function verifyOTP(
   data: OTPFormData
 ): Promise<ActionResult<{ customToken: string; uid: string }>> {
@@ -221,6 +229,7 @@ export async function verifyOTP(
     };
   }
 }
+*/
 
 /**
  * Send password reset email
@@ -249,8 +258,21 @@ export async function sendPasswordReset(
     // Generate password reset link
     const resetLink = await adminAuth.generatePasswordResetLink(data.email);
 
-    // TODO: In production, send email via email service (e.g., SendGrid, AWS SES)
-    console.log(`Password reset link for ${data.email}: ${resetLink}`);
+    // Send password reset email via Resend
+    try {
+      const { sendPasswordReset: sendResetEmail } = await import('@/services/email');
+      const emailResult = await sendResetEmail(data.email, resetLink, user.displayName || undefined);
+
+      if (!emailResult.success) {
+        console.error('Failed to send password reset email:', emailResult.error);
+        // Don't throw error - still return success for security
+      } else {
+        console.log(`✅ Password reset email sent to ${data.email}`);
+      }
+    } catch (emailError) {
+      console.error('Password reset email error:', emailError);
+      // Don't throw error - still return success for security
+    }
 
     return {
       success: true,
@@ -378,12 +400,15 @@ export async function signOutUser(): Promise<ActionResult> {
 }
 
 /**
- * Resend OTP
- * Generates new OTP and sends to phone
+ * Resend OTP (DISABLED - OTP authentication removed)
+ *
+ * This function has been disabled as customers now login with email/password.
+ * Kept for reference but should not be used.
  *
  * @param phone - Phone number
  * @returns Action result
  */
+/*
 export async function resendOTP(
   phone: string
 ): Promise<ActionResult<{ message: string }>> {
@@ -418,3 +443,4 @@ export async function resendOTP(
     };
   }
 }
+*/
