@@ -221,7 +221,7 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error: result.error || 'Failed to send notification',
-          attemptsMade: result.attemptsMade,
+          ...(result.attemptsMade !== undefined && { attemptsMade: result.attemptsMade }),
         },
         { status: 500 }
       );
