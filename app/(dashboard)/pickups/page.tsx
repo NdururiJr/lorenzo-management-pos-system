@@ -17,7 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Package, Clock, CheckCircle, Loader2 } from 'lucide-react';
 import { PickupTable } from '@/components/features/pickups/PickupTable';
 import { getDocuments } from '@/lib/db';
-import { where, orderBy, Timestamp } from 'firebase/firestore';
+import { where, orderBy, Timestamp, type QueryConstraint } from 'firebase/firestore';
 import type { Order } from '@/lib/db/schema';
 import { toast } from 'sonner';
 
@@ -41,12 +41,12 @@ export default function PickupsPage() {
       setLoading(true);
 
       // Base query: orders where collectionMethod === 'pickup_required'
-      const baseConstraints = [
+      const baseConstraints: QueryConstraint[] = [
         where('collectionMethod', '==', 'pickup_required'),
       ];
 
       // Add tab-specific filters
-      let constraints = [...baseConstraints];
+      let constraints: QueryConstraint[] = [...baseConstraints];
 
       if (activeTab === 'pending') {
         // Pending: no pickup completion time
