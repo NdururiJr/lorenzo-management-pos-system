@@ -48,20 +48,20 @@ export interface Employee {
 }
 
 export default function EmployeesPage() {
-  const { user } = useAuth();
+  const { userData } = useAuth();
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState('all');
 
   // Fetch employees
   const { data: employees = [], isLoading } = useQuery<Employee[]>({
-    queryKey: ['employees', user?.branchId],
+    queryKey: ['employees', userData?.branchId],
     queryFn: async () => {
-      if (!user?.branchId) return [];
+      if (!userData?.branchId) return [];
 
       const usersRef = collection(db, 'users');
       const q = query(
         usersRef,
-        where('branchId', '==', user.branchId),
+        where('branchId', '==', userData.branchId),
         where('role', 'in', ['front_desk', 'workstation', 'driver', 'manager']),
         orderBy('displayName', 'asc')
       );
@@ -73,7 +73,7 @@ export default function EmployeesPage() {
         ...doc.data(),
       })) as Employee[];
     },
-    enabled: !!user?.branchId,
+    enabled: !!userData?.branchId,
   });
 
   const activeEmployees = employees.filter((e) => e.status === 'active').length;

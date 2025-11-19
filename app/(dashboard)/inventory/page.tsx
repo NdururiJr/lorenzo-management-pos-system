@@ -73,7 +73,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 export default function InventoryPage() {
-  const { user } = useAuth();
+  const { userData } = useAuth();
   const queryClient = useQueryClient();
 
   const [showAddModal, setShowAddModal] = useState(false);
@@ -83,14 +83,14 @@ export default function InventoryPage() {
 
   // Fetch inventory items
   const { data: inventory = [], isLoading } = useQuery<InventoryItem[]>({
-    queryKey: ['inventory', user?.branchId],
+    queryKey: ['inventory', userData?.branchId],
     queryFn: async () => {
-      if (!user?.branchId) return [];
+      if (!userData?.branchId) return [];
 
       const inventoryRef = collection(db, 'inventory');
       const q = query(
         inventoryRef,
-        where('branchId', '==', user.branchId),
+        where('branchId', '==', userData.branchId),
         orderBy('name', 'asc')
       );
       const snapshot = await getDocs(q);
@@ -100,7 +100,7 @@ export default function InventoryPage() {
         ...doc.data(),
       })) as InventoryItem[];
     },
-    enabled: !!user?.branchId,
+    enabled: !!userData?.branchId,
   });
 
   // Filter items

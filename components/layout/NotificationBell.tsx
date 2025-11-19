@@ -51,21 +51,21 @@ interface Notification {
 }
 
 export function NotificationBell() {
-  const { user } = useAuth();
+  const { userData } = useAuth();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
 
   // Fetch notifications
   const { data: notifications = [] } = useQuery<Notification[]>({
-    queryKey: ['notifications', user?.branchId],
+    queryKey: ['notifications', userData?.branchId],
     queryFn: async () => {
-      if (!user?.branchId) return [];
+      if (!userData?.branchId) return [];
 
       const notificationsRef = collection(db, 'notifications');
       const q = query(
         notificationsRef,
-        where('branchId', '==', user.branchId),
+        where('branchId', '==', userData.branchId),
         orderBy('createdAt', 'desc'),
         limit(20)
       );
@@ -76,7 +76,7 @@ export function NotificationBell() {
         ...doc.data(),
       })) as Notification[];
     },
-    enabled: !!user?.branchId,
+    enabled: !!userData?.branchId,
     refetchInterval: 60000, // Refetch every minute
   });
 
