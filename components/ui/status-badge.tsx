@@ -20,11 +20,13 @@ import {
   Shield,
   Gift,
   MapPin,
+  ClipboardCheck,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 export type OrderStatus =
   | 'received'
+  | 'inspection'
   | 'queued'
   | 'washing'
   | 'drying'
@@ -52,6 +54,13 @@ const statusConfig: Record<OrderStatus, StatusConfig> = {
     bgColor: 'bg-gray-100',
     textColor: 'text-gray-700',
     icon: Circle,
+  },
+  inspection: {
+    label: 'Inspection',
+    color: 'indigo',
+    bgColor: 'bg-indigo-100',
+    textColor: 'text-indigo-700',
+    icon: ClipboardCheck,
   },
   queued: {
     label: 'Queued',
