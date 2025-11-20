@@ -100,7 +100,7 @@ const navigationItems: NavItem[] = [
     label: 'Customers',
     href: '/customers',
     icon: Users,
-    roles: ['admin', 'director', 'general_manager', 'store_manager', 'manager', 'front_desk', 'cashier'],
+    roles: ['admin', 'director', 'general_manager', 'store_manager', 'manager', 'front_desk'],
   },
   {
     label: 'Deliveries',
@@ -136,7 +136,7 @@ const navigationItems: NavItem[] = [
     label: 'Transactions',
     href: '/transactions',
     icon: FileText,
-    roles: ['admin', 'director', 'general_manager', 'store_manager', 'manager', 'cashier'],
+    roles: ['admin', 'director', 'general_manager', 'store_manager', 'manager'],
   },
   {
     label: 'Branches',
@@ -154,7 +154,7 @@ const navigationItems: NavItem[] = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { user, userData, logout } = useAuth();
+  const { user, userData, signOut } = useAuth();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
@@ -234,7 +234,7 @@ export function Sidebar() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-gray-200" />
-            <DropdownMenuItem onClick={() => logout()} className="text-red-600 cursor-pointer focus:bg-red-50 focus:text-red-700">
+            <DropdownMenuItem onClick={() => signOut()} className="text-red-600 cursor-pointer focus:bg-red-50 focus:text-red-700">
               <LogOut className="w-4 h-4 mr-2" />
               Logout
             </DropdownMenuItem>

@@ -326,7 +326,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isStaff = useMemo(
     () =>
       state.userData
-        ? ['admin', 'manager', 'cashier', 'driver'].includes(state.userData.role)
+        ? ['admin', 'manager', 'front_desk', 'driver'].includes(state.userData.role)
         : false,
     [state.userData]
   );

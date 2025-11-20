@@ -13,7 +13,8 @@ import type { OrderStatus } from '@/lib/db/schema';
  * Defines which statuses can transition to which statuses
  */
 export const VALID_TRANSITIONS: Record<OrderStatus, OrderStatus[]> = {
-  received: ['queued'],
+  received: ['inspection'],
+  inspection: ['queued'],
   queued: ['washing'],
   washing: ['drying'],
   drying: ['ironing'],
@@ -76,6 +77,15 @@ export function getStatusConfig(status: OrderStatus) {
       textColor: 'text-gray-700',
       borderColor: 'border-gray-200',
       description: 'Order received and logged',
+      requiresNotification: false,
+    },
+    inspection: {
+      label: 'Inspection',
+      color: 'indigo',
+      bgColor: 'bg-indigo-50',
+      textColor: 'text-indigo-700',
+      borderColor: 'border-indigo-200',
+      description: 'Initial inspection in progress',
       requiresNotification: false,
     },
     queued: {

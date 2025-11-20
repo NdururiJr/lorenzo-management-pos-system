@@ -145,7 +145,7 @@ export function OrderDetailsModal({
                     <p className="text-sm text-gray-500">Delivery Address</p>
                     <p className="font-medium text-black flex items-start gap-1">
                       <MapPin className="w-3 h-3 mt-1 flex-shrink-0" />
-                      {order.deliveryAddress}
+                      {order.deliveryAddress.address}
                     </p>
                   </div>
                 )}

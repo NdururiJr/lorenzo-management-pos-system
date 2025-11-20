@@ -9,7 +9,7 @@
 
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Sparkles, Truck, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -37,7 +37,7 @@ export function AboutLorenzo() {
   });
 
   // Animation variants
-  const imageVariants = {
+  const imageVariants: Variants = {
     hidden: { opacity: 0, scale: 0.9, x: -50 },
     visible: {
       opacity: 1,
@@ -45,12 +45,12 @@ export function AboutLorenzo() {
       x: 0,
       transition: {
         duration: 0.8,
-        ease: 'easeOut',
+        ease: [0.0, 0.0, 0.2, 1.0] as [number, number, number, number],
       },
     },
   };
 
-  const contentVariants = {
+  const contentVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -61,19 +61,19 @@ export function AboutLorenzo() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.5,
-        ease: 'easeOut',
+        ease: [0.0, 0.0, 0.2, 1.0] as [number, number, number, number],
       },
     },
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
@@ -81,7 +81,7 @@ export function AboutLorenzo() {
       scale: 1,
       transition: {
         duration: 0.7,
-        ease: [0.25, 0.1, 0.25, 1],
+        ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
       },
     },
   };
@@ -117,7 +117,7 @@ export function AboutLorenzo() {
               transition={{
                 duration: 4,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: [0.42, 0.0, 0.58, 1.0] as [number, number, number, number]
               }}
             >
               {/* Image */}
@@ -156,7 +156,7 @@ export function AboutLorenzo() {
               transition={{
                 duration: 4,
                 repeat: Infinity,
-                ease: 'easeInOut',
+                ease: [0.42, 0.0, 0.58, 1.0] as [number, number, number, number],
               }}
               className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-brand-blue/20 backdrop-blur-lg blur-sm"
             />
@@ -167,7 +167,7 @@ export function AboutLorenzo() {
               transition={{
                 duration: 5,
                 repeat: Infinity,
-                ease: 'easeInOut',
+                ease: [0.42, 0.0, 0.58, 1.0] as [number, number, number, number],
               }}
               className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-brand-blue-light/30 backdrop-blur-lg blur-md"
             />

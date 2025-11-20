@@ -34,7 +34,6 @@ const roleHierarchy: Record<UserRole, number> = {
   driver: 2,
   satellite_staff: 3,
   workstation_staff: 3,
-  cashier: 3,
   front_desk: 4,
   workstation: 4,
   manager: 4,
@@ -293,7 +292,6 @@ export function getRoleDisplayName(role: UserRole): string {
     manager: 'Branch Manager',
     front_desk: 'Front Desk',
     workstation: 'Workstation',
-    cashier: 'Cashier',
     driver: 'Delivery Driver',
     customer: 'Customer',
   };
@@ -319,7 +317,6 @@ export function getRoleBadgeColor(role: UserRole): string {
     manager: 'bg-gray-700 text-white',
     front_desk: 'bg-gray-600 text-white',
     workstation: 'bg-gray-600 text-white',
-    cashier: 'bg-gray-500 text-white',
     driver: 'bg-gray-600 text-white',
     customer: 'bg-gray-400 text-white',
   };

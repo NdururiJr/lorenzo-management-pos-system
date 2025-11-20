@@ -1,8 +1,8 @@
 /**
  * Transfers Management Page
  *
- * Allows satellite store staff to create transfer batches to main store.
- * Shows outgoing batches and allows main store staff to view incoming batches.
+ * Modern transfers management with glassmorphic design and blue theme.
+ * Features batch transfers between satellite and main stores with animations.
  *
  * @module app/(dashboard)/transfers/page
  */
@@ -12,13 +12,17 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useQuery } from '@tanstack/react-query';
-import { Truck, Package, ArrowRight, Inbox } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Truck, Package, ArrowRight, Inbox, Building2, Loader2, Send } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TransferBatchForm } from '@/components/features/transfers/TransferBatchForm';
 import { TransferBatchCard } from '@/components/features/transfers/TransferBatchCard';
 import { IncomingBatchesList } from '@/components/features/transfers/IncomingBatchesList';
+import { ModernSection } from '@/components/modern/ModernLayout';
+import { ModernCard, ModernCardContent, ModernCardHeader } from '@/components/modern/ModernCard';
+import { ModernStatCard } from '@/components/modern/ModernStatCard';
+import { ModernButton } from '@/components/modern/ModernButton';
+import { ModernBadge } from '@/components/modern/ModernBadge';
 import {
   getTransferBatchesBySatellite,
   getTransferBatchesByStatus,
@@ -106,95 +110,108 @@ export default function TransfersPage() {
   // Main store view
   if (branch?.branchType === 'main') {
     return (
-      <div className="min-h-screen bg-gray-50 pb-8">
+      <ModernSection animate className="min-h-screen">
         {/* Header */}
-        <div className="bg-white border-b sticky top-0 z-10 shadow-sm">
-          <div className="max-w-7xl mx-auto px-6 py-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-black rounded-lg">
-                <Inbox className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-black">Incoming Transfers</h1>
-                <p className="text-gray-600 text-sm">
-                  View and receive transfer batches from satellite stores
-                </p>
-              </div>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8"
+        >
+          <div className="flex items-center space-x-3">
+            <motion.div
+              initial={{ rotate: -180, scale: 0 }}
+              animate={{ rotate: 0, scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="p-3 rounded-2xl bg-gradient-to-br from-brand-blue/20 to-brand-blue/10"
+            >
+              <Inbox className="h-6 w-6 text-brand-blue" />
+            </motion.div>
+            <div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
+                Incoming Transfers
+              </h1>
+              <p className="text-sm text-gray-600">
+                View and receive transfer batches from satellite stores
+              </p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <IncomingBatchesList />
-        </div>
-      </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <ModernCard hover glowIntensity="low">
+            <ModernCardContent className="p-6">
+              <IncomingBatchesList />
+            </ModernCardContent>
+          </ModernCard>
+        </motion.div>
+      </ModernSection>
     );
   }
 
   // Satellite store view
   return (
-    <div className="min-h-screen bg-gray-50 pb-8">
+    <ModernSection animate className="min-h-screen">
       {/* Header */}
-      <div className="bg-white border-b sticky top-0 z-10 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-black rounded-lg">
-              <Truck className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-black">Transfer Management</h1>
-              <p className="text-gray-600 text-sm">
-                Create and manage transfer batches to main store
-              </p>
-            </div>
-          </div>
-
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card>
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardDescription>Ready for Transfer</CardDescription>
-                  <Package className="w-4 h-4 text-gray-400" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-black">{receivedOrders.length}</div>
-                <p className="text-xs text-gray-500 mt-1">Orders at satellite store</p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardDescription>Pending Batches</CardDescription>
-                  <Truck className="w-4 h-4 text-gray-400" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-black">{pendingBatchesCount}</div>
-                <p className="text-xs text-gray-500 mt-1">
-                  Awaiting driver pickup
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardDescription>Total Batches</CardDescription>
-                  <ArrowRight className="w-4 h-4 text-gray-400" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-black">{outgoingBatches.length}</div>
-                <p className="text-xs text-gray-500 mt-1">All outgoing batches</p>
-              </CardContent>
-            </Card>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-8"
+      >
+        <div className="flex items-center space-x-3 mb-6">
+          <motion.div
+            initial={{ rotate: -180, scale: 0 }}
+            animate={{ rotate: 0, scale: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="p-3 rounded-2xl bg-gradient-to-br from-brand-blue/20 to-brand-blue/10"
+          >
+            <Truck className="h-6 w-6 text-brand-blue" />
+          </motion.div>
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
+              Transfer Management
+            </h1>
+            <p className="text-sm text-gray-600">
+              Create and manage transfer batches to main store
+            </p>
           </div>
         </div>
-      </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <ModernStatCard
+            title="Ready for Transfer"
+            value={receivedOrders.length}
+            icon={<Package className="h-5 w-5" />}
+            changeLabel="At satellite store"
+            delay={0.1}
+          />
+
+          <ModernStatCard
+            title="Pending Batches"
+            value={pendingBatchesCount}
+            icon={<Truck className="h-5 w-5" />}
+            changeLabel="Awaiting pickup"
+            delay={0.2}
+            variant="gradient"
+          />
+
+          <ModernStatCard
+            title="Total Batches"
+            value={outgoingBatches.length}
+            icon={<ArrowRight className="h-5 w-5" />}
+            changeLabel="All outgoing"
+            delay={0.3}
+            variant="solid"
+          />
+        </div>
+      </motion.div>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
@@ -211,17 +228,18 @@ export default function TransfersPage() {
                 </p>
               </div>
               {selectedOrderIds.length > 0 && (
-                <Button
+                <ModernButton
                   onClick={handleCreateBatch}
-                  className="bg-black text-white hover:bg-gray-800"
+                  variant="primary"
+                  leftIcon={<Send className="w-4 h-4" />}
                 >
                   Create Batch ({selectedOrderIds.length})
-                </Button>
+                </ModernButton>
               )}
             </div>
 
-            <Card>
-              <CardContent className="p-6">
+            <ModernCard hover glowIntensity="low">
+              <ModernCardContent className="p-6">
                 {receivedOrders.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-12 text-gray-500">
                     <Package className="w-12 h-12 mb-4 text-gray-300" />
@@ -230,15 +248,15 @@ export default function TransfersPage() {
                 ) : (
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <Button
-                        variant="outline"
+                      <ModernButton
+                        variant="secondary"
                         size="sm"
                         onClick={handleSelectAll}
                       >
                         {selectedOrderIds.length === receivedOrders.length
                           ? 'Deselect All'
                           : 'Select All'}
-                      </Button>
+                      </ModernButton>
                       <span className="text-sm text-gray-600">
                         {selectedOrderIds.length} of {receivedOrders.length} selected
                       </span>
@@ -271,8 +289,8 @@ export default function TransfersPage() {
                     </div>
                   </div>
                 )}
-              </CardContent>
-            </Card>
+              </ModernCardContent>
+            </ModernCard>
           </div>
         )}
 
@@ -311,12 +329,12 @@ export default function TransfersPage() {
 
             <TabsContent value="pending" className="space-y-4 mt-6">
               {outgoingBatches.filter((b) => b.status === 'pending').length === 0 ? (
-                <Card>
-                  <CardContent className="flex flex-col items-center justify-center py-12 text-gray-500">
+                <ModernCard>
+                  <ModernCardContent className="flex flex-col items-center justify-center py-12 text-gray-500">
                     <Inbox className="w-12 h-12 mb-4 text-gray-300" />
                     <p className="text-sm">No pending batches</p>
-                  </CardContent>
-                </Card>
+                  </ModernCardContent>
+                </ModernCard>
               ) : (
                 outgoingBatches
                   .filter((b) => b.status === 'pending')
@@ -332,12 +350,12 @@ export default function TransfersPage() {
 
             <TabsContent value="in_transit" className="space-y-4 mt-6">
               {outgoingBatches.filter((b) => b.status === 'in_transit').length === 0 ? (
-                <Card>
-                  <CardContent className="flex flex-col items-center justify-center py-12 text-gray-500">
+                <ModernCard>
+                  <ModernCardContent className="flex flex-col items-center justify-center py-12 text-gray-500">
                     <Inbox className="w-12 h-12 mb-4 text-gray-300" />
                     <p className="text-sm">No batches in transit</p>
-                  </CardContent>
-                </Card>
+                  </ModernCardContent>
+                </ModernCard>
               ) : (
                 outgoingBatches
                   .filter((b) => b.status === 'in_transit')
@@ -349,12 +367,12 @@ export default function TransfersPage() {
 
             <TabsContent value="received" className="space-y-4 mt-6">
               {outgoingBatches.filter((b) => b.status === 'received').length === 0 ? (
-                <Card>
-                  <CardContent className="flex flex-col items-center justify-center py-12 text-gray-500">
+                <ModernCard>
+                  <ModernCardContent className="flex flex-col items-center justify-center py-12 text-gray-500">
                     <Inbox className="w-12 h-12 mb-4 text-gray-300" />
                     <p className="text-sm">No received batches</p>
-                  </CardContent>
-                </Card>
+                  </ModernCardContent>
+                </ModernCard>
               ) : (
                 outgoingBatches
                   .filter((b) => b.status === 'received')
@@ -366,6 +384,6 @@ export default function TransfersPage() {
           </Tabs>
         </div>
       </div>
-    </div>
+    </ModernSection>
   );
 }

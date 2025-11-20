@@ -94,7 +94,7 @@ export function HeroVideo({
       y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut',
+        ease: [0.0, 0.0, 0.2, 1.0] as [number, number, number, number],
       },
     },
   };
@@ -219,7 +219,7 @@ export function HeroVideo({
           <span className="text-sm font-medium">Scroll to explore</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: [0.42, 0.0, 0.58, 1.0] as [number, number, number, number] }}
           >
             <svg
               className="w-6 h-6"

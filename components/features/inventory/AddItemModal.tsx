@@ -67,7 +67,7 @@ function generateItemId(): string {
 }
 
 export function AddItemModal({ open, onOpenChange }: AddItemModalProps) {
-  const { user } = useAuth();
+  const { userData } = useAuth();
   const queryClient = useQueryClient();
 
   const form = useForm<InventoryItemForm>({
@@ -85,12 +85,12 @@ export function AddItemModal({ open, onOpenChange }: AddItemModalProps) {
 
   const addItemMutation = useMutation({
     mutationFn: async (data: InventoryItemForm) => {
-      if (!user?.branchId) throw new Error('No branch ID');
+      if (!userData?.branchId) throw new Error('No branch ID');
 
       const itemId = generateItemId();
       const item = {
         itemId,
-        branchId: user.branchId,
+        branchId: userData.branchId,
         ...data,
         lastRestocked: Timestamp.now(),
         createdAt: Timestamp.now(),

@@ -44,7 +44,7 @@ export default function RegisterPage() {
       confirmPassword: '',
       name: '',
       phone: '+254',
-      role: 'cashier',
+      role: 'front_desk',
       branchId: '',
     },
   });

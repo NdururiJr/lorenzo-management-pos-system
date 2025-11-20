@@ -82,8 +82,9 @@ export const OrderCard = memo(function OrderCard({
     // Get handlers for current stage from garments
     const handlersSet = new Set<string>();
     order.garments.forEach((garment) => {
-      if (garment.stageHandlers?.[order.status as 'inspection']) {
-        garment.stageHandlers[order.status as 'inspection'].forEach((handler) => {
+      const handlers = garment.stageHandlers?.[order.status as 'inspection'];
+      if (handlers) {
+        handlers.forEach((handler) => {
           handlersSet.add(handler.name);
         });
       }

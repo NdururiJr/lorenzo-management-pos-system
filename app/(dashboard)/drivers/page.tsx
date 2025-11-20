@@ -1,8 +1,8 @@
 /**
  * Drivers Dashboard Page
  *
- * Main dashboard for drivers to view their assigned delivery batches.
- * Shows today's deliveries, pending batches, and delivery history.
+ * Modern driver dashboard with glassmorphic design and blue theme.
+ * Features smooth animations for viewing and managing delivery batches.
  *
  * @module app/(dashboard)/drivers/page
  */
@@ -14,9 +14,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Truck,
@@ -32,6 +29,12 @@ import {
 } from 'lucide-react';
 import { format } from 'date-fns';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ModernCard, ModernCardHeader, ModernCardContent } from '@/components/modern/ModernCard';
+import { ModernButton } from '@/components/modern/ModernButton';
+import { ModernSection } from '@/components/modern/ModernLayout';
+import { ModernStatCard } from '@/components/modern/ModernStatCard';
+import { ModernBadge } from '@/components/modern/ModernBadge';
 
 interface Delivery {
   deliveryId: string;
@@ -94,27 +97,27 @@ export default function DriversPage() {
     switch (status) {
       case 'pending':
         return (
-          <Badge variant="outline" className="border-yellow-500 text-yellow-700 bg-yellow-50">
+          <ModernBadge variant="warning">
             <Clock className="w-3 h-3 mr-1" />
             Pending
-          </Badge>
+          </ModernBadge>
         );
       case 'in_progress':
         return (
-          <Badge variant="outline" className="border-blue-500 text-blue-700 bg-blue-50">
+          <ModernBadge variant="primary">
             <Navigation className="w-3 h-3 mr-1" />
             In Progress
-          </Badge>
+          </ModernBadge>
         );
       case 'completed':
         return (
-          <Badge variant="outline" className="border-green-500 text-green-700 bg-green-50">
+          <ModernBadge variant="success">
             <CheckCircle2 className="w-3 h-3 mr-1" />
             Completed
-          </Badge>
+          </ModernBadge>
         );
       default:
-        return <Badge>{status}</Badge>;
+        return <ModernBadge>{status}</ModernBadge>;
     }
   };
 
@@ -122,28 +125,30 @@ export default function DriversPage() {
     const scheduledDate = delivery.scheduledDate?.toDate();
 
     return (
-      <Card className="hover:shadow-lg transition-shadow">
-        <CardHeader className="pb-3">
+      <ModernCard hover glowIntensity="medium">
+        <ModernCardHeader>
           <div className="flex items-start justify-between">
             <div>
-              <CardTitle className="text-base font-semibold text-black">
+              <h3 className="text-base font-semibold text-gray-900">
                 {delivery.deliveryId}
-              </CardTitle>
+              </h3>
               {scheduledDate && (
-                <p className="text-xs text-gray-500 mt-1">
-                  <Calendar className="w-3 h-3 inline mr-1" />
+                <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                  <Calendar className="w-3 h-3" />
                   {format(scheduledDate, 'MMM d, yyyy - h:mm a')}
                 </p>
               )}
             </div>
             {getStatusBadge(delivery.status)}
           </div>
-        </CardHeader>
+        </ModernCardHeader>
 
-        <CardContent className="space-y-3">
+        <ModernCardContent className="space-y-3">
           {/* Orders Count */}
           <div className="flex items-center gap-2">
-            <Package className="w-4 h-4 text-gray-400" />
+            <div className="p-1.5 rounded-lg bg-brand-blue/10">
+              <Package className="w-4 h-4 text-brand-blue" />
+            </div>
             <span className="text-sm text-gray-700">
               {delivery.orders.length} order{delivery.orders.length !== 1 ? 's' : ''}
             </span>
@@ -152,7 +157,9 @@ export default function DriversPage() {
           {/* Route Info */}
           {delivery.route && (
             <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-gray-400" />
+              <div className="p-1.5 rounded-lg bg-brand-blue/10">
+                <MapPin className="w-4 h-4 text-brand-blue" />
+              </div>
               <span className="text-sm text-gray-700">
                 {delivery.route.stops.length} stop{delivery.route.stops.length !== 1 ? 's' : ''}
                 {delivery.route.distance > 0 && (
@@ -167,7 +174,9 @@ export default function DriversPage() {
           {/* Start Time */}
           {delivery.startTime && (
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-gray-400" />
+              <div className="p-1.5 rounded-lg bg-brand-blue/10">
+                <Clock className="w-4 h-4 text-brand-blue" />
+              </div>
               <span className="text-sm text-gray-700">
                 Started: {format(delivery.startTime.toDate(), 'h:mm a')}
               </span>
@@ -176,108 +185,111 @@ export default function DriversPage() {
 
           {/* Notes */}
           {delivery.notes && (
-            <div className="text-xs text-gray-600 bg-gray-50 p-2 rounded">
-              <AlertCircle className="w-3 h-3 inline mr-1" />
+            <div className="text-xs text-gray-700 bg-brand-blue/5 p-3 rounded-lg border border-brand-blue/10">
+              <AlertCircle className="w-3 h-3 inline mr-1 text-brand-blue" />
               {delivery.notes}
             </div>
           )}
 
           {/* Action Button */}
-          <div className="pt-2 border-t">
+          <div className="pt-2 border-t border-brand-blue/10">
             <Link href={`/drivers/${delivery.deliveryId}`}>
-              <Button
-                variant="ghost"
+              <ModernButton
+                variant="secondary"
                 size="sm"
-                className="w-full justify-between hover:bg-gray-100"
+                className="w-full"
+                rightIcon={<ChevronRight className="w-4 h-4" />}
               >
-                <span>
-                  {delivery.status === 'pending'
-                    ? 'Start Delivery'
-                    : delivery.status === 'in_progress'
-                    ? 'Continue Delivery'
-                    : 'View Details'}
-                </span>
-                <ChevronRight className="w-4 h-4" />
-              </Button>
+                {delivery.status === 'pending'
+                  ? 'Start Delivery'
+                  : delivery.status === 'in_progress'
+                  ? 'Continue Delivery'
+                  : 'View Details'}
+              </ModernButton>
             </Link>
           </div>
-        </CardContent>
-      </Card>
+        </ModernCardContent>
+      </ModernCard>
     );
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin mx-auto text-gray-400" />
-          <p className="text-sm text-gray-600 mt-2">Loading deliveries...</p>
-        </div>
+      <div className="flex items-center justify-center h-screen">
+        <ModernCard className="p-8">
+          <div className="text-center space-y-4">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+            >
+              <Loader2 className="w-8 h-8 mx-auto text-brand-blue" />
+            </motion.div>
+            <p className="text-gray-600">Loading deliveries...</p>
+          </div>
+        </ModernCard>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-8">
+    <ModernSection animate>
       {/* Header */}
-      <div className="bg-white border-b sticky top-0 z-10 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-black rounded-lg">
-              <Truck className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-black">Driver Dashboard</h1>
-              <p className="text-gray-600 text-sm">Your assigned delivery batches</p>
-            </div>
-          </div>
-        </div>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-8"
+      >
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent flex items-center gap-3">
+          <motion.div
+            initial={{ rotate: -10 }}
+            animate={{ rotate: 0 }}
+            transition={{ type: "spring", stiffness: 200 }}
+          >
+            <Truck className="w-8 h-8 text-brand-blue" />
+          </motion.div>
+          Driver Dashboard
+        </h1>
+        <p className="text-gray-600 mt-1">Your assigned delivery batches</p>
+      </motion.div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <ModernStatCard
+          title="Today's Deliveries"
+          value={todayDeliveries.length}
+          icon={<Calendar className="h-5 w-5" />}
+          delay={0.1}
+        />
+        <ModernStatCard
+          title="Pending"
+          value={pendingDeliveries.length}
+          icon={<Clock className="h-5 w-5" />}
+          delay={0.2}
+        />
+        <ModernStatCard
+          title="In Progress"
+          value={inProgressDeliveries.length}
+          icon={<Navigation className="h-5 w-5" />}
+          delay={0.3}
+        />
+        <ModernStatCard
+          title="Completed"
+          value={completedDeliveries.length}
+          icon={<CheckCircle2 className="h-5 w-5" />}
+          trend="up"
+          delay={0.4}
+        />
       </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <Card>
-            <CardContent className="pt-6">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-black">{todayDeliveries.length}</p>
-                <p className="text-xs text-gray-600 mt-1">Today's Deliveries</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="pt-6">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-yellow-600">{pendingDeliveries.length}</p>
-                <p className="text-xs text-gray-600 mt-1">Pending</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="pt-6">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-blue-600">{inProgressDeliveries.length}</p>
-                <p className="text-xs text-gray-600 mt-1">In Progress</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="pt-6">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-green-600">{completedDeliveries.length}</p>
-                <p className="text-xs text-gray-600 mt-1">Completed</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Tabs */}
+      {/* Tabs */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+      >
         <Tabs value={selectedTab} onValueChange={setSelectedTab}>
-          <TabsList className="mb-6">
+          <TabsList className="bg-white/70 backdrop-blur-xl border border-brand-blue/20 mb-6">
             <TabsTrigger value="today">Today ({todayDeliveries.length})</TabsTrigger>
             <TabsTrigger value="pending">Pending ({pendingDeliveries.length})</TabsTrigger>
             <TabsTrigger value="in-progress">In Progress ({inProgressDeliveries.length})</TabsTrigger>
@@ -285,75 +297,197 @@ export default function DriversPage() {
           </TabsList>
 
           <TabsContent value="today">
-            {todayDeliveries.length === 0 ? (
-              <Card className="p-8">
-                <div className="text-center text-gray-500">
-                  <Calendar className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                  <p className="font-semibold">No deliveries scheduled for today</p>
-                  <p className="text-sm mt-1">Check back later or view pending batches</p>
-                </div>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {todayDeliveries.map((delivery) => (
-                  <DeliveryCard key={delivery.deliveryId} delivery={delivery} />
-                ))}
-              </div>
-            )}
+            <AnimatePresence mode="wait">
+              {todayDeliveries.length === 0 ? (
+                <motion.div
+                  key="empty"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                >
+                  <ModernCard className="bg-gradient-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
+                    <ModernCardContent className="py-12">
+                      <div className="text-center space-y-4">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: "spring", stiffness: 200 }}
+                        >
+                          <Calendar className="w-16 h-16 mx-auto text-gray-300" />
+                        </motion.div>
+                        <div>
+                          <p className="font-semibold text-gray-900">No deliveries scheduled for today</p>
+                          <p className="text-sm text-gray-500 mt-1">Check back later or view pending batches</p>
+                        </div>
+                      </div>
+                    </ModernCardContent>
+                  </ModernCard>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="grid"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                >
+                  {todayDeliveries.map((delivery, index) => (
+                    <motion.div
+                      key={delivery.deliveryId}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <DeliveryCard delivery={delivery} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </TabsContent>
 
           <TabsContent value="pending">
-            {pendingDeliveries.length === 0 ? (
-              <Card className="p-8">
-                <div className="text-center text-gray-500">
-                  <CheckCircle2 className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                  <p className="font-semibold">No pending deliveries</p>
-                </div>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {pendingDeliveries.map((delivery) => (
-                  <DeliveryCard key={delivery.deliveryId} delivery={delivery} />
-                ))}
-              </div>
-            )}
+            <AnimatePresence mode="wait">
+              {pendingDeliveries.length === 0 ? (
+                <motion.div
+                  key="empty"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                >
+                  <ModernCard className="bg-gradient-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
+                    <ModernCardContent className="py-12">
+                      <div className="text-center space-y-4">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: "spring", stiffness: 200 }}
+                        >
+                          <CheckCircle2 className="w-16 h-16 mx-auto text-gray-300" />
+                        </motion.div>
+                        <p className="font-semibold text-gray-900">No pending deliveries</p>
+                      </div>
+                    </ModernCardContent>
+                  </ModernCard>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="grid"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                >
+                  {pendingDeliveries.map((delivery, index) => (
+                    <motion.div
+                      key={delivery.deliveryId}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <DeliveryCard delivery={delivery} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </TabsContent>
 
           <TabsContent value="in-progress">
-            {inProgressDeliveries.length === 0 ? (
-              <Card className="p-8">
-                <div className="text-center text-gray-500">
-                  <Navigation className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                  <p className="font-semibold">No deliveries in progress</p>
-                </div>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {inProgressDeliveries.map((delivery) => (
-                  <DeliveryCard key={delivery.deliveryId} delivery={delivery} />
-                ))}
-              </div>
-            )}
+            <AnimatePresence mode="wait">
+              {inProgressDeliveries.length === 0 ? (
+                <motion.div
+                  key="empty"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                >
+                  <ModernCard className="bg-gradient-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
+                    <ModernCardContent className="py-12">
+                      <div className="text-center space-y-4">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: "spring", stiffness: 200 }}
+                        >
+                          <Navigation className="w-16 h-16 mx-auto text-gray-300" />
+                        </motion.div>
+                        <p className="font-semibold text-gray-900">No deliveries in progress</p>
+                      </div>
+                    </ModernCardContent>
+                  </ModernCard>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="grid"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                >
+                  {inProgressDeliveries.map((delivery, index) => (
+                    <motion.div
+                      key={delivery.deliveryId}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <DeliveryCard delivery={delivery} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </TabsContent>
 
           <TabsContent value="completed">
-            {completedDeliveries.length === 0 ? (
-              <Card className="p-8">
-                <div className="text-center text-gray-500">
-                  <Package className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                  <p className="font-semibold">No completed deliveries</p>
-                </div>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {completedDeliveries.map((delivery) => (
-                  <DeliveryCard key={delivery.deliveryId} delivery={delivery} />
-                ))}
-              </div>
-            )}
+            <AnimatePresence mode="wait">
+              {completedDeliveries.length === 0 ? (
+                <motion.div
+                  key="empty"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                >
+                  <ModernCard className="bg-gradient-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
+                    <ModernCardContent className="py-12">
+                      <div className="text-center space-y-4">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: "spring", stiffness: 200 }}
+                        >
+                          <Package className="w-16 h-16 mx-auto text-gray-300" />
+                        </motion.div>
+                        <p className="font-semibold text-gray-900">No completed deliveries</p>
+                      </div>
+                    </ModernCardContent>
+                  </ModernCard>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="grid"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                >
+                  {completedDeliveries.map((delivery, index) => (
+                    <motion.div
+                      key={delivery.deliveryId}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <DeliveryCard delivery={delivery} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </TabsContent>
         </Tabs>
-      </div>
-    </div>
+      </motion.div>
+    </ModernSection>
   );
 }

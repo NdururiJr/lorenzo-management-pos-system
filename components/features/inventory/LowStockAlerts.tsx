@@ -33,7 +33,7 @@ interface LowStockAlertsProps {
 }
 
 export function LowStockAlerts({ items }: LowStockAlertsProps) {
-  const { user } = useAuth();
+  const { userData } = useAuth();
   const queryClient = useQueryClient();
 
   // Filter critical and low stock items
@@ -55,13 +55,13 @@ export function LowStockAlerts({ items }: LowStockAlertsProps) {
       message: string;
       items: InventoryItem[];
     }) => {
-      if (!user?.branchId) throw new Error('No branch ID');
+      if (!userData?.branchId) throw new Error('No branch ID');
 
       const notification = {
         type,
         title,
         message,
-        branchId: user.branchId,
+        branchId: userData.branchId,
         itemCount: notificationItems.length,
         items: notificationItems.map((item) => ({
           id: item.itemId,
@@ -81,8 +81,8 @@ export function LowStockAlerts({ items }: LowStockAlertsProps) {
 
   // Auto-create notifications for critical items (once per session)
   useEffect(() => {
-    if (criticalItems.length > 0 && user?.branchId) {
-      const notificationKey = `critical-stock-notified-${user.branchId}`;
+    if (criticalItems.length > 0 && userData?.branchId) {
+      const notificationKey = `critical-stock-notified-${userData.branchId}`;
       const lastNotified = sessionStorage.getItem(notificationKey);
       const now = Date.now();
 
@@ -97,7 +97,7 @@ export function LowStockAlerts({ items }: LowStockAlertsProps) {
         sessionStorage.setItem(notificationKey, now.toString());
       }
     }
-  }, [criticalItems.length, user?.branchId]);
+  }, [criticalItems.length, userData?.branchId]);
 
   if (criticalItems.length === 0 && lowStockItems.length === 0) {
     return null;

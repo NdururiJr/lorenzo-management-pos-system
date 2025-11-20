@@ -237,7 +237,7 @@ export function AddressSelector({
                   </div>
                   {value.receivedAt && (
                     <div className="text-xs text-muted-foreground mt-1">
-                      Received: {new Date(value.receivedAt.toDate ? value.receivedAt.toDate() : value.receivedAt).toLocaleDateString()}
+                      Received: {(typeof value.receivedAt.toDate === 'function' ? value.receivedAt.toDate() : value.receivedAt as unknown as Date).toLocaleDateString()}
                     </div>
                   )}
                 </div>

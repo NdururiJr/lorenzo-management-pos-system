@@ -1,22 +1,25 @@
 /**
  * POS (Point of Sale) Page
  *
- * Main POS interface for creating new orders.
- * Combines customer selection, garment entry, and payment processing.
+ * Modern POS interface with glassmorphic design and blue theme.
+ * Features animated cards and smooth transitions for order creation.
  *
  * @module app/(dashboard)/pos/page
  */
 
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { Timestamp } from 'firebase/firestore';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
-import { Loader2, ShoppingCart, User, Package } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
+import { Loader2, ShoppingCart, User, Package, Plus, Trash2, Check } from 'lucide-react';
+import { ModernCard, ModernCardHeader, ModernCardContent } from '@/components/modern/ModernCard';
+import { ModernButton } from '@/components/modern/ModernButton';
+import { ModernSection, ModernGrid } from '@/components/modern/ModernLayout';
+import { ModernBadge } from '@/components/modern/ModernBadge';
+import { ModernStatCard, MiniStatCard } from '@/components/modern/ModernStatCard';
 import { CustomerSearch } from '@/components/features/pos/CustomerSearch';
 import { CreateCustomerModal } from '@/components/features/pos/CreateCustomerModal';
 import { CustomerCard } from '@/components/features/pos/CustomerCard';
@@ -317,7 +320,7 @@ export default function POSPage() {
     } finally {
       setIsProcessing(false);
     }
-  }, [selectedCustomer, garments, user, userData, total]);
+  }, [selectedCustomer, garments, user, userData, total, collectionMethod, pickupAddress, pickupInstructions, pickupScheduledTime, returnMethod, deliveryAddress, deliveryInstructions, deliveryScheduledTime]);
 
   /**
    * Handle payment success
@@ -343,70 +346,119 @@ export default function POSPage() {
   if (!user || !userData) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-gray-400" />
-          <p className="text-gray-600">Loading...</p>
-        </div>
+        <ModernCard className="p-8">
+          <div className="text-center space-y-4">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+            >
+              <Loader2 className="w-8 h-8 mx-auto text-brand-blue" />
+            </motion.div>
+            <p className="text-gray-600">Loading POS System...</p>
+          </div>
+        </ModernCard>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-8">
+    <ModernSection animate>
       {/* Header */}
-      <div className="bg-white border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-black flex items-center gap-3">
-                <ShoppingCart className="w-8 h-8" />
-                Point of Sale
-              </h1>
-              <p className="text-gray-600 mt-1">Create new orders and process payments</p>
-            </div>
-            {selectedCustomer && garments.length > 0 && (
-              <Button
-                variant="outline"
-                onClick={handleClearOrder}
-                className="border-red-300 text-red-600 hover:bg-red-50"
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-8"
+      >
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent flex items-center gap-3">
+              <motion.div
+                initial={{ rotate: -10 }}
+                animate={{ rotate: 0 }}
+                transition={{ type: "spring", stiffness: 200 }}
               >
-                Clear Order
-              </Button>
-            )}
+                <ShoppingCart className="w-8 h-8 text-brand-blue" />
+              </motion.div>
+              Point of Sale
+            </h1>
+            <p className="text-gray-600 mt-1">Create new orders and process payments</p>
           </div>
+          {selectedCustomer && garments.length > 0 && (
+            <ModernButton
+              variant="danger"
+              onClick={handleClearOrder}
+              leftIcon={<Trash2 className="h-4 w-4" />}
+            >
+              Clear Order
+            </ModernButton>
+          )}
         </div>
+      </motion.div>
+
+      {/* Quick Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <MiniStatCard
+          label="Items in Order"
+          value={garments.length}
+          icon={<Package className="h-4 w-4" />}
+        />
+        <MiniStatCard
+          label="Subtotal"
+          value={`KES ${subtotal.toLocaleString()}`}
+          icon={<ShoppingCart className="h-4 w-4" />}
+        />
+        <MiniStatCard
+          label="Customer"
+          value={selectedCustomer ? 'Selected' : 'None'}
+          icon={<User className="h-4 w-4" />}
+        />
+        <MiniStatCard
+          label="Status"
+          value={isProcessing ? 'Processing...' : 'Ready'}
+          icon={<Check className="h-4 w-4" />}
+        />
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column: Customer Selection */}
-          <div className="lg:col-span-1 space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="w-5 h-5" />
-                  Customer
-                </CardTitle>
-                <CardDescription>Select or create a customer</CardDescription>
-              </CardHeader>
-              <div className="p-6 pt-0">
-                {showCustomerSearch ? (
-                  <CustomerSearch
-                    onSelectCustomer={handleSelectCustomer}
-                    onCreateNewCustomer={() => setShowCreateCustomerModal(true)}
-                  />
-                ) : selectedCustomer ? (
-                  <CustomerCard
-                    customer={selectedCustomer}
-                    onChangeCustomer={handleChangeCustomer}
-                  />
-                ) : null}
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column: Customer Selection */}
+        <div className="lg:col-span-1 space-y-6">
+          <ModernCard delay={0.1} hover glowIntensity="medium">
+            <ModernCardHeader>
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-xl bg-brand-blue/10">
+                  <User className="w-5 h-5 text-brand-blue" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900">Customer</h2>
+                  <p className="text-sm text-gray-600">Select or create a customer</p>
+                </div>
               </div>
-            </Card>
+            </ModernCardHeader>
+            <ModernCardContent>
+              {showCustomerSearch ? (
+                <CustomerSearch
+                  onSelectCustomer={handleSelectCustomer}
+                  onCreateNewCustomer={() => setShowCreateCustomerModal(true)}
+                />
+              ) : selectedCustomer ? (
+                <CustomerCard
+                  customer={selectedCustomer}
+                  onChangeCustomer={handleChangeCustomer}
+                />
+              ) : null}
+            </ModernCardContent>
+          </ModernCard>
 
-            {/* Order Summary - Desktop Sticky */}
-            <div className="hidden lg:block">
+          {/* Order Summary - Desktop Sticky */}
+          <div className="hidden lg:block">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="sticky top-24"
+            >
               <OrderSummary
                 customer={selectedCustomer || undefined}
                 garments={garments.map((g, i) => ({
@@ -421,77 +473,103 @@ export default function POSPage() {
                 onClearOrder={handleClearOrder}
                 isProcessing={isProcessing}
               />
-            </div>
+            </motion.div>
           </div>
+        </div>
 
-          {/* Center Column: Garment Entry */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Garment Entry Form */}
+        {/* Center Column: Garment Entry */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Garment Entry Form */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
             <GarmentEntryForm
               onAddGarment={handleAddGarment}
               onCancel={() => {
                 // Optional clear action
               }}
             />
+          </motion.div>
 
-            {/* Garments List */}
-            {garments.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Package className="w-5 h-5" />
-                    Order Items ({garments.length})
-                  </CardTitle>
-                  <CardDescription>
-                    Review and manage garments in this order
-                  </CardDescription>
-                </CardHeader>
-                <div className="p-6 pt-0">
-                  <div className="space-y-4">
-                    {garments.map((garment, index) => (
-                      <div key={`garment-${index}`} className="space-y-3">
-                        <GarmentCard
-                          garment={{
-                            garmentId: `temp-${index}`,
-                            type: garment.type,
-                            color: garment.color,
-                            brand: garment.brand,
-                            services: garment.services,
-                            price: garment.price,
-                            specialInstructions: garment.specialInstructions,
-                            photos: garment.photos,
-                          }}
-                          onEdit={() => handleEditGarment(index)}
-                          onRemove={() => handleRemoveGarment(index)}
-                        />
-                        <GarmentInitialInspection
-                          garmentId={`temp-${index}`}
-                          garmentType={garment.type}
-                          garmentColor={garment.color}
-                          value={{
-                            hasNotableDamage: garment.hasNotableDamage || false,
-                            initialInspectionNotes: garment.initialInspectionNotes || '',
-                            initialInspectionPhotos: garment.initialInspectionPhotos || [],
-                          }}
-                          onChange={(inspectionData) => handleUpdateInspection(index, inspectionData)}
-                        />
-                      </div>
-                    ))}
+          {/* Garments List */}
+          {garments.length > 0 && (
+            <ModernCard delay={0.3} hover={false}>
+              <ModernCardHeader>
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-xl bg-brand-blue/10">
+                    <Package className="w-5 h-5 text-brand-blue" />
                   </div>
-
-                  <Separator className="my-4" />
-
-                  <div className="flex justify-between items-center text-lg font-semibold">
-                    <span>Subtotal:</span>
-                    <span>KES {subtotal.toLocaleString()}</span>
+                  <div>
+                    <h2 className="text-lg font-bold text-gray-900">
+                      Order Items ({garments.length})
+                    </h2>
+                    <p className="text-sm text-gray-600">
+                      Review and manage garments in this order
+                    </p>
                   </div>
                 </div>
-              </Card>
-            )}
+              </ModernCardHeader>
+              <ModernCardContent>
+                <div className="space-y-4">
+                  {garments.map((garment, index) => (
+                    <motion.div
+                      key={`garment-${index}`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1, duration: 0.3 }}
+                      className="space-y-3"
+                    >
+                      <GarmentCard
+                        garment={{
+                          garmentId: `temp-${index}`,
+                          type: garment.type,
+                          color: garment.color,
+                          brand: garment.brand,
+                          services: garment.services,
+                          price: garment.price,
+                          specialInstructions: garment.specialInstructions,
+                          photos: garment.photos,
+                        }}
+                        onEdit={() => handleEditGarment(index)}
+                        onRemove={() => handleRemoveGarment(index)}
+                      />
+                      <GarmentInitialInspection
+                        garmentId={`temp-${index}`}
+                        garmentType={garment.type}
+                        garmentColor={garment.color}
+                        value={{
+                          hasNotableDamage: garment.hasNotableDamage || false,
+                          initialInspectionNotes: garment.initialInspectionNotes || '',
+                          initialInspectionPhotos: garment.initialInspectionPhotos || [],
+                        }}
+                        onChange={(inspectionData) => handleUpdateInspection(index, inspectionData)}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
 
-            {/* Collection & Return Methods - Only show if customer selected and garments added */}
-            {selectedCustomer && garments.length > 0 && (
-              <>
+                <div className="mt-6 pt-6 border-t border-brand-blue/10">
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-semibold text-gray-900">Subtotal:</span>
+                    <span className="text-2xl font-bold bg-gradient-to-r from-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
+                      KES {subtotal.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              </ModernCardContent>
+            </ModernCard>
+          )}
+
+          {/* Collection & Return Methods - Only show if customer selected and garments added */}
+          {selectedCustomer && garments.length > 0 && (
+            <>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+              >
                 <CollectionMethodSelector
                   customerId={selectedCustomer.customerId}
                   value={collectionMethod}
@@ -503,7 +581,13 @@ export default function POSPage() {
                   scheduledTime={pickupScheduledTime}
                   onScheduledTimeChange={setPickupScheduledTime}
                 />
+              </motion.div>
 
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
                 <ReturnMethodSelector
                   customerId={selectedCustomer.customerId}
                   value={returnMethod}
@@ -516,11 +600,17 @@ export default function POSPage() {
                   onScheduledTimeChange={setDeliveryScheduledTime}
                   estimatedCompletion={estimatedCompletion}
                 />
-              </>
-            )}
+              </motion.div>
+            </>
+          )}
 
-            {/* Order Summary - Mobile */}
-            <div className="lg:hidden">
+          {/* Order Summary - Mobile */}
+          <div className="lg:hidden">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+            >
               <OrderSummary
                 customer={selectedCustomer || undefined}
                 garments={garments.map((g, i) => ({
@@ -535,23 +625,40 @@ export default function POSPage() {
                 onClearOrder={handleClearOrder}
                 isProcessing={isProcessing}
               />
-            </div>
-
-            {/* Empty State */}
-            {garments.length === 0 && (
-              <Card className="bg-gray-50 border-dashed">
-                <div className="p-12 text-center">
-                  <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    No garments added yet
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    Add garments using the form above to create an order
-                  </p>
-                </div>
-              </Card>
-            )}
+            </motion.div>
           </div>
+
+          {/* Empty State */}
+          {garments.length === 0 && (
+            <ModernCard
+              delay={0.3}
+              className="bg-gradient-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300"
+            >
+              <ModernCardContent className="py-12 text-center">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
+                >
+                  <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                </motion.div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  No garments added yet
+                </h3>
+                <p className="text-sm text-gray-500">
+                  Add garments using the form above to create an order
+                </p>
+                <ModernButton
+                  variant="secondary"
+                  size="sm"
+                  className="mt-4"
+                  leftIcon={<Plus className="h-4 w-4" />}
+                >
+                  Add First Garment
+                </ModernButton>
+              </ModernCardContent>
+            </ModernCard>
+          )}
         </div>
       </div>
 
@@ -582,6 +689,6 @@ export default function POSPage() {
           onClose={handleCloseReceipt}
         />
       )}
-    </div>
+    </ModernSection>
   );
 }

@@ -15,6 +15,7 @@ import {
   query,
   where,
   getDocs,
+  deleteDoc,
   Timestamp,
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
@@ -202,7 +203,7 @@ export async function clearExpiredCache(): Promise<number> {
 
   // Delete expired entries
   const deletePromises = snapshot.docs.map(async (docSnap) => {
-    await docSnap.ref.delete();
+    await deleteDoc(docSnap.ref);
     deletedCount++;
   });
 
@@ -255,7 +256,7 @@ export async function invalidateCacheEntry(address: string): Promise<void> {
   const cacheKey = generateCacheKey(address);
   const cacheRef = doc(db, CACHE_COLLECTION, cacheKey);
 
-  await cacheRef.delete();
+  await deleteDoc(cacheRef);
 }
 
 /**
@@ -267,7 +268,7 @@ export async function clearAllCache(): Promise<void> {
   const cacheRef = collection(db, CACHE_COLLECTION);
   const snapshot = await getDocs(cacheRef);
 
-  const deletePromises = snapshot.docs.map((doc) => doc.ref.delete());
+  const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
   await Promise.all(deletePromises);
 
   console.log(`🗑️ Cleared all ${snapshot.size} cache entries`);

@@ -132,7 +132,7 @@ const PAYMENT_METHODS = ['cash', 'mpesa', 'card', 'credit'] as const;
 /**
  * Generate a random selection from an array
  */
-function randomSelect<T>(arr: T[]): T {
+function randomSelect<T>(arr: readonly T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
@@ -265,7 +265,7 @@ async function createOrder(
     : 0;
 
   // Random status from the pipeline
-  const status = randomSelect(ORDER_STATUSES);
+  const status = randomSelect([...ORDER_STATUSES]);
 
   // Random creation time in the last 7 days
   const daysAgo = Math.floor(Math.random() * 7);

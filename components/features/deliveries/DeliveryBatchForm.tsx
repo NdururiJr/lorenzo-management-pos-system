@@ -193,8 +193,6 @@ export function DeliveryBatchForm({
         orders: selectedOrderIds,
         route: routeData,
         status: 'pending',
-        scheduledDate: Timestamp.fromDate(data.scheduledDate),
-        notes: data.notes,
       });
 
       // Update order statuses to 'out_for_delivery'

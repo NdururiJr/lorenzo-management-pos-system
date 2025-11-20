@@ -96,14 +96,14 @@ export function WorkstationAnalytics() {
   // Calculate average processing time for completed orders
   const calculateAvgProcessingTime = (orders: Order[]) => {
     const completedWithTimes = orders.filter(
-      (o) => o.status === 'ready' && o.createdAt && o.updatedAt
+      (o) => o.status === 'ready' && o.createdAt && o.actualCompletion
     );
 
     if (completedWithTimes.length === 0) return 0;
 
     const totalMinutes = completedWithTimes.reduce((sum, order) => {
       const start = order.createdAt.toDate().getTime();
-      const end = order.updatedAt.toDate().getTime();
+      const end = order.actualCompletion!.toDate().getTime();
       const minutes = (end - start) / (1000 * 60);
       return sum + minutes;
     }, 0);
@@ -281,7 +281,7 @@ export function WorkstationAnalytics() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {activeBatches.map((batch) => {
                 const stageInfo = STAGES.find((s) => s.value === batch.stage);
-                const isProcessing = batch.status === 'processing';
+                const isProcessing = batch.status === 'in_progress';
 
                 return (
                   <div
@@ -320,11 +320,11 @@ export function WorkstationAnalytics() {
                         </span>
                       </div>
 
-                      {batch.assignedStaff && batch.assignedStaff.length > 0 && (
+                      {batch.assignedStaffIds && batch.assignedStaffIds.length > 0 && (
                         <div className="flex items-center justify-between">
                           <span className="text-gray-600">Staff:</span>
                           <span className="font-medium text-black">
-                            {batch.assignedStaff.length} assigned
+                            {batch.assignedStaffIds.length} assigned
                           </span>
                         </div>
                       )}

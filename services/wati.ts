@@ -14,7 +14,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { adminDb } from '@/lib/firebase-admin';
 import type { Notification, NotificationType, Order } from '@/types';
-import { Timestamp } from 'firebase-admin/firestore';
+import { Timestamp } from 'firebase/firestore';
 
 // Wati.io API configuration
 const WATI_API_URL = process.env.WATI_API_URL || 'https://live-server.wati.io';

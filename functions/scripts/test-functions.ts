@@ -73,7 +73,7 @@ async function testEmailUtility() {
     );
 
     if (result.success) {
-      log(`✓ Email sent successfully! Message ID: ${result.messageId}`, 'green');
+      log(`✓ Email sent successfully!`, 'green');
     } else {
       log(`✗ Email failed: ${result.error}`, 'red');
     }
@@ -101,7 +101,7 @@ async function testWhatsAppUtility() {
     );
 
     if (result.success) {
-      log(`✓ WhatsApp sent successfully! Message ID: ${result.messageId}`, 'green');
+      log(`✓ WhatsApp sent successfully!`, 'green');
     } else {
       log(`✗ WhatsApp failed: ${result.error}`, 'red');
     }

@@ -73,7 +73,7 @@ export function OrderDetails({ order }: OrderDetailsProps) {
             <Separator />
             <div>
               <h3 className="font-medium text-sm mb-1">Delivery Address</h3>
-              <p className="text-sm text-gray-600">{order.deliveryAddress}</p>
+              <p className="text-sm text-gray-600">{order.deliveryAddress.address}</p>
             </div>
           </>
         )}

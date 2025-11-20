@@ -106,7 +106,6 @@ export const userRoles = [
   'manager',
   'front_desk',
   'workstation',
-  'cashier',
   'driver',
   'customer',
 ] as const;

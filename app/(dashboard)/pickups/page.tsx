@@ -1,8 +1,8 @@
 /**
  * Pickups Page
  *
- * Displays all orders that require garment pickup from customer locations.
- * Allows staff to assign drivers and track pickup status.
+ * Modern pickups management interface with glassmorphic design and blue theme.
+ * Features smooth animations for tracking and managing garment pickups.
  *
  * @module app/(dashboard)/pickups/page
  */
@@ -11,10 +11,13 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
 import { Package, Clock, CheckCircle, Loader2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ModernCard, ModernCardHeader, ModernCardContent } from '@/components/modern/ModernCard';
+import { ModernSection } from '@/components/modern/ModernLayout';
+import { ModernStatCard } from '@/components/modern/ModernStatCard';
+import { ModernBadge } from '@/components/modern/ModernBadge';
 import { PickupTable } from '@/components/features/pickups/PickupTable';
 import { getDocuments } from '@/lib/db';
 import { where, orderBy, Timestamp, type QueryConstraint } from 'firebase/firestore';
@@ -121,157 +124,222 @@ export default function PickupsPage() {
 
   const currentData = getCurrentTabData();
 
+  // Calculate today's counts
+  const scheduledToday = scheduledPickups.filter((p) => {
+    if (!p.pickupScheduledTime) return false;
+    const scheduledDate = p.pickupScheduledTime.toDate();
+    const today = new Date();
+    return scheduledDate.toDateString() === today.toDateString();
+  }).length;
+
+  const completedToday = completedPickups.filter((p) => {
+    if (!p.pickupCompletedTime) return false;
+    const completedDate = p.pickupCompletedTime.toDate();
+    const today = new Date();
+    return completedDate.toDateString() === today.toDateString();
+  }).length;
+
   return (
-    <div className="container mx-auto p-6 space-y-6">
+    <ModernSection animate>
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Pickups</h1>
-        <p className="text-muted-foreground">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-8"
+      >
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent flex items-center gap-3">
+          <motion.div
+            initial={{ rotate: -10 }}
+            animate={{ rotate: 0 }}
+            transition={{ type: "spring", stiffness: 200 }}
+          >
+            <Package className="w-8 h-8 text-brand-blue" />
+          </motion.div>
+          Pickups
+        </h1>
+        <p className="text-gray-600 mt-1">
           Manage garment pickups from customer locations
         </p>
-      </div>
+      </motion.div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardDescription>Pending Pickup</CardDescription>
-              <Package className="w-4 h-4 text-muted-foreground" />
-            </div>
-            <CardTitle className="text-2xl">
-              {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : pendingPickups.length}
-            </CardTitle>
-          </CardHeader>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardDescription>Scheduled Today</CardDescription>
-              <Clock className="w-4 h-4 text-muted-foreground" />
-            </div>
-            <CardTitle className="text-2xl">
-              {loading ? (
-                <Loader2 className="w-6 h-6 animate-spin" />
-              ) : (
-                scheduledPickups.filter((p) => {
-                  if (!p.pickupScheduledTime) return false;
-                  const scheduledDate = p.pickupScheduledTime.toDate();
-                  const today = new Date();
-                  return (
-                    scheduledDate.toDateString() === today.toDateString()
-                  );
-                }).length
-              )}
-            </CardTitle>
-          </CardHeader>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardDescription>Completed Today</CardDescription>
-              <CheckCircle className="w-4 h-4 text-muted-foreground" />
-            </div>
-            <CardTitle className="text-2xl">
-              {loading ? (
-                <Loader2 className="w-6 h-6 animate-spin" />
-              ) : (
-                completedPickups.filter((p) => {
-                  if (!p.pickupCompletedTime) return false;
-                  const completedDate = p.pickupCompletedTime.toDate();
-                  const today = new Date();
-                  return (
-                    completedDate.toDateString() === today.toDateString()
-                  );
-                }).length
-              )}
-            </CardTitle>
-          </CardHeader>
-        </Card>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <ModernStatCard
+          title="Pending Pickup"
+          value={loading ? "--" : pendingPickups.length}
+          icon={<Package className="h-5 w-5" />}
+          changeLabel="Awaiting pickup"
+          delay={0.1}
+        />
+        <ModernStatCard
+          title="Scheduled Today"
+          value={loading ? "--" : scheduledToday}
+          icon={<Clock className="h-5 w-5" />}
+          changeLabel="Scheduled for today"
+          delay={0.2}
+        />
+        <ModernStatCard
+          title="Completed Today"
+          value={loading ? "--" : completedToday}
+          icon={<CheckCircle className="h-5 w-5" />}
+          changeLabel="Completed today"
+          trend="up"
+          delay={0.3}
+        />
       </div>
 
       {/* Pickups Table with Tabs */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Pickup Orders</CardTitle>
-          <CardDescription>
-            View and manage orders requiring garment pickup
-          </CardDescription>
-        </CardHeader>
-        <div className="p-6 pt-0">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="pending" className="flex items-center gap-2">
-                <Package className="w-4 h-4" />
-                Pending
-                {pendingPickups.length > 0 && (
-                  <Badge variant="secondary" className="ml-1">
-                    {pendingPickups.length}
-                  </Badge>
-                )}
-              </TabsTrigger>
-              <TabsTrigger value="scheduled" className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                Scheduled
-                {scheduledPickups.length > 0 && (
-                  <Badge variant="secondary" className="ml-1">
-                    {scheduledPickups.length}
-                  </Badge>
-                )}
-              </TabsTrigger>
-              <TabsTrigger value="completed" className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
-                Completed
-              </TabsTrigger>
-            </TabsList>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+      >
+        <ModernCard hover={false}>
+          <ModernCardHeader>
+            <div className="flex items-center gap-2">
+              <div className="p-2 rounded-xl bg-brand-blue/10">
+                <Package className="w-5 h-5 text-brand-blue" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">Pickup Orders</h2>
+                <p className="text-sm text-gray-600">View and manage orders requiring garment pickup</p>
+              </div>
+            </div>
+          </ModernCardHeader>
+          <ModernCardContent>
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+              <TabsList className="grid w-full grid-cols-3 bg-white/70 backdrop-blur-xl border border-brand-blue/20">
+                <TabsTrigger value="pending" className="flex items-center gap-2">
+                  <Package className="w-4 h-4" />
+                  Pending
+                  {pendingPickups.length > 0 && (
+                    <ModernBadge variant="secondary" className="ml-1">
+                      {pendingPickups.length}
+                    </ModernBadge>
+                  )}
+                </TabsTrigger>
+                <TabsTrigger value="scheduled" className="flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  Scheduled
+                  {scheduledPickups.length > 0 && (
+                    <ModernBadge variant="secondary" className="ml-1">
+                      {scheduledPickups.length}
+                    </ModernBadge>
+                  )}
+                </TabsTrigger>
+                <TabsTrigger value="completed" className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4" />
+                  Completed
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="pending" className="mt-6">
-              {loading ? (
-                <div className="flex items-center justify-center py-12">
-                  <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
-                </div>
-              ) : (
-                <PickupTable
-                  pickups={pendingPickups}
-                  onPickupCompleted={handlePickupCompleted}
-                  onRefresh={handleRefresh}
-                />
-              )}
-            </TabsContent>
+              <TabsContent value="pending" className="mt-6">
+                <AnimatePresence mode="wait">
+                  {loading ? (
+                    <motion.div
+                      key="loading"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center justify-center py-12"
+                    >
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                      >
+                        <Loader2 className="w-8 h-8 text-brand-blue" />
+                      </motion.div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="content"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                    >
+                      <PickupTable
+                        pickups={pendingPickups}
+                        onPickupCompleted={handlePickupCompleted}
+                        onRefresh={handleRefresh}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </TabsContent>
 
-            <TabsContent value="scheduled" className="mt-6">
-              {loading ? (
-                <div className="flex items-center justify-center py-12">
-                  <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
-                </div>
-              ) : (
-                <PickupTable
-                  pickups={scheduledPickups}
-                  onPickupCompleted={handlePickupCompleted}
-                  onRefresh={handleRefresh}
-                />
-              )}
-            </TabsContent>
+              <TabsContent value="scheduled" className="mt-6">
+                <AnimatePresence mode="wait">
+                  {loading ? (
+                    <motion.div
+                      key="loading"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center justify-center py-12"
+                    >
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                      >
+                        <Loader2 className="w-8 h-8 text-brand-blue" />
+                      </motion.div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="content"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                    >
+                      <PickupTable
+                        pickups={scheduledPickups}
+                        onPickupCompleted={handlePickupCompleted}
+                        onRefresh={handleRefresh}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </TabsContent>
 
-            <TabsContent value="completed" className="mt-6">
-              {loading ? (
-                <div className="flex items-center justify-center py-12">
-                  <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
-                </div>
-              ) : (
-                <PickupTable
-                  pickups={completedPickups}
-                  onPickupCompleted={handlePickupCompleted}
-                  onRefresh={handleRefresh}
-                  showCompleted
-                />
-              )}
-            </TabsContent>
-          </Tabs>
-        </div>
-      </Card>
-    </div>
+              <TabsContent value="completed" className="mt-6">
+                <AnimatePresence mode="wait">
+                  {loading ? (
+                    <motion.div
+                      key="loading"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center justify-center py-12"
+                    >
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                      >
+                        <Loader2 className="w-8 h-8 text-brand-blue" />
+                      </motion.div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="content"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                    >
+                      <PickupTable
+                        pickups={completedPickups}
+                        onPickupCompleted={handlePickupCompleted}
+                        onRefresh={handleRefresh}
+                        showCompleted
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </TabsContent>
+            </Tabs>
+          </ModernCardContent>
+        </ModernCard>
+      </motion.div>
+    </ModernSection>
   );
 }

@@ -1,9 +1,8 @@
 /**
  * Inventory Management Page
  *
- * Comprehensive inventory tracking and management system.
- * Allows staff to manage inventory items, track stock levels,
- * perform stock adjustments, and view adjustment history.
+ * Modern inventory management with glassmorphic design and animations.
+ * Features stock tracking, alerts, and comprehensive item management.
  *
  * @module app/(dashboard)/inventory/page
  */
@@ -21,17 +20,7 @@ import {
   orderBy,
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Package,
   AlertTriangle,
@@ -40,11 +29,27 @@ import {
   Plus,
   Search,
   Loader2,
+  BoxesIcon,
+  AlertCircle,
+  Filter,
 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { InventoryTable } from '@/components/features/inventory/InventoryTable';
 import { AddItemModal } from '@/components/features/inventory/AddItemModal';
 import { LowStockAlerts } from '@/components/features/inventory/LowStockAlerts';
 import { format } from 'date-fns';
+import { ModernSection } from '@/components/modern/ModernLayout';
+import { ModernCard, ModernCardContent, ModernCardHeader } from '@/components/modern/ModernCard';
+import { ModernStatCard } from '@/components/modern/ModernStatCard';
+import { ModernButton } from '@/components/modern/ModernButton';
+import { ModernBadge } from '@/components/modern/ModernBadge';
 
 export interface InventoryItem {
   id: string;
@@ -135,104 +140,117 @@ export default function InventoryPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-8">
-      {/* Header */}
-      <div className="bg-white border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
+    <ModernSection animate className="min-h-screen">
+      {/* Page Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-8"
+      >
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-3">
+            <motion.div
+              initial={{ rotate: -180, scale: 0 }}
+              animate={{ rotate: 0, scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="p-3 rounded-2xl bg-gradient-to-br from-brand-blue/20 to-brand-blue/10"
+            >
+              <BoxesIcon className="h-6 w-6 text-brand-blue" />
+            </motion.div>
             <div>
-              <h1 className="text-2xl font-bold text-black">Inventory Management</h1>
-              <p className="text-sm text-gray-600 mt-1">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
+                Inventory Management
+              </h1>
+              <p className="text-sm text-gray-600">
                 Track and manage your inventory items
               </p>
             </div>
-            <Button
-              onClick={() => setShowAddModal(true)}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Item
-            </Button>
           </div>
-        </div>
-      </div>
-
-      {/* Stats Cards */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Total Items
-              </CardTitle>
-              <Package className="h-4 w-4 text-gray-400" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-black">{totalItems}</div>
-              <p className="text-xs text-gray-600 mt-1">In inventory</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Critical Stock
-              </CardTitle>
-              <AlertTriangle className="h-4 w-4 text-red-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-red-600">{criticalItems}</div>
-              <p className="text-xs text-gray-600 mt-1">Below reorder level</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Low Stock
-              </CardTitle>
-              <TrendingUp className="h-4 w-4 text-yellow-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-yellow-600">{lowStockItems}</div>
-              <p className="text-xs text-gray-600 mt-1">Needs attention</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Total Value
-              </CardTitle>
-              <DollarSign className="h-4 w-4 text-green-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-green-600">
-                ${totalValue.toFixed(2)}
-              </div>
-              <p className="text-xs text-gray-600 mt-1">Inventory worth</p>
-            </CardContent>
-          </Card>
+          <ModernButton
+            onClick={() => setShowAddModal(true)}
+            variant="primary"
+            leftIcon={<Plus className="w-4 h-4" />}
+          >
+            Add Item
+          </ModernButton>
         </div>
 
-        {/* Filters */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <ModernStatCard
+            title="Total Items"
+            value={totalItems}
+            icon={<Package className="h-5 w-5" />}
+            changeLabel="In inventory"
+            delay={0.1}
+          />
+
+          <ModernStatCard
+            title="Critical Stock"
+            value={criticalItems}
+            icon={<AlertTriangle className="h-5 w-5" />}
+            changeLabel="Below reorder level"
+            trend={criticalItems > 0 ? 'down' : 'neutral'}
+            delay={0.2}
+            variant={criticalItems > 0 ? 'default' : 'gradient'}
+          />
+
+          <ModernStatCard
+            title="Low Stock"
+            value={lowStockItems}
+            icon={<AlertCircle className="h-5 w-5" />}
+            changeLabel="Needs attention"
+            trend={lowStockItems > 5 ? 'down' : 'neutral'}
+            delay={0.3}
+          />
+
+          <ModernStatCard
+            title="Total Value"
+            value={totalValue}
+            format="currency"
+            icon={<DollarSign className="h-5 w-5" />}
+            changeLabel="Inventory worth"
+            delay={0.4}
+            variant="solid"
+          />
+        </div>
+
+      </motion.div>
+
+      {/* Filters */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+      >
+        <ModernCard className="mb-6">
+          <ModernCardContent className="p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Filter className="w-4 h-4 text-brand-blue" />
+              <h3 className="font-semibold text-gray-900">Filters</h3>
+              {(searchTerm || selectedCategory !== 'all' || stockFilter !== 'all') && (
+                <ModernBadge variant="primary" size="sm">
+                  Active
+                </ModernBadge>
+              )}
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {/* Search */}
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-brand-blue/60 w-4 h-4" />
                 <Input
                   placeholder="Search items..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 bg-white/50 border-brand-blue/20 focus:border-brand-blue focus:ring-brand-blue"
                 />
               </div>
 
               {/* Category Filter */}
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger>
+                <SelectTrigger className="bg-white/50 border-brand-blue/20 focus:border-brand-blue">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent>
@@ -248,91 +266,139 @@ export default function InventoryPage() {
 
               {/* Stock Level Filter */}
               <div className="flex gap-2">
-                <Button
-                  variant={stockFilter === 'all' ? 'default' : 'outline'}
+                <ModernButton
+                  variant={stockFilter === 'all' ? 'primary' : 'ghost'}
                   size="sm"
                   onClick={() => setStockFilter('all')}
                   className="flex-1"
                 >
                   All
-                </Button>
-                <Button
-                  variant={stockFilter === 'critical' ? 'default' : 'outline'}
+                </ModernButton>
+                <ModernButton
+                  variant={stockFilter === 'critical' ? 'danger' : 'ghost'}
                   size="sm"
                   onClick={() => setStockFilter('critical')}
                   className="flex-1"
                 >
                   Critical
-                </Button>
-                <Button
-                  variant={stockFilter === 'low' ? 'default' : 'outline'}
+                </ModernButton>
+                <ModernButton
+                  variant={stockFilter === 'low' ? 'secondary' : 'ghost'}
                   size="sm"
                   onClick={() => setStockFilter('low')}
                   className="flex-1"
                 >
                   Low
-                </Button>
-                <Button
-                  variant={stockFilter === 'good' ? 'default' : 'outline'}
+                </ModernButton>
+                <ModernButton
+                  variant={stockFilter === 'good' ? 'success' : 'ghost'}
                   size="sm"
                   onClick={() => setStockFilter('good')}
                   className="flex-1"
                 >
                   Good
-                </Button>
+                </ModernButton>
               </div>
 
               {/* Results Count */}
-              <div className="flex items-center justify-end text-sm text-gray-600">
-                Showing {filteredItems.length} of {totalItems} items
+              <div className="flex items-center justify-end">
+                <ModernBadge variant="secondary" gradient>
+                  {filteredItems.length} of {totalItems} items
+                </ModernBadge>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </ModernCardContent>
+        </ModernCard>
+      </motion.div>
 
-        {/* Low Stock Alerts */}
+      {/* Low Stock Alerts */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+      >
         <LowStockAlerts items={filteredItems} />
+      </motion.div>
 
-        {/* Inventory Table */}
+      {/* Inventory Table */}
+      <AnimatePresence mode="wait">
         {isLoading ? (
-          <Card>
-            <CardContent className="py-12">
-              <div className="text-center">
-                <Loader2 className="w-8 h-8 animate-spin mx-auto text-gray-400" />
-                <p className="text-sm text-gray-600 mt-2">Loading inventory...</p>
-              </div>
-            </CardContent>
-          </Card>
-        ) : filteredItems.length === 0 ? (
-          <Card>
-            <CardContent className="py-12">
-              <div className="text-center text-gray-500">
-                <Package className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-                <p className="font-semibold">No items found</p>
-                <p className="text-sm mt-1">
-                  {searchTerm || selectedCategory !== 'all' || stockFilter !== 'all'
-                    ? 'Try adjusting your filters'
-                    : 'Add your first inventory item to get started'}
-                </p>
-                {!searchTerm && selectedCategory === 'all' && stockFilter === 'all' && (
-                  <Button
-                    onClick={() => setShowAddModal(true)}
-                    className="mt-4 bg-blue-600 hover:bg-blue-700"
+          <motion.div
+            key="loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <ModernCard hover glowIntensity="low">
+              <ModernCardContent className="py-12">
+                <div className="text-center">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                   >
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Item
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+                    <Loader2 className="w-8 h-8 mx-auto text-brand-blue" />
+                  </motion.div>
+                  <p className="text-sm text-gray-600 mt-2">Loading inventory...</p>
+                </div>
+              </ModernCardContent>
+            </ModernCard>
+          </motion.div>
+        ) : filteredItems.length === 0 ? (
+          <motion.div
+            key="empty"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+          >
+            <ModernCard hover glowIntensity="medium">
+              <ModernCardContent className="py-12">
+                <div className="text-center">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                  >
+                    <Package className="w-12 h-12 mx-auto mb-3 text-brand-blue/50" />
+                  </motion.div>
+                  <p className="font-semibold text-gray-900">No items found</p>
+                  <p className="text-sm mt-1 text-gray-600">
+                    {searchTerm || selectedCategory !== 'all' || stockFilter !== 'all'
+                      ? 'Try adjusting your filters'
+                      : 'Add your first inventory item to get started'}
+                  </p>
+                  {!searchTerm && selectedCategory === 'all' && stockFilter === 'all' && (
+                    <ModernButton
+                      onClick={() => setShowAddModal(true)}
+                      variant="primary"
+                      leftIcon={<Plus className="w-4 h-4" />}
+                      className="mt-4"
+                    >
+                      Add Item
+                    </ModernButton>
+                  )}
+                </div>
+              </ModernCardContent>
+            </ModernCard>
+          </motion.div>
         ) : (
-          <InventoryTable items={filteredItems} />
+          <motion.div
+            key="table"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ delay: 0.7 }}
+          >
+            <ModernCard hover glowIntensity="low">
+              <ModernCardContent className="p-0">
+                <InventoryTable items={filteredItems} />
+              </ModernCardContent>
+            </ModernCard>
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
 
       {/* Add Item Modal */}
       <AddItemModal open={showAddModal} onOpenChange={setShowAddModal} />
-    </div>
+    </ModernSection>
   );
 }

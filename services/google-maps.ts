@@ -329,7 +329,7 @@ export async function optimizeRoute(
         origin: `${startLocation.lat},${startLocation.lng}`,
         destination: destination,
         waypoints: waypointsForRequest,
-        optimize_waypoints: true,
+        optimize: true, // enable waypoint optimization
         key: GOOGLE_MAPS_API_KEY,
         mode: TravelMode.driving,
         units: UnitSystem.metric,

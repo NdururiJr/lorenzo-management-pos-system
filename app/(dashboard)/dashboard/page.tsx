@@ -1,8 +1,8 @@
 /**
  * Dashboard Home Page
  *
- * Main dashboard page showing user info and basic navigation.
- * Verifies authentication is working.
+ * Modern dashboard with glassmorphic cards and blue theme.
+ * Features animated stat cards and role-based access display.
  *
  * @module app/(dashboard)/dashboard/page
  */
@@ -10,14 +10,20 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
-import { getRoleDisplayName, getRoleBadgeColor } from '@/lib/auth/utils';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { getRoleDisplayName } from '@/lib/auth/utils';
+import { ModernButton } from '@/components/modern/ModernButton';
+import { ModernCard, ModernCardContent, ModernCardHeader } from '@/components/modern/ModernCard';
+import { ModernBadge, StatusBadge } from '@/components/modern/ModernBadge';
+import { ModernStatCard, StatCardGroup } from '@/components/modern/ModernStatCard';
+import { ModernSection, ModernGrid } from '@/components/modern/ModernLayout';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
-import { LogOut, User, Mail, Phone, Building2, Shield } from 'lucide-react';
+import { motion } from 'framer-motion';
+import {
+  LogOut, User, Mail, Phone, Building2, Shield,
+  Package, TrendingUp, Users, CheckCircle,
+  Clock, DollarSign, Truck, Star
+} from 'lucide-react';
 
 export default function DashboardPage() {
   const { user, userData, signOut, isAdmin, isManager, isStaff, isCustomer } = useAuth();
@@ -42,188 +48,335 @@ export default function DashboardPage() {
     .toUpperCase()
     .slice(0, 2);
 
+  // Sample stats - replace with real data
+  const stats = {
+    todayOrders: 24,
+    pendingOrders: 8,
+    completedToday: 16,
+    revenue: 45200,
+    customers: 156,
+    avgProcessTime: 2.5,
+  };
+
   return (
-    <div className="space-y-8">
+    <ModernSection animate>
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-center justify-between mb-8"
+      >
         <div>
-          <h1 className="text-3xl font-bold text-black">Dashboard</h1>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
+            Dashboard
+          </h1>
           <p className="text-gray-600 mt-1">
             Welcome back, {userData.name}!
           </p>
         </div>
-        <Button
+        <ModernButton
           onClick={handleSignOut}
-          variant="outline"
-          className="border-gray-300 hover:bg-gray-50"
+          variant="secondary"
+          leftIcon={<LogOut className="h-4 w-4" />}
         >
-          <LogOut className="mr-2 h-4 w-4" />
           Sign Out
-        </Button>
-      </div>
+        </ModernButton>
+      </motion.div>
 
-      <Separator />
+      {/* Quick Stats */}
+      <StatCardGroup className="mb-8">
+        <ModernStatCard
+          title="Today's Orders"
+          value={stats.todayOrders}
+          change={12}
+          changeLabel="vs yesterday"
+          icon={<Package className="h-5 w-5" />}
+          trend="up"
+          delay={0.1}
+        />
+        <ModernStatCard
+          title="Pending Orders"
+          value={stats.pendingOrders}
+          change={-5}
+          changeLabel="from morning"
+          icon={<Clock className="h-5 w-5" />}
+          trend="down"
+          delay={0.2}
+          variant="gradient"
+        />
+        <ModernStatCard
+          title="Completed Today"
+          value={stats.completedToday}
+          change={33}
+          changeLabel="completion rate"
+          icon={<CheckCircle className="h-5 w-5" />}
+          trend="up"
+          delay={0.3}
+        />
+        <ModernStatCard
+          title="Today's Revenue"
+          value={stats.revenue}
+          change={8}
+          changeLabel="vs yesterday"
+          icon={<DollarSign className="h-5 w-5" />}
+          format="currency"
+          trend="up"
+          delay={0.4}
+          variant="solid"
+        />
+      </StatCardGroup>
 
-      {/* User Info Card */}
-      <Card className="border-gray-200">
-        <CardHeader>
-          <CardTitle className="text-xl">Your Profile</CardTitle>
-          <CardDescription>
-            Your account information and role
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Avatar and Name */}
-          <div className="flex items-center space-x-4">
-            <Avatar className="h-20 w-20 border-2 border-gray-200">
-              <AvatarFallback className="bg-black text-white text-lg">
-                {initials}
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <h2 className="text-2xl font-bold text-black">{userData.name}</h2>
-              <Badge className={getRoleBadgeColor(userData.role)}>
-                {getRoleDisplayName(userData.role)}
-              </Badge>
+      <ModernGrid columns={2} gap="lg" className="mb-8">
+        {/* User Profile Card */}
+        <ModernCard delay={0.5} hover glowIntensity="medium">
+          <ModernCardHeader>
+            <h2 className="text-xl font-bold text-gray-900">Your Profile</h2>
+            <p className="text-sm text-gray-600">Account information and role</p>
+          </ModernCardHeader>
+          <ModernCardContent className="space-y-6">
+            {/* Avatar and Name */}
+            <div className="flex items-center space-x-4">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
+              >
+                <Avatar className="h-20 w-20 border-4 border-brand-blue/20 shadow-glow-blue/20">
+                  <AvatarFallback className="bg-gradient-to-br from-brand-blue to-brand-blue-dark text-white text-lg font-bold">
+                    {initials}
+                  </AvatarFallback>
+                </Avatar>
+              </motion.div>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">{userData.name}</h2>
+                <ModernBadge variant="primary" gradient>
+                  {getRoleDisplayName(userData.role)}
+                </ModernBadge>
+              </div>
             </div>
-          </div>
 
-          <Separator />
+            {/* Divider */}
+            <div className="h-px bg-gradient-to-r from-transparent via-brand-blue/20 to-transparent" />
 
-          {/* User Details */}
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3 text-sm">
-                <User className="h-4 w-4 text-gray-500" />
+            {/* User Details Grid */}
+            <div className="grid gap-4">
+              <motion.div
+                className="flex items-center space-x-3 text-sm"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.7 }}
+              >
+                <div className="p-2 rounded-xl bg-brand-blue/10">
+                  <User className="h-4 w-4 text-brand-blue" />
+                </div>
                 <div>
                   <p className="text-gray-500">User ID</p>
-                  <p className="font-mono text-black">{userData.uid.slice(0, 20)}...</p>
+                  <p className="font-mono text-gray-900">{userData.uid.slice(0, 20)}...</p>
                 </div>
-              </div>
+              </motion.div>
 
               {userData.email && (
-                <div className="flex items-center space-x-3 text-sm">
-                  <Mail className="h-4 w-4 text-gray-500" />
+                <motion.div
+                  className="flex items-center space-x-3 text-sm"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  <div className="p-2 rounded-xl bg-brand-blue/10">
+                    <Mail className="h-4 w-4 text-brand-blue" />
+                  </div>
                   <div>
                     <p className="text-gray-500">Email</p>
-                    <p className="text-black">{userData.email}</p>
+                    <p className="text-gray-900">{userData.email}</p>
                   </div>
-                </div>
+                </motion.div>
               )}
 
-              <div className="flex items-center space-x-3 text-sm">
-                <Phone className="h-4 w-4 text-gray-500" />
+              <motion.div
+                className="flex items-center space-x-3 text-sm"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.9 }}
+              >
+                <div className="p-2 rounded-xl bg-brand-blue/10">
+                  <Phone className="h-4 w-4 text-brand-blue" />
+                </div>
                 <div>
                   <p className="text-gray-500">Phone</p>
-                  <p className="text-black">{userData.phone}</p>
+                  <p className="text-gray-900">{userData.phone}</p>
                 </div>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3 text-sm">
-                <Shield className="h-4 w-4 text-gray-500" />
-                <div>
-                  <p className="text-gray-500">Role</p>
-                  <p className="text-black">{getRoleDisplayName(userData.role)}</p>
-                </div>
-              </div>
+              </motion.div>
 
               {userData.branchId && (
-                <div className="flex items-center space-x-3 text-sm">
-                  <Building2 className="h-4 w-4 text-gray-500" />
+                <motion.div
+                  className="flex items-center space-x-3 text-sm"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.0 }}
+                >
+                  <div className="p-2 rounded-xl bg-brand-blue/10">
+                    <Building2 className="h-4 w-4 text-brand-blue" />
+                  </div>
                   <div>
                     <p className="text-gray-500">Branch</p>
-                    <p className="text-black">{userData.branchId}</p>
+                    <p className="text-gray-900">{userData.branchId}</p>
                   </div>
-                </div>
+                </motion.div>
               )}
 
-              <div className="flex items-center space-x-3 text-sm">
-                <div className="h-4 w-4" />
-                <div>
-                  <p className="text-gray-500">Account Status</p>
-                  <Badge variant={userData.isActive ? 'default' : 'destructive'}>
-                    {userData.isActive ? 'Active' : 'Inactive'}
-                  </Badge>
+              <motion.div
+                className="flex items-center space-x-3 text-sm"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.1 }}
+              >
+                <div className="p-2 rounded-xl bg-brand-blue/10">
+                  <Shield className="h-4 w-4 text-brand-blue" />
                 </div>
-              </div>
+                <div className="flex items-center space-x-2">
+                  <p className="text-gray-500">Status:</p>
+                  <StatusBadge status={userData.isActive ? 'active' : 'inactive'} />
+                </div>
+              </motion.div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </ModernCardContent>
+        </ModernCard>
 
-      {/* Role-based Access Info */}
-      <Card className="border-gray-200">
-        <CardHeader>
-          <CardTitle className="text-xl">Access Permissions</CardTitle>
-          <CardDescription>
-            Features available based on your role
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <span className="text-sm text-black">Administrator Access</span>
-              <Badge variant={isAdmin ? 'default' : 'secondary'}>
-                {isAdmin ? 'Granted' : 'Not Available'}
-              </Badge>
-            </div>
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <span className="text-sm text-black">Manager Access</span>
-              <Badge variant={isManager || isAdmin ? 'default' : 'secondary'}>
-                {isManager || isAdmin ? 'Granted' : 'Not Available'}
-              </Badge>
-            </div>
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <span className="text-sm text-black">Staff Access</span>
-              <Badge variant={isStaff ? 'default' : 'secondary'}>
-                {isStaff ? 'Granted' : 'Not Available'}
-              </Badge>
-            </div>
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <span className="text-sm text-black">Customer Access</span>
-              <Badge variant={isCustomer ? 'default' : 'secondary'}>
-                {isCustomer ? 'Granted' : 'Not Available'}
-              </Badge>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Access Permissions Card */}
+        <ModernCard delay={0.6} hover glowIntensity="medium">
+          <ModernCardHeader>
+            <h2 className="text-xl font-bold text-gray-900">Access Permissions</h2>
+            <p className="text-sm text-gray-600">Features available based on your role</p>
+          </ModernCardHeader>
+          <ModernCardContent>
+            <div className="space-y-3">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.7 }}
+                className={`flex items-center justify-between p-4 rounded-2xl ${
+                  isAdmin
+                    ? 'bg-gradient-to-r from-brand-blue/10 to-brand-blue/5 border border-brand-blue/20'
+                    : 'bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <Star className={`h-5 w-5 ${isAdmin ? 'text-brand-blue' : 'text-gray-400'}`} />
+                  <span className="text-sm font-medium text-gray-900">Administrator Access</span>
+                </div>
+                <ModernBadge variant={isAdmin ? 'primary' : 'secondary'} size="sm">
+                  {isAdmin ? 'Granted' : 'Not Available'}
+                </ModernBadge>
+              </motion.div>
 
-      {/* Success Message */}
-      <Card className="border-green-200 bg-green-50">
-        <CardContent className="pt-6">
-          <div className="flex items-center space-x-3">
-            <div className="flex-shrink-0">
-              <div className="h-10 w-10 rounded-full bg-green-600 flex items-center justify-center">
-                <svg
-                  className="h-6 w-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.8 }}
+                className={`flex items-center justify-between p-4 rounded-2xl ${
+                  isManager || isAdmin
+                    ? 'bg-gradient-to-r from-brand-blue/10 to-brand-blue/5 border border-brand-blue/20'
+                    : 'bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <TrendingUp className={`h-5 w-5 ${isManager || isAdmin ? 'text-brand-blue' : 'text-gray-400'}`} />
+                  <span className="text-sm font-medium text-gray-900">Manager Access</span>
+                </div>
+                <ModernBadge variant={isManager || isAdmin ? 'primary' : 'secondary'} size="sm">
+                  {isManager || isAdmin ? 'Granted' : 'Not Available'}
+                </ModernBadge>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.9 }}
+                className={`flex items-center justify-between p-4 rounded-2xl ${
+                  isStaff
+                    ? 'bg-gradient-to-r from-brand-blue/10 to-brand-blue/5 border border-brand-blue/20'
+                    : 'bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <Users className={`h-5 w-5 ${isStaff ? 'text-brand-blue' : 'text-gray-400'}`} />
+                  <span className="text-sm font-medium text-gray-900">Staff Access</span>
+                </div>
+                <ModernBadge variant={isStaff ? 'primary' : 'secondary'} size="sm">
+                  {isStaff ? 'Granted' : 'Not Available'}
+                </ModernBadge>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.0 }}
+                className={`flex items-center justify-between p-4 rounded-2xl ${
+                  isCustomer
+                    ? 'bg-gradient-to-r from-brand-blue/10 to-brand-blue/5 border border-brand-blue/20'
+                    : 'bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <Package className={`h-5 w-5 ${isCustomer ? 'text-brand-blue' : 'text-gray-400'}`} />
+                  <span className="text-sm font-medium text-gray-900">Customer Access</span>
+                </div>
+                <ModernBadge variant={isCustomer ? 'primary' : 'secondary'} size="sm">
+                  {isCustomer ? 'Granted' : 'Not Available'}
+                </ModernBadge>
+              </motion.div>
             </div>
+          </ModernCardContent>
+        </ModernCard>
+      </ModernGrid>
+
+      {/* Quick Actions */}
+      <ModernCard delay={0.7} className="bg-gradient-to-br from-brand-blue/10 to-brand-blue/5">
+        <ModernCardContent className="py-8">
+          <div className="text-center space-y-4">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
+              className="inline-flex p-4 rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow-lg shadow-green-500/30"
+            >
+              <CheckCircle className="h-8 w-8 text-white" />
+            </motion.div>
             <div>
-              <h3 className="text-lg font-medium text-green-900">
+              <h3 className="text-xl font-bold bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">
                 Authentication System Active
               </h3>
-              <p className="text-sm text-green-700 mt-1">
-                Your authentication system is working correctly. You are logged in
-                and authenticated.
+              <p className="text-sm text-gray-600 mt-1 max-w-md mx-auto">
+                Your authentication system is working correctly. You are logged in and authenticated with full access to your role's features.
               </p>
             </div>
+            <div className="flex gap-4 justify-center pt-4">
+              <ModernButton
+                variant="primary"
+                leftIcon={<Package className="h-4 w-4" />}
+                onClick={() => window.location.href = '/pos'}
+              >
+                New Order
+              </ModernButton>
+              <ModernButton
+                variant="secondary"
+                leftIcon={<Users className="h-4 w-4" />}
+                onClick={() => window.location.href = '/customers'}
+              >
+                View Customers
+              </ModernButton>
+              <ModernButton
+                variant="ghost"
+                leftIcon={<Truck className="h-4 w-4" />}
+                onClick={() => window.location.href = '/deliveries'}
+              >
+                Deliveries
+              </ModernButton>
+            </div>
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        </ModernCardContent>
+      </ModernCard>
+    </ModernSection>
   );
 }

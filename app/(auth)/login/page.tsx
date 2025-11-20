@@ -1,8 +1,8 @@
 /**
  * Staff Login Page
  *
- * Email/Password login for staff members.
- * Uses react-hook-form with Zod validation.
+ * Modern staff login with glassmorphic design and blue theme.
+ * Matches the main site aesthetic with smooth animations.
  *
  * @module app/(auth)/login/page
  */
@@ -15,14 +15,14 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
+import { motion } from 'framer-motion';
 import { useAuth } from '@/hooks/useAuth';
 import { loginSchema, type LoginFormData } from '@/lib/validations/auth';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { AuthCard } from '@/components/auth/AuthCard';
+import { AuthButton } from '@/components/auth/AuthButton';
+import { AuthInput } from '@/components/auth/AuthInput';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Loader2 } from 'lucide-react';
+import { Mail, Lock, Rocket, UserCircle } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -87,77 +87,93 @@ export default function LoginPage() {
   };
 
   return (
-    <Card className="border-gray-200">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-black">Staff Login</CardTitle>
-        <CardDescription className="text-gray-600">
-          Sign in with your email and password
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <AuthCard className="p-8">
+      <div className="space-y-6">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.4 }}
+          className="text-center"
+        >
+          <div className="flex justify-center mb-4">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="w-20 h-20 bg-gradient-to-br from-brand-blue to-brand-blue-dark rounded-full flex items-center justify-center shadow-glow-blue/30"
+            >
+              <UserCircle className="w-12 h-12 text-white" />
+            </motion.div>
+          </div>
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
+            Staff Login
+          </h2>
+          <p className="mt-2 text-gray-600">
+            Sign in with your email and password
+          </p>
+        </motion.div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* Email Field */}
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-black">
-              Email Address
-            </Label>
-            <Input
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+          >
+            <AuthInput
               id="email"
               type="email"
+              label="Email Address"
               placeholder="you@example.com"
               disabled={isLoading}
-              className="border-gray-300 focus:border-black focus:ring-black"
+              icon={<Mail className="h-5 w-5" />}
+              error={errors.email?.message}
               aria-invalid={errors.email ? 'true' : 'false'}
               aria-describedby={errors.email ? 'email-error' : undefined}
               {...register('email')}
             />
-            {errors.email && (
-              <p
-                id="email-error"
-                className="text-sm text-red-600"
-                role="alert"
-              >
-                {errors.email.message}
-              </p>
-            )}
-          </div>
+          </motion.div>
 
           {/* Password Field */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password" className="text-black">
-                Password
-              </Label>
-              <Link
-                href="/forgot-password"
-                className="text-sm text-gray-600 hover:text-black transition-colors"
-              >
-                Forgot password?
-              </Link>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4, duration: 0.4 }}
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
+                <Link
+                  href="/forgot-password"
+                  className="text-sm text-brand-blue hover:text-brand-blue-dark transition-colors duration-300"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+              <AuthInput
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                disabled={isLoading}
+                icon={<Lock className="h-5 w-5" />}
+                error={errors.password?.message}
+                aria-invalid={errors.password ? 'true' : 'false'}
+                aria-describedby={errors.password ? 'password-error' : undefined}
+                {...register('password')}
+              />
             </div>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              disabled={isLoading}
-              className="border-gray-300 focus:border-black focus:ring-black"
-              aria-invalid={errors.password ? 'true' : 'false'}
-              aria-describedby={errors.password ? 'password-error' : undefined}
-              {...register('password')}
-            />
-            {errors.password && (
-              <p
-                id="password-error"
-                className="text-sm text-red-600"
-                role="alert"
-              >
-                {errors.password.message}
-              </p>
-            )}
-          </div>
+          </motion.div>
 
           {/* Remember Me */}
-          <div className="flex items-center space-x-2">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.4 }}
+            className="flex items-center space-x-2"
+          >
             <Checkbox
               id="rememberMe"
               checked={rememberMe}
@@ -165,69 +181,75 @@ export default function LoginPage() {
                 setValue('rememberMe', checked as boolean)
               }
               disabled={isLoading}
-              className="border-gray-300 data-[state=checked]:bg-black data-[state=checked]:border-black"
+              className="border-brand-blue/30 data-[state=checked]:bg-brand-blue data-[state=checked]:border-brand-blue"
             />
-            <Label
+            <label
               htmlFor="rememberMe"
-              className="text-sm text-gray-700 cursor-pointer"
+              className="text-sm text-gray-600 cursor-pointer hover:text-brand-blue transition-colors"
             >
               Remember me for 30 days
-            </Label>
-          </div>
+            </label>
+          </motion.div>
 
           {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-black hover:bg-gray-800 text-white"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.4 }}
           >
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Signing in...
-              </>
-            ) : (
-              'Sign In'
-            )}
-          </Button>
+            <AuthButton
+              type="submit"
+              disabled={isLoading}
+              isLoading={isLoading}
+              className="w-full"
+              size="lg"
+            >
+              Sign In
+            </AuthButton>
+          </motion.div>
 
           {/* Dev Login Button - Only shown in development */}
           {process.env.NODE_ENV === 'development' &&
            process.env.NEXT_PUBLIC_DEV_LOGIN_EMAIL && (
-            <Button
-              type="button"
-              onClick={handleDevLogin}
-              disabled={isLoading}
-              variant="outline"
-              className="w-full border-2 border-dashed border-gray-300 hover:border-gray-400 hover:bg-gray-50 text-gray-700"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.4 }}
             >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Logging in...
-                </>
-              ) : (
-                <>
-                  🚀 Dev Quick Login
-                </>
-              )}
-            </Button>
+              <AuthButton
+                type="button"
+                onClick={handleDevLogin}
+                disabled={isLoading}
+                isLoading={isLoading}
+                variant="secondary"
+                className="w-full"
+                size="md"
+              >
+                <Rocket className="mr-2 h-4 w-4" />
+                Dev Quick Login
+              </AuthButton>
+            </motion.div>
           )}
         </form>
 
         {/* Customer Login Link */}
-        <div className="mt-6 pt-6 border-t border-gray-200">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.4 }}
+          className="pt-6 border-t border-brand-blue/10"
+        >
           <p className="text-sm text-center text-gray-600">
             Are you a customer?{' '}
             <Link
               href="/customer-login"
-              className="font-medium text-black hover:underline"
+              className="font-medium text-brand-blue hover:text-brand-blue-dark transition-colors duration-300 hover:underline"
             >
               Login Here
             </Link>
           </p>
-        </div>
-      </CardContent>
-    </Card>
+        </motion.div>
+      </div>
+    </AuthCard>
   );
 }
