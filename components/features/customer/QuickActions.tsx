@@ -10,13 +10,12 @@
 
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Package, History, User, Phone } from 'lucide-react';
+import { Package, History, User } from 'lucide-react';
 
 const ACTIONS = [
   {
     id: 'track-order',
-    href: '/orders',
+    href: '/portal/orders',
     label: 'Track Order',
     description: 'View order status',
     icon: Package,
@@ -24,7 +23,7 @@ const ACTIONS = [
   },
   {
     id: 'order-history',
-    href: '/orders',
+    href: '/portal/orders',
     label: 'History',
     description: 'Past orders',
     icon: History,
@@ -56,9 +55,7 @@ export function QuickActions() {
                 <div className="flex flex-col items-center text-center space-y-2">
                   <Icon className="w-6 h-6" />
                   <div>
-                    <div className="font-semibold text-sm">
-                      {action.label}
-                    </div>
+                    <div className="font-semibold text-sm">{action.label}</div>
                     <div className="text-xs opacity-80 hidden sm:block">
                       {action.description}
                     </div>

@@ -97,7 +97,13 @@ export function GarmentEntryForm({
     },
   });
 
-  const { register, handleSubmit, formState: { errors }, setValue, watch } = form;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = form;
 
   const watchType = watch('type');
 
@@ -339,7 +345,7 @@ export function GarmentEntryForm({
               <Button
                 type="submit"
                 disabled={selectedServices.length === 0}
-                className="flex-1 h-11 bg-black hover:bg-gray-800 text-white"
+                className="flex-1 h-11 bg-brand-blue hover:bg-brand-blue-dark text-white"
               >
                 <Plus className="w-5 h-5 mr-2" />
                 Add to Order

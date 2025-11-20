@@ -44,7 +44,11 @@ export async function generateOrderId(branchId: string): Promise<string> {
   const todayOrders = await getDocuments<Order>(
     'orders',
     where('branchId', '==', branchId),
-    where('createdAt', '>=', Timestamp.fromDate(new Date(today.setHours(0, 0, 0, 0)))),
+    where(
+      'createdAt',
+      '>=',
+      Timestamp.fromDate(new Date(today.setHours(0, 0, 0, 0)))
+    ),
     orderBy('createdAt', 'desc'),
     limit(1)
   );
@@ -53,7 +57,10 @@ export async function generateOrderId(branchId: string): Promise<string> {
   if (todayOrders.length > 0) {
     const lastOrder = todayOrders[0];
     // Extract sequence from last order ID (ORD-BRANCH-20251015-0001)
-    const lastSequence = parseInt(lastOrder.orderId.split('-').pop() || '0', 10);
+    const lastSequence = parseInt(
+      lastOrder.orderId.split('-').pop() || '0',
+      10
+    );
     sequence = lastSequence + 1;
   }
 
@@ -312,6 +319,17 @@ export async function getOrdersByStatus(
   return getDocuments<OrderExtended>(
     'orders',
     where('status', '==', status),
+    orderBy('createdAt', 'desc'),
+    limit(limitCount)
+  );
+}
+
+/**
+ * Get all orders (recent)
+ */
+export async function getAllOrders(limitCount = 50): Promise<OrderExtended[]> {
+  return getDocuments<OrderExtended>(
+    'orders',
     orderBy('createdAt', 'desc'),
     limit(limitCount)
   );

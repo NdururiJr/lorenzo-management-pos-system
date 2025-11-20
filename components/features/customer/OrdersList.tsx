@@ -41,7 +41,7 @@ export function OrdersList({ orders }: OrdersListProps) {
   return (
     <div className="space-y-3">
       {orders.map((order) => (
-        <Link key={order.orderId} href={`/orders/${order.orderId}`}>
+        <Link key={order.orderId} href={`/portal/orders/${order.orderId}`}>
           <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
             <div className="flex items-start justify-between mb-3">
               {/* Order ID and Date */}
@@ -59,7 +59,8 @@ export function OrdersList({ orders }: OrdersListProps) {
             {/* Order Details */}
             <div className="flex items-center justify-between text-sm">
               <div className="text-gray-600">
-                {order.garments.length} garment{order.garments.length !== 1 ? 's' : ''}
+                {order.garments.length} garment
+                {order.garments.length !== 1 ? 's' : ''}
               </div>
               <div className="font-semibold">
                 {formatCurrency(order.totalAmount)}

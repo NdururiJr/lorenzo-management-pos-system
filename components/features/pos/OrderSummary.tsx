@@ -104,7 +104,8 @@ export function OrderSummary({
         {/* Garments List */}
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-3">
-            Garments: {garments.length} {garments.length === 1 ? 'item' : 'items'}
+            Garments: {garments.length}{' '}
+            {garments.length === 1 ? 'item' : 'items'}
           </h3>
 
           {garments.length > 0 ? (
@@ -197,7 +198,7 @@ export function OrderSummary({
           <Button
             onClick={onProcessPayment}
             disabled={!hasItems || !customer || isProcessing}
-            className="w-full h-11 bg-black hover:bg-gray-800 text-white"
+            className="w-full h-11 bg-brand-blue hover:bg-brand-blue-dark text-white"
           >
             <CreditCard className="w-5 h-5 mr-2" />
             Process Payment

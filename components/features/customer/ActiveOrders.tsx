@@ -71,15 +71,13 @@ export function ActiveOrders({ orders, loading }: ActiveOrdersProps) {
 
       <div className="space-y-3">
         {orders.map((order) => (
-          <Link key={order.orderId} href={`/orders/${order.orderId}`}>
+          <Link key={order.orderId} href={`/portal/orders/${order.orderId}`}>
             <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer">
               <div className="space-y-3">
                 {/* Order Header */}
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="font-semibold text-sm">
-                      {order.orderId}
-                    </div>
+                    <div className="font-semibold text-sm">{order.orderId}</div>
                     <div className="text-xs text-gray-600">
                       {formatDate(order.createdAt.toDate())}
                     </div>
@@ -90,7 +88,8 @@ export function ActiveOrders({ orders, loading }: ActiveOrdersProps) {
                 {/* Order Details */}
                 <div className="flex items-center justify-between text-sm">
                   <div className="text-gray-600">
-                    {order.garments.length} garment{order.garments.length !== 1 ? 's' : ''}
+                    {order.garments.length} garment
+                    {order.garments.length !== 1 ? 's' : ''}
                   </div>
                   <div className="font-semibold">
                     {formatCurrency(order.totalAmount)}
@@ -112,12 +111,7 @@ export function ActiveOrders({ orders, loading }: ActiveOrdersProps) {
                 )}
 
                 {/* Track Order Button */}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full"
-                  asChild
-                >
+                <Button variant="outline" size="sm" className="w-full" asChild>
                   <span>
                     Track Order
                     <ArrowRight className="w-4 h-4 ml-1" />

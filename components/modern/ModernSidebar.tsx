@@ -17,7 +17,6 @@ import {
   DollarSign,
   BarChart3,
   Calendar,
-  ClipboardList,
   Boxes,
   Menu,
   X,
@@ -26,9 +25,9 @@ import {
   User,
   Store,
   Wrench,
+  ChevronRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { ModernButton } from './ModernButton';
 import { ModernBadge } from './ModernBadge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
@@ -58,7 +57,7 @@ const navigationItems: NavItem[] = [
     icon: Home,
   },
   {
-    label: 'Orders',
+    label: 'POS',
     href: '/orders',
     icon: Package,
     children: [
@@ -69,15 +68,29 @@ const navigationItems: NavItem[] = [
       },
       {
         label: 'Create Order',
-        href: '/orders/new',
+        href: '/pos',
         icon: ShoppingBag,
-        roles: ['admin', 'director', 'general_manager', 'store_manager', 'manager', 'front_desk'],
+        roles: [
+          'admin',
+          'director',
+          'general_manager',
+          'store_manager',
+          'manager',
+          'front_desk',
+        ],
       },
       {
         label: 'Pipeline',
         href: '/pipeline',
         icon: TrendingUp,
-        roles: ['admin', 'director', 'general_manager', 'store_manager', 'workstation_manager', 'manager'],
+        roles: [
+          'admin',
+          'director',
+          'general_manager',
+          'store_manager',
+          'workstation_manager',
+          'manager',
+        ],
       },
     ],
   },
@@ -85,19 +98,40 @@ const navigationItems: NavItem[] = [
     label: 'Workstation',
     href: '/workstation',
     icon: Wrench,
-    roles: ['admin', 'director', 'general_manager', 'store_manager', 'workstation_manager', 'workstation_staff'],
+    roles: [
+      'admin',
+      'director',
+      'general_manager',
+      'store_manager',
+      'workstation_manager',
+      'workstation_staff',
+    ],
   },
   {
     label: 'Customers',
     href: '/customers',
     icon: Users,
-    roles: ['admin', 'director', 'general_manager', 'store_manager', 'manager', 'front_desk'],
+    roles: [
+      'admin',
+      'director',
+      'general_manager',
+      'store_manager',
+      'manager',
+      'front_desk',
+    ],
   },
   {
     label: 'Deliveries',
     href: '/deliveries',
     icon: Truck,
-    roles: ['admin', 'director', 'general_manager', 'store_manager', 'manager', 'driver'],
+    roles: [
+      'admin',
+      'director',
+      'general_manager',
+      'store_manager',
+      'manager',
+      'driver',
+    ],
   },
   {
     label: 'Inventory',
@@ -113,7 +147,7 @@ const navigationItems: NavItem[] = [
   },
   {
     label: 'Staff',
-    href: '/staff',
+    href: '/employees',
     icon: Calendar,
     roles: ['admin', 'director', 'general_manager', 'store_manager', 'manager'],
   },
@@ -159,7 +193,9 @@ export function ModernSidebar() {
 
   const toggleExpanded = (label: string) => {
     setExpandedItems((prev) =>
-      prev.includes(label) ? prev.filter((item) => item !== label) : [...prev, label]
+      prev.includes(label)
+        ? prev.filter((item) => item !== label)
+        : [...prev, label]
     );
   };
 
@@ -190,7 +226,7 @@ export function ModernSidebar() {
         <Link href="/dashboard" className="flex items-center gap-3 group">
           <motion.div
             whileHover={{ scale: 1.1, rotate: 5 }}
-            transition={{ type: "spring", stiffness: 400 }}
+            transition={{ type: 'spring', stiffness: 400 }}
             className="w-10 h-10 bg-gradient-to-br from-brand-blue to-brand-blue-dark rounded-2xl flex items-center justify-center shadow-glow-blue/30"
           >
             <span className="text-white font-bold text-lg">L</span>
@@ -222,31 +258,45 @@ export function ModernSidebar() {
                   {userData?.name || user?.email || 'User'}
                 </p>
                 {userRole && (
-                  <p className="text-xs text-gray-600">{getRoleDisplayName(userRole)}</p>
+                  <p className="text-xs text-gray-600">
+                    {getRoleDisplayName(userRole)}
+                  </p>
                 )}
               </div>
               <ChevronDown className="w-4 h-4 text-gray-500 group-hover:text-brand-blue transition-colors" />
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-56 bg-white/95 backdrop-blur-xl border-2 border-brand-blue/20 shadow-glow-blue/10">
+          <DropdownMenuContent
+            align="start"
+            className="w-56 bg-white/95 backdrop-blur-xl border-2 border-brand-blue/20 shadow-glow-blue/10"
+          >
             <DropdownMenuLabel className="bg-gradient-to-r from-brand-blue/10 to-brand-blue/5 font-semibold">
               My Account
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-brand-blue/10" />
-            <DropdownMenuItem asChild className="focus:bg-brand-blue/10 cursor-pointer">
+            <DropdownMenuItem
+              asChild
+              className="focus:bg-brand-blue/10 cursor-pointer"
+            >
               <Link href="/profile">
                 <User className="w-4 h-4 mr-2 text-brand-blue" />
                 Profile
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild className="focus:bg-brand-blue/10 cursor-pointer">
+            <DropdownMenuItem
+              asChild
+              className="focus:bg-brand-blue/10 cursor-pointer"
+            >
               <Link href="/settings">
                 <Settings className="w-4 h-4 mr-2 text-brand-blue" />
                 Settings
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-brand-blue/10" />
-            <DropdownMenuItem onClick={() => signOut()} className="text-red-600 cursor-pointer focus:bg-red-50 focus:text-red-700">
+            <DropdownMenuItem
+              onClick={() => signOut()}
+              className="text-red-600 cursor-pointer focus:bg-red-50 focus:text-red-700"
+            >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
             </DropdownMenuItem>
@@ -262,7 +312,8 @@ export function ModernSidebar() {
             const active = isActive(item.href);
             const hasChildren = item.children && item.children.length > 0;
             const isExpanded = expandedItems.includes(item.label);
-            const accessibleChildren = item.children?.filter(hasAccessToChild) || [];
+            const accessibleChildren =
+              item.children?.filter(hasAccessToChild) || [];
 
             if (hasChildren && accessibleChildren.length === 0) {
               return null;
@@ -391,7 +442,11 @@ export function ModernSidebar() {
         className="fixed top-4 left-4 z-50 lg:hidden p-2 bg-white/80 backdrop-blur-xl rounded-2xl shadow-glow-blue/20 border-2 border-brand-blue/20"
         onClick={() => setIsMobileOpen(!isMobileOpen)}
       >
-        {isMobileOpen ? <X className="w-5 h-5 text-brand-blue" /> : <Menu className="w-5 h-5 text-brand-blue" />}
+        {isMobileOpen ? (
+          <X className="w-5 h-5 text-brand-blue" />
+        ) : (
+          <Menu className="w-5 h-5 text-brand-blue" />
+        )}
       </motion.button>
 
       {/* Mobile Overlay */}

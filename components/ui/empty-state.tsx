@@ -73,7 +73,7 @@ export function EmptyState({
       {action && (
         <Button
           onClick={action.onClick}
-          className="bg-black text-white hover:bg-gray-800"
+          className="bg-brand-blue text-white hover:bg-brand-blue-dark"
         >
           {action.label}
         </Button>

@@ -10,7 +10,13 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+} from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
@@ -25,12 +31,10 @@ import { ModernPipelineColumn } from '@/components/modern/ModernPipelineColumn';
 import { OrderDetailsModal } from '@/components/features/pipeline/OrderDetailsModal';
 import { usePipelineFilters } from '@/hooks/usePipelineFilters';
 import { ModernCard, ModernCardContent } from '@/components/modern/ModernCard';
-import { ModernButton } from '@/components/modern/ModernButton';
 import { ModernSection } from '@/components/modern/ModernLayout';
 import {
   groupOrdersByStatus,
   calculatePipelineStatistics,
-  calculateTimeInCurrentStage,
 } from '@/lib/pipeline/pipeline-helpers';
 import { getAllStatuses, canTransitionTo } from '@/lib/pipeline/status-manager';
 
@@ -38,11 +42,14 @@ export default function PipelinePage() {
   const { user, userData } = useAuth();
   const [orders, setOrders] = useState<OrderExtended[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedOrder, setSelectedOrder] = useState<OrderExtended | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<OrderExtended | null>(
+    null
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Check if user is manager (pipeline is manager-only)
   const isManager =
+    userData?.role === 'admin' ||
     userData?.role === 'workstation_manager' ||
     userData?.role === 'store_manager' ||
     userData?.role === 'director' ||
@@ -55,7 +62,6 @@ export default function PipelinePage() {
     updateFilter,
     resetFilters,
     filteredOrders,
-    statusCounts,
     hasActiveFilters,
   } = usePipelineFilters(orders);
 
@@ -67,7 +73,8 @@ export default function PipelinePage() {
 
   // Real-time listener for orders
   useEffect(() => {
-    if (!userData?.branchId) return;
+    // If not admin and no branchId, can't load orders
+    if (userData?.role !== 'admin' && !userData?.branchId) return;
 
     setIsLoading(true);
 
@@ -84,12 +91,24 @@ export default function PipelinePage() {
       'out_for_delivery',
     ];
 
-    const q = query(
-      ordersRef,
-      where('branchId', '==', userData.branchId),
-      where('status', 'in', activeStatuses.slice(0, 10)), // Firestore 'in' limit is 10
-      orderBy('createdAt', 'desc')
-    );
+    let q;
+
+    if (userData?.role === 'admin') {
+      // Admin sees all active orders
+      q = query(
+        ordersRef,
+        where('status', 'in', activeStatuses.slice(0, 10)),
+        orderBy('createdAt', 'desc')
+      );
+    } else {
+      // Staff sees branch orders
+      q = query(
+        ordersRef,
+        where('branchId', '==', userData?.branchId),
+        where('status', 'in', activeStatuses.slice(0, 10)),
+        orderBy('createdAt', 'desc')
+      );
+    }
 
     const unsubscribe = onSnapshot(
       q,
@@ -110,11 +129,11 @@ export default function PipelinePage() {
     );
 
     return () => unsubscribe();
-  }, [userData?.branchId]);
+  }, [userData?.branchId, userData?.role]);
 
   // Handle status change
   const handleStatusChange = useCallback(
-    async (orderId: string, newStatus: OrderStatus, note?: string) => {
+    async (orderId: string, newStatus: OrderStatus, _note?: string) => {
       if (!user) return;
 
       // Find the order
@@ -174,13 +193,13 @@ export default function PipelinePage() {
   }, []);
 
   // Handle print receipt (placeholder)
-  const handlePrintReceipt = useCallback((orderId: string) => {
+  const handlePrintReceipt = useCallback((_orderId: string) => {
     toast.info('Receipt printing coming soon!');
     // TODO: Implement receipt printing
   }, []);
 
   // Handle print order sheet (placeholder)
-  const handlePrintOrderSheet = useCallback((orderId: string) => {
+  const handlePrintOrderSheet = useCallback((_orderId: string) => {
     toast.info('Order sheet printing coming soon!');
     // TODO: Implement order sheet printing
   }, []);
@@ -197,7 +216,7 @@ export default function PipelinePage() {
           <div className="text-center space-y-4">
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
             >
               <Loader2 className="h-8 w-8 mx-auto text-brand-blue" />
             </motion.div>
@@ -222,7 +241,7 @@ export default function PipelinePage() {
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
                 className="inline-flex p-4 rounded-full bg-gradient-to-br from-red-400 to-red-600 shadow-lg shadow-red-500/30 mb-4"
               >
                 <AlertTriangle className="h-8 w-8 text-white" />
@@ -231,7 +250,8 @@ export default function PipelinePage() {
                 Access Restricted
               </h3>
               <p className="text-gray-600">
-                The Order Pipeline is only accessible to management roles. Please contact your administrator if you need access.
+                The Order Pipeline is only accessible to management roles.
+                Please contact your administrator if you need access.
               </p>
             </ModernCardContent>
           </ModernCard>
@@ -253,7 +273,7 @@ export default function PipelinePage() {
           <motion.div
             initial={{ rotate: -180, scale: 0 }}
             animate={{ rotate: 0, scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
             className="p-3 rounded-2xl bg-gradient-to-br from-brand-blue/20 to-brand-blue/10"
           >
             <GitBranch className="h-6 w-6 text-brand-blue" />
@@ -262,7 +282,9 @@ export default function PipelinePage() {
             <h1 className="text-3xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
               Order Pipeline
             </h1>
-            <p className="text-sm text-gray-600">Real-time order tracking & management</p>
+            <p className="text-sm text-gray-600">
+              Real-time order tracking & management
+            </p>
           </div>
         </div>
       </motion.div>
@@ -301,7 +323,11 @@ export default function PipelinePage() {
                 <div className="text-center space-y-4">
                   <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    }}
                   >
                     <Loader2 className="h-8 w-8 mx-auto text-brand-blue" />
                   </motion.div>
@@ -322,7 +348,10 @@ export default function PipelinePage() {
                 <ScrollArea className="h-full w-full">
                   <div className="flex gap-4 p-6 min-w-max">
                     {getAllStatuses()
-                      .filter((status) => status !== 'delivered' && status !== 'collected')
+                      .filter(
+                        (status) =>
+                          status !== 'delivered' && status !== 'collected'
+                      )
                       .map((status, index) => (
                         <motion.div
                           key={status}
@@ -346,7 +375,10 @@ export default function PipelinePage() {
               <div className="lg:hidden h-full overflow-y-auto">
                 <div className="space-y-4 p-4">
                   {getAllStatuses()
-                    .filter((status) => status !== 'delivered' && status !== 'collected')
+                    .filter(
+                      (status) =>
+                        status !== 'delivered' && status !== 'collected'
+                    )
                     .map((status, index) => {
                       const statusOrders = ordersByStatus[status] || [];
                       const count = statusOrders.length;
@@ -362,7 +394,9 @@ export default function PipelinePage() {
                             <details className="group">
                               <summary className="cursor-pointer p-4 hover:bg-brand-blue/5 transition-colors list-none rounded-t-3xl">
                                 <div className="flex items-center justify-between">
-                                  <h3 className="font-semibold text-gray-900">{status}</h3>
+                                  <h3 className="font-semibold text-gray-900">
+                                    {status}
+                                  </h3>
                                   <span className="px-3 py-1 rounded-full bg-brand-blue/10 text-sm text-brand-blue font-medium">
                                     {count} orders
                                   </span>
