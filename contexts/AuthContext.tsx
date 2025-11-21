@@ -28,6 +28,9 @@ import {
   getUserRole,
   setAuthToken,
   removeAuthToken,
+  getAllowedBranches,
+  canAccessBranch as checkBranchAccess,
+  isSuperAdmin as checkSuperAdmin,
   type UserData,
 } from '@/lib/auth/utils';
 import type { UserRole } from '@/lib/validations/auth';
@@ -56,6 +59,9 @@ interface AuthContextValue extends AuthState {
   isManager: boolean;
   isStaff: boolean;
   isCustomer: boolean;
+  isSuperAdmin: boolean;
+  allowedBranches: string[] | null;
+  canAccessBranch: (branchId: string) => boolean;
 }
 
 /**
@@ -336,6 +342,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
     [state.userData]
   );
 
+  const isSuperAdmin = useMemo(
+    () => checkSuperAdmin(state.userData),
+    [state.userData]
+  );
+
+  const allowedBranches = useMemo(
+    () => (state.userData ? getAllowedBranches(state.userData) : null),
+    [state.userData]
+  );
+
+  const canAccessBranch = useCallback(
+    (branchId: string) => checkBranchAccess(state.userData, branchId),
+    [state.userData]
+  );
+
   /**
    * Context value
    */
@@ -352,6 +373,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       isManager,
       isStaff,
       isCustomer,
+      isSuperAdmin,
+      allowedBranches,
+      canAccessBranch,
     }),
     [
       state,
@@ -365,6 +389,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       isManager,
       isStaff,
       isCustomer,
+      isSuperAdmin,
+      allowedBranches,
+      canAccessBranch,
     ]
   );
 

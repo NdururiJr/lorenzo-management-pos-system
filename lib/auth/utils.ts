@@ -20,6 +20,8 @@ export interface UserData {
   phone: string;
   role: UserRole;
   branchId?: string;
+  branchAccess?: string[];
+  isSuperAdmin?: boolean;
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean;
@@ -76,6 +78,8 @@ export async function getUserRole(uid: string): Promise<UserData | null> {
       phone: data.phone,
       role: data.role as UserRole,
       branchId: data.branchId,
+      branchAccess: data.branchAccess || [],
+      isSuperAdmin: data.isSuperAdmin || false,
       createdAt: data.createdAt?.toDate() || new Date(),
       updatedAt: data.updatedAt?.toDate() || new Date(),
       isActive: data.isActive ?? true,
@@ -119,6 +123,83 @@ export function checkUserPermission(
  */
 export function hasRole(userRole: UserRole, allowedRoles: UserRole[]): boolean {
   return allowedRoles.includes(userRole);
+}
+
+/**
+ * Get list of all branches a user can access
+ *
+ * @param userData - User data from Firestore
+ * @returns Array of branch IDs user can access, or null for super admin (all branches)
+ *
+ * @example
+ * // Super admin - can access all branches
+ * getAllowedBranches({ isSuperAdmin: true, branchId: 'A', branchAccess: [] }) // null (means all)
+ *
+ * // Branch manager with extra access
+ * getAllowedBranches({ isSuperAdmin: false, branchId: 'A', branchAccess: ['B', 'C'] }) // ['A', 'B', 'C']
+ *
+ * // Regular staff with single branch
+ * getAllowedBranches({ isSuperAdmin: false, branchId: 'A', branchAccess: [] }) // ['A']
+ */
+export function getAllowedBranches(userData: UserData): string[] | null {
+  // Super admin can access all branches
+  if (userData.isSuperAdmin) {
+    return null;
+  }
+
+  // Build list of allowed branches
+  const branches: string[] = [];
+
+  // Add primary branch
+  if (userData.branchId) {
+    branches.push(userData.branchId);
+  }
+
+  // Add additional branches from branchAccess
+  if (userData.branchAccess && userData.branchAccess.length > 0) {
+    userData.branchAccess.forEach((branchId) => {
+      if (!branches.includes(branchId)) {
+        branches.push(branchId);
+      }
+    });
+  }
+
+  return branches;
+}
+
+/**
+ * Check if user can access a specific branch
+ *
+ * @param userData - User data from Firestore
+ * @param branchId - Branch ID to check access for
+ * @returns True if user can access the branch
+ *
+ * @example
+ * canAccessBranch(userData, 'branch-A') // true if user has access to branch-A
+ */
+export function canAccessBranch(userData: UserData | null, branchId: string): boolean {
+  if (!userData) {
+    return false;
+  }
+
+  // Super admin can access all branches
+  if (userData.isSuperAdmin) {
+    return true;
+  }
+
+  // Check if branch is in allowed list
+  const allowedBranches = getAllowedBranches(userData);
+  return allowedBranches ? allowedBranches.includes(branchId) : false;
+}
+
+/**
+ * Check if user is a super admin
+ *
+ * @param userData - User data from Firestore
+ * @returns True if user is super admin
+ */
+export function isSuperAdmin(userData: UserData | null): boolean {
+  return userData?.isSuperAdmin || false;
 }
 
 /**

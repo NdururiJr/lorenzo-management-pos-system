@@ -24,9 +24,11 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 const DEV_USER = {
   email: process.env.NEXT_PUBLIC_DEV_LOGIN_EMAIL || 'dev@lorenzo.com',
   password: process.env.NEXT_PUBLIC_DEV_LOGIN_PASSWORD || 'DevPass123!',
-  displayName: 'Dev Admin',
+  displayName: 'Dev Super Admin',
   role: 'admin' as const,
-  branch: 'main-branch',
+  isSuperAdmin: true, // Super admin can access all branches
+  branchId: null as string | null, // Super admin is not bound to a specific branch
+  branchAccess: [] as string[], // Super admin doesn't need specific branch access
 };
 
 /**
@@ -99,7 +101,9 @@ async function seedDevUser() {
       email: DEV_USER.email,
       name: DEV_USER.displayName,
       role: DEV_USER.role,
-      branchId: DEV_USER.branch,
+      branchId: DEV_USER.branchId,
+      branchAccess: DEV_USER.branchAccess,
+      isSuperAdmin: DEV_USER.isSuperAdmin,
       active: true,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -107,19 +111,26 @@ async function seedDevUser() {
 
     await userRef.set(userData, { merge: true });
     console.log('✓ Updated user document in Firestore');
+    console.log('  - isSuperAdmin:', DEV_USER.isSuperAdmin);
+    console.log('  - Can access ALL branches');
 
-    // Set custom claims for role
+    // Set custom claims for role and branch access
     await auth.setCustomUserClaims(user.uid, {
       role: DEV_USER.role,
-      branchId: DEV_USER.branch,
+      branchId: DEV_USER.branchId,
+      branchAccess: DEV_USER.branchAccess,
+      isSuperAdmin: DEV_USER.isSuperAdmin,
     });
-    console.log('✓ Set custom user claims');
+    console.log('✓ Set custom user claims (including isSuperAdmin)');
 
     console.log('\n✅ Development user seeded successfully!\n');
     console.log('📧 Email:', DEV_USER.email);
     console.log('🔑 Password:', DEV_USER.password);
     console.log('👤 Role:', DEV_USER.role);
-    console.log('\n🚀 You can now use the "Dev Quick Login" button on the login page!\n');
+    console.log('🌟 Super Admin:', DEV_USER.isSuperAdmin);
+    console.log('🏢 Branch Access: ALL BRANCHES (Super Admin)');
+    console.log('\n🚀 You can now use the "Dev Quick Login" button on the login page!');
+    console.log('💡 This account has full system access to all branches!\n');
   } catch (error) {
     console.error('\n❌ Error seeding development user:', error);
     process.exit(1);

@@ -41,8 +41,12 @@ export interface User {
   role: UserRole;
   /** User's full name */
   name: string;
-  /** Branch ID (for staff members) */
+  /** Primary branch ID (for staff members) */
   branchId?: string;
+  /** Additional branches this user can access (for multi-branch managers) */
+  branchAccess?: string[];
+  /** Whether user has super admin privileges (system-wide access) */
+  isSuperAdmin?: boolean;
   /** Account creation timestamp */
   createdAt: Timestamp;
   /** Whether the account is active */
@@ -888,4 +892,163 @@ export interface WorkstationAssignment {
   createdBy: string;
   /** Timestamp when assignment was last modified */
   updatedAt?: Timestamp;
+}
+
+/**
+ * Inventory transfer status types
+ */
+export type InventoryTransferStatus =
+  | 'draft'
+  | 'requested'
+  | 'approved'
+  | 'in_transit'
+  | 'received'
+  | 'reconciled'
+  | 'rejected'
+  | 'cancelled';
+
+/**
+ * Inventory transfer item structure
+ */
+export interface InventoryTransferItem {
+  /** Reference to inventory item ID */
+  inventoryItemId: string;
+  /** Item name (denormalized) */
+  name: string;
+  /** Unit of measurement */
+  unit: string;
+  /** Quantity being transferred */
+  quantity: number;
+  /** Cost per unit */
+  costPerUnit: number;
+  /** Actual quantity received (may differ from requested) */
+  receivedQuantity?: number;
+}
+
+/**
+ * Audit trail entry for inventory transfers
+ */
+export interface TransferAuditEntry {
+  /** Status at this point */
+  status: InventoryTransferStatus;
+  /** Timestamp of this action */
+  timestamp: Timestamp;
+  /** UID of user who performed this action */
+  userId: string;
+  /** User name (denormalized) */
+  userName: string;
+  /** Notes about this action */
+  notes?: string;
+}
+
+/**
+ * Inventory transfer document structure
+ * Collection: inventoryTransfers
+ *
+ * Manages inventory transfers between branches
+ */
+export interface InventoryTransfer {
+  /** Unique transfer identifier (format: TRF-INV-[YYYYMMDD]-[####]) */
+  transferId: string;
+  /** Source branch ID (sender) */
+  fromBranchId: string;
+  /** Destination branch ID (receiver) */
+  toBranchId: string;
+  /** Items being transferred */
+  items: InventoryTransferItem[];
+  /** Current transfer status */
+  status: InventoryTransferStatus;
+  /** UID of user who created/requested the transfer */
+  requestedBy: string;
+  /** UID of user who approved the transfer (required before dispatch) */
+  approvedBy?: string;
+  /** Timestamp when transfer was dispatched from sender */
+  dispatchedAt?: Timestamp;
+  /** Timestamp when transfer was received at destination */
+  receivedAt?: Timestamp;
+  /** Timestamp when transfer was reconciled (quantities verified) */
+  reconciledAt?: Timestamp;
+  /** Additional notes about the transfer */
+  notes?: string;
+  /** Audit trail of all status changes */
+  auditTrail: TransferAuditEntry[];
+  /** Creation timestamp */
+  createdAt: Timestamp;
+  /** Last update timestamp */
+  updatedAt?: Timestamp;
+  /** Discrepancies found during reconciliation */
+  discrepancies?: {
+    itemId: string;
+    expected: number;
+    actual: number;
+    notes?: string;
+  }[];
+}
+
+/**
+ * Updated Inventory item with transfer tracking fields
+ */
+export interface InventoryItemExtended extends InventoryItem {
+  /** Quantity on hand (available for use) */
+  onHand: number;
+  /** Quantity reserved (allocated but not yet used) */
+  reserved?: number;
+  /** Quantity pending transfer out (approved transfers not yet dispatched) */
+  pendingTransferOut?: number;
+  /** Quantity in transit (dispatched but not yet received) */
+  inTransit?: number;
+}
+
+/**
+ * Audit log action types
+ */
+export type AuditLogAction =
+  | 'create'
+  | 'update'
+  | 'delete'
+  | 'transfer'
+  | 'approve'
+  | 'reject'
+  | 'role_change'
+  | 'branch_access_change'
+  | 'permission_change';
+
+/**
+ * Audit log document structure
+ * Collection: auditLogs
+ *
+ * Tracks all administrative and cross-branch actions for compliance
+ */
+export interface AuditLog {
+  /** Unique audit log ID */
+  auditLogId: string;
+  /** Action performed */
+  action: AuditLogAction;
+  /** Resource type (e.g., 'order', 'inventory', 'user', 'transfer') */
+  resourceType: string;
+  /** Resource ID */
+  resourceId: string;
+  /** UID of user who performed the action */
+  performedBy: string;
+  /** User name (denormalized) */
+  performedByName: string;
+  /** User role at time of action */
+  performedByRole: UserRole;
+  /** Branch ID where action was performed (null for global actions) */
+  branchId?: string;
+  /** Additional branch IDs involved (for transfers) */
+  additionalBranchIds?: string[];
+  /** Description of the action */
+  description: string;
+  /** Changes made (before/after snapshot) */
+  changes?: {
+    before?: Record<string, unknown>;
+    after?: Record<string, unknown>;
+  };
+  /** IP address of the user */
+  ipAddress?: string;
+  /** User agent string */
+  userAgent?: string;
+  /** Timestamp when action was performed */
+  timestamp: Timestamp;
 }

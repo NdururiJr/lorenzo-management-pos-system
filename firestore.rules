@@ -51,6 +51,31 @@ service cloud.firestore {
     }
 
     /**
+     * Get user's branchAccess array from custom claims (additional branches)
+     */
+    function getUserBranchAccess() {
+      return request.auth.token.get('branchAccess', []);
+    }
+
+    /**
+     * Check if user is a super admin (system-wide access)
+     */
+    function isSuperAdmin() {
+      return isAuthenticated() && request.auth.token.get('isSuperAdmin', false) == true;
+    }
+
+    /**
+     * Get list of all branches user can access (primary + branchAccess)
+     */
+    function getAllowedBranches() {
+      let branches = [];
+      if (getUserBranch() != null) {
+        branches = branches.concat([getUserBranch()]);
+      }
+      return branches.concat(getUserBranchAccess());
+    }
+
+    /**
      * Check if user has a specific role
      */
     function hasRole(role) {
@@ -65,24 +90,25 @@ service cloud.firestore {
     }
 
     /**
-     * Check if user is admin
+     * Check if user is admin (legacy - kept for compatibility)
+     * NOTE: Use isSuperAdmin() for new code
      */
     function isAdmin() {
-      return hasRole('admin');
+      return isSuperAdmin() || hasRole('admin');
     }
 
     /**
      * Check if user is admin or manager
      */
     function isManagement() {
-      return hasAnyRole(['admin', 'manager']);
+      return isSuperAdmin() || hasAnyRole(['admin', 'director', 'general_manager', 'store_manager', 'manager']);
     }
 
     /**
      * Check if user is staff (any role except customer)
      */
     function isStaff() {
-      return hasAnyRole(['admin', 'manager', 'front_desk', 'workstation', 'driver']);
+      return hasAnyRole(['admin', 'director', 'general_manager', 'store_manager', 'manager', 'workstation_manager', 'front_desk', 'workstation_staff', 'workstation', 'driver', 'satellite_staff']);
     }
 
     /**
@@ -94,10 +120,18 @@ service cloud.firestore {
 
     /**
      * Check if user can access branch data
-     * Admins can access all branches, others only their own
+     * Super admins can access all branches
+     * Others can access branches in their allowedBranches list
      */
     function canAccessBranch(branchId) {
-      return isAdmin() || belongsToBranch(branchId);
+      return isSuperAdmin() || branchId in getAllowedBranches();
+    }
+
+    /**
+     * Check if branchId is being changed (must remain immutable)
+     */
+    function branchIdChanged() {
+      return request.resource.data.branchId != resource.data.branchId;
     }
 
     /**
@@ -113,28 +147,30 @@ service cloud.firestore {
 
     match /users/{userId} {
       // Users can read their own profile
-      // Admins can read all profiles
-      // Staff can read other staff profiles in their branch
+      // Super admins can read all profiles
+      // Managers can read profiles in their allowed branches
       allow read: if isAuthenticated() && (
         currentUserId() == userId ||
-        isAdmin() ||
-        (isStaff() && belongsToBranch(resource.data.branchId))
+        isSuperAdmin() ||
+        (isManagement() && canAccessBranch(resource.data.branchId))
       );
 
-      // Only admins can create new users
-      allow create: if isAdmin();
+      // Only super admins can create new users
+      allow create: if isSuperAdmin();
 
-      // Users can update their own profile (limited fields)
-      // Admins can update any profile
+      // Users can update their own profile (limited fields only)
+      // Super admins can update any profile
+      // NOTE: branchId, branchAccess, isSuperAdmin, and role can only be changed by super admin
       allow update: if isAuthenticated() && (
         (currentUserId() == userId &&
           request.resource.data.diff(resource.data).affectedKeys()
-            .hasOnly(['name', 'phone', 'email'])) ||
-        isAdmin()
+            .hasOnly(['name', 'phone', 'email']) &&
+          !branchIdChanged()) ||
+        isSuperAdmin()
       );
 
-      // Only admins can delete users
-      allow delete: if isAdmin();
+      // Only super admins can delete users
+      allow delete: if isSuperAdmin();
     }
 
     // ============================================
@@ -173,37 +209,39 @@ service cloud.firestore {
 
     match /orders/{orderId} {
       // Customers can read their own orders
-      // Staff can read orders from their branch
-      // Admins can read all orders
+      // Staff can read orders from their allowed branches
+      // Super admins can read all orders
       allow read: if isAuthenticated() && (
         resource.data.customerId == currentUserId() ||
         canAccessBranch(resource.data.branchId) ||
-        isAdmin()
+        isSuperAdmin()
       );
 
-      // Front desk and management can create orders
+      // Front desk and management can create orders in their allowed branches
+      // branchId must match user's allowed branches
       allow create: if isAuthenticated() &&
-        hasAnyRole(['admin', 'manager', 'front_desk']) &&
+        hasAnyRole(['admin', 'director', 'general_manager', 'store_manager', 'manager', 'front_desk', 'satellite_staff']) &&
         canAccessBranch(request.resource.data.branchId);
 
       // Staff can update orders (status, payment, etc.)
-      // Workstation can only update status
+      // Workstation can only update status and garments
       // Drivers can update delivery status
-      allow update: if isAuthenticated() && (
-        (hasAnyRole(['admin', 'manager', 'front_desk']) &&
+      // branchId cannot be changed (immutable)
+      allow update: if isAuthenticated() && !branchIdChanged() && (
+        (hasAnyRole(['admin', 'director', 'general_manager', 'store_manager', 'manager', 'front_desk']) &&
           canAccessBranch(resource.data.branchId)) ||
-        (hasRole('workstation') &&
+        (hasAnyRole(['workstation_manager', 'workstation_staff', 'workstation']) &&
           canAccessBranch(resource.data.branchId) &&
           request.resource.data.diff(resource.data).affectedKeys()
-            .hasOnly(['status', 'garments'])) ||
+            .hasOnly(['status', 'garments', 'majorIssuesDetected', 'majorIssuesReviewedBy', 'majorIssuesApprovedAt', 'processingBatchId'])) ||
         (hasRole('driver') &&
           resource.data.driverId == currentUserId() &&
           request.resource.data.diff(resource.data).affectedKeys()
-            .hasOnly(['status']))
+            .hasOnly(['status', 'deliveryCompletedTime']))
       );
 
-      // Only admins can delete orders
-      allow delete: if isAdmin();
+      // Only super admins can delete orders
+      allow delete: if isSuperAdmin();
     }
 
     // ============================================
@@ -211,11 +249,15 @@ service cloud.firestore {
     // ============================================
 
     match /branches/{branchId} {
-      // All authenticated users can read branch info
-      allow read: if isAuthenticated();
+      // All authenticated users can read branches they have access to
+      // Super admins can read all branches
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() ||
+        canAccessBranch(branchId)
+      );
 
-      // Only admins can create, update, or delete branches
-      allow create, update, delete: if isAdmin();
+      // Only super admins can create, update, or delete branches
+      allow create, update, delete: if isSuperAdmin();
     }
 
     // ============================================
@@ -249,20 +291,86 @@ service cloud.firestore {
     // ============================================
 
     match /inventory/{itemId} {
-      // Staff can read inventory from their branch
+      // Staff can read inventory from their allowed branches
+      // Super admins can read all inventory
       allow read: if isAuthenticated() && (
         canAccessBranch(resource.data.branchId) ||
-        isAdmin()
+        isSuperAdmin()
       );
 
-      // Management can create and update inventory
-      allow create, update: if isManagement() && (
-        canAccessBranch(request.resource.data.branchId) ||
-        isAdmin()
+      // Management and inventory staff can create and update inventory in their allowed branches
+      // branchId cannot be changed after creation (immutable)
+      allow create: if isManagement() &&
+        canAccessBranch(request.resource.data.branchId);
+
+      allow update: if isManagement() && !branchIdChanged() &&
+        canAccessBranch(resource.data.branchId);
+
+      // Only super admins can delete inventory items
+      allow delete: if isSuperAdmin();
+    }
+
+    // ============================================
+    // INVENTORY TRANSFERS COLLECTION
+    // ============================================
+
+    match /inventoryTransfers/{transferId} {
+      // Users can read transfers if they have access to either fromBranch or toBranch
+      // Super admins can read all transfers
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() ||
+        canAccessBranch(resource.data.fromBranchId) ||
+        canAccessBranch(resource.data.toBranchId)
       );
 
-      // Only admins can delete inventory items
-      allow delete: if isAdmin();
+      // Inventory staff/managers can create transfers from their allowed branches
+      // Must have access to fromBranchId
+      allow create: if isManagement() &&
+        canAccessBranch(request.resource.data.fromBranchId) &&
+        request.resource.data.status == 'draft';
+
+      // Update rules based on status transitions and user permissions:
+      // - Request: creator from fromBranch
+      // - Approve/Reject: manager of fromBranch or super admin
+      // - Mark in_transit: staff from fromBranch
+      // - Receive: staff from toBranch
+      // - Reconcile: manager of toBranch or super admin
+      // fromBranchId and toBranchId are immutable
+      allow update: if isAuthenticated() &&
+        request.resource.data.fromBranchId == resource.data.fromBranchId &&
+        request.resource.data.toBranchId == resource.data.toBranchId && (
+          // Super admin can do anything
+          isSuperAdmin() ||
+          // Request transition (draft -> requested) by fromBranch staff
+          (resource.data.status == 'draft' &&
+           request.resource.data.status == 'requested' &&
+           canAccessBranch(resource.data.fromBranchId)) ||
+          // Approve/Reject by fromBranch manager or super admin
+          ((resource.data.status == 'requested' &&
+            (request.resource.data.status == 'approved' || request.resource.data.status == 'rejected') &&
+            isManagement() &&
+            canAccessBranch(resource.data.fromBranchId))) ||
+          // Mark in_transit by fromBranch staff
+          (resource.data.status == 'approved' &&
+           request.resource.data.status == 'in_transit' &&
+           canAccessBranch(resource.data.fromBranchId)) ||
+          // Receive by toBranch staff
+          (resource.data.status == 'in_transit' &&
+           request.resource.data.status == 'received' &&
+           canAccessBranch(resource.data.toBranchId)) ||
+          // Reconcile by toBranch manager
+          (resource.data.status == 'received' &&
+           request.resource.data.status == 'reconciled' &&
+           isManagement() &&
+           canAccessBranch(resource.data.toBranchId)) ||
+          // Cancel from draft or requested status
+          ((resource.data.status in ['draft', 'requested']) &&
+           request.resource.data.status == 'cancelled' &&
+           canAccessBranch(resource.data.fromBranchId))
+        );
+
+      // Only super admins can delete transfers
+      allow delete: if isSuperAdmin();
     }
 
     // ============================================
@@ -319,8 +427,33 @@ service cloud.firestore {
       // All authenticated users can read pricing
       allow read: if isAuthenticated();
 
-      // Only admins can create, update, or delete pricing
-      allow create, update, delete: if isAdmin();
+      // Only super admins can create, update, or delete pricing
+      allow create, update, delete: if isSuperAdmin();
+    }
+
+    // ============================================
+    // AUDIT LOGS COLLECTION
+    // ============================================
+
+    match /auditLogs/{auditLogId} {
+      // Super admins can read all audit logs
+      // Managers can read audit logs for their allowed branches
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() ||
+        (isManagement() && (
+          resource.data.branchId == null ||
+          canAccessBranch(resource.data.branchId)
+        ))
+      );
+
+      // Only authenticated staff can create audit logs
+      // System/backend should create these via Admin SDK in production
+      allow create: if isStaff();
+
+      // Audit logs are immutable - no updates or deletes allowed
+      // Only super admin can delete for compliance reasons
+      allow update: if false;
+      allow delete: if isSuperAdmin();
     }
 
     // ============================================

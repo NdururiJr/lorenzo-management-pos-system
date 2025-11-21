@@ -567,3 +567,248 @@ export async function assignDeliveryDriver(
     updatedAt: Timestamp.now(),
   });
 }
+
+/**
+ * Get orders for multiple branches
+ * Handles both small (<= 10 branches) and large (> 10 branches) sets
+ *
+ * @param branchIds - Array of branch IDs (null = all branches)
+ * @param limitCount - Max orders per branch
+ * @returns Combined orders from all branches
+ */
+export async function getOrdersForBranches(
+  branchIds: string[] | null,
+  limitCount = 50
+): Promise<OrderExtended[]> {
+  // Super admin or no branch filter - get all orders
+  if (branchIds === null) {
+    return getAllOrders(limitCount);
+  }
+
+  // No branches - return empty
+  if (branchIds.length === 0) {
+    return [];
+  }
+
+  // Single branch - use regular query
+  if (branchIds.length === 1) {
+    return getOrdersByBranch(branchIds[0], limitCount);
+  }
+
+  // Multiple branches <= 10 - use 'in' query
+  if (branchIds.length <= 10) {
+    return getDocuments<OrderExtended>(
+      'orders',
+      where('branchId', 'in', branchIds),
+      orderBy('createdAt', 'desc'),
+      limit(limitCount)
+    );
+  }
+
+  // More than 10 branches - fetch per branch and merge
+  const allOrders: OrderExtended[] = [];
+  for (const branchId of branchIds) {
+    const orders = await getOrdersByBranch(branchId, limitCount);
+    allOrders.push(...orders);
+  }
+
+  // Sort by createdAt and limit
+  return allOrders
+    .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis())
+    .slice(0, limitCount);
+}
+
+/**
+ * Get today's orders count for multiple branches
+ *
+ * @param branchIds - Array of branch IDs (null = all branches)
+ * @returns Total count across all branches
+ */
+export async function getTodayOrdersCountForBranches(
+  branchIds: string[] | null
+): Promise<number> {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Super admin - get all
+  if (branchIds === null) {
+    const orders = await getDocuments<OrderExtended>(
+      'orders',
+      where('createdAt', '>=', Timestamp.fromDate(today))
+    );
+    return orders.length;
+  }
+
+  // No branches
+  if (branchIds.length === 0) {
+    return 0;
+  }
+
+  // Single branch
+  if (branchIds.length === 1) {
+    return getTodayOrdersCount(branchIds[0]);
+  }
+
+  // Multiple branches <= 10
+  if (branchIds.length <= 10) {
+    const orders = await getDocuments<OrderExtended>(
+      'orders',
+      where('branchId', 'in', branchIds),
+      where('createdAt', '>=', Timestamp.fromDate(today))
+    );
+    return orders.length;
+  }
+
+  // More than 10 branches - sum counts
+  let total = 0;
+  for (const branchId of branchIds) {
+    const count = await getTodayOrdersCount(branchId);
+    total += count;
+  }
+  return total;
+}
+
+/**
+ * Get completed orders today for multiple branches
+ *
+ * @param branchIds - Array of branch IDs (null = all branches)
+ * @returns Count of completed orders
+ */
+export async function getCompletedTodayCountForBranches(
+  branchIds: string[] | null
+): Promise<number> {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const completedStatuses: OrderStatus[] = ['delivered', 'collected'];
+
+  // Super admin - get all
+  if (branchIds === null) {
+    const orders = await getDocuments<OrderExtended>(
+      'orders',
+      where('actualCompletion', '>=', Timestamp.fromDate(today)),
+      where('status', 'in', completedStatuses)
+    );
+    return orders.length;
+  }
+
+  // No branches
+  if (branchIds.length === 0) {
+    return 0;
+  }
+
+  // Single branch
+  if (branchIds.length === 1) {
+    const orders = await getDocuments<OrderExtended>(
+      'orders',
+      where('branchId', '==', branchIds[0]),
+      where('actualCompletion', '>=', Timestamp.fromDate(today)),
+      where('status', 'in', completedStatuses)
+    );
+    return orders.length;
+  }
+
+  // Multiple branches - merge results
+  let total = 0;
+  for (const branchId of branchIds) {
+    const orders = await getDocuments<OrderExtended>(
+      'orders',
+      where('branchId', '==', branchId),
+      where('actualCompletion', '>=', Timestamp.fromDate(today)),
+      where('status', 'in', completedStatuses)
+    );
+    total += orders.length;
+  }
+  return total;
+}
+
+/**
+ * Get pending orders count for multiple branches
+ *
+ * @param branchIds - Array of branch IDs (null = all branches)
+ * @returns Count of pending orders
+ */
+export async function getPendingOrdersCountForBranches(
+  branchIds: string[] | null
+): Promise<number> {
+  const pendingStatuses: OrderStatus[] = ['received', 'queued', 'washing', 'drying', 'ironing', 'quality_check', 'packaging'];
+
+  // Super admin - get all
+  if (branchIds === null) {
+    const orders = await getDocuments<OrderExtended>(
+      'orders',
+      where('status', 'in', pendingStatuses.slice(0, 10))
+    );
+    return orders.length;
+  }
+
+  // No branches
+  if (branchIds.length === 0) {
+    return 0;
+  }
+
+  // Single or multiple branches
+  let total = 0;
+  const branchesToQuery = branchIds.length <= 10 ? [branchIds] : branchIds.map((id) => [id]);
+
+  for (const branches of branchesToQuery) {
+    const orders = await getDocuments<OrderExtended>(
+      'orders',
+      ...(branches.length === 1
+        ? [where('branchId', '==', branches[0])]
+        : [where('branchId', 'in', branches)]),
+      where('status', 'in', pendingStatuses.slice(0, 10))
+    );
+    total += orders.length;
+  }
+
+  return total;
+}
+
+/**
+ * Get today's revenue for multiple branches
+ *
+ * @param branchIds - Array of branch IDs (null = all branches)
+ * @returns Total revenue (sum of paidAmount)
+ */
+export async function getTodayRevenueForBranches(
+  branchIds: string[] | null
+): Promise<number> {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  let orders: OrderExtended[] = [];
+
+  // Super admin - get all
+  if (branchIds === null) {
+    orders = await getDocuments<OrderExtended>(
+      'orders',
+      where('createdAt', '>=', Timestamp.fromDate(today))
+    );
+  } else if (branchIds.length === 0) {
+    return 0;
+  } else if (branchIds.length === 1) {
+    orders = await getDocuments<OrderExtended>(
+      'orders',
+      where('branchId', '==', branchIds[0]),
+      where('createdAt', '>=', Timestamp.fromDate(today))
+    );
+  } else if (branchIds.length <= 10) {
+    orders = await getDocuments<OrderExtended>(
+      'orders',
+      where('branchId', 'in', branchIds),
+      where('createdAt', '>=', Timestamp.fromDate(today))
+    );
+  } else {
+    // More than 10 branches
+    for (const branchId of branchIds) {
+      const branchOrders = await getDocuments<OrderExtended>(
+        'orders',
+        where('branchId', '==', branchId),
+        where('createdAt', '>=', Timestamp.fromDate(today))
+      );
+      orders.push(...branchOrders);
+    }
+  }
+
+  return orders.reduce((sum, order) => sum + (order.paidAmount || 0), 0);
+}

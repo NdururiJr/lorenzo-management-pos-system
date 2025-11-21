@@ -26,6 +26,8 @@ import { ModernCard, ModernCardContent } from '@/components/modern/ModernCard';
 import { ModernStatCard, MiniStatCard } from '@/components/modern/ModernStatCard';
 import { ModernButton } from '@/components/modern/ModernButton';
 import { ModernBadge } from '@/components/modern/ModernBadge';
+import { useAuth } from '@/hooks/useAuth';
+import { getAllowedBranchesArray } from '@/lib/auth/branch-access';
 
 // Default branch location (Kilimani, Nairobi)
 const BRANCH_LOCATION: Coordinates = {
@@ -38,18 +40,68 @@ export default function DeliveriesPage() {
   const [showBatchForm, setShowBatchForm] = useState(false);
   const [activeTab, setActiveTab] = useState<string>('create');
 
-  // Fetch ready orders count
+  const { userData } = useAuth();
+  const allowedBranches = userData ? getAllowedBranchesArray(userData) : [];
+
+  // Fetch ready orders count (branch-filtered)
   const { data: readyOrdersCount = 0 } = useQuery({
-    queryKey: ['ready-orders-count'],
+    queryKey: ['ready-orders-count', allowedBranches],
     queryFn: async () => {
       const ordersRef = collection(db, 'orders');
-      const q = query(ordersRef, where('status', '==', 'ready'));
-      const snapshot = await getDocs(q);
-      return snapshot.size;
+
+      // Super admin - all branches
+      if (allowedBranches === null) {
+        const q = query(ordersRef, where('status', '==', 'ready'));
+        const snapshot = await getDocs(q);
+        return snapshot.size;
+      }
+
+      // No branches
+      if (allowedBranches.length === 0) {
+        return 0;
+      }
+
+      // Single branch
+      if (allowedBranches.length === 1) {
+        const q = query(
+          ordersRef,
+          where('branchId', '==', allowedBranches[0]),
+          where('status', '==', 'ready')
+        );
+        const snapshot = await getDocs(q);
+        return snapshot.size;
+      }
+
+      // Multiple branches <= 10
+      if (allowedBranches.length <= 10) {
+        const q = query(
+          ordersRef,
+          where('branchId', 'in', allowedBranches),
+          where('status', '==', 'ready')
+        );
+        const snapshot = await getDocs(q);
+        return snapshot.size;
+      }
+
+      // More than 10 branches - query each branch
+      let total = 0;
+      for (const branchId of allowedBranches) {
+        const q = query(
+          ordersRef,
+          where('branchId', '==', branchId),
+          where('status', '==', 'ready')
+        );
+        const snapshot = await getDocs(q);
+        total += snapshot.size;
+      }
+      return total;
     },
+    enabled: !!userData,
   });
 
-  // Fetch pending deliveries count
+  // TODO: Fetch pending deliveries count
+  // NOTE: Deliveries collection may not have branchId field
+  // Need to verify schema and potentially add branchId or filter by order.branchId
   const { data: pendingDeliveriesCount = 0 } = useQuery({
     queryKey: ['pending-deliveries-count'],
     queryFn: async () => {
@@ -60,7 +112,9 @@ export default function DeliveriesPage() {
     },
   });
 
-  // Fetch today's deliveries count
+  // TODO: Fetch today's deliveries count
+  // NOTE: Deliveries collection may not have branchId field
+  // Need to verify schema and potentially add branchId or filter by order.branchId
   const { data: todayDeliveriesCount = 0 } = useQuery({
     queryKey: ['today-deliveries-count'],
     queryFn: async () => {

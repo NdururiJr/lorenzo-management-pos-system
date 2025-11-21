@@ -11,6 +11,13 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import { getRoleDisplayName } from '@/lib/auth/utils';
+import { getAllowedBranchesArray } from '@/lib/auth/branch-access';
+import {
+  getTodayOrdersCountForBranches,
+  getPendingOrdersCountForBranches,
+  getCompletedTodayCountForBranches,
+  getTodayRevenueForBranches,
+} from '@/lib/db/orders';
 import { ModernButton } from '@/components/modern/ModernButton';
 import { ModernCard, ModernCardContent, ModernCardHeader } from '@/components/modern/ModernCard';
 import { ModernBadge, StatusBadge } from '@/components/modern/ModernBadge';
@@ -19,14 +26,46 @@ import { ModernSection, ModernGrid } from '@/components/modern/ModernLayout';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
+import { useQuery } from '@tanstack/react-query';
 import {
   LogOut, User, Mail, Phone, Building2, Shield,
   Package, TrendingUp, Users, CheckCircle,
-  Clock, DollarSign, Truck, Star
+  Clock, DollarSign, Truck, Star, Loader2
 } from 'lucide-react';
 
 export default function DashboardPage() {
   const { user, userData, signOut, isAdmin, isManager, isStaff, isCustomer } = useAuth();
+
+  // Get allowed branches for the user (safe to call even if userData is null)
+  const allowedBranches = userData ? getAllowedBranchesArray(userData) : [];
+
+  // Fetch real-time stats with branch filtering
+  // NOTE: These hooks must be called before any early returns (React rules of hooks)
+  const { data: todayOrders = 0, isLoading: loadingToday } = useQuery({
+    queryKey: ['dashboard-today-orders', allowedBranches],
+    queryFn: () => getTodayOrdersCountForBranches(allowedBranches),
+    enabled: !!userData,
+  });
+
+  const { data: pendingOrders = 0, isLoading: loadingPending } = useQuery({
+    queryKey: ['dashboard-pending-orders', allowedBranches],
+    queryFn: () => getPendingOrdersCountForBranches(allowedBranches),
+    enabled: !!userData,
+  });
+
+  const { data: completedToday = 0, isLoading: loadingCompleted } = useQuery({
+    queryKey: ['dashboard-completed-today', allowedBranches],
+    queryFn: () => getCompletedTodayCountForBranches(allowedBranches),
+    enabled: !!userData,
+  });
+
+  const { data: revenue = 0, isLoading: loadingRevenue } = useQuery({
+    queryKey: ['dashboard-revenue-today', allowedBranches],
+    queryFn: () => getTodayRevenueForBranches(allowedBranches),
+    enabled: !!userData,
+  });
+
+  const isLoadingStats = loadingToday || loadingPending || loadingCompleted || loadingRevenue;
 
   const handleSignOut = async () => {
     try {
@@ -48,14 +87,11 @@ export default function DashboardPage() {
     .toUpperCase()
     .slice(0, 2);
 
-  // Sample stats - replace with real data
   const stats = {
-    todayOrders: 24,
-    pendingOrders: 8,
-    completedToday: 16,
-    revenue: 45200,
-    customers: 156,
-    avgProcessTime: 2.5,
+    todayOrders,
+    pendingOrders,
+    completedToday,
+    revenue,
   };
 
   return (
@@ -85,47 +121,51 @@ export default function DashboardPage() {
       </motion.div>
 
       {/* Quick Stats */}
-      <StatCardGroup className="mb-8">
-        <ModernStatCard
-          title="Today's Orders"
-          value={stats.todayOrders}
-          change={12}
-          changeLabel="vs yesterday"
-          icon={<Package className="h-5 w-5" />}
-          trend="up"
-          delay={0.1}
-        />
-        <ModernStatCard
-          title="Pending Orders"
-          value={stats.pendingOrders}
-          change={-5}
-          changeLabel="from morning"
-          icon={<Clock className="h-5 w-5" />}
-          trend="down"
-          delay={0.2}
-          variant="gradient"
-        />
-        <ModernStatCard
-          title="Completed Today"
-          value={stats.completedToday}
-          change={33}
-          changeLabel="completion rate"
-          icon={<CheckCircle className="h-5 w-5" />}
-          trend="up"
-          delay={0.3}
-        />
-        <ModernStatCard
-          title="Today's Revenue"
-          value={stats.revenue}
-          change={8}
-          changeLabel="vs yesterday"
-          icon={<DollarSign className="h-5 w-5" />}
-          format="currency"
-          trend="up"
-          delay={0.4}
-          variant="solid"
-        />
-      </StatCardGroup>
+      {isLoadingStats ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {[...Array(4)].map((_, i) => (
+            <ModernCard key={i} className="h-32">
+              <ModernCardContent className="flex items-center justify-center h-full">
+                <Loader2 className="w-6 h-6 animate-spin text-brand-blue" />
+              </ModernCardContent>
+            </ModernCard>
+          ))}
+        </div>
+      ) : (
+        <StatCardGroup className="mb-8">
+          <ModernStatCard
+            title="Today's Orders"
+            value={stats.todayOrders}
+            changeLabel="Orders received today"
+            icon={<Package className="h-5 w-5" />}
+            delay={0.1}
+          />
+          <ModernStatCard
+            title="Pending Orders"
+            value={stats.pendingOrders}
+            changeLabel="In progress"
+            icon={<Clock className="h-5 w-5" />}
+            delay={0.2}
+            variant="gradient"
+          />
+          <ModernStatCard
+            title="Completed Today"
+            value={stats.completedToday}
+            changeLabel="Delivered/Collected"
+            icon={<CheckCircle className="h-5 w-5" />}
+            delay={0.3}
+          />
+          <ModernStatCard
+            title="Today's Revenue"
+            value={stats.revenue}
+            changeLabel="Total payments"
+            icon={<DollarSign className="h-5 w-5" />}
+            format="currency"
+            delay={0.4}
+            variant="solid"
+          />
+        </StatCardGroup>
+      )}
 
       <ModernGrid columns={2} gap="lg" className="mb-8">
         {/* User Profile Card */}
