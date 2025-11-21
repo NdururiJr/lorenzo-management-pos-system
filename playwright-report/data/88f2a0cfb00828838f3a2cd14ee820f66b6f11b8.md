@@ -1,0 +1,56 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - heading "Lorenzo" [level=1] [ref=e8]
+      - paragraph [ref=e9]: Dry Cleaners
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - img [ref=e16]
+        - heading "Staff Login" [level=2] [ref=e20]
+        - paragraph [ref=e21]: Sign in with your email and password
+      - generic [ref=e22]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: Email Address
+          - generic [ref=e26]:
+            - generic:
+              - img
+            - textbox "Email Address" [ref=e27]:
+              - /placeholder: you@example.com
+              - text: invalid@example.com
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]: Password
+            - link "Forgot password?" [ref=e32] [cursor=pointer]:
+              - /url: /forgot-password
+          - generic [ref=e34]:
+            - generic:
+              - img
+            - textbox "Password" [ref=e35]:
+              - /placeholder: Enter your password
+              - text: wrongpassword
+        - generic [ref=e36]:
+          - checkbox "Remember me for 30 days" [ref=e37]
+          - checkbox
+          - generic [ref=e38] [cursor=pointer]: Remember me for 30 days
+        - button "Sign In" [ref=e40]:
+          - generic [ref=e41]: Sign In
+        - button "Dev Quick Login" [ref=e43]:
+          - generic [ref=e44]:
+            - img [ref=e45]
+            - text: Dev Quick Login
+      - paragraph [ref=e51]:
+        - text: Are you a customer?
+        - link "Login Here" [ref=e52] [cursor=pointer]:
+          - /url: /customer-login
+  - region "Notifications alt+T":
+    - list:
+      - listitem [ref=e54]:
+        - img [ref=e56]
+        - generic [ref=e59]: "Firebase: Error (auth/invalid-credential)."
+  - button "Open Next.js Dev Tools" [ref=e65] [cursor=pointer]:
+    - img [ref=e66]
+  - alert [ref=e69]
+```

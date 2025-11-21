@@ -28,6 +28,10 @@ import { ModernButton } from '@/components/modern/ModernButton';
 import { ModernBadge } from '@/components/modern/ModernBadge';
 import { useAuth } from '@/hooks/useAuth';
 import { getAllowedBranchesArray } from '@/lib/auth/branch-access';
+import {
+  getPendingDeliveriesCountForBranches,
+  getTodayDeliveriesCountForBranches,
+} from '@/lib/db/deliveries';
 
 // Default branch location (Kilimani, Nairobi)
 const BRANCH_LOCATION: Coordinates = {
@@ -99,35 +103,18 @@ export default function DeliveriesPage() {
     enabled: !!userData,
   });
 
-  // TODO: Fetch pending deliveries count
-  // NOTE: Deliveries collection may not have branchId field
-  // Need to verify schema and potentially add branchId or filter by order.branchId
+  // Fetch pending deliveries count (branch-filtered)
   const { data: pendingDeliveriesCount = 0 } = useQuery({
-    queryKey: ['pending-deliveries-count'],
-    queryFn: async () => {
-      const deliveriesRef = collection(db, 'deliveries');
-      const q = query(deliveriesRef, where('status', '==', 'pending'));
-      const snapshot = await getDocs(q);
-      return snapshot.size;
-    },
+    queryKey: ['pending-deliveries-count', allowedBranches],
+    queryFn: () => getPendingDeliveriesCountForBranches(allowedBranches),
+    enabled: !!userData,
   });
 
-  // TODO: Fetch today's deliveries count
-  // NOTE: Deliveries collection may not have branchId field
-  // Need to verify schema and potentially add branchId or filter by order.branchId
+  // Fetch today's deliveries count (branch-filtered)
   const { data: todayDeliveriesCount = 0 } = useQuery({
-    queryKey: ['today-deliveries-count'],
-    queryFn: async () => {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const deliveriesRef = collection(db, 'deliveries');
-      const q = query(
-        deliveriesRef,
-        where('scheduledDate', '>=', Timestamp.fromDate(today))
-      );
-      const snapshot = await getDocs(q);
-      return snapshot.size;
-    },
+    queryKey: ['today-deliveries-count', allowedBranches],
+    queryFn: () => getTodayDeliveriesCountForBranches(allowedBranches),
+    enabled: !!userData,
   });
 
   const handleBatchCreated = () => {

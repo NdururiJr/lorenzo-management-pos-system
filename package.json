@@ -21,6 +21,8 @@
     "seed:dev": "tsx scripts/seed-dev-user.ts",
     "seed:milestone2": "tsx scripts/seed-milestone2.ts",
     "seed:test-orders": "tsx scripts/seed-test-orders.ts",
+    "seed:branch-trials": "tsx scripts/seed-branch-trials.ts",
+    "backfill:deliveries-branchid": "tsx scripts/backfill-deliveries-branchid.ts",
     "test:wati": "tsx scripts/test-wati.ts",
     "test:email": "tsx scripts/test-email-service.ts",
     "test:maps": "tsx scripts/test-google-maps.ts",

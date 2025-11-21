@@ -427,6 +427,8 @@ export interface Delivery {
   deliveryId: string;
   /** Assigned driver UID */
   driverId: string;
+  /** Reference to branch (where deliveries originate from) */
+  branchId: string;
   /** List of order IDs in this delivery */
   orders: string[];
   /** Delivery route details */

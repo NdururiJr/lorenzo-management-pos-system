@@ -1,0 +1,57 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - heading "Lorenzo" [level=1] [ref=e8]
+      - paragraph [ref=e9]: Dry Cleaners
+    - link "Back to Staff Login" [active] [ref=e11] [cursor=pointer]:
+      - /url: /login
+      - img [ref=e12]
+      - text: Back to Staff Login
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - heading "Customer Login" [level=2] [ref=e18]
+        - paragraph [ref=e19]: Sign in with your email and password
+      - generic [ref=e20]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: Email Address
+          - generic [ref=e24]:
+            - generic:
+              - img
+            - textbox "Email Address" [ref=e25]:
+              - /placeholder: you@example.com
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - generic [ref=e29]: Password
+            - link "Forgot password?" [ref=e30] [cursor=pointer]:
+              - /url: /forgot-password
+          - generic [ref=e32]:
+            - generic:
+              - img
+            - textbox "Password" [ref=e33]:
+              - /placeholder: Enter your password
+        - generic [ref=e34]:
+          - checkbox "Remember me for 30 days" [ref=e35]
+          - checkbox
+          - generic [ref=e36] [cursor=pointer]: Remember me for 30 days
+        - button "Sign In" [ref=e38]:
+          - generic [ref=e39]: Sign In
+      - generic [ref=e40]:
+        - heading "New Customer?" [level=3] [ref=e41]
+        - paragraph [ref=e42]: Contact your nearest Lorenzo Dry Cleaners branch to create a customer account.
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - heading "Developer Quick Login" [level=3] [ref=e45]
+          - generic [ref=e46]: Dev Only
+        - button "Dev Quick Login" [ref=e47]:
+          - generic [ref=e48]:
+            - img [ref=e49]
+            - text: Dev Quick Login
+        - paragraph [ref=e54]: Quick login directly to customer portal
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e61] [cursor=pointer]:
+    - img [ref=e62]
+  - alert [ref=e65]
+```

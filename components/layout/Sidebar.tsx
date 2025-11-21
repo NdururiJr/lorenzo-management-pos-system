@@ -9,10 +9,11 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { getBranchName } from '@/lib/utils/branch-lookup';
 import {
   Home,
   Package,
@@ -58,6 +59,7 @@ interface NavItem {
   roles?: UserRole[]; // If undefined, accessible to all roles
   badge?: string;
   children?: NavItem[];
+  requireSuperAdmin?: boolean; // If true, only super admins can access
 }
 
 const navigationItems: NavItem[] = [
@@ -94,7 +96,7 @@ const navigationItems: NavItem[] = [
     label: 'Workstation',
     href: '/workstation',
     icon: Wrench,
-    roles: ['admin', 'director', 'general_manager', 'store_manager', 'workstation_manager', 'workstation_staff'],
+    roles: ['admin', 'director', 'general_manager', 'store_manager', 'workstation_manager', 'workstation_staff', 'manager'],
   },
   {
     label: 'Customers',
@@ -136,13 +138,14 @@ const navigationItems: NavItem[] = [
     label: 'Transactions',
     href: '/transactions',
     icon: FileText,
-    roles: ['admin', 'director', 'general_manager', 'store_manager', 'manager'],
+    roles: ['admin', 'director', 'general_manager', 'store_manager', 'manager', 'front_desk'],
   },
   {
     label: 'Branches',
     href: '/branches',
     icon: Store,
-    roles: ['admin', 'director', 'general_manager'],
+    roles: [], // Will be filtered separately using isSuperAdmin flag
+    requireSuperAdmin: true,
   },
   {
     label: 'Settings',
@@ -157,12 +160,33 @@ export function Sidebar() {
   const { user, userData, signOut } = useAuth();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [branchName, setBranchName] = useState<string>('');
 
   const userRole = userData?.role;
+  const isSuperAdmin = userData?.isSuperAdmin || false;
+
+  // Fetch branch name
+  useEffect(() => {
+    if (isSuperAdmin) {
+      setBranchName('All branches');
+    } else if (userData?.branchId) {
+      getBranchName(userData.branchId).then(setBranchName);
+    } else {
+      setBranchName('No branch assigned');
+    }
+  }, [userData?.branchId, isSuperAdmin]);
 
   // Filter navigation items based on user role
   const filteredNavItems = navigationItems.filter((item) => {
-    if (!item.roles) return true; // Accessible to all
+    // Check super admin requirement first
+    if (item.requireSuperAdmin) {
+      return isSuperAdmin;
+    }
+
+    // If no roles specified, accessible to all
+    if (!item.roles || item.roles.length === 0) return true;
+
+    // Check if user role is in allowed roles
     return userRole && item.roles.includes(userRole);
   });
 
@@ -213,6 +237,12 @@ export function Sidebar() {
                 </p>
                 {userRole && (
                   <p className="text-xs text-gray-600">{getRoleDisplayName(userRole)}</p>
+                )}
+                {branchName && (
+                  <p className="text-xs text-gray-500 truncate mt-0.5">
+                    <Store className="w-3 h-3 inline mr-1" />
+                    {branchName}
+                  </p>
                 )}
               </div>
               <ChevronDown className="w-4 h-4 text-gray-500" />

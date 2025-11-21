@@ -279,6 +279,148 @@ export async function batchCreateDeliveries(deliveries: Delivery[]): Promise<voi
 }
 
 /**
+ * Get deliveries for multiple branches with status filter
+ *
+ * @param branchIds - Array of branch IDs (null for all branches)
+ * @param status - Optional status filter
+ * @returns Promise<number> - Count of deliveries
+ */
+export async function getDeliveriesCountForBranches(
+  branchIds: string[] | null,
+  status?: DeliveryStatus
+): Promise<number> {
+  const deliveriesRef = collection(db, 'deliveries');
+
+  // Super admin - all branches
+  if (branchIds === null) {
+    const constraints = [];
+    if (status) {
+      constraints.push(where('status', '==', status));
+    }
+    const q = query(deliveriesRef, ...constraints);
+    const snapshot = await getDocs(q);
+    return snapshot.size;
+  }
+
+  // No branches
+  if (branchIds.length === 0) {
+    return 0;
+  }
+
+  // Single branch
+  if (branchIds.length === 1) {
+    const constraints = [where('branchId', '==', branchIds[0])];
+    if (status) {
+      constraints.push(where('status', '==', status));
+    }
+    const q = query(deliveriesRef, ...constraints);
+    const snapshot = await getDocs(q);
+    return snapshot.size;
+  }
+
+  // Multiple branches <= 10 (use 'in' query)
+  if (branchIds.length <= 10) {
+    const constraints = [where('branchId', 'in', branchIds)];
+    if (status) {
+      constraints.push(where('status', '==', status));
+    }
+    const q = query(deliveriesRef, ...constraints);
+    const snapshot = await getDocs(q);
+    return snapshot.size;
+  }
+
+  // More than 10 branches - query each separately and sum
+  let total = 0;
+  for (const branchId of branchIds) {
+    const constraints = [where('branchId', '==', branchId)];
+    if (status) {
+      constraints.push(where('status', '==', status));
+    }
+    const q = query(deliveriesRef, ...constraints);
+    const snapshot = await getDocs(q);
+    total += snapshot.size;
+  }
+  return total;
+}
+
+/**
+ * Get pending deliveries count for branches
+ *
+ * @param branchIds - Array of branch IDs (null for all branches)
+ * @returns Promise<number>
+ */
+export async function getPendingDeliveriesCountForBranches(
+  branchIds: string[] | null
+): Promise<number> {
+  return getDeliveriesCountForBranches(branchIds, 'pending');
+}
+
+/**
+ * Get today's deliveries count for branches
+ *
+ * @param branchIds - Array of branch IDs (null for all branches)
+ * @returns Promise<number>
+ */
+export async function getTodayDeliveriesCountForBranches(
+  branchIds: string[] | null
+): Promise<number> {
+  const deliveriesRef = collection(db, 'deliveries');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayTimestamp = Timestamp.fromDate(today);
+
+  // Super admin - all branches
+  if (branchIds === null) {
+    const q = query(
+      deliveriesRef,
+      where('startTime', '>=', todayTimestamp)
+    );
+    const snapshot = await getDocs(q);
+    return snapshot.size;
+  }
+
+  // No branches
+  if (branchIds.length === 0) {
+    return 0;
+  }
+
+  // Single branch
+  if (branchIds.length === 1) {
+    const q = query(
+      deliveriesRef,
+      where('branchId', '==', branchIds[0]),
+      where('startTime', '>=', todayTimestamp)
+    );
+    const snapshot = await getDocs(q);
+    return snapshot.size;
+  }
+
+  // Multiple branches <= 10 (use 'in' query)
+  if (branchIds.length <= 10) {
+    const q = query(
+      deliveriesRef,
+      where('branchId', 'in', branchIds),
+      where('startTime', '>=', todayTimestamp)
+    );
+    const snapshot = await getDocs(q);
+    return snapshot.size;
+  }
+
+  // More than 10 branches - query each separately and sum
+  let total = 0;
+  for (const branchId of branchIds) {
+    const q = query(
+      deliveriesRef,
+      where('branchId', '==', branchId),
+      where('startTime', '>=', todayTimestamp)
+    );
+    const snapshot = await getDocs(q);
+    total += snapshot.size;
+  }
+  return total;
+}
+
+/**
  * Get delivery statistics for a driver
  *
  * @param driverId - Driver UID

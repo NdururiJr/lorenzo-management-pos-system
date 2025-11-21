@@ -68,11 +68,9 @@ service cloud.firestore {
      * Get list of all branches user can access (primary + branchAccess)
      */
     function getAllowedBranches() {
-      let branches = [];
-      if (getUserBranch() != null) {
-        branches = branches.concat([getUserBranch()]);
-      }
-      return branches.concat(getUserBranchAccess());
+      return getUserBranch() != null
+        ? [getUserBranch()].concat(getUserBranchAccess())
+        : getUserBranchAccess();
     }
 
     /**
@@ -265,25 +263,33 @@ service cloud.firestore {
     // ============================================
 
     match /deliveries/{deliveryId} {
-      // Drivers can read their assigned deliveries
-      // Management can read all deliveries in their branch
+      // Drivers can read their assigned deliveries from their branch
+      // Staff can read deliveries from their allowed branches
+      // Super admins can read all deliveries
       allow read: if isAuthenticated() && (
-        resource.data.driverId == currentUserId() ||
-        isManagement()
+        (resource.data.driverId == currentUserId() &&
+          canAccessBranch(resource.data.branchId)) ||
+        canAccessBranch(resource.data.branchId) ||
+        isSuperAdmin()
       );
 
-      // Management can create deliveries
-      allow create: if isManagement();
+      // Management can create deliveries in their allowed branches
+      // branchId must match user's allowed branches
+      allow create: if isManagement() &&
+        canAccessBranch(request.resource.data.branchId);
 
-      // Drivers can update their assigned deliveries
-      // Management can update all deliveries
-      allow update: if isAuthenticated() && (
-        resource.data.driverId == currentUserId() ||
-        isManagement()
+      // Drivers can update their assigned deliveries from their branch
+      // Management can update deliveries in their allowed branches
+      // branchId cannot be changed (immutable)
+      allow update: if isAuthenticated() && !branchIdChanged() && (
+        (resource.data.driverId == currentUserId() &&
+          canAccessBranch(resource.data.branchId)) ||
+        (isManagement() &&
+          canAccessBranch(resource.data.branchId))
       );
 
-      // Only admins can delete deliveries
-      allow delete: if isAdmin();
+      // Only super admins can delete deliveries
+      allow delete: if isSuperAdmin();
     }
 
     // ============================================

@@ -159,6 +159,10 @@ export function DeliveryBatchForm({
     try {
       const deliveryId = generateDeliveryId();
 
+      // Get branchId from the first order (all orders in a delivery should be from the same branch)
+      const firstOrder = await getOrder(selectedOrderIds[0]);
+      const branchId = firstOrder.branchId;
+
       // Prepare route data
       const routeData = optimizedRoute
         ? {
@@ -190,6 +194,7 @@ export function DeliveryBatchForm({
       await createDelivery({
         deliveryId,
         driverId: data.driverId,
+        branchId,
         orders: selectedOrderIds,
         route: routeData,
         status: 'pending',

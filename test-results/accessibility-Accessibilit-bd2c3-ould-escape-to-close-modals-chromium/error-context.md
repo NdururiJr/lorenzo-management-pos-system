@@ -1,0 +1,43 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - heading "Lorenzo" [level=1] [ref=e6]
+      - paragraph [ref=e7]: Dry Cleaners
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - heading "Staff Login" [level=2] [ref=e13]
+        - paragraph [ref=e14]: Sign in with your email and password
+      - generic [ref=e15]:
+        - generic [ref=e17]:
+          - text: Email Address
+          - generic [ref=e18]:
+            - img [ref=e20]
+            - textbox "Email Address" [ref=e23]:
+              - /placeholder: you@example.com
+        - generic [ref=e25]:
+          - generic [ref=e26]:
+            - text: Password
+            - link "Forgot password?" [ref=e27] [cursor=pointer]:
+              - /url: /forgot-password
+          - generic [ref=e29]:
+            - img [ref=e31]
+            - textbox "Password" [ref=e34]:
+              - /placeholder: Enter your password
+        - generic [ref=e35]:
+          - checkbox "Remember me for 30 days" [ref=e36]
+          - checkbox
+          - text: Remember me for 30 days
+        - button "Sign In" [ref=e38]
+        - button "Dev Quick Login" [ref=e40]:
+          - generic [ref=e41]:
+            - img [ref=e42]
+            - text: Dev Quick Login
+      - paragraph [ref=e48]:
+        - text: Are you a customer?
+        - link "Login Here" [ref=e49] [cursor=pointer]:
+          - /url: /customer-login
+  - region "Notifications alt+T"
+```

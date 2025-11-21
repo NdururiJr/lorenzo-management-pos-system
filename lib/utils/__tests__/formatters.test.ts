@@ -169,7 +169,8 @@ describe('Formatter Utilities', () => {
     it('falls back to formatted date for distant dates', () => {
       const date = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000); // 10 days ago
       const formatted = formatRelativeTime(date);
-      expect(formatted).toContain('Oct');
+      // Should return a formatted date (not relative time like "10 days ago")
+      expect(formatted).toMatch(/\d{1,2}\s+\w{3}\s+\d{4}/); // e.g., "12 Nov 2025"
     });
   });
 
