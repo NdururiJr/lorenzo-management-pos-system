@@ -27,7 +27,9 @@ import {
   Clock,
   TrendingUp,
   Loader2,
+  Lock,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ModernCard, ModernCardHeader, ModernCardContent } from '@/components/modern/ModernCard';
 import { ModernButton } from '@/components/modern/ModernButton';
@@ -51,36 +53,159 @@ export interface Employee {
 }
 
 export default function EmployeesPage() {
+  const router = useRouter();
   const { userData } = useAuth();
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState('all');
 
-  // Fetch employees
+  // Page guard - only super admins and managers can access
+  const isSuperAdmin = userData?.isSuperAdmin || false;
+  const isManager = ['admin', 'director', 'general_manager', 'store_manager', 'manager'].includes(
+    userData?.role || ''
+  );
+  const canAccess = isSuperAdmin || isManager;
+
+  // Get allowed branches for filtering
+  const allowedBranches = isSuperAdmin
+    ? null // null means access to all branches
+    : userData?.branchId
+    ? [userData.branchId, ...(userData.branchAccess || [])]
+    : [];
+
+  // Fetch employees with branch-scoped access
   const { data: employees = [], isLoading } = useQuery<Employee[]>({
-    queryKey: ['employees', userData?.branchId],
+    queryKey: ['employees', isSuperAdmin, allowedBranches],
     queryFn: async () => {
-      if (!userData?.branchId) return [];
-
       const usersRef = collection(db, 'users');
-      const q = query(
-        usersRef,
-        where('branchId', '==', userData.branchId),
-        where('role', 'in', ['front_desk', 'workstation', 'driver', 'manager']),
-        orderBy('displayName', 'asc')
-      );
-      const snapshot = await getDocs(q);
 
-      return snapshot.docs.map((doc) => ({
-        id: doc.id,
-        uid: doc.id,
-        ...doc.data(),
-      })) as Employee[];
+      // Super admin - fetch all employees
+      if (isSuperAdmin) {
+        const q = query(
+          usersRef,
+          where('role', 'in', [
+            'front_desk',
+            'workstation_staff',
+            'workstation_manager',
+            'driver',
+            'manager',
+            'store_manager',
+            'satellite_staff',
+          ]),
+          orderBy('displayName', 'asc')
+        );
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          uid: doc.id,
+          ...doc.data(),
+        })) as Employee[];
+      }
+
+      // No branches - return empty
+      if (!allowedBranches || allowedBranches.length === 0) return [];
+
+      // Single branch
+      if (allowedBranches.length === 1) {
+        const q = query(
+          usersRef,
+          where('branchId', '==', allowedBranches[0]),
+          where('role', 'in', [
+            'front_desk',
+            'workstation_staff',
+            'workstation_manager',
+            'driver',
+            'manager',
+            'satellite_staff',
+          ]),
+          orderBy('displayName', 'asc')
+        );
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          uid: doc.id,
+          ...doc.data(),
+        })) as Employee[];
+      }
+
+      // Multiple branches <= 10 (use 'in' query)
+      if (allowedBranches.length <= 10) {
+        const q = query(
+          usersRef,
+          where('branchId', 'in', allowedBranches),
+          where('role', 'in', [
+            'front_desk',
+            'workstation_staff',
+            'workstation_manager',
+            'driver',
+            'manager',
+            'satellite_staff',
+          ]),
+          orderBy('displayName', 'asc')
+        );
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          uid: doc.id,
+          ...doc.data(),
+        })) as Employee[];
+      }
+
+      // More than 10 branches - query each separately and merge
+      const allEmployees: Employee[] = [];
+      for (const branchId of allowedBranches) {
+        const q = query(
+          usersRef,
+          where('branchId', '==', branchId),
+          where('role', 'in', [
+            'front_desk',
+            'workstation_staff',
+            'workstation_manager',
+            'driver',
+            'manager',
+            'satellite_staff',
+          ]),
+          orderBy('displayName', 'asc')
+        );
+        const snapshot = await getDocs(q);
+        const branchEmployees = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          uid: doc.id,
+          ...doc.data(),
+        })) as Employee[];
+        allEmployees.push(...branchEmployees);
+      }
+
+      // Remove duplicates (in case employee has branchAccess)
+      const uniqueEmployees = allEmployees.filter(
+        (emp, index, self) => index === self.findIndex((e) => e.id === emp.id)
+      );
+
+      return uniqueEmployees;
     },
-    enabled: !!userData?.branchId,
+    enabled: !!userData && canAccess,
   });
 
   const activeEmployees = employees.filter((e) => e.status === 'active').length;
   const totalEmployees = employees.length;
+
+  // If not authorized, show access denied
+  if (userData && !canAccess) {
+    return (
+      <ModernSection>
+        <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
+          <Lock className="w-16 h-16 text-gray-400" />
+          <h2 className="text-2xl font-semibold text-gray-900">Access Denied</h2>
+          <p className="text-gray-600 text-center max-w-md">
+            Employee management is restricted to super administrators and managers only.
+            Please contact your system administrator if you need access.
+          </p>
+          <ModernButton onClick={() => router.push('/dashboard')}>
+            Return to Dashboard
+          </ModernButton>
+        </div>
+      </ModernSection>
+    );
+  }
 
   return (
     <ModernSection animate>
@@ -224,7 +349,7 @@ export default function EmployeesPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                 >
-                  <EmployeeTable employees={employees} />
+                  <EmployeeTable employees={employees} isSuperAdmin={isSuperAdmin} />
                 </motion.div>
               )}
             </AnimatePresence>

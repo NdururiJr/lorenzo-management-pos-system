@@ -8,7 +8,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Table,
   TableBody,
@@ -30,9 +30,12 @@ import {
 import { Card, CardContent } from '@/components/ui/card';
 import { MoreHorizontal, Edit, UserX, UserCheck } from 'lucide-react';
 import type { Employee } from '@/app/(dashboard)/employees/page';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 interface EmployeeTableProps {
   employees: Employee[];
+  isSuperAdmin?: boolean;
 }
 
 const ROLE_LABELS: Record<string, string> = {
@@ -43,7 +46,37 @@ const ROLE_LABELS: Record<string, string> = {
   admin: 'Admin',
 };
 
-export function EmployeeTable({ employees }: EmployeeTableProps) {
+export function EmployeeTable({ employees, isSuperAdmin = false }: EmployeeTableProps) {
+  const [branches, setBranches] = useState<Record<string, string>>({});
+
+  // Fetch branch names for super admin view
+  useEffect(() => {
+    if (!isSuperAdmin) return;
+
+    async function fetchBranchNames() {
+      const uniqueBranchIds = [...new Set(employees.map((e) => e.branchId))];
+      const branchMap: Record<string, string> = {};
+
+      for (const branchId of uniqueBranchIds) {
+        try {
+          const branchDoc = await getDoc(doc(db, 'branches', branchId));
+          if (branchDoc.exists()) {
+            branchMap[branchId] = branchDoc.data().name;
+          } else {
+            branchMap[branchId] = branchId; // Fallback to ID
+          }
+        } catch (error) {
+          console.error(`Error fetching branch ${branchId}:`, error);
+          branchMap[branchId] = branchId;
+        }
+      }
+
+      setBranches(branchMap);
+    }
+
+    fetchBranchNames();
+  }, [employees, isSuperAdmin]);
+
   return (
     <Card>
       <CardContent className="p-0">
@@ -55,6 +88,7 @@ export function EmployeeTable({ employees }: EmployeeTableProps) {
                 <TableHead>Email</TableHead>
                 <TableHead>Phone</TableHead>
                 <TableHead>Role</TableHead>
+                {isSuperAdmin && <TableHead>Branch</TableHead>}
                 <TableHead>Status</TableHead>
                 <TableHead>Today's Status</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
@@ -71,6 +105,11 @@ export function EmployeeTable({ employees }: EmployeeTableProps) {
                       {ROLE_LABELS[employee.role] || employee.role}
                     </Badge>
                   </TableCell>
+                  {isSuperAdmin && (
+                    <TableCell className="text-gray-600">
+                      {branches[employee.branchId] || employee.branchId}
+                    </TableCell>
+                  )}
                   <TableCell>
                     {employee.status === 'active' ? (
                       <Badge className="bg-green-100 text-green-700 border-green-200">

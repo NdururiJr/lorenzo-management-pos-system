@@ -54,6 +54,7 @@ export async function createTransaction(
     transactionId,
     orderId: data.orderId,
     customerId: data.customerId,
+    branchId: data.branchId,
     amount: data.amount,
     method: data.method,
     status: data.status || 'pending',

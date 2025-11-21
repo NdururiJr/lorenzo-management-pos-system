@@ -9,16 +9,23 @@ import { DataTable, type DataTableColumn } from '@/components/ui/data-table';
 import { Button } from '@/components/ui/button';
 import { getPricingByBranch, getActivePricing } from '@/lib/db/pricing';
 import type { Pricing } from '@/lib/db/schema';
-import { Plus, RefreshCw, Edit } from 'lucide-react';
+import { Plus, RefreshCw, Edit, Lock } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
+import { AddPricingModal } from '@/components/features/pricing/AddPricingModal';
 
 export default function PricingPage() {
   const router = useRouter();
-  const { user, userData, isAdmin } = useAuth();
+  const { userData, isAdmin } = useAuth();
 
   const [pricing, setPricing] = useState<Pricing[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [editingPricing, setEditingPricing] = useState<Pricing | null>(null);
 
+  // Page guard - only super admins can access
+  const isSuperAdmin = userData?.isSuperAdmin || false;
+
+  // Define hooks BEFORE any conditional returns
   const fetchPricing = useCallback(async () => {
     if (!userData) return;
 
@@ -42,8 +49,33 @@ export default function PricingPage() {
   }, [userData, isAdmin]);
 
   useEffect(() => {
+    if (userData && !isSuperAdmin) {
+      router.push('/dashboard');
+    }
+  }, [userData, isSuperAdmin, router]);
+
+  useEffect(() => {
     fetchPricing();
   }, [fetchPricing]);
+
+  // If not super admin, show access denied message
+  if (userData && !isSuperAdmin) {
+    return (
+      <PageContainer>
+        <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
+          <Lock className="w-16 h-16 text-gray-400" />
+          <h2 className="text-2xl font-semibold text-gray-900">Access Denied</h2>
+          <p className="text-gray-600 text-center max-w-md">
+            Pricing management is restricted to super administrators only.
+            Please contact your system administrator if you need access.
+          </p>
+          <Button onClick={() => router.push('/dashboard')}>
+            Return to Dashboard
+          </Button>
+        </div>
+      </PageContainer>
+    );
+  }
 
   const columns: DataTableColumn<Pricing>[] = [
     {
@@ -82,8 +114,8 @@ export default function PricingPage() {
           size="sm"
           onClick={(e) => {
             e.stopPropagation();
-            // TODO: Implement edit modal or page
-            console.log('Edit pricing', item.pricingId);
+            setEditingPricing(item);
+            setShowAddModal(true);
           }}
         >
           <Edit className="w-4 h-4" />
@@ -98,7 +130,12 @@ export default function PricingPage() {
         title="Pricing"
         description="Manage service prices for garment types"
         action={
-          <Button onClick={() => console.log('Add pricing')}>
+          <Button
+            onClick={() => {
+              setEditingPricing(null);
+              setShowAddModal(true);
+            }}
+          >
             <Plus className="w-4 h-4 mr-2" />
             Add Pricing
           </Button>
@@ -130,11 +167,26 @@ export default function PricingPage() {
             description: 'Get started by adding pricing for garment types.',
             action: {
               label: 'Add Pricing',
-              onClick: () => console.log('Add pricing'),
+              onClick: () => {
+                setEditingPricing(null);
+                setShowAddModal(true);
+              },
             },
           }}
         />
       </div>
+
+      {/* Add/Edit Pricing Modal */}
+      <AddPricingModal
+        open={showAddModal}
+        onOpenChange={(open) => {
+          setShowAddModal(open);
+          if (!open) {
+            setEditingPricing(null);
+          }
+        }}
+        editPricing={editingPricing}
+      />
     </PageContainer>
   );
 }

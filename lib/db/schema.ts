@@ -486,6 +486,8 @@ export interface Transaction {
   orderId: string;
   /** Reference to customer */
   customerId: string;
+  /** Reference to branch (where transaction occurred) */
+  branchId: string;
   /** Transaction amount (in KES) */
   amount: number;
   /** Payment method */

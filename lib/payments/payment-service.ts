@@ -69,6 +69,7 @@ export async function processCashPayment(
     const transactionId = await createTransaction({
       orderId: data.orderId,
       customerId: data.customerId,
+      branchId: order.branchId,
       amount: data.amount,
       method: 'cash',
       status: 'completed', // Cash payments are immediately completed
@@ -140,6 +141,7 @@ export async function initiateDigitalPayment(
     const transactionId = await createTransaction({
       orderId: data.orderId,
       customerId: data.customerId,
+      branchId: order.branchId,
       amount: data.amount,
       method: data.method,
       status: 'pending',
@@ -203,6 +205,7 @@ export async function processCreditPayment(
     const transactionId = await createTransaction({
       orderId: data.orderId,
       customerId: data.customerId,
+      branchId: order.branchId,
       amount: data.amount,
       method: 'credit',
       status: 'completed', // Credit payments are recorded as completed

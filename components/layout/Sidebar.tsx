@@ -132,7 +132,8 @@ const navigationItems: NavItem[] = [
     label: 'Pricing',
     href: '/pricing',
     icon: DollarSign,
-    roles: ['admin', 'director', 'general_manager', 'store_manager', 'manager'],
+    roles: [], // Will be filtered by requireSuperAdmin flag
+    requireSuperAdmin: true,
   },
   {
     label: 'Transactions',
