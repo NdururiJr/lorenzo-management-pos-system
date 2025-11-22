@@ -21,6 +21,8 @@ import { FloatingOrbs } from '@/components/auth/FloatingOrbs';
 import { motion } from 'framer-motion';
 import { Loader2, Search, AlertCircle } from 'lucide-react';
 import type { OrderExtended } from '@/lib/db/schema';
+import { collection, query, where, getDocs, limit } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 type TabValue = 'all' | 'active' | 'completed';
 
@@ -29,14 +31,32 @@ export default function OrdersListPage() {
   const [activeTab, setActiveTab] = useState<TabValue>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Fetch all orders
-  const { data: allOrders, isLoading, error } = useQuery<OrderExtended[]>({
-    queryKey: ['customer-orders', user?.uid],
+  // Fetch customer profile to get customerId
+  const { data: customer } = useQuery({
+    queryKey: ['customer-profile', user?.email],
     queryFn: async () => {
-      if (!user?.uid) return [];
-      return getOrdersByCustomer(user.uid, 100);
+      if (!user?.email) return null;
+
+      const customersRef = collection(db, 'customers');
+      const q = query(customersRef, where('email', '==', user.email), limit(1));
+      const snapshot = await getDocs(q);
+
+      if (!snapshot.empty) {
+        return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as any;
+      }
+      return null;
     },
-    enabled: !!user?.uid,
+    enabled: !!user?.email,
+  });
+
+  // Fetch all orders using customerId
+  const { data: allOrders, isLoading, error } = useQuery<OrderExtended[]>({
+    queryKey: ['customer-orders', customer?.customerId],
+    queryFn: async () => {
+      if (!customer?.customerId) return [];
+      return getOrdersByCustomer(customer.customerId, 100);
+    },
+    enabled: !!customer?.customerId,
   });
 
   // Filter orders based on tab
