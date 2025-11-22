@@ -263,16 +263,6 @@
       ]
     },
     {
-      "collectionGroup": "customers",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "phone",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
       "collectionGroup": "pricing",
       "queryScope": "COLLECTION",
       "fields": [

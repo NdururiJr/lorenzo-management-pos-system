@@ -199,6 +199,32 @@ export async function getOrder(orderId: string): Promise<OrderExtended> {
 }
 
 /**
+ * Get order by ID with ownership verification
+ *
+ * Fetches an order and verifies it belongs to the specified customer.
+ * Used in customer portal to prevent unauthorized access.
+ *
+ * @param orderId - Order ID
+ * @param customerId - Customer UID to verify ownership
+ * @returns Order if owned by customer
+ * @throws DatabaseError if order not found or doesn't belong to customer
+ */
+export async function getOrderByIdForCustomer(
+  orderId: string,
+  customerId: string
+): Promise<OrderExtended> {
+  const order = await getDocument<OrderExtended>('orders', orderId);
+
+  if (order.customerId !== customerId) {
+    throw new DatabaseError(
+      `Order ${orderId} does not exist or you do not have permission to view it.`
+    );
+  }
+
+  return order;
+}
+
+/**
  * Update order status
  *
  * @param orderId - Order ID

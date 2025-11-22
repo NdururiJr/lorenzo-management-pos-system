@@ -15,6 +15,7 @@ import { Separator } from '@/components/ui/separator';
 import { formatCurrency } from '@/lib/utils/formatters';
 import { Download, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
 import type { OrderExtended } from '@/lib/db/schema';
+import { toast } from 'sonner';
 
 interface PaymentInfoProps {
   order: OrderExtended;
@@ -22,8 +23,25 @@ interface PaymentInfoProps {
 
 export function PaymentInfo({ order }: PaymentInfoProps) {
   const handleDownloadReceipt = () => {
-    // TODO: Implement receipt download
-    console.log('Download receipt for order:', order.orderId);
+    // TODO: Implement receipt generation and download
+    // Check if receipt URL exists in order (type assertion for future implementation)
+    const orderWithReceipt = order as OrderExtended & { receiptUrl?: string };
+    if (orderWithReceipt.receiptUrl) {
+      // Open receipt in new tab or download
+      window.open(orderWithReceipt.receiptUrl, '_blank');
+    } else {
+      // Show placeholder toast
+      toast.info('Receipt download coming soon', {
+        description: 'Please contact the store for a copy of your receipt.',
+      });
+    }
+  };
+
+  const handlePayBalance = () => {
+    // TODO: Implement Pesapal payment integration
+    toast.info('Payment flow coming soon', {
+      description: 'Please contact the store to pay your remaining balance.',
+    });
   };
 
   const getPaymentStatusConfig = () => {
@@ -109,15 +127,31 @@ export function PaymentInfo({ order }: PaymentInfoProps) {
 
         <Separator />
 
-        {/* Download Receipt */}
-        <Button
-          variant="outline"
-          className="w-full"
-          onClick={handleDownloadReceipt}
-        >
-          <Download className="w-4 h-4 mr-2" />
-          Download Receipt
-        </Button>
+        {/* Payment Actions */}
+        <div className="space-y-2">
+          {/* Pay Balance Button - only show if not fully paid */}
+          {remainingBalance > 0 && (
+            <Button
+              variant="default"
+              className="w-full bg-brand-blue hover:bg-brand-blue-dark"
+              onClick={handlePayBalance}
+            >
+              Pay Balance ({formatCurrency(remainingBalance)})
+            </Button>
+          )}
+
+          {/* Download Receipt - only show if paid */}
+          {order.paymentStatus === 'paid' && (
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={handleDownloadReceipt}
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Download Receipt
+            </Button>
+          )}
+        </div>
       </div>
     </Card>
   );

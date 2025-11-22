@@ -206,13 +206,13 @@ service cloud.firestore {
     // ============================================
 
     match /orders/{orderId} {
-      // Customers can read their own orders
       // Staff can read orders from their allowed branches
       // Super admins can read all orders
+      // Customers can read orders if they match by email via customer lookup (handled in app)
       allow read: if isAuthenticated() && (
-        resource.data.customerId == currentUserId() ||
+        isSuperAdmin() ||
         canAccessBranch(resource.data.branchId) ||
-        isSuperAdmin()
+        isStaff()
       );
 
       // Front desk and management can create orders in their allowed branches

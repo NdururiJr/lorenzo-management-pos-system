@@ -1,9 +1,9 @@
 /**
  * Orders List Page
  *
- * List of all orders (active and completed) with filtering.
+ * Modern orders list with glassmorphic design, filtering, and search.
  *
- * @module app/(customer)/orders/page
+ * @module app/(customer)/portal/orders/page
  */
 
 'use client';
@@ -15,9 +15,11 @@ import { getOrdersByCustomer } from '@/lib/db/orders';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { OrdersList } from '@/components/features/customer/OrdersList';
-import { Loader2, Search } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertCircle } from 'lucide-react';
+import { ModernSection } from '@/components/modern/ModernLayout';
+import { ModernCard, ModernCardContent } from '@/components/modern/ModernCard';
+import { FloatingOrbs } from '@/components/auth/FloatingOrbs';
+import { motion } from 'framer-motion';
+import { Loader2, Search, AlertCircle } from 'lucide-react';
 import type { OrderExtended } from '@/lib/db/schema';
 
 type TabValue = 'all' | 'active' | 'completed';
@@ -68,74 +70,133 @@ export default function OrdersListPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-center space-y-4">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto text-black" />
-          <p className="text-sm text-gray-600">Loading orders...</p>
+      <ModernSection animate>
+        <FloatingOrbs />
+        <div className="flex items-center justify-center py-12">
+          <ModernCard className="p-8">
+            <div className="text-center space-y-4">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              >
+                <Loader2 className="h-8 w-8 mx-auto text-brand-blue" />
+              </motion.div>
+              <p className="text-sm text-gray-600">Loading your orders...</p>
+            </div>
+          </ModernCard>
         </div>
-      </div>
+      </ModernSection>
     );
   }
 
   if (error) {
     return (
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
-        <AlertDescription>
-          Failed to load orders. Please try refreshing the page.
-        </AlertDescription>
-      </Alert>
+      <ModernSection animate>
+        <FloatingOrbs />
+        <ModernCard className="bg-gradient-to-br from-red-50 to-red-100/50 border-red-200">
+          <ModernCardContent className="flex items-start space-x-3">
+            <div className="p-2 rounded-full bg-red-100">
+              <AlertCircle className="h-5 w-5 text-red-600" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-red-900">Error Loading Orders</h3>
+              <p className="text-sm text-red-700 mt-1">
+                Failed to load your orders. Please try refreshing the page.
+              </p>
+            </div>
+          </ModernCardContent>
+        </ModernCard>
+      </ModernSection>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <ModernSection animate>
+      <FloatingOrbs />
+
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold">My Orders</h1>
-        <p className="text-sm text-gray-600">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="mb-6"
+      >
+        <h1 className="text-3xl font-bold text-gray-900">My Orders</h1>
+        <p className="text-gray-600 mt-1">
           View and track all your orders
         </p>
-      </div>
+      </motion.div>
 
       {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-        <Input
-          type="text"
-          placeholder="Search by order ID..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9"
-        />
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+        className="mb-6"
+      >
+        <ModernCard className="!p-0 overflow-hidden">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-blue/60" />
+            <Input
+              type="text"
+              placeholder="Search by order ID..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-12 h-12 border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 text-base"
+            />
+          </div>
+        </ModernCard>
+      </motion.div>
 
       {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as TabValue)}>
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="all">
-            All ({allOrders?.length || 0})
-          </TabsTrigger>
-          <TabsTrigger value="active">
-            Active (
-            {allOrders?.filter(
-              (o) => !['delivered', 'collected'].includes(o.status)
-            ).length || 0}
-            )
-          </TabsTrigger>
-          <TabsTrigger value="completed">
-            Completed (
-            {allOrders?.filter((o) =>
-              ['delivered', 'collected'].includes(o.status)
-            ).length || 0}
-            )
-          </TabsTrigger>
-        </TabsList>
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+      >
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as TabValue)}>
+          <ModernCard className="!p-2 mb-6">
+            <TabsList className="grid w-full grid-cols-3 bg-transparent">
+              <TabsTrigger
+                value="all"
+                className="data-[state=active]:bg-brand-blue data-[state=active]:text-white data-[state=active]:shadow-md transition-all"
+              >
+                All ({allOrders?.length || 0})
+              </TabsTrigger>
+              <TabsTrigger
+                value="active"
+                className="data-[state=active]:bg-brand-blue data-[state=active]:text-white data-[state=active]:shadow-md transition-all"
+              >
+                Active (
+                {allOrders?.filter(
+                  (o) => !['delivered', 'collected'].includes(o.status)
+                ).length || 0}
+                )
+              </TabsTrigger>
+              <TabsTrigger
+                value="completed"
+                className="data-[state=active]:bg-brand-blue data-[state=active]:text-white data-[state=active]:shadow-md transition-all"
+              >
+                Completed (
+                {allOrders?.filter((o) =>
+                  ['delivered', 'collected'].includes(o.status)
+                ).length || 0}
+                )
+              </TabsTrigger>
+            </TabsList>
+          </ModernCard>
 
-        <TabsContent value={activeTab} className="mt-6">
-          <OrdersList orders={filteredOrders} />
-        </TabsContent>
-      </Tabs>
-    </div>
+          <TabsContent value={activeTab} className="mt-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+            >
+              <OrdersList orders={filteredOrders} />
+            </motion.div>
+          </TabsContent>
+        </Tabs>
+      </motion.div>
+    </ModernSection>
   );
 }

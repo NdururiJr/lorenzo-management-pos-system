@@ -1056,3 +1056,30 @@ export interface AuditLog {
   /** Timestamp when action was performed */
   timestamp: Timestamp;
 }
+
+/**
+ * Driver Location document structure
+ * Collection: driverLocations
+ *
+ * Used for real-time tracking of drivers during active deliveries.
+ * Document ID matches deliveryId for easy lookup.
+ */
+export interface DriverLocation {
+  /** Delivery ID (also the document ID) */
+  deliveryId: string;
+  /** Driver UID */
+  driverId: string;
+  /** Current location coordinates */
+  location: {
+    lat: number;
+    lng: number;
+  };
+  /** Heading/direction in degrees (0-360, 0 = North) */
+  heading?: number;
+  /** Speed in meters per second */
+  speed?: number;
+  /** Last update timestamp */
+  lastUpdated: Timestamp;
+  /** Whether location tracking is active */
+  isActive: boolean;
+}

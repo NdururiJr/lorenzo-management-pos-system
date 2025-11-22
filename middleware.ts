@@ -4,6 +4,10 @@
  * Protects dashboard routes and handles authentication redirects.
  * Runs on Edge Runtime for optimal performance.
  *
+ * NOTE: Role-based access control for customer portal is handled
+ * in the layout.tsx file, which has access to user data from Firestore.
+ * Middleware only handles authentication checks.
+ *
  * @module middleware
  */
 

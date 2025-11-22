@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
-import { CustomerHeader } from '@/components/features/customer/CustomerHeader';
+import { CustomerSidebar } from '@/components/features/customer/CustomerSidebar';
 import { MobileBottomNav } from '@/components/features/customer/MobileBottomNav';
 import { FloatingOrbs } from '@/components/auth/FloatingOrbs';
 
@@ -97,12 +97,12 @@ export default function CustomerLayout({
       {/* Top decorative blur */}
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
 
-      {/* Content wrapper */}
-      <div className="relative z-10">
-        {/* Header */}
-        <CustomerHeader />
+      {/* Desktop Sidebar */}
+      <CustomerSidebar />
 
-        {/* Main content */}
+      {/* Content wrapper */}
+      <div className="relative z-10 md:pl-64">
+        {/* Main content centered with proper spacing */}
         <motion.main
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

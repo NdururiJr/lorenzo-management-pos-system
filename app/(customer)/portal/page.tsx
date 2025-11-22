@@ -2,7 +2,7 @@
  * Customer Portal Dashboard Page
  *
  * Modern customer portal with glassmorphic cards and blue theme.
- * Shows active orders, recent activity, and quick actions with animations.
+ * Features sidebar navigation and displays active orders and recent activity.
  *
  * @module app/(customer)/portal/page
  */
@@ -12,32 +12,82 @@
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { getOrdersByCustomer } from '@/lib/db/orders';
-import { WelcomeHeader } from '@/components/features/customer/WelcomeHeader';
 import { ActiveOrders } from '@/components/features/customer/ActiveOrders';
-import { QuickActions } from '@/components/features/customer/QuickActions';
 import { RecentActivity } from '@/components/features/customer/RecentActivity';
 import { ModernCard, ModernCardContent } from '@/components/modern/ModernCard';
 import { ModernSection } from '@/components/modern/ModernLayout';
+import { FloatingOrbs } from '@/components/auth/FloatingOrbs';
 import { motion } from 'framer-motion';
-import { Loader2, AlertCircle, Info } from 'lucide-react';
+import { Loader2, AlertCircle } from 'lucide-react';
 import type { OrderExtended } from '@/lib/db/schema';
+import { collection, query, where, getDocs, limit } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 export default function CustomerPortalPage() {
   const { user, userData } = useAuth();
 
+  // Debug: Log auth status
+  console.log('[Customer Portal] Auth State:', {
+    email: user?.email,
+    isSuperAdmin: userData?.isSuperAdmin,
+    role: userData?.role,
+    uid: user?.uid
+  });
+
+  // Fetch customer record by email or phone
+  const { data: customer, isLoading: customerLoading } = useQuery({
+    queryKey: ['customer-profile', user?.email],
+    queryFn: async () => {
+      if (!user?.email) {
+        console.log('[Customer Portal] No user email found');
+        return null;
+      }
+
+      console.log('[Customer Portal] Looking for customer with email:', user.email);
+
+      // Try to find customer by email
+      const customersRef = collection(db, 'customers');
+      const q = query(customersRef, where('email', '==', user.email), limit(1));
+      const snapshot = await getDocs(q);
+
+      if (!snapshot.empty) {
+        const customerData = { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as any;
+        console.log('[Customer Portal] Found customer:', customerData.customerId);
+        return customerData;
+      }
+
+      console.log('[Customer Portal] No customer record found for email:', user.email);
+      return null;
+    },
+    enabled: !!user?.email,
+  });
+
   // Fetch all orders for this customer
   const { data: allOrders, isLoading, error } = useQuery<OrderExtended[]>({
-    queryKey: ['customer-orders', user?.uid, userData?.role],
+    queryKey: ['customer-orders', customer?.customerId],
     queryFn: async () => {
-      if (!user?.uid) return [];
-      // If user is staff (not customer), return empty array for development testing
-      if (userData?.role && userData.role !== 'customer') {
-        console.log('Staff user accessing customer portal (dev mode) - No customer orders to show');
+      if (!customer?.customerId) {
+        console.log('[Customer Portal] No customerId, skipping order fetch');
         return [];
       }
-      return getOrdersByCustomer(user.uid, 50);
+      console.log('[Customer Portal] Fetching orders for customer:', customer.customerId);
+
+      // Debug: Check if ANY orders exist in the database
+      const allOrdersRef = collection(db, 'orders');
+      const allOrdersSnap = await getDocs(allOrdersRef);
+      console.log('[Customer Portal] DEBUG - Total orders in database:', allOrdersSnap.size);
+      if (allOrdersSnap.size > 0) {
+        const firstOrder = allOrdersSnap.docs[0].data();
+        console.log('[Customer Portal] DEBUG - First order customerId:', firstOrder.customerId);
+        console.log('[Customer Portal] DEBUG - Looking for customerId:', customer.customerId);
+      }
+
+      const orders = await getOrdersByCustomer(customer.customerId, 50);
+      console.log('[Customer Portal] Fetched orders:', orders.length, 'orders');
+      console.log('[Customer Portal] Order statuses:', orders.map(o => o.status));
+      return orders;
     },
-    enabled: !!user?.uid && !!userData,
+    enabled: !!customer?.customerId,
   });
 
   // Filter active orders (not delivered or collected)
@@ -49,6 +99,10 @@ export default function CustomerPortalPage() {
   const recentCompletedOrders = allOrders
     ?.filter((order) => ['delivered', 'collected'].includes(order.status))
     .slice(0, 3) || [];
+
+  console.log('[Customer Portal] Total orders:', allOrders?.length || 0);
+  console.log('[Customer Portal] Active orders:', activeOrders.length);
+  console.log('[Customer Portal] Completed orders:', recentCompletedOrders.length);
 
   if (isLoading) {
     return (
@@ -86,68 +140,54 @@ export default function CustomerPortalPage() {
     );
   }
 
-  return (
-    <ModernSection animate>
-      {/* Dev Mode Notice for Staff Users */}
-      {userData?.role && userData.role !== 'customer' && process.env.NODE_ENV === 'development' && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ModernCard className="bg-gradient-to-br from-brand-blue/10 to-brand-blue/5 border-brand-blue/20 mb-6">
-            <ModernCardContent className="flex items-start space-x-3">
-              <div className="p-2 rounded-full bg-brand-blue/20">
-                <Info className="h-5 w-5 text-brand-blue" />
+  // Show message if no customer record found
+  if (!customerLoading && !customer) {
+    return (
+      <ModernSection>
+        <ModernCard className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+          <ModernCardContent className="p-8">
+            <div className="text-center space-y-4">
+              <div className="p-3 rounded-full bg-amber-100 w-16 h-16 mx-auto flex items-center justify-center">
+                <AlertCircle className="h-8 w-8 text-amber-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-brand-blue-dark">Development Mode</h3>
-                <p className="text-sm text-gray-700 mt-1">
-                  You are viewing the customer portal as a <strong>{userData.role}</strong> user.
-                  In production, only customers can access this portal. To test with customer data, create a customer account.
+                <h3 className="font-semibold text-amber-900 text-lg">No Customer Profile Found</h3>
+                <p className="text-sm text-amber-700 mt-2">
+                  We couldn't find a customer profile linked to your account ({user?.email || 'unknown'}).
+                </p>
+                <p className="text-sm text-amber-700 mt-2">
+                  Please run the "Generate Test Data" tool at{' '}
+                  <a href="/admin/seed-data" className="underline font-medium">
+                    /admin/seed-data
+                  </a>{' '}
+                  to create sample orders for testing.
                 </p>
               </div>
-            </ModernCardContent>
-          </ModernCard>
-        </motion.div>
-      )}
+            </div>
+          </ModernCardContent>
+        </ModernCard>
+      </ModernSection>
+    );
+  }
 
-      {/* Welcome Header with animation */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-      >
-        <WelcomeHeader
-          customerName={userData?.name || 'Customer'}
-          lastOrderDate={allOrders?.[0]?.createdAt}
-          totalOrders={allOrders?.length || 0}
-        />
-      </motion.div>
+  return (
+    <ModernSection animate>
+      <FloatingOrbs />
 
       {/* Active Orders with stagger animation */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
       >
         <ActiveOrders orders={activeOrders} loading={isLoading} />
-      </motion.div>
-
-      {/* Quick Actions with scale animation */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
-        <QuickActions />
       </motion.div>
 
       {/* Recent Activity with slide animation */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
       >
         <RecentActivity orders={recentCompletedOrders} />
       </motion.div>
