@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 import { PageContainer } from '@/components/ui/page-container';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,6 +18,7 @@ import {
   Clock,
   ArrowLeft,
   Edit,
+  AlertCircle,
 } from 'lucide-react';
 import { getCustomer } from '@/lib/db/customers';
 import { getOrdersByCustomer } from '@/lib/db/orders';
@@ -27,14 +29,16 @@ import { DataTable } from '@/components/ui/data-table';
 export default function CustomerDetailsPage() {
   const params = useParams();
   const router = useRouter();
+  const { userData } = useAuth();
   const customerId = params.customerId as string;
 
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Fetch customer data - skip if user is a driver
   const fetchData = useCallback(async () => {
-    if (!customerId) return;
+    if (!customerId || userData?.role === 'driver') return;
 
     setIsLoading(true);
     try {
@@ -50,11 +54,39 @@ export default function CustomerDetailsPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [customerId]);
+  }, [customerId, userData]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  // Route guard: Block drivers from accessing customer profiles
+  useEffect(() => {
+    if (userData && userData.role === 'driver') {
+      router.replace('/dashboard');
+    }
+  }, [userData, router]);
+
+  // Show access denied for drivers
+  if (userData?.role === 'driver') {
+    return (
+      <PageContainer>
+        <Card className="p-12">
+          <div className="text-center space-y-4">
+            <AlertCircle className="w-16 h-16 mx-auto text-red-500" />
+            <h2 className="text-2xl font-bold text-gray-900">Access Denied</h2>
+            <p className="text-gray-600">
+              You do not have permission to view customer profiles.
+            </p>
+            <Button onClick={() => router.back()} variant="outline">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Go Back
+            </Button>
+          </div>
+        </Card>
+      </PageContainer>
+    );
+  }
 
   if (isLoading) {
     return (

@@ -19,6 +19,7 @@
     "test:all": "npm run test && npm run test:e2e",
     "prepare": "husky",
     "seed:dev": "tsx scripts/seed-dev-user.ts",
+    "seed:driver": "tsx scripts/seed-test-driver.ts",
     "seed:milestone2": "tsx scripts/seed-milestone2.ts",
     "seed:test-orders": "tsx scripts/seed-test-orders.ts",
     "seed:branch-trials": "tsx scripts/seed-branch-trials.ts",
