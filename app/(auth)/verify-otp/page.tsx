@@ -9,6 +9,9 @@
 
 'use client';
 
+// Force dynamic rendering - don't statically generate this page
+export const dynamic = 'force-dynamic';
+
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';

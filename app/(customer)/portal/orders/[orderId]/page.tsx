@@ -16,6 +16,7 @@ import { OrderTrackingTimeline } from '@/components/features/customer/OrderTrack
 import { OrderStatusBanner } from '@/components/features/customer/OrderStatusBanner';
 import { BranchInfoCard } from '@/components/features/customer/BranchInfoCard';
 import { PaymentInfo } from '@/components/features/customer/PaymentInfo';
+import { PaymentStub } from '@/components/features/customer/PaymentStub';
 import { LiveDriverMap } from '@/components/features/customer/LiveDriverMap';
 import type { OrderExtended } from '@/lib/db/schema';
 import { motion } from 'framer-motion';
@@ -235,6 +236,21 @@ export default function CustomerOrderDetailsPage() {
           >
             <PaymentInfo order={order} />
           </motion.div>
+
+          {/* Payment Stub - Show if payment needed */}
+          {order.paymentStatus !== 'paid' && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.35 }}
+            >
+              <PaymentStub
+                amountDue={order.totalAmount - (order.paidAmount || 0)}
+                paymentStatus={order.paymentStatus}
+                orderId={order.orderId}
+              />
+            </motion.div>
+          )}
 
           {/* Branch Information */}
           {order.branchId && (

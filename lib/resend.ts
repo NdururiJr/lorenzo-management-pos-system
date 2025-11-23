@@ -36,6 +36,32 @@ export const resend = new Resend(RESEND_API_KEY);
 export const FROM_EMAIL = RESEND_FROM_EMAIL;
 
 /**
+ * Multiple sender email addresses for different scenarios
+ * Resend allows using any email from your verified domain
+ *
+ * Usage:
+ * - orders@: Order confirmations, receipts, status updates
+ * - support@: Password resets, customer service
+ * - billing@: Payment reminders, invoices
+ * - delivery@: Pickup requests, delivery notifications
+ * - hr@: Employee invitations
+ * - noreply@: System/automated emails (fallback)
+ */
+export const EMAIL_SENDERS = {
+  orders: process.env.RESEND_ORDERS_EMAIL || 'Lorenzo Orders <orders@lorenzo-dry-cleaners.com>',
+  support: process.env.RESEND_SUPPORT_EMAIL || 'Lorenzo Support <support@lorenzo-dry-cleaners.com>',
+  billing: process.env.RESEND_BILLING_EMAIL || 'Lorenzo Billing <billing@lorenzo-dry-cleaners.com>',
+  delivery: process.env.RESEND_DELIVERY_EMAIL || 'Lorenzo Delivery <delivery@lorenzo-dry-cleaners.com>',
+  hr: process.env.RESEND_HR_EMAIL || 'Lorenzo HR <hr@lorenzo-dry-cleaners.com>',
+  noreply: RESEND_FROM_EMAIL, // Use the main config as noreply fallback
+} as const;
+
+/**
+ * Type for email sender keys
+ */
+export type EmailSenderType = keyof typeof EMAIL_SENDERS;
+
+/**
  * Email configuration constants
  */
 export const EMAIL_CONFIG = {

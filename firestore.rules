@@ -385,21 +385,29 @@ service cloud.firestore {
 
     match /transactions/{transactionId} {
       // Customers can read their own transactions
-      // Staff can read transactions from their branch
+      // Staff can read transactions from their allowed branches
+      // Super admins can read all transactions
       allow read: if isAuthenticated() && (
         resource.data.customerId == currentUserId() ||
-        isStaff() ||
-        isAdmin()
+        (isStaff() && canAccessBranch(resource.data.branchId)) ||
+        isSuperAdmin()
       );
 
-      // Front desk and management can create transactions
-      allow create: if hasAnyRole(['admin', 'manager', 'front_desk']);
+      // Front desk and management can create transactions in their allowed branches
+      // branchId must match user's allowed branches
+      allow create: if hasAnyRole(['admin', 'manager', 'front_desk']) &&
+        canAccessBranch(request.resource.data.branchId);
 
-      // Only management can update transactions
-      allow update: if isManagement();
+      // Only management can update transactions in their allowed branches
+      // Super admins can update all transactions
+      // branchId cannot be changed (immutable)
+      allow update: if !branchIdChanged() && (
+        (isManagement() && canAccessBranch(resource.data.branchId)) ||
+        isSuperAdmin()
+      );
 
-      // Only admins can delete transactions
-      allow delete: if isAdmin();
+      // Only super admins can delete transactions
+      allow delete: if isSuperAdmin();
     }
 
     // ============================================
@@ -433,8 +441,15 @@ service cloud.firestore {
       // All authenticated users can read pricing
       allow read: if isAuthenticated();
 
-      // Only super admins can create, update, or delete pricing
-      allow create, update, delete: if isSuperAdmin();
+      // Only super admins can create pricing
+      allow create: if isSuperAdmin();
+
+      // Only super admins can update pricing
+      // branchId cannot be changed (immutable)
+      allow update: if isSuperAdmin() && !branchIdChanged();
+
+      // Only super admins can delete pricing
+      allow delete: if isSuperAdmin();
     }
 
     // ============================================

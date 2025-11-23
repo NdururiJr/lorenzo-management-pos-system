@@ -5,22 +5,32 @@
  * It includes retry logic, error handling, and logging for all email sends.
  *
  * Features:
- * - Password reset emails
+ * - Password reset emails (staff & customers)
+ * - Employee invitation emails
  * - Order confirmation emails
- * - Order status update notifications
+ * - Order status update notifications (ready, delivered, etc.)
  * - Receipt delivery with PDF attachments
+ * - Payment reminder emails
+ * - Pickup request confirmation emails
  * - Retry logic with exponential backoff
  * - Comprehensive error handling and logging
+ * - Email attempt logging to Firestore
  *
  * @module services/email
  */
 
-import { resend, FROM_EMAIL, EMAIL_CONFIG, EmailResult, isResendConfigured } from '@/lib/resend';
-import { render } from '@react-email/render';
-import PasswordResetEmail from '@/emails/password-reset';
-import OrderConfirmationEmail from '@/emails/order-confirmation';
-import OrderStatusUpdateEmail from '@/emails/order-status-update';
-import ReceiptEmail from '@/emails/receipt';
+import 'server-only';
+
+import { resend, FROM_EMAIL, EMAIL_CONFIG, EmailResult, isResendConfigured, EMAIL_SENDERS } from '@/lib/resend';
+import {
+  passwordResetEmailHtml,
+  orderConfirmationEmailHtml,
+  orderStatusUpdateEmailHtml,
+  receiptEmailHtml,
+  employeeInvitationEmailHtml,
+  paymentReminderEmailHtml,
+  pickupRequestEmailHtml,
+} from '@/lib/email-templates-html';
 
 /**
  * Sleep utility for retry delays
@@ -40,7 +50,8 @@ async function sendEmailWithRetry(
   emailData: {
     to: string | string[];
     subject: string;
-    react: React.ReactElement;
+    html: string;
+    from?: string; // Optional custom sender address
     attachments?: Array<{
       filename: string;
       content: Buffer | string;
@@ -61,10 +72,10 @@ async function sendEmailWithRetry(
 
     // Send email
     const { data, error } = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: emailData.from || FROM_EMAIL, // Use custom sender or default
       to: emailData.to,
       subject: emailData.subject,
-      react: emailData.react,
+      html: emailData.html,
       attachments: emailData.attachments,
     });
 
@@ -152,14 +163,13 @@ export async function sendPasswordReset(
   userName?: string
 ): Promise<EmailResult> {
   try {
-    const emailHtml = await render(
-      PasswordResetEmail({ email, resetLink, userName })
-    );
+    const html = passwordResetEmailHtml({ email, resetLink, userName });
 
     const result = await sendEmailWithRetry({
       to: email,
       subject: 'Reset Your Password - Lorenzo Dry Cleaners',
-      react: PasswordResetEmail({ email, resetLink, userName }),
+      html,
+      from: EMAIL_SENDERS.support, // Use support@ for password resets
     });
 
     // Log the attempt
@@ -201,10 +211,13 @@ export async function sendOrderConfirmation(
   data: OrderConfirmationData
 ): Promise<EmailResult> {
   try {
+    const html = orderConfirmationEmailHtml(data);
+
     const result = await sendEmailWithRetry({
       to: data.customerEmail,
       subject: `Order Confirmation #${data.orderId} - Lorenzo Dry Cleaners`,
-      react: OrderConfirmationEmail(data),
+      html,
+      from: EMAIL_SENDERS.orders, // Use orders@ for order confirmations
     });
 
     // Log the attempt
@@ -247,10 +260,13 @@ export async function sendOrderStatusUpdate(
   data: OrderStatusUpdateData
 ): Promise<EmailResult> {
   try {
+    const html = orderStatusUpdateEmailHtml(data);
+
     const result = await sendEmailWithRetry({
       to: data.customerEmail,
       subject: `Order Update #${data.orderId} - ${data.newStatus}`,
-      react: OrderStatusUpdateEmail(data),
+      html,
+      from: EMAIL_SENDERS.orders, // Use orders@ for status updates
     });
 
     // Log the attempt
@@ -296,6 +312,8 @@ export async function sendReceipt(
   pdfBuffer?: Buffer
 ): Promise<EmailResult> {
   try {
+    const html = receiptEmailHtml(data);
+
     const attachments = pdfBuffer
       ? [
           {
@@ -308,7 +326,8 @@ export async function sendReceipt(
     const result = await sendEmailWithRetry({
       to: data.customerEmail,
       subject: `Receipt #${data.orderId} - Lorenzo Dry Cleaners`,
-      react: ReceiptEmail(data),
+      html,
+      from: EMAIL_SENDERS.billing, // Use billing@ for receipts
       attachments,
     });
 
@@ -335,19 +354,19 @@ export async function sendReceipt(
  *
  * @param to - Recipient email
  * @param subject - Email subject
- * @param reactComponent - React Email component
+ * @param html - HTML content
  * @returns Email result
  */
 export async function sendTransactionalEmail(
   to: string | string[],
   subject: string,
-  reactComponent: React.ReactElement
+  html: string
 ): Promise<EmailResult> {
   try {
     const result = await sendEmailWithRetry({
       to,
       subject,
-      react: reactComponent,
+      html,
     });
 
     // Log the attempt
@@ -360,6 +379,162 @@ export async function sendTransactionalEmail(
     return {
       success: false,
       error: error.message || 'Failed to send transactional email',
+    };
+  }
+}
+
+/**
+ * Employee invitation email data interface
+ */
+export interface EmployeeInvitationData {
+  employeeName: string;
+  employeeEmail: string;
+  role: string;
+  branchName: string;
+  temporaryPassword?: string;
+  loginUrl: string;
+  invitedBy: string;
+}
+
+/**
+ * Send employee invitation email
+ *
+ * @param data - Employee invitation data
+ * @returns Email result
+ */
+export async function sendEmployeeInvitation(
+  data: EmployeeInvitationData
+): Promise<EmailResult> {
+  try {
+    
+    const html = employeeInvitationEmailHtml(data);
+
+    const result = await sendEmailWithRetry({
+      to: data.employeeEmail,
+      subject: `Welcome to Lorenzo Dry Cleaners - ${data.role}`,
+      html,
+      from: EMAIL_SENDERS.hr, // Use hr@ for employee invitations
+    });
+
+    // Log the attempt
+    await logEmailAttempt('employee_invitation', data.employeeEmail, result, {
+      role: data.role,
+      branchName: data.branchName,
+      invitedBy: data.invitedBy,
+    });
+
+    return result;
+  } catch (error: any) {
+    console.error('Employee invitation email error:', error);
+    return {
+      success: false,
+      error: error.message || 'Failed to send employee invitation email',
+    };
+  }
+}
+
+/**
+ * Payment reminder email data interface
+ */
+export interface PaymentReminderData {
+  orderId: string;
+  customerName: string;
+  customerEmail: string;
+  totalAmount: number;
+  paidAmount: number;
+  amountDue: number;
+  orderStatus: string;
+  branchName: string;
+  branchPhone: string;
+  paymentUrl?: string;
+  dueDate?: Date;
+}
+
+/**
+ * Send payment reminder email
+ *
+ * @param data - Payment reminder data
+ * @returns Email result
+ */
+export async function sendPaymentReminder(
+  data: PaymentReminderData
+): Promise<EmailResult> {
+  try {
+    
+    const html = paymentReminderEmailHtml(data);
+
+    const result = await sendEmailWithRetry({
+      to: data.customerEmail,
+      subject: `Payment Reminder - Order #${data.orderId}`,
+      html,
+      from: EMAIL_SENDERS.billing, // Use billing@ for payment reminders
+    });
+
+    // Log the attempt
+    await logEmailAttempt('payment_reminder', data.customerEmail, result, {
+      orderId: data.orderId,
+      amountDue: data.amountDue,
+    });
+
+    return result;
+  } catch (error: any) {
+    console.error('Payment reminder email error:', error);
+    return {
+      success: false,
+      error: error.message || 'Failed to send payment reminder email',
+    };
+  }
+}
+
+/**
+ * Pickup request confirmation email data interface
+ */
+export interface PickupRequestData {
+  customerName: string;
+  customerEmail: string;
+  pickupAddress: string;
+  pickupDate?: Date;
+  pickupTimeSlot?: string;
+  contactPhone: string;
+  specialInstructions?: string;
+  requestId: string;
+  branchName: string;
+  branchPhone: string;
+  trackingUrl?: string;
+}
+
+/**
+ * Send pickup request confirmation email
+ *
+ * @param data - Pickup request data
+ * @returns Email result
+ */
+export async function sendPickupRequestConfirmation(
+  data: PickupRequestData
+): Promise<EmailResult> {
+  try {
+    
+    const html = pickupRequestEmailHtml(data);
+
+    const result = await sendEmailWithRetry({
+      to: data.customerEmail,
+      subject: `Pickup Request Confirmed - ${data.requestId}`,
+      html,
+      from: EMAIL_SENDERS.delivery, // Use delivery@ for pickup requests
+    });
+
+    // Log the attempt
+    await logEmailAttempt('pickup_request', data.customerEmail, result, {
+      requestId: data.requestId,
+      pickupDate: data.pickupDate?.toISOString(),
+    });
+
+    return result;
+  } catch (error: any) {
+    console.error('Pickup request email error:', error);
+    return {
+      success: false,
+      error: error.message || 'Failed to send pickup request email',
     };
   }
 }
@@ -380,14 +555,17 @@ export async function testEmailConnection(testEmail: string): Promise<EmailResul
       };
     }
 
+    const html = passwordResetEmailHtml({
+      email: testEmail,
+      resetLink: 'https://example.com/reset',
+      userName: 'Test User',
+    });
+
     const result = await sendEmailWithRetry({
       to: testEmail,
       subject: 'Test Email - Lorenzo Dry Cleaners',
-      react: PasswordResetEmail({
-        email: testEmail,
-        resetLink: 'https://example.com/reset',
-        userName: 'Test User',
-      }),
+      html,
+      from: EMAIL_SENDERS.noreply, // Use noreply@ for test emails
     });
 
     return result;

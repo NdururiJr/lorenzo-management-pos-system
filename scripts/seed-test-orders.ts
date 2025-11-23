@@ -290,7 +290,7 @@ async function createOrder(
     totalAmount,
     paidAmount,
     paymentStatus: paymentStatus as 'paid' | 'partial' | 'pending',
-    paymentMethod: paidAmount > 0 ? randomSelect(PAYMENT_METHODS) : undefined,
+    paymentMethod: paidAmount > 0 ? randomSelect([...PAYMENT_METHODS]) : undefined,
     estimatedCompletion,
     createdAt,
     createdBy: userId,
