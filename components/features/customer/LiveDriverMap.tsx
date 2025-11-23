@@ -12,10 +12,11 @@
 import { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { MapView, type MapMarker, type MapRoute, MarkerIcons } from '@/components/maps/MapView';
-import { subscribeToDriverLocation, isLocationStale } from '@/lib/db/driver-locations';
+import { isLocationStale } from '@/lib/db/driver-locations';
 import { calculateDistance, type DistanceResult } from '@/lib/maps/distance';
 import { getDelivery } from '@/lib/db/deliveries';
 import { getUser } from '@/lib/db/users';
+import { getOrder } from '@/lib/db/orders';
 import type { DriverLocation, Delivery, User } from '@/lib/db/schema';
 import { Loader2, MapPin, Phone, Clock, AlertCircle, Car } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
@@ -43,17 +44,24 @@ export function LiveDriverMap({ orderId, deliveryAddress }: LiveDriverMapProps) 
   useEffect(() => {
     async function fetchDelivery() {
       try {
-        // Find delivery containing this order
-        // Note: In a real implementation, you'd want to query deliveries
-        // by order ID. For now, we'll assume the deliveryId is available
-        // or we need to add a way to get it from the order.
+        setIsLoading(true);
+        setError(null);
 
-        // TODO: Add orderId to deliveryId mapping in orders collection
-        // For now, this is a placeholder
-        setError('Delivery tracking not yet available for this order.');
-      } catch (err) {
+        // Get order to find deliveryId
+        const order = await getOrder(orderId);
+
+        if (!order.deliveryId) {
+          setError('This order is not yet out for delivery.');
+          setIsLoading(false);
+          return;
+        }
+
+        // Fetch delivery details
+        const deliveryData = await getDelivery(order.deliveryId);
+        setDelivery(deliveryData);
+      } catch (err: any) {
         console.error('Failed to fetch delivery:', err);
-        setError('Failed to load delivery information.');
+        setError(err.message || 'Failed to load delivery information.');
       } finally {
         setIsLoading(false);
       }
@@ -62,27 +70,54 @@ export function LiveDriverMap({ orderId, deliveryAddress }: LiveDriverMapProps) 
     fetchDelivery();
   }, [orderId]);
 
-  // Subscribe to driver location updates
+  // Poll driver location updates via secure API endpoint
+  // Replaces direct Firestore subscription to prevent unauthorized access
   useEffect(() => {
     if (!delivery) return;
 
-    const unsubscribe = subscribeToDriverLocation(delivery.deliveryId, (location) => {
-      setDriverLocation(location);
+    async function fetchDriverLocation() {
+      if (!delivery) return; // Additional null check for TypeScript
 
-      // Calculate ETA when location updates
-      if (
-        location &&
-        !isLocationStale(location) &&
-        deliveryAddress.coordinates
-      ) {
-        calculateDistance(location.location, deliveryAddress.coordinates)
-          .then(setEta)
-          .catch((err) => console.error('Failed to calculate ETA:', err));
+      try {
+        const response = await fetch(
+          `/api/deliveries/${delivery.deliveryId}/location?orderId=${orderId}`
+        );
+
+        if (!response.ok) {
+          if (response.status === 403) {
+            setError('Unable to access driver location for this order.');
+          }
+          return;
+        }
+
+        const data = await response.json();
+        const location = data.location;
+
+        setDriverLocation(location);
+
+        // Calculate ETA when location updates
+        if (
+          location &&
+          !isLocationStale(location) &&
+          deliveryAddress.coordinates
+        ) {
+          calculateDistance(location.location, deliveryAddress.coordinates)
+            .then(setEta)
+            .catch((err) => console.error('Failed to calculate ETA:', err));
+        }
+      } catch (err: any) {
+        console.error('Failed to fetch driver location:', err);
       }
-    });
+    }
 
-    return () => unsubscribe();
-  }, [delivery, deliveryAddress.coordinates]);
+    // Initial fetch
+    fetchDriverLocation();
+
+    // Poll every 5 seconds for real-time updates
+    const pollInterval = setInterval(fetchDriverLocation, 5000);
+
+    return () => clearInterval(pollInterval);
+  }, [delivery, orderId, deliveryAddress.coordinates]);
 
   // Fetch driver information
   useEffect(() => {

@@ -10,21 +10,50 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
 import { ModernSection } from '@/components/modern/ModernLayout';
 import { FloatingOrbs } from '@/components/auth/FloatingOrbs';
 import { PersonalInfoSection } from '@/components/features/customer/PersonalInfoSection';
 import { AddressesSection } from '@/components/features/customer/AddressesSection';
 import { PreferencesSection } from '@/components/features/customer/PreferencesSection';
 import { motion } from 'framer-motion';
-import { User, Loader2 } from 'lucide-react';
+import { User, Loader2, AlertCircle } from 'lucide-react';
+import { collection, query, where, getDocs, limit } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import type { Customer } from '@/lib/db/schema';
 
 export default function ProfilePage() {
   const { user, loading: authLoading } = useAuth();
 
-  // Note: Components handle their own data fetching internally
-  // This page is just a layout container
+  // Fetch customer record by email
+  const {
+    data: customer,
+    isLoading: customerLoading,
+    error,
+    refetch,
+  } = useQuery<Customer | null>({
+    queryKey: ['customer-profile', user?.email],
+    queryFn: async () => {
+      if (!user?.email) return null;
 
-  if (authLoading) {
+      const customersRef = collection(db, 'customers');
+      const q = query(customersRef, where('email', '==', user.email), limit(1));
+      const snapshot = await getDocs(q);
+
+      if (!snapshot.empty) {
+        return {
+          customerId: snapshot.docs[0].id,
+          ...snapshot.docs[0].data(),
+        } as Customer;
+      }
+      return null;
+    },
+    enabled: !!user?.email,
+  });
+
+  const isLoading = authLoading || customerLoading;
+
+  if (isLoading) {
     return (
       <ModernSection animate>
         <FloatingOrbs />
@@ -37,6 +66,30 @@ export default function ProfilePage() {
               <Loader2 className="h-8 w-8 mx-auto text-brand-blue" />
             </motion.div>
             <p className="text-sm text-gray-600">Loading your profile...</p>
+          </div>
+        </div>
+      </ModernSection>
+    );
+  }
+
+  // Show error if customer not found
+  if (error || !customer) {
+    return (
+      <ModernSection animate>
+        <FloatingOrbs />
+        <div className="bg-white rounded-lg border border-red-200 p-8">
+          <div className="text-center space-y-4">
+            <div className="p-3 rounded-full bg-red-100 w-16 h-16 mx-auto flex items-center justify-center">
+              <AlertCircle className="h-8 w-8 text-red-600" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-red-900 text-lg">
+                Profile Not Found
+              </h3>
+              <p className="text-sm text-red-700 mt-2">
+                We couldn't find your customer profile. Please contact support.
+              </p>
+            </div>
           </div>
         </div>
       </ModernSection>
@@ -77,12 +130,7 @@ export default function ProfilePage() {
         transition={{ duration: 0.4, delay: 0.1 }}
         className="mb-6"
       >
-        {/* PersonalInfoSection - Handles own data fetching */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <p className="text-sm text-gray-500">
-            Personal information section - Component needs to be updated to handle data fetching internally.
-          </p>
-        </div>
+        <PersonalInfoSection customer={customer} onUpdate={() => refetch()} />
       </motion.div>
 
       {/* Delivery Addresses Section */}
@@ -92,12 +140,7 @@ export default function ProfilePage() {
         transition={{ duration: 0.4, delay: 0.2 }}
         className="mb-6"
       >
-        {/* AddressesSection - Handles own data fetching */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <p className="text-sm text-gray-500">
-            Addresses section - Component needs to be updated to handle data fetching internally.
-          </p>
-        </div>
+        <AddressesSection customer={customer} onUpdate={() => refetch()} />
       </motion.div>
 
       {/* Preferences Section */}
@@ -106,12 +149,7 @@ export default function ProfilePage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.3 }}
       >
-        {/* PreferencesSection - Handles own data fetching */}
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
-          <p className="text-sm text-gray-500">
-            Preferences section - Component needs to be updated to handle data fetching internally.
-          </p>
-        </div>
+        <PreferencesSection customer={customer} onUpdate={() => refetch()} />
       </motion.div>
     </ModernSection>
   );

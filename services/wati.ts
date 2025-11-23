@@ -162,7 +162,8 @@ export async function sendWhatsAppMessage(
   phone: string,
   templateName: string,
   parameters: Record<string, string>,
-  orderId?: string
+  orderId?: string,
+  customerId?: string
 ): Promise<{
   success: boolean;
   notificationId?: string;
@@ -186,7 +187,7 @@ export async function sendWhatsAppMessage(
   // Log notification attempt
   const notificationId = await logNotification({
     type: mapTemplateToNotificationType(templateName),
-    recipientId: '', // Will be filled by caller if available
+    recipientId: customerId || '', // Customer ID for tracking
     recipientPhone: formattedPhone,
     message,
     status: 'pending',
@@ -375,6 +376,7 @@ export async function sendOrderConfirmation(
     customerName: string;
     amount: number;
     estimatedCompletion: string;
+    customerId?: string;
   }
 ): Promise<{
   success: boolean;
@@ -392,7 +394,8 @@ export async function sendOrderConfirmation(
       amount: orderData.amount.toLocaleString(),
       date: orderData.estimatedCompletion,
     },
-    orderData.orderId
+    orderData.orderId,
+    orderData.customerId
   );
 }
 
@@ -418,6 +421,7 @@ export async function sendOrderReady(
     customerName: string;
     collectionMethod: string;
     branchName: string;
+    customerId?: string;
   }
 ): Promise<{
   success: boolean;
@@ -435,7 +439,8 @@ export async function sendOrderReady(
       collectionMethod: orderData.collectionMethod,
       branchName: orderData.branchName,
     },
-    orderData.orderId
+    orderData.orderId,
+    orderData.customerId
   );
 }
 
@@ -535,6 +540,7 @@ export async function sendDelivered(
   orderData: {
     orderId: string;
     customerName: string;
+    customerId?: string;
   }
 ): Promise<{
   success: boolean;
@@ -550,7 +556,8 @@ export async function sendDelivered(
       name: orderData.customerName,
       orderId: orderData.orderId,
     },
-    orderData.orderId
+    orderData.orderId,
+    orderData.customerId
   );
 }
 

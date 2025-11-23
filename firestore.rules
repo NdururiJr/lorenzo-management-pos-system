@@ -139,6 +139,16 @@ service cloud.firestore {
       return exists(/databases/$(database)/documents/$(path));
     }
 
+    /**
+     * Check if current user is the driver assigned to a specific delivery
+     * Used for securing driver location access
+     */
+    function isDriverAssignedToDelivery(deliveryId) {
+      return isAuthenticated() &&
+        hasRole('driver') &&
+        get(/databases/$(database)/documents/deliveries/$(deliveryId)).data.driverId == currentUserId();
+    }
+
     // ============================================
     // USERS COLLECTION
     // ============================================
@@ -474,6 +484,53 @@ service cloud.firestore {
       // Audit logs are immutable - no updates or deletes allowed
       // Only super admin can delete for compliance reasons
       allow update: if false;
+      allow delete: if isSuperAdmin();
+    }
+
+    // ============================================
+    // DRIVER LOCATIONS COLLECTION
+    // ============================================
+
+    match /driverLocations/{deliveryId} {
+      // SECURITY: Only assigned driver and super admins can read location
+      // Customers access location through API endpoint that verifies order ownership
+      // This prevents unauthorized staff from viewing sensitive location data
+      allow read: if isAuthenticated() && (
+        isDriverAssignedToDelivery(deliveryId) ||
+        isSuperAdmin()
+      );
+
+      // SECURITY: Only the assigned driver can write/update their delivery location
+      // This prevents drivers from updating locations for deliveries they're not assigned to
+      allow create, update: if isAuthenticated() && (
+        isDriverAssignedToDelivery(deliveryId) ||
+        isSuperAdmin()
+      );
+
+      // Only super admins can delete driver locations
+      allow delete: if isSuperAdmin();
+    }
+
+    // ============================================
+    // EMAIL LOGS COLLECTION
+    // ============================================
+
+    match /email_logs/{emailLogId} {
+      // Only super admins can read email logs
+      // Managers can read logs for diagnostic purposes
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() ||
+        isManagement()
+      );
+
+      // Email logs are created by backend only (via Admin SDK)
+      // Allow writes for local development and testing
+      allow create: if isStaff();
+
+      // Email logs are immutable - no updates allowed
+      allow update: if false;
+
+      // Only super admins can delete email logs
       allow delete: if isSuperAdmin();
     }
 

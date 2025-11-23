@@ -25,6 +25,12 @@ import type {
   StatusHistoryEntry,
 } from './schema';
 import { getCustomer, incrementCustomerStats } from './customers';
+import {
+  notifyOrderCreated,
+  notifyOrderReady,
+  notifyOrderDelivered,
+  notifyOrderCollected,
+} from '@/app/actions/notifications';
 
 /**
  * Generate a unique order ID
@@ -188,6 +194,30 @@ export async function createOrder(
   // Update customer stats
   await incrementCustomerStats(data.customerId, data.totalAmount);
 
+  // Trigger order created notifications (email + WhatsApp)
+  // Note: Fire and forget - don't block order creation on notification failures
+  notifyOrderCreated({
+    order: {
+      orderId,
+      totalAmount: data.totalAmount,
+      paidAmount: data.paidAmount,
+      paymentStatus: data.paymentStatus,
+      paymentMethod: data.paymentMethod,
+      estimatedCompletion: estimatedCompletion.toDate(),
+      createdAt: order.createdAt.toDate(),
+      garments: garmentsWithIds,
+    },
+    customer: {
+      customerId: customer.customerId,
+      name: customer.name,
+      email: customer.email,
+      phone: customer.phone,
+    },
+  }).catch((error) => {
+    console.error('Failed to trigger order created notification:', error);
+    // Don't throw - notifications are non-critical
+  });
+
   return orderId;
 }
 
@@ -260,6 +290,51 @@ export async function updateOrderStatus(
   }
 
   await updateDocument<OrderExtended>('orders', orderId, updates);
+
+  // Trigger notifications based on status change
+  // Note: Fire and forget - don't block status updates on notification failures
+  const customer = await getCustomer(order.customerId);
+
+  const orderData = {
+    orderId: order.orderId,
+    totalAmount: order.totalAmount,
+    paidAmount: order.paidAmount,
+    paymentStatus: order.paymentStatus,
+    paymentMethod: order.paymentMethod,
+    estimatedCompletion: order.estimatedCompletion.toDate(),
+    createdAt: order.createdAt.toDate(),
+  };
+
+  const customerData = {
+    customerId: customer.customerId,
+    name: customer.name,
+    email: customer.email,
+    phone: customer.phone,
+  };
+
+  // Send appropriate notifications based on new status
+  if (status === 'ready') {
+    notifyOrderReady({
+      order: orderData,
+      customer: customerData,
+    }).catch((error) => {
+      console.error('Failed to trigger order ready notification:', error);
+    });
+  } else if (status === 'delivered') {
+    notifyOrderDelivered({
+      order: orderData,
+      customer: customerData,
+    }).catch((error) => {
+      console.error('Failed to trigger order delivered notification:', error);
+    });
+  } else if (status === 'collected') {
+    notifyOrderCollected({
+      order: orderData,
+      customer: customerData,
+    }).catch((error) => {
+      console.error('Failed to trigger order collected notification:', error);
+    });
+  }
 }
 
 /**

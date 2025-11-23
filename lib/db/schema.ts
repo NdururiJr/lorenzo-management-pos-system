@@ -272,6 +272,8 @@ export interface Order {
   paymentStatus: PaymentStatus;
   /** Payment method used */
   paymentMethod?: PaymentMethod;
+  /** Reference to delivery (when order is out for delivery) */
+  deliveryId?: string;
   /** Estimated completion timestamp */
   estimatedCompletion: Timestamp;
   /** Actual completion timestamp */
