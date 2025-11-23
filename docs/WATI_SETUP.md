@@ -121,9 +121,15 @@ WhatsApp requires pre-approved message templates for business notifications. Cre
 
 ## Step 5: Get API Credentials
 
-1. In Wati.io dashboard, navigate to **API Docs** or **Settings** > **API**
-2. Copy your **API Key**
-3. Note the **Base URL**: `https://live-server.wati.io`
+1. In Wati.io dashboard, navigate to **API Docs** (usually in the sidebar or Settings menu)
+2. Copy your **Access Token**:
+   - This is a JWT token that looks like: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`
+   - **IMPORTANT**: Copy only the token itself, NOT the word "Bearer"
+   - If you see "Bearer eyJ...", copy only the part after "Bearer " (excluding the space)
+3. Copy the **API Endpoint** URL:
+   - It should look like: `https://live-mt-server.wati.io/1051875`
+   - **IMPORTANT**: Use the complete URL including your instance ID (the number at the end)
+   - Note: Some accounts show `live-mt-server`, others show `live-server` - use exactly what's shown in your dashboard
 
 ## Step 6: Configure Environment Variables
 
@@ -131,11 +137,22 @@ Add the following to your `.env.local` file:
 
 ```bash
 # Wati.io WhatsApp Business API
-WATI_API_KEY=your_wati_api_key_here
-WATI_API_URL=https://live-server.wati.io
+# Get these from https://app.wati.io/dashboard > API Docs
+
+# Access Token - JWT token WITHOUT "Bearer" prefix
+WATI_ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...your_actual_token
+
+# API Endpoint - Complete URL including your instance ID
+# Example: https://live-mt-server.wati.io/1051875
+# Note: URL may vary - use exactly what's shown in your Wati dashboard
+WATI_API_ENDPOINT=https://live-mt-server.wati.io/YOUR_INSTANCE_ID
 ```
 
-Replace `your_wati_api_key_here` with your actual API key from Step 5.
+**Important Notes**:
+- Replace `YOUR_INSTANCE_ID` with your actual instance ID (e.g., `1051875`)
+- Do NOT include "Bearer" in the access token
+- The endpoint URL must include `/YOUR_INSTANCE_ID` at the end
+- Some accounts use `live-mt-server`, others use `live-server` - copy exactly from your dashboard
 
 ## Step 7: Test the Integration
 
@@ -270,12 +287,30 @@ Wati.io API rate limits:
 
 ## Troubleshooting
 
-### Problem: "Authentication failed - invalid API key"
+### Problem: "404 Not Found" errors
 
 **Solution**:
-1. Verify API key in `.env.local`
-2. Check that `WATI_API_KEY` has no extra spaces
-3. Regenerate API key in Wati.io dashboard if needed
+1. **Check API Endpoint URL format**: Must include your instance ID
+   - ❌ Wrong: `https://live-server.wati.io`
+   - ✅ Correct: `https://live-mt-server.wati.io/1051875`
+2. **Verify URL from dashboard**: Copy the exact URL shown in your Wati API Docs
+3. **Check for `live-mt-server` vs `live-server`**: Different accounts use different formats
+4. **Ensure API access is enabled**: Look for padlock icons on API endpoints in dashboard
+   - If you see padlocks, you may need to:
+     - Upgrade your Wati plan to include API access
+     - Contact Wati support to enable API access
+     - Check if your trial account has API access enabled
+
+### Problem: "401 Unauthorized" or "Authentication failed - invalid API key"
+
+**Solution**:
+1. **Remove "Bearer" prefix**: Access token should NOT include "Bearer"
+   - ❌ Wrong: `WATI_ACCESS_TOKEN=Bearer eyJhbGciOi...`
+   - ✅ Correct: `WATI_ACCESS_TOKEN=eyJhbGciOi...`
+2. **Check for extra spaces**: Ensure no leading/trailing spaces in `.env.local`
+3. **Regenerate token**: Get a fresh Access Token from Wati dashboard (Dashboard > API Docs)
+4. **Password change**: Note that changing your Wati account password invalidates the token
+5. **Trial account**: Verify your trial account hasn't expired (Wati trials are typically 4-7 days)
 
 ### Problem: "Template not found"
 
@@ -302,9 +337,13 @@ Wati.io API rate limits:
 ### Problem: "Bad request - check template name and parameters"
 
 **Solution**:
-1. Verify template parameters match approved template
-2. Check parameter count (e.g., template with 3 params needs 3 values)
-3. Ensure parameter values are strings (convert numbers: `amount.toString()`)
+1. **Match all template parameters**: Template with 4 parameters requires exactly 4 values
+   - Example: If template has `{{name}}`, `{{dashboard_url}}`, `{{tenant_id}}`, `{{username}}`
+   - You MUST provide all 4 parameters in your API call
+2. **Check parameter count**: Template with 3 params needs exactly 3 values (not 2, not 4)
+3. **Verify parameter names**: Parameter names must match template variable names
+4. **Convert to strings**: Ensure parameter values are strings (convert numbers: `amount.toString()`)
+5. **Template name case-sensitive**: Use exact template name (e.g., `order_confirmation` not `Order_Confirmation`)
 
 ## Monitoring
 
@@ -348,6 +387,8 @@ After setup is complete:
 
 ---
 
-**Last Updated**: November 14, 2025
+**Last Updated**: November 23, 2025 (Testing completed successfully)
 **Wati.io Integration Version**: 1.0
 **Lorenzo Dry Cleaners Management System**
+
+**Note**: Configuration tested and verified working with Wati trial account on November 23, 2025.

@@ -111,8 +111,8 @@ Added test script:
 #### `.env.example`
 Already contains Wati.io variables:
 ```bash
-WATI_API_KEY=your_wati_api_key
-WATI_API_URL=https://live-server.wati.io
+WATI_ACCESS_TOKEN=your_wati_access_token
+WATI_API_ENDPOINT=https://live-server.wati.io
 ```
 
 ---
@@ -323,11 +323,11 @@ export const sendPaymentReminders = functions.pubsub
    - Wait for approval (24-48 hours)
 
 4. **Configure Environment Variables**
-   - Get API key from Wati.io dashboard
+   - Get Access Token and API Endpoint from Wati.io dashboard (Dashboard > API Docs)
    - Add to `.env.local`:
      ```
-     WATI_API_KEY=your_actual_api_key
-     WATI_API_URL=https://live-server.wati.io
+     WATI_ACCESS_TOKEN=your_actual_access_token
+     WATI_API_ENDPOINT=https://live-server.wati.io
      ```
 
 5. **Test Integration**
@@ -462,11 +462,11 @@ const notifications = await adminDb
 
 ## Security Considerations
 
-**API Key Protection:**
-- Never commit API keys to git
+**Access Token Protection:**
+- Never commit access tokens to git
 - Use environment variables only
-- Rotate keys every 3-6 months
-- Restrict API key to production domain
+- Rotate tokens every 3-6 months
+- Note: Changing Wati account password invalidates the token
 
 **Customer Privacy:**
 - Get consent for WhatsApp notifications
@@ -485,8 +485,8 @@ const notifications = await adminDb
 
 ### Common Issues
 
-**Issue: "Invalid API key"**
-- Solution: Verify WATI_API_KEY in .env.local
+**Issue: "Invalid Access Token"**
+- Solution: Verify WATI_ACCESS_TOKEN in .env.local
 - Check for extra spaces or quotes
 
 **Issue: "Template not found"**

@@ -14,31 +14,39 @@
 import axios, { AxiosInstance } from 'axios';
 import { adminDb } from '@/lib/firebase-admin';
 import type { Notification, NotificationType, Order } from '@/types';
-import { Timestamp } from 'firebase/firestore';
-
-// Wati.io API configuration
-const WATI_API_URL = process.env.WATI_API_URL || 'https://live-server.wati.io';
-const WATI_API_KEY = process.env.WATI_API_KEY || '';
+import { Timestamp } from 'firebase-admin/firestore';
 
 // Retry configuration
 const MAX_RETRY_ATTEMPTS = 3;
 const INITIAL_RETRY_DELAY = 1000; // 1 second
 
 /**
+ * Get Wati.io API configuration from environment variables
+ */
+function getWatiConfig() {
+  return {
+    apiEndpoint: process.env.WATI_API_ENDPOINT || 'https://live-server.wati.io',
+    accessToken: process.env.WATI_ACCESS_TOKEN || '',
+  };
+}
+
+/**
  * Create axios instance for Wati.io API
  */
 function createWatiClient(): AxiosInstance {
-  if (!WATI_API_KEY) {
+  const config = getWatiConfig();
+
+  if (!config.accessToken) {
     throw new Error(
-      'WATI_API_KEY environment variable is not set. ' +
-        'Please add your Wati.io API key to .env.local'
+      'WATI_ACCESS_TOKEN environment variable is not set. ' +
+        'Please add your Wati.io Access Token to .env.local'
     );
   }
 
   return axios.create({
-    baseURL: WATI_API_URL,
+    baseURL: config.apiEndpoint,
     headers: {
-      'Authorization': `Bearer ${WATI_API_KEY}`,
+      'Authorization': `Bearer ${config.accessToken}`,
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
@@ -109,10 +117,20 @@ async function logNotification(
     const notificationRef = adminDb.collection('notifications').doc();
     const notificationId = notificationRef.id;
 
-    await notificationRef.set({
+    // Filter out undefined values to avoid Firestore errors
+    const cleanedData: any = {
       notificationId,
       ...notificationData,
+    };
+
+    // Remove undefined fields
+    Object.keys(cleanedData).forEach(key => {
+      if (cleanedData[key] === undefined) {
+        delete cleanedData[key];
+      }
     });
+
+    await notificationRef.set(cleanedData);
 
     return notificationId;
   } catch (error) {
@@ -612,10 +630,12 @@ export async function testWatiConnection(): Promise<{
   message: string;
 }> {
   try {
-    if (!WATI_API_KEY) {
+    const config = getWatiConfig();
+
+    if (!config.accessToken) {
       return {
         success: false,
-        message: 'WATI_API_KEY environment variable is not set',
+        message: 'WATI_ACCESS_TOKEN environment variable is not set',
       };
     }
 

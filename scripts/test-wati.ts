@@ -52,17 +52,17 @@ async function main() {
   // Check environment variables
   section('1. Environment Variables Check');
 
-  const apiKey = process.env.WATI_API_KEY;
-  const apiUrl = process.env.WATI_API_URL;
+  const accessToken = process.env.WATI_ACCESS_TOKEN;
+  const apiEndpoint = process.env.WATI_API_ENDPOINT;
 
-  if (!apiKey) {
-    log('ERROR: WATI_API_KEY not found in .env.local', 'red');
-    log('Please add your Wati.io API key to .env.local', 'yellow');
+  if (!accessToken) {
+    log('ERROR: WATI_ACCESS_TOKEN not found in .env.local', 'red');
+    log('Please add your Wati.io Access Token to .env.local', 'yellow');
     process.exit(1);
   }
 
-  log(`API Key: ${apiKey.substring(0, 10)}...${apiKey.substring(apiKey.length - 4)}`, 'green');
-  log(`API URL: ${apiUrl}`, 'green');
+  log(`Access Token: ${accessToken.substring(0, 10)}...${accessToken.substring(accessToken.length - 4)}`, 'green');
+  log(`API Endpoint: ${apiEndpoint}`, 'green');
 
   // Test connection
   section('2. Connection Test');

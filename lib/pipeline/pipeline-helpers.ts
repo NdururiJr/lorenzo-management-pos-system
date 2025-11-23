@@ -6,8 +6,7 @@
  * @module lib/pipeline/pipeline-helpers
  */
 
-import type { OrderExtended, OrderStatus } from '@/lib/db/schema';
-import { Timestamp } from 'firebase/firestore';
+import type { OrderExtended, OrderStatus, Timestamp } from '@/lib/db/schema';
 
 /**
  * Group orders by status

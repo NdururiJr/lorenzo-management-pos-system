@@ -7,7 +7,14 @@
  * @module lib/db/schema
  */
 
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp as ClientTimestamp } from 'firebase/firestore';
+import type { Timestamp as AdminTimestamp } from 'firebase-admin/firestore';
+
+/**
+ * Unified Timestamp type that works with both client and admin SDKs
+ * This allows the same schema to be used in both client and server code
+ */
+export type Timestamp = ClientTimestamp | AdminTimestamp;
 
 /**
  * User roles in the system
