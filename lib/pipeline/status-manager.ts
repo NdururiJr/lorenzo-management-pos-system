@@ -202,6 +202,7 @@ export function requiresNotification(status: OrderStatus): boolean {
 export function getAllStatuses(): OrderStatus[] {
   return [
     'received',
+    'inspection',
     'queued',
     'washing',
     'drying',
@@ -232,7 +233,7 @@ export function isTerminalStatus(status: OrderStatus): boolean {
  * @returns Status group name
  */
 export function getStatusGroup(status: OrderStatus): string {
-  if (['received', 'queued'].includes(status)) return 'Pending';
+  if (['received', 'inspection', 'queued'].includes(status)) return 'Pending';
   if (['washing', 'drying', 'ironing', 'quality_check', 'packaging'].includes(status))
     return 'Processing';
   if (['ready', 'out_for_delivery'].includes(status)) return 'Ready';
