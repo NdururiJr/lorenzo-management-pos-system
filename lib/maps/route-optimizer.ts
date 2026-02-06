@@ -7,7 +7,7 @@
  * @module lib/maps/route-optimizer
  */
 
-import { calculateDistances, haversineDistance, type DistanceResult } from './distance';
+import { calculateDistances, haversineDistance } from './distance';
 import type { Coordinates } from './geocoding';
 import { getDirections, type DirectionsRoute } from './directions';
 

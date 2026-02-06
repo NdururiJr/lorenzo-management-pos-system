@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 const config: Config = {
   darkMode: "class",
@@ -37,7 +38,10 @@ const config: Config = {
         error: "#EF4444",
         info: "#3B82F6",
 
-        // Marketing site colors (blue theme)
+        // Lorenzo Teal/Gold Theme - DEFINED IN globals.css @theme block for Tailwind v4
+        // Using CSS-first approach: text-lorenzo-dark-teal, bg-lorenzo-teal, etc.
+
+        // Marketing site colors (blue theme) - kept for backwards compatibility
         "brand-blue": "#22BBFF",
         "brand-blue-dark": "#12A4EA",
         "brand-blue-light": "#7FD8FF",
@@ -95,6 +99,9 @@ const config: Config = {
         "glass-gradient": "linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06))",
         "blue-gradient": "linear-gradient(135deg, #22BBFF, #7FD8FF)",
         "blue-gradient-radial": "radial-gradient(circle at top, #22BBFF, #12A4EA)",
+        "teal-gradient": "linear-gradient(135deg, #0A2F2C 0%, #0F3D38 100%)",
+        "teal-gradient-nav": "linear-gradient(90deg, #0A2F2C 0%, #0F3D38 50%, #0A2F2C 100%)",
+        "gold-gradient": "linear-gradient(135deg, #C9A962 0%, #A68B4B 100%)",
       },
       backdropBlur: {
         "glass": "16px",
@@ -104,6 +111,9 @@ const config: Config = {
         "card": "0 12px 30px rgba(0, 0, 0, 0.12)",
         "lift": "0 16px 48px rgba(0, 0, 0, 0.15)",
         "glow-blue": "0 0 24px rgba(34, 187, 255, 0.4)",
+        "glow-teal": "0 0 24px rgba(45, 212, 191, 0.4)",
+        "glow-gold": "0 0 24px rgba(201, 169, 98, 0.4)",
+        "card-teal": "0 12px 30px rgba(10, 47, 44, 0.12)",
         "inner-glass": "inset 0 1px 2px rgba(255, 255, 255, 0.25)",
       },
       keyframes: {
@@ -152,7 +162,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 };
 
 export default config;

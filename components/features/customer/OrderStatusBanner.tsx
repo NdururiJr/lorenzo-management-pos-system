@@ -36,7 +36,8 @@ export function OrderStatusBanner({ status, orderId }: OrderStatusBannerProps) {
   };
 
   // Only show for specific statuses
-  if (status !== 'ready' && status !== 'out_for_delivery') {
+  // FR-008: Updated to use 'queued_for_delivery' instead of 'ready'
+  if (status !== 'queued_for_delivery' && status !== 'out_for_delivery') {
     return null;
   }
 
@@ -45,8 +46,9 @@ export function OrderStatusBanner({ status, orderId }: OrderStatusBannerProps) {
     return null;
   }
 
+  // FR-008: Updated to use 'queued_for_delivery' instead of 'ready'
   const bannerConfig = {
-    ready: {
+    queued_for_delivery: {
       icon: Package,
       bgColor: 'bg-green-50',
       borderColor: 'border-green-200',

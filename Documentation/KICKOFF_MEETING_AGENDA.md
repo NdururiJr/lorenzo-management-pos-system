@@ -409,7 +409,7 @@ Blockers: [any issues] or "None"
 ## 📞 Contact Information
 
 **Gachengoh Marugu (Team Lead)**
-- Email: hello@ai-agentsplus.com
+- Email: jerry@ai-agentsplus.com
 - Phone: +254 725 462 859
 - WhatsApp: +254 725 462 859
 - Availability: Mon-Fri 9AM-6PM, weekends (emergencies only)

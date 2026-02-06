@@ -9,7 +9,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
@@ -39,12 +39,10 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import {
-  Truck,
   MapPin,
   Clock,
   CheckCircle2,
   XCircle,
-  Camera,
   Navigation,
   Phone,
   Package,
@@ -52,7 +50,6 @@ import {
   Loader2,
   ArrowLeft,
   Play,
-  StopCircle,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { MapView, type MapMarker, type MapRoute } from '@/components/maps/MapView';
@@ -66,15 +63,21 @@ interface Delivery {
   driverId: string;
   orders: string[];
   status: 'pending' | 'in_progress' | 'completed';
-  scheduledDate?: any;
-  startTime?: any;
-  endTime?: any;
+  scheduledDate?: Date;
+  startTime?: Date;
+  endTime?: Date;
   notes?: string;
   route?: {
     distance: number;
     estimatedDuration: number;
     stops: DeliveryStop[];
   };
+}
+
+interface OrderItem {
+  quantity: number;
+  type: string;
+  price: number;
 }
 
 interface Order {
@@ -88,26 +91,26 @@ interface Order {
     state: string;
     zipCode: string;
   };
-  items: any[];
+  items: OrderItem[];
   totalAmount: number;
   status: string;
   deliveryStatus?: 'pending' | 'delivered' | 'failed';
   deliveryNotes?: string;
   deliveryProof?: string;
-  deliveredAt?: any;
+  deliveredAt?: Date;
 }
 
 export default function DriverBatchDetailsPage() {
   const { deliveryId } = useParams();
   const router = useRouter();
-  const { user } = useAuth();
+  const _auth = useAuth();
   const queryClient = useQueryClient();
 
   const [selectedTab, setSelectedTab] = useState('route');
   const [selectedStop, setSelectedStop] = useState<Order | null>(null);
   const [showCompleteDialog, setShowCompleteDialog] = useState(false);
   const [completionNotes, setCompletionNotes] = useState('');
-  const [proofPhoto, setProofPhoto] = useState<string>('');
+  const [_proofPhoto, setProofPhoto] = useState<string>('');
 
   // Fetch delivery batch
   const { data: delivery, isLoading: loadingDelivery } = useQuery<Delivery>({
@@ -374,7 +377,12 @@ export default function DriverBatchDetailsPage() {
                 <h1 className="text-xl font-bold text-black">{delivery.deliveryId}</h1>
                 <p className="text-sm text-gray-600">
                   {delivery.scheduledDate &&
-                    format(delivery.scheduledDate.toDate(), 'MMM d, yyyy - h:mm a')}
+                    format(
+                      delivery.scheduledDate instanceof Timestamp
+                        ? delivery.scheduledDate.toDate()
+                        : new Date(delivery.scheduledDate),
+                      'MMM d, yyyy - h:mm a'
+                    )}
                 </p>
               </div>
             </div>
@@ -605,7 +613,7 @@ export default function DriverBatchDetailsPage() {
               <div>
                 <Label className="text-sm font-medium">Order Details</Label>
                 <div className="mt-2 space-y-2">
-                  {selectedStop.items.map((item: any, index: number) => (
+                  {selectedStop.items.map((item: OrderItem, index: number) => (
                     <div
                       key={index}
                       className="flex justify-between text-sm p-2 bg-gray-50 rounded"

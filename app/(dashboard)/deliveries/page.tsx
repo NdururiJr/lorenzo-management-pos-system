@@ -10,21 +10,19 @@
 'use client';
 
 import { useState } from 'react';
-import { Truck, Package, Calendar, Clock, MapPin, Users, Route } from 'lucide-react';
+import { Truck, Package, Calendar, Route } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { OrderSelectionTable } from '@/components/features/deliveries/OrderSelectionTable';
 import { DeliveryBatchForm } from '@/components/features/deliveries/DeliveryBatchForm';
 import { ActiveBatchesList } from '@/components/features/deliveries/ActiveBatchesList';
-import { DeliveryMapView } from '@/components/features/deliveries/DeliveryMapView';
 import { useQuery } from '@tanstack/react-query';
-import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import type { RouteStop, Coordinates } from '@/services/google-maps';
+import type { Coordinates } from '@/services/google-maps';
 import { ModernSection } from '@/components/modern/ModernLayout';
 import { ModernCard, ModernCardContent } from '@/components/modern/ModernCard';
-import { ModernStatCard, MiniStatCard } from '@/components/modern/ModernStatCard';
-import { ModernButton } from '@/components/modern/ModernButton';
+import { ModernStatCard } from '@/components/modern/ModernStatCard';
 import { ModernBadge } from '@/components/modern/ModernBadge';
 import { useAuth } from '@/hooks/useAuth';
 import { getAllowedBranchesArray } from '@/lib/auth/branch-access';
@@ -136,12 +134,12 @@ export default function DeliveriesPage() {
             initial={{ rotate: -180, scale: 0 }}
             animate={{ rotate: 0, scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="p-3 rounded-2xl bg-gradient-to-br from-brand-blue/20 to-brand-blue/10"
+            className="p-3 rounded-2xl bg-linear-to-br from-brand-blue/20 to-brand-blue/10"
           >
             <Truck className="h-6 w-6 text-brand-blue" />
           </motion.div>
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-linear-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
               Delivery Management
             </h1>
             <p className="text-sm text-gray-600">

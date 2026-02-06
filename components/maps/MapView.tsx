@@ -75,7 +75,7 @@ export function MapView({
   onMarkerClick,
   className = '',
 }: MapViewProps) {
-  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [_map, setMap] = useState<google.maps.Map | null>(null);
   const [selectedMarker, setSelectedMarker] = useState<string | null>(null);
 
   const { isLoaded, loadError } = useJsApiLoader({

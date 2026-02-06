@@ -1,4 +1,6 @@
+@config "../tailwind.config.ts";
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* Black & White Theme - Lorenzo Dry Cleaners */
 :root {
@@ -43,15 +45,37 @@
   --radius: 0.5rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+/* Tailwind v4 Theme - Direct color values (generates utility classes) */
+@theme {
+  /* Brand colors */
   --color-brand-blue: #22BBFF;
   --color-brand-blue-dark: #12A4EA;
   --color-brand-blue-light: #7FD8FF;
   --color-brand-blue-50: #E6F7FF;
   --color-brand-blue-100: #BAE7FF;
   --color-brand-blue-900: #002766;
+
+  /* Lorenzo Teal/Gold Theme */
+  --color-lorenzo-dark-teal: #0A2F2C;
+  --color-lorenzo-deep-teal: #0F3D38;
+  --color-lorenzo-teal: #14524A;
+  --color-lorenzo-light-teal: #1E6B5E;
+  --color-lorenzo-accent-teal: #2DD4BF;
+  --color-lorenzo-cream: #F5F5F0;
+  --color-lorenzo-gold: #C9A962;
+  --color-lorenzo-gold-dark: #A68B4B;
+
+  /* Shadows */
+  --shadow-glow-teal: 0 0 24px rgba(45, 212, 191, 0.4);
+  --shadow-glow-gold: 0 0 24px rgba(201, 169, 98, 0.4);
+  --shadow-card-teal: 0 12px 30px rgba(10, 47, 44, 0.12);
+  --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Tailwind v4 Theme Inline - For CSS variable references */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
 }
 
@@ -71,14 +95,12 @@ body {
 
 /* Base styles for better typography */
 h1, h2, h3, h4, h5, h6 {
-  color: var(--primary);
   font-weight: 600;
   line-height: 1.2;
 }
 
-p {
-  color: var(--primary-dark);
-}
+/* Note: Removed hardcoded colors from h1-h6 and p tags
+   to allow Tailwind text-* classes to work properly */
 
 /* Utility classes */
 .text-secondary {
@@ -93,4 +115,494 @@ p {
 *:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
+}
+
+/* =============================================================================
+   LORENZO INSIGHTS COMMAND - DIRECTOR DASHBOARD DARK THEME
+   ============================================================================= */
+
+/* Director Dark Theme Container */
+.director-dark {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0A1A1F 0%, #0D2329 50%, #0A1A1F 100%);
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #E8F0F2;
+}
+
+/* Director Theme CSS Variables */
+.director-dark {
+  --director-bg-primary: #0A1A1F;
+  --director-bg-secondary: #0D2329;
+  --director-text-primary: #E8F0F2;
+  --director-text-muted: rgba(232, 240, 242, 0.6);
+  --director-text-dimmed: rgba(232, 240, 242, 0.4);
+  --director-accent-teal: #2DD4BF;
+  --director-accent-gold: #C9A962;
+  --director-border-teal: rgba(45, 212, 191, 0.12);
+  --director-border-teal-hover: rgba(45, 212, 191, 0.25);
+  --director-glass-bg: linear-gradient(145deg, rgba(20, 82, 74, 0.15) 0%, rgba(10, 47, 44, 0.25) 100%);
+  --director-glass-dark-bg: linear-gradient(145deg, rgba(10, 47, 44, 0.4) 0%, rgba(10, 30, 35, 0.6) 100%);
+}
+
+/* =============================================================================
+   GLASS-MORPHIC CARD STYLES
+   ============================================================================= */
+
+/* Primary Glass Card */
+.glass-card {
+  background: linear-gradient(145deg, rgba(20, 82, 74, 0.15) 0%, rgba(10, 47, 44, 0.25) 100%);
+  border: 1px solid rgba(45, 212, 191, 0.12);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Dark Variant Glass Card (for nested cards) */
+.glass-card-dark {
+  background: linear-gradient(145deg, rgba(10, 47, 44, 0.4) 0%, rgba(10, 30, 35, 0.6) 100%);
+  border: 1px solid rgba(45, 212, 191, 0.08);
+  border-radius: 16px;
+}
+
+/* KPI Card with Hover Effects */
+.kpi-card {
+  background: linear-gradient(145deg, rgba(20, 82, 74, 0.2) 0%, rgba(10, 47, 44, 0.3) 100%);
+  border: 1px solid rgba(45, 212, 191, 0.1);
+  border-radius: 14px;
+  padding: 20px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.kpi-card:hover {
+  border-color: rgba(45, 212, 191, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* KPI Card Top Highlight on Hover */
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(45, 212, 191, 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.kpi-card:hover::before {
+  opacity: 1;
+}
+
+/* =============================================================================
+   DIRECTOR UTILITY CLASSES
+   ============================================================================= */
+
+/* Dark Search Input */
+.director-search-input {
+  background: rgba(10, 47, 44, 0.5);
+  border: 1px solid rgba(45, 212, 191, 0.15);
+  border-radius: 12px;
+  padding: 12px 16px 12px 44px;
+  color: #E8F0F2;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.director-search-input::placeholder {
+  color: rgba(232, 240, 242, 0.4);
+}
+
+.director-search-input:focus {
+  border-color: rgba(45, 212, 191, 0.4);
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.1);
+}
+
+/* Dark Dropdown Button */
+.director-dropdown {
+  background: rgba(10, 47, 44, 0.6);
+  border: 1px solid rgba(45, 212, 191, 0.15);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #E8F0F2;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.director-dropdown:hover {
+  border-color: rgba(45, 212, 191, 0.3);
+  background: rgba(20, 82, 74, 0.4);
+}
+
+/* Teal Gradient Action Button */
+.director-action-btn {
+  background: linear-gradient(135deg, #14524A 0%, #1E6B5E 100%);
+  border: 1px solid rgba(45, 212, 191, 0.2);
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.director-action-btn:hover {
+  background: linear-gradient(135deg, #1E6B5E 0%, #2DD4BF 100%);
+  transform: translateY(-1px);
+}
+
+/* AI/Purple Variant Action Button */
+.director-action-btn-ai {
+  background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.director-action-btn-ai:hover {
+  background: linear-gradient(135deg, #6366F1 0%, #818CF8 100%);
+  transform: translateY(-1px);
+}
+
+/* Icon Button with Hover States */
+.director-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(10, 47, 44, 0.4);
+  border: 1px solid rgba(45, 212, 191, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: rgba(232, 240, 242, 0.6);
+}
+
+.director-icon-btn:hover {
+  background: rgba(20, 82, 74, 0.5);
+  border-color: rgba(45, 212, 191, 0.25);
+  color: #2DD4BF;
+}
+
+/* =============================================================================
+   DIRECTOR TYPOGRAPHY UTILITIES
+   ============================================================================= */
+
+.director-text-primary {
+  color: #E8F0F2;
+}
+
+.director-text-muted {
+  color: rgba(232, 240, 242, 0.6);
+}
+
+.director-text-dimmed {
+  color: rgba(232, 240, 242, 0.4);
+}
+
+.director-text-teal {
+  color: #2DD4BF;
+}
+
+.director-text-gold {
+  color: #C9A962;
+}
+
+.director-text-purple {
+  color: #818CF8;
+}
+
+.director-text-error {
+  color: #FF6B6B;
+}
+
+/* Section Label (e.g., "MORNING BRIEFING") */
+.director-section-label {
+  font-size: 11px;
+  color: #C9A962;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Section Divider Label */
+.director-divider-label {
+  font-size: 11px;
+  color: rgba(232, 240, 242, 0.4);
+  letter-spacing: 2px;
+  text-align: center;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Monospace Numbers (for KPI values) */
+.director-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* =============================================================================
+   DIRECTOR ALERT/STATUS CARDS
+   ============================================================================= */
+
+/* Warning Alert Card */
+.director-alert-warning {
+  background: rgba(201, 169, 98, 0.08);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+/* Error/Risk Alert Card */
+.director-alert-error {
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.25);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+/* AI/Opportunity Card */
+.director-alert-ai {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+/* AI Card Light Variant */
+.director-alert-ai-light {
+  background: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+/* =============================================================================
+   DIRECTOR CHART UTILITIES
+   ============================================================================= */
+
+.director-chart-bar {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.director-chart-bar:hover {
+  filter: brightness(1.15);
+}
+
+/* =============================================================================
+   DIRECTOR BADGE/TAG UTILITIES
+   ============================================================================= */
+
+.director-badge-ai {
+  padding: 4px 10px;
+  background: rgba(99, 102, 241, 0.15);
+  border-radius: 12px;
+  font-size: 10px;
+  color: #818CF8;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.director-badge-teal {
+  padding: 4px 10px;
+  background: rgba(45, 212, 191, 0.15);
+  border-radius: 12px;
+  font-size: 10px;
+  color: #2DD4BF;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.director-badge-gold {
+  padding: 4px 10px;
+  background: rgba(201, 169, 98, 0.15);
+  border-radius: 12px;
+  font-size: 10px;
+  color: #C9A962;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* =============================================================================
+   PULSING INDICATOR ANIMATION
+   ============================================================================= */
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: #2DD4BF;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.pulse-dot-gold {
+  width: 8px;
+  height: 8px;
+  background: #C9A962;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.pulse-dot-error {
+  width: 8px;
+  height: 8px;
+  background: #FF6B6B;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.pulse-dot-sm {
+  width: 6px;
+  height: 6px;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+/* =============================================================================
+   DIRECTOR LAYOUT UTILITIES
+   ============================================================================= */
+
+/* Header Border */
+.director-header-border {
+  border-bottom: 1px solid rgba(45, 212, 191, 0.08);
+}
+
+/* Footer Border */
+.director-footer-border {
+  border-top: 1px solid rgba(45, 212, 191, 0.08);
+}
+
+/* User Profile Pill */
+.director-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px 6px 6px;
+  background: rgba(10, 47, 44, 0.4);
+  border: 1px solid rgba(45, 212, 191, 0.1);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.director-user-pill:hover {
+  border-color: rgba(45, 212, 191, 0.25);
+  background: rgba(20, 82, 74, 0.4);
+}
+
+/* User Avatar */
+.director-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2DD4BF 0%, #14524A 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.director-avatar-lg {
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+}
+
+/* Icon Box (for KPI icons, etc.) */
+.director-icon-box {
+  width: 32px;
+  height: 32px;
+  background: rgba(45, 212, 191, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.director-icon-box-lg {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #2DD4BF 0%, #14524A 100%);
+  border-radius: 10px;
+}
+
+/* Logo Icon Box (for header) */
+.director-logo-box {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #2DD4BF 0%, #14524A 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* AI Icon Box */
+.director-ai-icon-box {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============================================================================
+   DIRECTOR GRADIENT UTILITIES
+   ============================================================================= */
+
+.director-gradient-teal {
+  background: linear-gradient(135deg, #2DD4BF 0%, #14524A 100%);
+}
+
+.director-gradient-teal-bar {
+  background: linear-gradient(90deg, #14524A, #2DD4BF);
+}
+
+.director-gradient-error-bar {
+  background: linear-gradient(90deg, #FF6B6B, #C53030);
+}
+
+.director-gradient-purple {
+  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+}
+
+/* Notification Dot */
+.director-notification-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  background: #C9A962;
+  border-radius: 50%;
 }

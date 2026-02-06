@@ -70,7 +70,7 @@ const MOCK_TICKETS: MockTicket[] = [
 
 export default function ContactPage() {
   const router = useRouter();
-  const { user, userData } = useAuth();
+  const { user: _user, userData: _userData } = useAuth();
   const [subject, setSubject] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');

@@ -71,9 +71,9 @@ export function ModernStatCard({
   };
 
   const cardVariants = {
-    default: 'bg-white/70 backdrop-blur-xl border-2 border-white/60',
-    gradient: 'bg-gradient-to-br from-brand-blue/10 to-brand-blue/5 backdrop-blur-xl border-2 border-brand-blue/20',
-    solid: 'bg-brand-blue text-white border-2 border-brand-blue-dark'
+    default: 'bg-white/70 backdrop-blur-xl border-2 border-lorenzo-teal/10',
+    gradient: 'bg-linear-to-br from-lorenzo-cream to-white backdrop-blur-xl border-2 border-lorenzo-teal/20',
+    solid: 'bg-lorenzo-deep-teal text-white border-2 border-lorenzo-dark-teal'
   };
 
   return (
@@ -87,14 +87,14 @@ export function ModernStatCard({
       }}
       whileHover={{ scale: 1.02, y: -2 }}
       className={cn(
-        'relative rounded-3xl shadow-card hover:shadow-glow-blue/10 transition-all duration-300 p-6',
+        'relative rounded-3xl shadow-card hover:shadow-glow-teal/10 transition-all duration-300 p-6',
         cardVariants[variant],
         className
       )}
     >
       {/* Subtle gradient overlay for default variant */}
       {variant === 'default' && (
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-blue/5 via-transparent to-brand-blue-100/5 pointer-events-none" />
+        <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-lorenzo-teal/5 via-transparent to-lorenzo-cream/5 pointer-events-none" />
       )}
 
       <div className="relative z-10">
@@ -113,12 +113,12 @@ export function ModernStatCard({
               transition={{ type: "spring", stiffness: 400 }}
               className={cn(
                 'p-2 rounded-xl',
-                variant === 'solid' ? 'bg-white/20' : 'bg-brand-blue/10'
+                variant === 'solid' ? 'bg-white/20' : 'bg-lorenzo-teal/10'
               )}
             >
               <div className={cn(
                 'w-5 h-5',
-                variant === 'solid' ? 'text-white' : 'text-brand-blue'
+                variant === 'solid' ? 'text-white' : 'text-lorenzo-teal'
               )}>
                 {icon}
               </div>
@@ -197,13 +197,13 @@ export function MiniStatCard({
       whileHover={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 400 }}
       className={cn(
-        'flex items-center gap-3 p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-brand-blue/10',
+        'flex items-center gap-3 p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-lorenzo-teal/10',
         className
       )}
     >
       {icon && (
-        <div className="p-2 rounded-xl bg-brand-blue/10">
-          <div className="w-4 h-4 text-brand-blue">
+        <div className="p-2 rounded-xl bg-lorenzo-teal/10">
+          <div className="w-4 h-4 text-lorenzo-teal">
             {icon}
           </div>
         </div>

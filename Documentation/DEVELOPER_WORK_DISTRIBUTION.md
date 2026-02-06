@@ -745,7 +745,7 @@ Blockers:
 ## 🚨 Emergency Contacts
 
 **Team Lead:** Gachengoh Marugu
-- Email: hello@ai-agentsplus.com
+- Email: jerry@ai-agentsplus.com
 - Phone: +254 725 462 859
 - WhatsApp: +254 725 462 859
 

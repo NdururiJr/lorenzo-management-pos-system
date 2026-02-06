@@ -41,6 +41,7 @@ interface InventoryLog {
   reason?: string;
   userId: string;
   userName: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   timestamp: any;
 }
 

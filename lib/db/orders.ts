@@ -20,7 +20,6 @@ import type {
   Order,
   OrderExtended,
   OrderStatus,
-  Garment,
   PaymentMethod,
   StatusHistoryEntry,
 } from './schema';
@@ -96,10 +95,11 @@ export function calculateEstimatedCompletion(
   let hoursToAdd = 48; // Default 48 hours
 
   // Adjust based on garment count
-  if (garmentCount > 10) {
-    hoursToAdd += 24;
-  } else if (garmentCount > 20) {
+  // Note: Check larger counts first to avoid logic errors
+  if (garmentCount > 20) {
     hoursToAdd += 48;
+  } else if (garmentCount > 10) {
+    hoursToAdd += 24;
   }
 
   // Express service: half the time
@@ -158,6 +158,7 @@ export async function createOrder(
   ];
 
   // Create order object (filtering out undefined values for Firestore)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const order: Record<string, any> = {
     orderId,
     customerId: data.customerId,
@@ -313,7 +314,8 @@ export async function updateOrderStatus(
   };
 
   // Send appropriate notifications based on new status
-  if (status === 'ready') {
+  // FR-008: Updated to use 'queued_for_delivery' instead of 'ready'
+  if (status === 'queued_for_delivery') {
     notifyOrderReady({
       order: orderData,
       customer: customerData,
@@ -549,6 +551,7 @@ export async function getTodayOrdersCount(branchId: string): Promise<number> {
 
 /**
  * Get pipeline statistics for a branch
+ * FR-008: Updated 'ready' to 'queued_for_delivery'
  */
 export async function getPipelineStats(branchId: string): Promise<{
   received: number;
@@ -558,7 +561,7 @@ export async function getPipelineStats(branchId: string): Promise<{
   ironing: number;
   quality_check: number;
   packaging: number;
-  ready: number;
+  queued_for_delivery: number;
   out_for_delivery: number;
   total: number;
 }> {
@@ -572,7 +575,7 @@ export async function getPipelineStats(branchId: string): Promise<{
     ironing: 0,
     quality_check: 0,
     packaging: 0,
-    ready: 0,
+    queued_for_delivery: 0,
     out_for_delivery: 0,
     total: 0,
   };

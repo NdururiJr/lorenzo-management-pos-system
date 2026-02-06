@@ -479,5 +479,5 @@ Successfully implemented **212 comprehensive automated tests** plus **12+ E2E te
 ---
 
 **Last Updated:** January 2025
-**Maintained By:** Development Team
-**Contact:** hello@ai-agentsplus.com
+**Maintained By:** Jerry Ndururi in collaboration with AI Agents Plus
+**Contact:** jerry@ai-agentsplus.com

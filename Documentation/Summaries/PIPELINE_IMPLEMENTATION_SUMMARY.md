@@ -498,7 +498,7 @@ match /orders/{orderId} {
 ## Contact & Support
 
 **Pipeline System Developer**: Claude (Pipeline Developer Agent)
-**Project Lead**: Gachengoh Marugu (hello@ai-agentsplus.com)
+**Project Lead**: Gachengoh Marugu (jerry@ai-agentsplus.com)
 **Product Manager**: Jerry Nduriri (jerry@ai-agentsplus.com)
 
 For questions or issues with the pipeline system:

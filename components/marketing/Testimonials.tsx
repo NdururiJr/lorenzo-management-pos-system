@@ -15,7 +15,6 @@ import { useInView } from 'react-intersection-observer';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 
 const testimonials = [
   {
@@ -32,7 +31,7 @@ const testimonials = [
     role: 'Business Owner',
     image: '/images/marketing/testimonial-2.jpg',
     rating: 5,
-    text: 'Professional service and great quality. The express 24-hour service has been a lifesaver for my business trips.',
+    text: 'Professional service and great quality. The express 2-hour service has been a lifesaver for my business trips.',
   },
   {
     id: 3,
@@ -60,7 +59,7 @@ const testimonials = [
   },
 ];
 
-const containerVariants: Variants = {
+const _containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -70,7 +69,7 @@ const containerVariants: Variants = {
   },
 };
 
-const cardVariants: Variants = {
+const _cardVariants: Variants = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
   visible: {
     opacity: 1,
@@ -315,7 +314,7 @@ function TestimonialCard({ testimonial, index }: TestimonialCardProps) {
       )}
     >
       {/* Animated gradient on hover */}
-      <motion.div className="absolute inset-0 bg-gradient-to-br from-brand-blue/10 via-brand-blue-light/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <motion.div className="absolute inset-0 bg-linear-to-br from-brand-blue/10 via-brand-blue-light/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col h-full">
@@ -325,14 +324,14 @@ function TestimonialCard({ testimonial, index }: TestimonialCardProps) {
         </div>
 
         {/* Testimonial Text */}
-        <blockquote className="text-base text-gray-700 leading-relaxed mb-6 flex-grow">
+        <blockquote className="text-base text-gray-700 leading-relaxed mb-6 grow">
           &ldquo;{testimonial.text}&rdquo;
         </blockquote>
 
         {/* Author Info */}
         <div className="flex items-center gap-4 pt-6 border-t border-gray-200">
           {/* Avatar */}
-          <div className="relative w-14 h-14 rounded-full flex-shrink-0 overflow-hidden shadow-lg">
+          <div className="relative w-14 h-14 rounded-full shrink-0 overflow-hidden shadow-lg">
             <div
               className="w-full h-full flex items-center justify-center text-white text-xl font-semibold"
               style={{ backgroundColor: '#22BBFF' }}
@@ -341,7 +340,7 @@ function TestimonialCard({ testimonial, index }: TestimonialCardProps) {
             </div>
           </div>
 
-          <div className="flex-grow">
+          <div className="grow">
             <div className="font-bold text-black text-base group-hover:text-brand-blue transition-colors duration-300">
               {testimonial.name}
             </div>

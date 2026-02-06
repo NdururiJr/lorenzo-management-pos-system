@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorenzo Dry Cleaners - How The System Works</title>
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #1F2937;
+            --accent: #0D9488;
+            --accent-gold: #D4AF37;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --bg-light: #F9FAFB;
+            --bg-white: #FFFFFF;
+            --border: #E5E7EB;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --info: #3B82F6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-white);
+        }
+
+        .slide {
+            min-height: 100vh;
+            padding: 60px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid var(--border);
+            page-break-after: always;
+        }
+
+        .slide-title {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a3d3d 0%, #0d4f4f 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .slide-title h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #FFFFFF !important;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .slide-title h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #D4AF37;
+        }
+
+        .slide-title .meta {
+            margin-top: 3rem;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .slide-title .meta p {
+            color: #FFFFFF;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 1rem 0 0.5rem;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 1rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        tr:hover {
+            background: var(--bg-light);
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-gold) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .highlight h2, .highlight h3 {
+            color: white;
+        }
+
+        .highlight p, .highlight li {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-card .label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .demo-box {
+            background: #1a1a2e;
+            color: #00ff88;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 1rem 0;
+        }
+
+        .demo-box .title {
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-box .highlight-text {
+            color: #ffcc00;
+        }
+
+        .demo-box .success {
+            color: #00ff88;
+        }
+
+        .demo-box .info {
+            color: #00bfff;
+        }
+
+        .feature-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .feature-card h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .progress-bar {
+            background: var(--border);
+            border-radius: 999px;
+            height: 24px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-gold) 100%);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-success {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .badge-warning {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge-info {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .flow-chart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .flow-box {
+            background: var(--bg-light);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            border: 2px solid var(--accent);
+            font-weight: 500;
+        }
+
+        .flow-box.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .flow-arrow {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .whatsapp-msg {
+            background: #DCF8C6;
+            padding: 1rem;
+            border-radius: 12px;
+            border-bottom-left-radius: 0;
+            max-width: 350px;
+            margin: 1rem 0;
+            color: #111;
+            font-size: 0.95rem;
+        }
+
+        .whatsapp-msg .sender {
+            font-weight: 600;
+            color: #25D366;
+            margin-bottom: 0.5rem;
+        }
+
+        .slide-end {
+            background: linear-gradient(135deg, #0a3d3d 0%, #0d4f4f 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .slide-end h1 {
+            color: white;
+            border-bottom: none;
+            font-size: 3rem;
+        }
+
+        .slide-end p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.25rem;
+        }
+
+        .demo-section {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .demo-section h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        @media print {
+            .slide {
+                page-break-after: always;
+                min-height: auto;
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .two-column, .three-column {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Title -->
+    <section class="slide slide-title">
+        <h1>Lorenzo Dry Cleaners Management System</h1>
+        <h2>How The System Works</h2>
+        <div class="meta">
+            <p><strong>Developer:</strong> Jerry Ndururi in collaboration with AI Agents Plus</p>
+            <p><strong>Client:</strong> Lorenzo Dry Cleaners, Nairobi, Kenya</p>
+            <p><strong>Status:</strong> Production Ready (96%)</p>
+        </div>
+    </section>
+
+    <!-- Slide 2: What This System Does -->
+    <section class="slide">
+        <h1>What This System Does</h1>
+        <p>A complete digital transformation of dry cleaning operations:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Manual Process</th>
+                    <th>Digital Solution</th>
+                    <th>Benefit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Paper receipts</td>
+                    <td>Digital orders with tracking</td>
+                    <td>Never lose an order</td>
+                </tr>
+                <tr>
+                    <td>Phone calls for updates</td>
+                    <td>Automatic WhatsApp notifications</td>
+                    <td>24/7 customer visibility</td>
+                </tr>
+                <tr>
+                    <td>Manual route planning</td>
+                    <td>AI-optimized delivery routes</td>
+                    <td>Faster, cheaper deliveries</td>
+                </tr>
+                <tr>
+                    <td>Cash-only payments</td>
+                    <td>M-Pesa, Card, and Credit</td>
+                    <td>Customer convenience</td>
+                </tr>
+                <tr>
+                    <td>No customer visibility</td>
+                    <td>Real-time tracking portal</td>
+                    <td>Happy customers</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="highlight">
+            <h3>Complete Order Lifecycle Automation</h3>
+            <p>From the moment a customer walks in to the moment their clothes are delivered - every step is tracked, automated, and visible.</p>
+        </div>
+    </section>
+
+    <!-- Slide 3: System Overview -->
+    <section class="slide">
+        <h1>System Architecture</h1>
+        <div class="three-column">
+            <div class="feature-card">
+                <h3>Front Desk</h3>
+                <p><strong>POS System</strong></p>
+                <ul>
+                    <li>Customer lookup</li>
+                    <li>Order creation</li>
+                    <li>Payment processing</li>
+                    <li>Receipt generation</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Processing</h3>
+                <p><strong>Workstation System</strong></p>
+                <ul>
+                    <li>Garment inspection</li>
+                    <li>Stage tracking</li>
+                    <li>Staff assignment</li>
+                    <li>Quality control</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>Delivery</h3>
+                <p><strong>Driver App</strong></p>
+                <ul>
+                    <li>Route optimization</li>
+                    <li>GPS navigation</li>
+                    <li>Delivery confirmation</li>
+                    <li>Payment collection</li>
+                </ul>
+            </div>
+        </div>
+        <div class="flow-chart" style="margin-top: 2rem;">
+            <div class="flow-box">Customer</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box active">POS</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">Workstation</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">Ready</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box">Delivery</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box" style="border-color: var(--success);">Complete</div>
+        </div>
+    </section>
+
+    <!-- Slide 4: DEMO - POS System -->
+    <section class="slide">
+        <h1>DEMO: Point of Sale (POS)</h1>
+        <p>How Front Desk Creates an Order</p>
+
+        <div class="two-column">
+            <div>
+                <div class="step-indicator">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Customer Lookup</h3>
+                        <p>Search by phone number or name</p>
+                    </div>
+                </div>
+                <div class="demo-box">
+<span class="title">🔍 CUSTOMER SEARCH</span>
+
+Enter phone: <span class="highlight-text">+254 712 345 678</span>
+
+<span class="success">✓ Customer Found:</span>
+Name: John Kamau
+Orders: 15 previous
+Total Spent: KES 45,000
+
+[Select] [Create New]
+                </div>
+            </div>
+            <div>
+                <div class="step-indicator">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Add Garments</h3>
+                        <p>Select items and services</p>
+                    </div>
+                </div>
+                <div class="demo-box">
+<span class="title">👔 ADD GARMENT</span>
+
+Type:     <span class="highlight-text">Suit - 2 Piece</span>
+Color:    Navy Blue
+Brand:    Hugo Boss
+Services: <span class="success">[✓]</span> Dry Clean
+          <span class="success">[✓]</span> Press
+
+Notes: Minor stain on lapel
+Photo: <span class="info">[📷 Uploaded]</span>
+
+Price: <span class="highlight-text">KES 1,200</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: DEMO - POS Payment -->
+    <section class="slide">
+        <h1>DEMO: Payment Processing</h1>
+
+        <div class="two-column">
+            <div>
+                <div class="step-indicator">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Order Summary</h3>
+                        <p>Review and confirm order</p>
+                    </div>
+                </div>
+                <div class="demo-box">
+<span class="title">📋 ORDER SUMMARY</span>
+
+Order: <span class="highlight-text">ORD-KLM-20251114-0042</span>
+Customer: John Kamau
+
+Items:
+├─ Suit (2-piece)    KES 1,200
+├─ Shirts x3         KES   450
+└─ Trousers x2       KES   600
+─────────────────────────────
+TOTAL:               <span class="highlight-text">KES 2,250</span>
+
+Payment: <span class="success">[M-Pesa]</span> [Card] [Credit]
+Ready:   Nov 16, 2025
+                </div>
+            </div>
+            <div>
+                <div class="step-indicator">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>M-Pesa Payment</h3>
+                        <p>Customer receives STK push</p>
+                    </div>
+                </div>
+                <div class="demo-box">
+<span class="title">📱 M-PESA PAYMENT</span>
+
+Amount: <span class="highlight-text">KES 2,250</span>
+
+Processing...
+STK Push sent to: +254 712 345 678
+
+Customer actions:
+1. Check phone
+2. Enter M-Pesa PIN
+3. Confirm payment
+
+<span class="success">✅ Payment Confirmed!</span>
+Ref: MPESA-ABC123XYZ
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: DEMO - Receipt & WhatsApp -->
+    <section class="slide">
+        <h1>DEMO: Receipt & Notifications</h1>
+
+        <div class="two-column">
+            <div>
+                <div class="step-indicator">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Receipt Generated</h3>
+                        <p>PDF ready for print/email</p>
+                    </div>
+                </div>
+                <div class="demo-box" style="background: white; color: #333; border: 2px solid #ddd;">
+<span style="font-weight: bold; font-size: 1.1rem;">    LORENZO DRY CLEANERS</span>
+    ────────────────────────
+
+    Order #ORD-KLM-20251114-0042
+    Date: Nov 14, 2025
+
+    Customer: John Kamau
+    Phone: +254 712 345 678
+
+    Items: 6 garments
+    Total: KES 2,250
+    Paid:  KES 2,250 (M-Pesa)
+
+    Ready: Nov 16, 2025
+
+    Track: portal.lorenzo.co.ke
+
+    ────────────────────────
+    Thank you for your business!
+                </div>
+            </div>
+            <div>
+                <h3>WhatsApp Sent Automatically</h3>
+                <div class="whatsapp-msg">
+                    <div class="sender">Lorenzo Dry Cleaners</div>
+                    ✅ <strong>Order Confirmed!</strong><br><br>
+                    Order #ORD-KLM-20251114-0042<br>
+                    Items: 6 garments<br>
+                    Total: KES 2,250<br><br>
+                    Expected Ready: Nov 16, 2025<br><br>
+                    Track your order:<br>
+                    portal.lorenzo.co.ke<br><br>
+                    Thank you for choosing Lorenzo! 🧥
+                </div>
+                <p style="margin-top: 1rem;"><span class="badge badge-success">AUTOMATIC</span> Customer receives confirmation within seconds</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: DEMO - Order Pipeline -->
+    <section class="slide">
+        <h1>DEMO: Order Pipeline</h1>
+        <p>Visual Kanban Board - Real-Time Order Tracking</p>
+
+        <!-- 11-Stage Pipeline -->
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1rem;">
+            <div style="padding: 8px 12px; border: 2px solid var(--border); border-radius: 8px; text-align: center; min-width: 80px;">
+                <strong style="font-size: 0.8rem;">Received</strong><br><small style="color: var(--text-secondary);">3</small>
+            </div>
+            <span style="display: flex; align-items: center;">→</span>
+            <div style="padding: 8px 12px; border: 2px solid var(--border); border-radius: 8px; text-align: center; min-width: 80px;">
+                <strong style="font-size: 0.8rem;">Queued</strong><br><small style="color: var(--text-secondary);">5</small>
+            </div>
+            <span style="display: flex; align-items: center;">→</span>
+            <div style="padding: 8px 12px; border: 2px solid var(--border); border-radius: 8px; text-align: center; min-width: 80px;">
+                <strong style="font-size: 0.8rem;">Washing</strong><br><small style="color: var(--text-secondary);">4</small>
+            </div>
+            <span style="display: flex; align-items: center;">→</span>
+            <div style="padding: 8px 12px; border: 2px solid var(--border); border-radius: 8px; text-align: center; min-width: 80px;">
+                <strong style="font-size: 0.8rem;">Drying</strong><br><small style="color: var(--text-secondary);">2</small>
+            </div>
+            <span style="display: flex; align-items: center;">→</span>
+            <div style="padding: 8px 12px; border: 2px solid var(--accent); border-radius: 8px; text-align: center; min-width: 80px; background: rgba(13,148,136,0.1);">
+                <strong style="font-size: 0.8rem;">Ironing</strong><br><small style="color: var(--text-secondary);">6</small>
+            </div>
+            <span style="display: flex; align-items: center;">→</span>
+            <div style="padding: 8px 12px; border: 2px solid var(--border); border-radius: 8px; text-align: center; min-width: 80px;">
+                <strong style="font-size: 0.8rem;">QC</strong><br><small style="color: var(--text-secondary);">3</small>
+            </div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+            <div style="padding: 8px 12px; border: 2px solid var(--border); border-radius: 8px; text-align: center; min-width: 80px;">
+                <strong style="font-size: 0.8rem;">Packaging</strong><br><small style="color: var(--text-secondary);">2</small>
+            </div>
+            <span style="display: flex; align-items: center;">→</span>
+            <div style="padding: 8px 12px; border: 2px solid var(--success); border-radius: 8px; text-align: center; min-width: 80px; background: rgba(16,185,129,0.1);">
+                <strong style="font-size: 0.8rem;">Ready</strong><br><small style="color: var(--text-secondary);">8</small>
+            </div>
+            <span style="display: flex; align-items: center;">→</span>
+            <div style="padding: 8px 12px; border: 2px solid var(--info); border-radius: 8px; text-align: center; min-width: 80px;">
+                <strong style="font-size: 0.8rem;">Out for Delivery</strong><br><small style="color: var(--text-secondary);">4</small>
+            </div>
+            <span style="display: flex; align-items: center;">→</span>
+            <div style="padding: 8px 12px; border: 2px solid var(--success); border-radius: 8px; text-align: center; min-width: 80px;">
+                <strong style="font-size: 0.8rem;">Delivered</strong><br><small style="color: var(--text-secondary);">12</small>
+            </div>
+            <span style="display: flex; align-items: center;">→</span>
+            <div style="padding: 8px 12px; border: 2px solid var(--success); border-radius: 8px; text-align: center; min-width: 80px; background: rgba(16,185,129,0.15);">
+                <strong style="font-size: 0.8rem;">Collected</strong><br><small style="color: var(--text-secondary);">✓</small>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.85rem;"><strong>11 Stages</strong> - Complete order lifecycle tracking</p>
+
+        <div class="stats-grid" style="margin-top: 2rem;">
+            <div class="stat-card">
+                <div class="number">42</div>
+                <div class="label">Orders Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">4.2h</div>
+                <div class="label">Avg Processing</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">94%</div>
+                <div class="label">On-Time Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="color: var(--warning);">⚠️ 6</div>
+                <div class="label">Ironing Backlog</div>
+            </div>
+        </div>
+
+        <div class="highlight">
+            <h3>What Managers See</h3>
+            <ul>
+                <li>Click any order to see full details</li>
+                <li>Move orders between stages with one click</li>
+                <li>Real-time updates across all devices</li>
+                <li>Bottleneck alerts help optimize staffing</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Slide 8: DEMO - Workstation -->
+    <section class="slide">
+        <h1>DEMO: Workstation Management</h1>
+        <p>How Garments Are Inspected and Processed</p>
+
+        <div class="two-column">
+            <div>
+                <div class="demo-box">
+<span class="title">🔍 INSPECTION STATION</span>
+Staff: Mary Wanjiku
+
+Order: #ORD-KLM-20251114-0042
+Garment 1 of 6: <span class="highlight-text">Suit Jacket</span>
+
+Initial Notes (from POS):
+"Minor stain on lapel"
+
+<span class="info">─── DETAILED INSPECTION ───</span>
+
+Condition: <span class="success">[Good]</span>
+Stains:    <span class="success">[✓]</span> Yes - Lapel
+Tears:     [ ] No
+Buttons:   <span class="success">[✓]</span> All present
+Lining:    <span class="success">[✓]</span> Intact
+
+Treatment: Spot treat + Dry Clean
+
+[📷 Add Photo] [⚠️ Report Issue]
+                </div>
+            </div>
+            <div>
+                <h3>Processing Stages</h3>
+                <div class="feature-card">
+                    <h3>Stage 1: Inspection</h3>
+                    <p>Document condition, stains, tears</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Stage 2-3: Washing & Drying</h3>
+                    <p>Machine selection, temperature, timing</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Stage 4: Ironing</h3>
+                    <p>Steam pressing, crease checking</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Stage 5-6: QC & Packaging</h3>
+                    <p>Final inspection, covers, tags</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 9: DEMO - Customer Portal -->
+    <section class="slide">
+        <h1>DEMO: Customer Portal</h1>
+        <p>What Customers See When Tracking Their Orders</p>
+
+        <div class="two-column">
+            <div>
+                <div class="demo-box">
+<span class="title">👋 CUSTOMER DASHBOARD</span>
+Welcome back, John!
+
+<span class="info">═══ ACTIVE ORDERS ═══</span>
+
+Order #0042
+Status: <span class="highlight-text">🔵 IRONING</span>
+Items: 6 garments
+Ready: Tomorrow by 5:00 PM
+[Track Order →]
+
+<span class="info">═══ QUICK ACTIONS ═══</span>
+
+<span class="success">[📅 Request Pickup]</span>
+[📜 Order History]
+[👤 My Profile]
+
+<span class="info">═══ QUICK STATS ═══</span>
+
+Total Orders:   47
+This Month:     3
+Total Spent:    KES 52,450
+Member Since:   March 2024
+                </div>
+            </div>
+            <div>
+                <div class="demo-box">
+<span class="title">📦 ORDER TRACKING</span>
+Order #ORD-KLM-20251114-0042
+
+<span class="success">✅</span> Received     Nov 14, 10:30 AM
+<span class="success">✅</span> Inspected    Nov 14, 11:15 AM
+<span class="success">✅</span> Washing      Nov 14, 1:00 PM
+<span class="success">✅</span> Drying       Nov 14, 3:30 PM
+<span class="highlight-text">🔵</span> Ironing      In Progress...
+⚪ Quality Check  Pending
+⚪ Ready          Est: Nov 15
+
+ITEMS:
+• Suit (2-piece) - Dry Clean
+• Shirts x3 - Wash + Iron
+• Trousers x2 - Dry Clean
+
+<span class="success">[Download Receipt]</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 10: DEMO - WhatsApp Notifications -->
+    <section class="slide">
+        <h1>DEMO: WhatsApp Notifications</h1>
+        <p>Automatic Messages at Every Stage - 6 Templates</p>
+
+        <div class="three-column">
+            <div>
+                <h3>Order Confirmation</h3>
+                <div class="whatsapp-msg">
+                    <div class="sender">Lorenzo Dry Cleaners</div>
+                    ✅ <strong>Order Confirmed!</strong><br><br>
+                    Order #0042<br>
+                    Items: 6 garments<br>
+                    Total: KES 2,250<br><br>
+                    Ready: Nov 16, 2025
+                </div>
+                <p><small>Sent: Immediately after payment</small></p>
+            </div>
+            <div>
+                <h3>Order Ready</h3>
+                <div class="whatsapp-msg">
+                    <div class="sender">Lorenzo Dry Cleaners</div>
+                    🎉 <strong>Your order is ready!</strong><br><br>
+                    Order #0042<br><br>
+                    Pickup: Lorenzo Kilimani<br>
+                    Hours: 8 AM - 8 PM<br><br>
+                    Or request delivery!
+                </div>
+                <p><small>Sent: When order reaches "Ready"</small></p>
+            </div>
+            <div>
+                <h3>Driver Nearby</h3>
+                <div class="whatsapp-msg">
+                    <div class="sender">Lorenzo Dry Cleaners</div>
+                    📍 <strong>Driver arriving in 5 min!</strong><br><br>
+                    Please be ready.<br><br>
+                    Driver: James Mutua<br>
+                    Vehicle: KBZ 123A
+                </div>
+                <p><small>Sent: 5 minutes before arrival</small></p>
+            </div>
+        </div>
+
+        <div class="highlight" style="margin-top: 2rem;">
+            <h3>All 6 Message Templates</h3>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                <div>1. Order Confirmation</div>
+                <div>2. Order Ready</div>
+                <div>3. Driver Dispatched</div>
+                <div>4. Driver Nearby (5 min)</div>
+                <div>5. Order Delivered</div>
+                <div>6. Payment Reminder</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 11: DEMO - Route Optimization -->
+    <section class="slide">
+        <h1>DEMO: Delivery Route Optimization</h1>
+        <p>Google Maps Integration - AI-Optimized Routes</p>
+
+        <div class="two-column">
+            <div>
+                <h3>Manager Creates Delivery Batch</h3>
+                <div class="demo-box">
+<span class="title">🚚 CREATE DELIVERY BATCH</span>
+
+Available Drivers:
+○ James Mutua (8 today)
+<span class="success">●</span> David Ochieng (2 today)
+○ Sarah Wanjiru (5 today)
+
+Ready Orders:
+<span class="success">[✓]</span> #0015 - Westlands
+<span class="success">[✓]</span> #0014 - Lavington
+<span class="success">[✓]</span> #0012 - Kilimani
+<span class="success">[✓]</span> #0010 - Kileleshwa
+[ ] #0008 - Karen (too far)
+
+<span class="info">[Optimize Route]</span> [Assign]
+                </div>
+            </div>
+            <div>
+                <h3>Optimized Route Result</h3>
+                <div class="demo-box">
+<span class="title">🗺️ OPTIMIZED ROUTE</span>
+Driver: David Ochieng
+
+🏪 Lorenzo (Start)
+    ↓
+📍 1. Kilimani - Kariuki
+    ↓
+📍 2. Kileleshwa - Njeri
+    ↓
+📍 3. Westlands - Achieng
+    ↓
+📍 4. Lavington - Mutua
+    ↓
+🏪 Lorenzo (Return)
+
+Total: <span class="highlight-text">18.5 km</span>
+Time:  <span class="highlight-text">1 hr 15 min</span>
+Stops: <span class="highlight-text">4 deliveries</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12: DEMO - Driver View -->
+    <section class="slide">
+        <h1>DEMO: Driver Mobile View</h1>
+        <p>What Drivers See on Their Phone</p>
+
+        <div class="two-column">
+            <div>
+                <div class="demo-box">
+<span class="title">📱 DRIVER APP</span>
+David Ochieng
+
+TODAY'S DELIVERIES: <span class="highlight-text">4</span>
+
+<span class="info">═══ NEXT STOP ═══</span>
+
+#1 - Kilimani
+Customer: Jane Kariuki
+Phone: +254 722 XXX XXX
+Order: #0012 (3 items)
+Payment: <span class="success">PAID ✓</span>
+
+[📞 Call] [📍 Navigate] [✓ Done]
+
+<span class="info">═══ UPCOMING ═══</span>
+
+• #2 Kileleshwa - Njeri
+• #3 Westlands - Achieng
+• #4 Lavington - Mutua
+
+[View Full Route]
+                </div>
+            </div>
+            <div>
+                <h3>Driver Actions</h3>
+                <div class="feature-card">
+                    <h3>📞 Call Customer</h3>
+                    <p>One tap to call, confirm availability</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📍 Navigate</h3>
+                    <p>Opens Google Maps with directions</p>
+                </div>
+                <div class="feature-card">
+                    <h3>✓ Mark Delivered</h3>
+                    <p>Updates status, triggers WhatsApp</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💳 Collect Payment</h3>
+                    <p>Record payment on delivery</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 13: User Roles -->
+    <section class="slide">
+        <h1>User Roles & Access</h1>
+        <p>Role-Based Access Control - Everyone sees only what they need</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Role</th>
+                    <th>What They Access</th>
+                    <th>What They Can Do</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Admin</strong></td>
+                    <td>Everything</td>
+                    <td>Configure system, manage users, all reports</td>
+                </tr>
+                <tr>
+                    <td><strong>Store Manager</strong></td>
+                    <td>Branch data</td>
+                    <td>Manage staff, view reports, handle issues</td>
+                </tr>
+                <tr>
+                    <td><strong>Front Desk</strong></td>
+                    <td>POS, Customers</td>
+                    <td>Create orders, process payments</td>
+                </tr>
+                <tr>
+                    <td><strong>Workstation Staff</strong></td>
+                    <td>Processing queues</td>
+                    <td>Update garment status, flag issues</td>
+                </tr>
+                <tr>
+                    <td><strong>Driver</strong></td>
+                    <td>Delivery routes</td>
+                    <td>Mark deliveries, collect payments</td>
+                </tr>
+                <tr>
+                    <td><strong>Customer</strong></td>
+                    <td>Own orders only</td>
+                    <td>Track orders, view history, download receipts</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Slide 14: Technology Stack -->
+    <section class="slide">
+        <h1>Technology Summary</h1>
+
+        <div class="two-column">
+            <div>
+                <h2>Core System</h2>
+                <table>
+                    <tr><td><strong>Frontend</strong></td><td>Next.js 15 + React</td></tr>
+                    <tr><td><strong>Styling</strong></td><td>Tailwind CSS + shadcn/ui</td></tr>
+                    <tr><td><strong>Database</strong></td><td>Firebase Firestore</td></tr>
+                    <tr><td><strong>Auth</strong></td><td>Firebase Authentication</td></tr>
+                    <tr><td><strong>Backend</strong></td><td>Firebase Cloud Functions</td></tr>
+                </table>
+            </div>
+            <div>
+                <h2>Integrations</h2>
+                <table>
+                    <tr><td><strong>WhatsApp</strong></td><td>Wati.io (6 templates)</td></tr>
+                    <tr><td><strong>Payments</strong></td><td>Pesapal (M-Pesa + Card)</td></tr>
+                    <tr><td><strong>Maps</strong></td><td>Google Maps API</td></tr>
+                    <tr><td><strong>Email</strong></td><td>Resend (4 templates)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 2rem;">Monthly Operating Costs</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="number">$50-100</div>
+                <div class="label">Firebase</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">$100-150</div>
+                <div class="label">WhatsApp</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">$100-150</div>
+                <div class="label">Google Maps</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">$50-100</div>
+                <div class="label">Email & Other</div>
+            </div>
+        </div>
+        <p style="text-align: center; font-weight: 600; font-size: 1.25rem;">Total: <span style="color: var(--accent);">$300-500/month</span></p>
+    </section>
+
+    <!-- Slide 15: Dashboard Screenshot -->
+    <section class="slide">
+        <h1>SCREENSHOT: Staff Dashboard</h1>
+        <p>Real-time performance overview for every team member</p>
+
+        <!-- Dashboard Mockup -->
+        <div style="background: linear-gradient(135deg, #f0f9f7 0%, #e6f4f1 100%); border-radius: 16px; padding: 24px; margin-top: 1rem;">
+
+            <!-- Header -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div>
+                    <h2 style="margin: 0; color: #0d4f4f; font-weight: 400; font-size: 1.5rem;">Welcome back, <strong>Mary</strong></h2>
+                    <p style="margin: 4px 0 0; color: #5a8a8a; font-size: 0.9rem;">Here's your performance overview at Adlife Plaza Branch</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <!-- Inbox/Message Icon -->
+                    <div style="position: relative; background: white; border-radius: 12px; padding: 10px; cursor: pointer;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0d4f4f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <span style="position: absolute; top: 4px; right: 4px; background: #EF4444; color: white; font-size: 0.6rem; font-weight: 600; padding: 2px 5px; border-radius: 10px;">3</span>
+                    </div>
+                    <!-- Notification Icon -->
+                    <div style="position: relative; background: white; border-radius: 12px; padding: 10px; cursor: pointer;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0d4f4f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span style="position: absolute; top: 4px; right: 4px; background: #D4AF37; color: white; font-size: 0.6rem; font-weight: 600; padding: 2px 5px; border-radius: 10px;">5</span>
+                    </div>
+                    <!-- Time Toggle -->
+                    <div style="display: flex; gap: 4px; background: white; padding: 4px; border-radius: 20px;">
+                        <span style="padding: 8px 16px; background: #0d4f4f; color: white; border-radius: 16px; font-size: 0.85rem;">Today</span>
+                        <span style="padding: 8px 16px; color: #5a8a8a; font-size: 0.85rem;">This Week</span>
+                        <span style="padding: 8px 16px; color: #5a8a8a; font-size: 0.85rem;">This Month</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
+                <div style="background: white; border-radius: 20px; padding: 20px;">
+                    <span style="font-size: 1.5rem;">📦</span>
+                    <p style="color: #5a8a8a; font-size: 0.8rem; margin: 8px 0 4px;">Today's Orders</p>
+                    <p style="color: #0d4f4f; font-size: 2rem; font-weight: 600; margin: 0;">18</p>
+                    <p style="color: #5a8a8a; font-size: 0.7rem; margin: 4px 0 0;">Processed by you</p>
+                </div>
+                <div style="background: white; border-radius: 20px; padding: 20px;">
+                    <span style="font-size: 1.5rem;">👔</span>
+                    <p style="color: #5a8a8a; font-size: 0.8rem; margin: 8px 0 4px;">Items Handled</p>
+                    <p style="color: #0d4f4f; font-size: 2rem; font-weight: 600; margin: 0;">54</p>
+                    <p style="color: #5a8a8a; font-size: 0.7rem; margin: 4px 0 0;">Garments today</p>
+                </div>
+                <div style="background: white; border-radius: 20px; padding: 20px;">
+                    <span style="font-size: 1.5rem;">⏱️</span>
+                    <p style="color: #5a8a8a; font-size: 0.8rem; margin: 8px 0 4px;">Avg. Time</p>
+                    <p style="color: #0d4f4f; font-size: 2rem; font-weight: 600; margin: 0;">12 min</p>
+                    <p style="color: #5a8a8a; font-size: 0.7rem; margin: 4px 0 0;">Per order</p>
+                </div>
+                <div style="background: #0d4f4f; border-radius: 20px; padding: 20px; color: white;">
+                    <span style="font-size: 1.5rem;">🏆</span>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.8rem; margin: 8px 0 4px;">Your Rank</p>
+                    <p style="font-size: 2rem; font-weight: 600; margin: 0; color: #D4AF37;">#2</p>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 0.7rem; margin: 4px 0 0;">of 12 staff</p>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div style="display: grid; grid-template-columns: 7fr 5fr; gap: 16px;">
+                <!-- Performance Chart -->
+                <div style="background: white; border-radius: 20px; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                        <div>
+                            <h3 style="margin: 0; color: #0d4f4f; font-size: 1.1rem;">My Performance</h3>
+                            <p style="margin: 4px 0 0; color: #5a8a8a; font-size: 0.8rem;">Orders processed over time</p>
+                        </div>
+                        <div style="display: flex; gap: 4px; background: #f0f9f7; padding: 4px; border-radius: 12px;">
+                            <span style="padding: 6px 12px; background: #0d4f4f; color: white; border-radius: 8px; font-size: 0.75rem;">Weekly</span>
+                            <span style="padding: 6px 12px; color: #5a8a8a; font-size: 0.75rem;">Today</span>
+                        </div>
+                    </div>
+                    <!-- Mini Stats -->
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; background: #f0f9f7; padding: 12px; border-radius: 12px; margin-bottom: 16px;">
+                        <div>
+                            <p style="color: #5a8a8a; font-size: 0.7rem; margin: 0;">This Week</p>
+                            <p style="color: #0d4f4f; font-size: 1.25rem; font-weight: 600; margin: 4px 0 0;">120</p>
+                            <p style="color: #10B981; font-size: 0.65rem; margin: 2px 0 0;">↑ 12%</p>
+                        </div>
+                        <div>
+                            <p style="color: #5a8a8a; font-size: 0.7rem; margin: 0;">Items</p>
+                            <p style="color: #0d4f4f; font-size: 1.25rem; font-weight: 600; margin: 4px 0 0;">360</p>
+                            <p style="color: #10B981; font-size: 0.65rem; margin: 2px 0 0;">↑ 8%</p>
+                        </div>
+                        <div>
+                            <p style="color: #5a8a8a; font-size: 0.7rem; margin: 0;">Target Met</p>
+                            <p style="color: #D4AF37; font-size: 1.25rem; font-weight: 600; margin: 4px 0 0;">5 days</p>
+                            <p style="color: #D4AF37; font-size: 0.65rem; margin: 2px 0 0;">🔥 Streak!</p>
+                        </div>
+                        <div>
+                            <p style="color: #5a8a8a; font-size: 0.7rem; margin: 0;">Efficiency</p>
+                            <p style="color: #2DD4BF; font-size: 1.25rem; font-weight: 600; margin: 4px 0 0;">89%</p>
+                            <p style="color: #5a8a8a; font-size: 0.65rem; margin: 2px 0 0;">Above avg</p>
+                        </div>
+                    </div>
+                    <!-- Bar Chart -->
+                    <div style="display: flex; align-items: flex-end; gap: 12px; height: 100px;">
+                        <div style="flex: 1; text-align: center;">
+                            <div style="background: #0d4f4f; height: 56px; border-radius: 6px 6px 0 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;"><span style="color: white; font-size: 0.7rem;">14</span></div>
+                            <span style="color: #5a8a8a; font-size: 0.7rem;">Mon</span>
+                        </div>
+                        <div style="flex: 1; text-align: center;">
+                            <div style="background: #2DD4BF; height: 72px; border-radius: 6px 6px 0 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;"><span style="color: white; font-size: 0.7rem;">18</span></div>
+                            <span style="color: #5a8a8a; font-size: 0.7rem;">Tue</span>
+                        </div>
+                        <div style="flex: 1; text-align: center;">
+                            <div style="background: #2DD4BF; height: 64px; border-radius: 6px 6px 0 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;"><span style="color: white; font-size: 0.7rem;">16</span></div>
+                            <span style="color: #5a8a8a; font-size: 0.7rem;">Wed</span>
+                        </div>
+                        <div style="flex: 1; text-align: center;">
+                            <div style="background: #2DD4BF; height: 84px; border-radius: 6px 6px 0 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;"><span style="color: white; font-size: 0.7rem;">21</span></div>
+                            <span style="color: #5a8a8a; font-size: 0.7rem;">Thu</span>
+                        </div>
+                        <div style="flex: 1; text-align: center;">
+                            <div style="background: #2DD4BF; height: 76px; border-radius: 6px 6px 0 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;"><span style="color: white; font-size: 0.7rem;">19</span></div>
+                            <span style="color: #5a8a8a; font-size: 0.7rem;">Fri</span>
+                        </div>
+                        <div style="flex: 1; text-align: center;">
+                            <div style="background: #2DD4BF; height: 96px; border-radius: 6px 6px 0 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;"><span style="color: white; font-size: 0.7rem;">24</span></div>
+                            <span style="color: #5a8a8a; font-size: 0.7rem;">Sat</span>
+                        </div>
+                        <div style="flex: 1; text-align: center;">
+                            <div style="background: #0d4f4f; height: 32px; border-radius: 6px 6px 0 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;"><span style="color: white; font-size: 0.7rem;">8</span></div>
+                            <span style="color: #5a8a8a; font-size: 0.7rem;">Sun</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Card -->
+                <div style="background: linear-gradient(135deg, #0a3d3d 0%, #0d4f4f 100%); border-radius: 20px; padding: 20px; color: white;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <img src="../../public/images/Mary.jpg" alt="Mary Wanjiku" style="width: 56px; height: 56px; border-radius: 16px; object-fit: cover;">
+                        <div style="flex: 1;">
+                            <h3 style="margin: 0; font-size: 1.1rem; color: #FFFFFF;">Mary Wanjiku</h3>
+                            <p style="margin: 4px 0 0; color: rgba(255,255,255,0.6); font-size: 0.8rem;">Front Desk</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <span style="color: #D4AF37;">★</span>
+                                <span style="font-size: 1.25rem; font-weight: 600; color: #FFFFFF;">4.8</span>
+                            </div>
+                            <p style="color: rgba(255,255,255,0.5); font-size: 0.7rem; margin: 2px 0 0;">Rating</p>
+                        </div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-bottom: 12px;">Performance Metrics</p>
+                    <div style="margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Customer Satisfaction</span>
+                            <span style="font-size: 0.8rem; font-weight: 600; color: #FFFFFF;">96%</span>
+                        </div>
+                        <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                            <div style="width: 96%; height: 100%; background: #2DD4BF; border-radius: 3px;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Accuracy</span>
+                            <span style="font-size: 0.8rem; font-weight: 600; color: #D4AF37;">94%</span>
+                        </div>
+                        <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                            <div style="width: 94%; height: 100%; background: #D4AF37; border-radius: 3px;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Efficiency</span>
+                            <span style="font-size: 0.8rem; font-weight: 600; color: #FFFFFF;">89%</span>
+                        </div>
+                        <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                            <div style="width: 89%; height: 100%; background: #10B981; border-radius: 3px;"></div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,255,255,0.1); border-radius: 12px;">
+                        <span style="font-size: 1.5rem;">🎯</span>
+                        <div>
+                            <p style="font-size: 0.85rem; font-weight: 500; margin: 0; color: #D4AF37;">Top Performer</p>
+                            <p style="font-size: 0.7rem; color: rgba(255,255,255,0.6); margin: 2px 0 0;">Ranked #2 of 12 this month</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 16: Director & GM Capabilities -->
+    <section class="slide">
+        <h1>Director & General Manager View</h1>
+        <p>Executive-level access to all business operations and analytics</p>
+
+        <div class="two-column">
+            <div>
+                <h2>Full System Access</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Capabilities</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dashboard</strong></td>
+                            <td>All branches overview, company-wide KPIs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Orders & POS</strong></td>
+                            <td>View all orders, create orders, override pricing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pipeline</strong></td>
+                            <td>Monitor all stages, identify bottlenecks</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Branches</strong></td>
+                            <td>Multi-branch management, transfers oversight</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Staff</strong></td>
+                            <td>Performance metrics, attendance, shifts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transactions</strong></td>
+                            <td>Full financial records, revenue reports</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reports</strong></td>
+                            <td>Custom analytics, export data</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Settings</strong></td>
+                            <td>Pricing config, system settings</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h2>Executive Dashboard Features</h2>
+                <div class="feature-card">
+                    <h3>📊 Company-Wide Analytics</h3>
+                    <p>Revenue trends, order volumes, customer growth across all branches</p>
+                </div>
+                <div class="feature-card">
+                    <h3>👥 Staff Performance Rankings</h3>
+                    <p>Compare staff efficiency, identify top performers, track productivity</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🏢 Multi-Branch Comparison</h3>
+                    <p>Compare branch performance, revenue per location, workload distribution</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💰 Financial Overview</h3>
+                    <p>Daily/weekly/monthly revenue, payment method breakdown, outstanding balances</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🚨 Bottleneck Alerts</h3>
+                    <p>Real-time notifications when processing stages are backed up</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📧 Internal Memos</h3>
+                    <p>Send company-wide or branch-specific announcements to all staff</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 17: Director Actions -->
+    <section class="slide">
+        <h1>What Directors Can Do</h1>
+        <p>Strategic oversight and operational control</p>
+
+        <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="stat-card">
+                <div class="number" style="font-size: 2.5rem;">🏢</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Branch Management</div>
+                <ul style="text-align: left; font-size: 0.85rem; margin-top: 0.5rem;">
+                    <li>Add/edit branches</li>
+                    <li>Set branch targets</li>
+                    <li>Manage transfers</li>
+                    <li>Assign staff</li>
+                </ul>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2.5rem;">👥</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Staff Oversight</div>
+                <ul style="text-align: left; font-size: 0.85rem; margin-top: 0.5rem;">
+                    <li>View all staff performance</li>
+                    <li>Manage roles & access</li>
+                    <li>Track attendance</li>
+                    <li>Set performance targets</li>
+                </ul>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2.5rem;">📈</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Business Analytics</div>
+                <ul style="text-align: left; font-size: 0.85rem; margin-top: 0.5rem;">
+                    <li>Revenue reports</li>
+                    <li>Customer insights</li>
+                    <li>Service popularity</li>
+                    <li>Trend analysis</li>
+                </ul>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2.5rem;">⚙️</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">System Configuration</div>
+                <ul style="text-align: left; font-size: 0.85rem; margin-top: 0.5rem;">
+                    <li>Set service pricing</li>
+                    <li>Configure workflows</li>
+                    <li>Manage user accounts</li>
+                    <li>System settings</li>
+                </ul>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2.5rem;">💳</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Financial Control</div>
+                <ul style="text-align: left; font-size: 0.85rem; margin-top: 0.5rem;">
+                    <li>View all transactions</li>
+                    <li>Approve refunds</li>
+                    <li>Credit management</li>
+                    <li>Payment reports</li>
+                </ul>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2.5rem;">🔔</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Notifications & Alerts</div>
+                <ul style="text-align: left; font-size: 0.85rem; margin-top: 0.5rem;">
+                    <li>Daily summary emails</li>
+                    <li>Low inventory alerts</li>
+                    <li>Issue escalations</li>
+                    <li>Performance alerts</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight" style="margin-top: 1.5rem;">
+            <h3>Role Hierarchy</h3>
+            <p style="font-family: monospace; font-size: 0.9rem;">
+                Director (Level 8) → General Manager (7) → Store Manager (6) → Workstation Manager (5) → Front Desk (4) → Staff (3) → Driver (2) → Customer (1)
+            </p>
+        </div>
+    </section>
+
+    <!-- Slide 18: What Makes This Special -->
+    <section class="slide">
+        <h1>What Makes This System Special</h1>
+
+        <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="stat-card">
+                <div class="number" style="font-size: 3rem;">🤖</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Complete Automation</div>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Order to delivery with minimal manual work</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 3rem;">👁️</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Real-Time Visibility</div>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Everyone knows order status instantly</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 3rem;">📱</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">WhatsApp Updates</div>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Automatic notifications at every stage</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 3rem;">🗺️</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Smart Routes</div>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Google Maps optimizes deliveries</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 3rem;">💳</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Multi-Payment</div>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">M-Pesa, Card, Credit all supported</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 3rem;">📊</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Staff Tracking</div>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Performance metrics for accountability</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 3rem;">🔒</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Audit Logging</div>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Complete action trail for compliance</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 3rem;">🌐</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Marketing Site</div>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">About, FAQ (85+ Q&A), Services pages</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 3rem;">📅</div>
+                <div class="label" style="font-size: 1rem; color: var(--text-primary);">Pickup Scheduling</div>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Customer self-service pickup requests</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 19: AI-Powered Intelligence -->
+    <section class="slide">
+        <h1>AI-Powered Intelligence</h1>
+        <p>8 Specialized AI Agents powering smart automation</p>
+
+        <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">📦</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Order Agent</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Order creation & tracking assistance</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">💰</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Pricing Agent</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Dynamic pricing calculations</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">👤</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Customer Agent</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Customer support & queries</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">🎯</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Support Agent</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">General help desk</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">🚀</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Onboarding Agent</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">New customer registration</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">🚚</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Logistics Agent</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Delivery optimization</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">📊</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Analytics Agent</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Business insights & reports</p>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, var(--accent) 0%, #0a7a70 100%); color: white;">
+                <div class="number" style="font-size: 2rem;">🧠</div>
+                <div class="label" style="font-size: 0.9rem; color: white;">Orchestrator</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem; color: rgba(255,255,255,0.8);">Routes requests to correct agent</p>
+            </div>
+        </div>
+
+        <div class="highlight" style="margin-top: 1.5rem;">
+            <h3>Multi-LLM Support</h3>
+            <p>Powered by <strong>OpenAI</strong>, <strong>Anthropic</strong>, and <strong>Google</strong> models with admin-configurable provider settings</p>
+        </div>
+    </section>
+
+    <!-- Slide 20: Future Enhancements Roadmap -->
+    <section class="slide">
+        <h1>Future Enhancements Roadmap</h1>
+        <p>Planned features for continued growth</p>
+
+        <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">🤖</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">AI Prediction</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Smart order completion time estimation using ML</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">📍</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Live Driver Tracking</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Real-time GPS on customer portal</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">📈</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Advanced Analytics</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Financial reconciliation & profit margins</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">📦</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Inventory Alerts</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Low stock notifications & auto-reorder</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">🎫</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Issue Management</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Complaint tracking & resolution workflow</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">📱</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Native Mobile Apps</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">iOS/Android for drivers & customers</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">⚡</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Bulk Operations</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Mass imports & batch updates</p>
+            </div>
+            <div class="stat-card">
+                <div class="number" style="font-size: 2rem;">📝</div>
+                <div class="label" style="font-size: 0.9rem; color: var(--text-primary);">Blog & CMS</div>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Marketing content management</p>
+            </div>
+        </div>
+
+        <div class="highlight" style="margin-top: 1.5rem;">
+            <h3>Foundation Already Built</h3>
+            <p>Core infrastructure supports all these features. Marketing website includes About, FAQ (85+ Q&A), Services, and Contact pages.</p>
+        </div>
+    </section>
+
+    <!-- Slide 21: Live Demo Checklist -->
+    <section class="slide">
+        <h1>Live Demo Checklist</h1>
+        <p>15-20 Minute System Walkthrough</p>
+
+        <div class="two-column">
+            <div>
+                <div class="demo-section">
+                    <h3>1. POS Demo (5 min)</h3>
+                    <ul>
+                        <li>☐ Search for existing customer</li>
+                        <li>☐ Add garments with photos</li>
+                        <li>☐ Process M-Pesa payment</li>
+                        <li>☐ Show receipt generation</li>
+                        <li>☐ Show WhatsApp notification</li>
+                    </ul>
+                </div>
+                <div class="demo-section">
+                    <h3>2. Pipeline Demo (3 min)</h3>
+                    <ul>
+                        <li>☐ View order in pipeline</li>
+                        <li>☐ Move order between stages</li>
+                        <li>☐ Show real-time updates</li>
+                    </ul>
+                </div>
+                <div class="demo-section">
+                    <h3>3. Customer Portal (3 min)</h3>
+                    <ul>
+                        <li>☐ Login as customer</li>
+                        <li>☐ View order tracking</li>
+                        <li>☐ Show order history</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="demo-section">
+                    <h3>4. Workstation Demo (3 min)</h3>
+                    <ul>
+                        <li>☐ Process garment inspection</li>
+                        <li>☐ Update status</li>
+                        <li>☐ Show staff assignment</li>
+                    </ul>
+                </div>
+                <div class="demo-section">
+                    <h3>5. Delivery Demo (3 min)</h3>
+                    <ul>
+                        <li>☐ Create delivery batch</li>
+                        <li>☐ Show route optimization</li>
+                        <li>☐ Demonstrate driver view</li>
+                    </ul>
+                </div>
+                <div class="highlight">
+                    <h3>System Access</h3>
+                    <p>Demo URL: staging.lorenzo.co.ke</p>
+                    <p>Test accounts provided for each role</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide: Marketing Website -->
+    <section class="slide">
+        <h1>Marketing Website</h1>
+        <p>Professional online presence to attract and convert customers</p>
+
+        <!-- Benefits -->
+        <div class="two-column" style="margin-bottom: 2rem;">
+            <div>
+                <h2>Benefits</h2>
+                <div class="feature-card">
+                    <h3>🌐 24/7 Online Presence</h3>
+                    <p>Customers can learn about services, view pricing, and contact Lorenzo anytime</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📱 Mobile Responsive</h3>
+                    <p>Perfect experience on phones, tablets, and desktops</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔍 SEO Optimized</h3>
+                    <p>Rank higher on Google for "dry cleaning Nairobi" searches</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💼 Professional Branding</h3>
+                    <p>Consistent Lorenzo teal & gold theme builds trust and recognition</p>
+                </div>
+            </div>
+            <div>
+                <h2>Key Features</h2>
+                <div class="feature-card">
+                    <h3>📋 Service Catalog</h3>
+                    <p>Full list of services with descriptions and transparent pricing</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📍 Location & Hours</h3>
+                    <p>Interactive map, branch addresses, and operating hours</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📞 Contact Form</h3>
+                    <p>Easy inquiry submission with automated WhatsApp follow-up</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⭐ Testimonials</h3>
+                    <p>Customer reviews showcasing service quality</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide: Website Screenshots -->
+    <section class="slide">
+        <h1>Website Screenshots</h1>
+        <p>Images from the Lorenzo Dry Cleaners website</p>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 1.5rem;">
+            <!-- About Page Screenshot -->
+            <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div style="background: linear-gradient(135deg, #0a3d3d 0%, #0d4f4f 100%); padding: 12px; text-align: center;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+                        <div style="width: 8px; height: 8px; background: #EF4444; border-radius: 50%;"></div>
+                        <div style="width: 8px; height: 8px; background: #F59E0B; border-radius: 50%;"></div>
+                        <div style="width: 8px; height: 8px; background: #10B981; border-radius: 50%;"></div>
+                    </div>
+                    <h3 style="color: white; margin: 0; font-size: 1rem;">About Us Page</h3>
+                </div>
+                <img src="../../website/public/images/marketing/about-hero.jpg" alt="About Page" style="width: 100%; height: 200px; object-fit: cover;">
+                <div style="padding: 12px; background: #f9fafb;">
+                    <p style="margin: 0; font-size: 0.75rem; color: #0d4f4f; font-weight: 600;">Our Story & Heritage</p>
+                    <p style="margin: 4px 0 0; font-size: 0.65rem; color: #666;">Premium garment care since 1990</p>
+                </div>
+            </div>
+
+            <!-- Services Page Screenshot -->
+            <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div style="background: linear-gradient(135deg, #0a3d3d 0%, #0d4f4f 100%); padding: 12px; text-align: center;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+                        <div style="width: 8px; height: 8px; background: #EF4444; border-radius: 50%;"></div>
+                        <div style="width: 8px; height: 8px; background: #F59E0B; border-radius: 50%;"></div>
+                        <div style="width: 8px; height: 8px; background: #10B981; border-radius: 50%;"></div>
+                    </div>
+                    <h3 style="color: white; margin: 0; font-size: 1rem;">Services Page</h3>
+                </div>
+                <img src="../../website/public/images/blog/dry-cleaning.jpg" alt="Services Page" style="width: 100%; height: 200px; object-fit: cover;">
+                <div style="padding: 12px; background: #f9fafb;">
+                    <p style="margin: 0; font-size: 0.75rem; color: #0d4f4f; font-weight: 600;">Our Services</p>
+                    <p style="margin: 4px 0 0; font-size: 0.65rem; color: #666;">Dry cleaning, laundry, alterations & more</p>
+                </div>
+            </div>
+
+            <!-- Blog/Content Page Screenshot -->
+            <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div style="background: linear-gradient(135deg, #0a3d3d 0%, #0d4f4f 100%); padding: 12px; text-align: center;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+                        <div style="width: 8px; height: 8px; background: #EF4444; border-radius: 50%;"></div>
+                        <div style="width: 8px; height: 8px; background: #F59E0B; border-radius: 50%;"></div>
+                        <div style="width: 8px; height: 8px; background: #10B981; border-radius: 50%;"></div>
+                    </div>
+                    <h3 style="color: white; margin: 0; font-size: 1rem;">Sustainability</h3>
+                </div>
+                <img src="../../website/public/images/blog/sustainable.jpg" alt="Sustainability Page" style="width: 100%; height: 200px; object-fit: cover;">
+                <div style="padding: 12px; background: #f9fafb;">
+                    <p style="margin: 0; font-size: 0.75rem; color: #0d4f4f; font-weight: 600;">Eco-Friendly Practices</p>
+                    <p style="margin: 4px 0 0; font-size: 0.65rem; color: #666;">Our commitment to sustainability</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; text-align: center;">
+            <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+                <strong>URL:</strong> www.lorenzo.co.ke • <strong>Status:</strong> Live & Fully Responsive
+            </p>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                Website includes: Home, About, Services, FAQ (85+ Q&A), Contact, Blog, Privacy & Terms
+            </p>
+        </div>
+    </section>
+
+    <!-- Slide: Deployment Plan -->
+    <section class="slide">
+        <h1>Deployment Plan</h1>
+        <h2>Phased Rollout & Data Requirements</h2>
+
+        <!-- 4-Phase Timeline -->
+        <div class="stats-grid" style="margin-bottom: 2rem;">
+            <div class="stat-card" style="border-left: 4px solid var(--accent);">
+                <div class="number" style="font-size: 1.5rem;">Phase 1</div>
+                <div class="label" style="font-weight: 600;">Data Collection</div>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem; text-align: left;">
+                    • Branch information<br>
+                    • Staff roster & roles<br>
+                    • Service pricing list<br>
+                    • Customer database
+                </p>
+            </div>
+            <div class="stat-card" style="border-left: 4px solid var(--accent);">
+                <div class="number" style="font-size: 1.5rem;">Phase 2</div>
+                <div class="label" style="font-weight: 600;">System Setup</div>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem; text-align: left;">
+                    • Firebase configuration<br>
+                    • Pesapal credentials<br>
+                    • WhatsApp (Wati.io)<br>
+                    • Google Maps API
+                </p>
+            </div>
+            <div class="stat-card" style="border-left: 4px solid var(--accent);">
+                <div class="number" style="font-size: 1.5rem;">Phase 3</div>
+                <div class="label" style="font-weight: 600;">Migration & Testing</div>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem; text-align: left;">
+                    • Import customer data<br>
+                    • Configure pricing<br>
+                    • Create user accounts<br>
+                    • Staff training
+                </p>
+            </div>
+            <div class="stat-card" style="border-left: 4px solid var(--accent);">
+                <div class="number" style="font-size: 1.5rem;">Phase 4</div>
+                <div class="label" style="font-weight: 600;">Go-Live</div>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem; text-align: left;">
+                    • Soft launch<br>
+                    • Monitor performance<br>
+                    • Address issues<br>
+                    • Full rollout
+                </p>
+            </div>
+        </div>
+
+        <!-- Data Requirements Table -->
+        <h3 style="color: var(--accent); margin-bottom: 1rem;">Data Required from Lorenzo Management</h3>
+        <table style="width: 100%; margin-bottom: 1.5rem;">
+            <thead>
+                <tr>
+                    <th style="width: 25%;">Category</th>
+                    <th>Required Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Branches</strong></td>
+                    <td>Branch names, addresses, phone numbers, operating hours</td>
+                </tr>
+                <tr>
+                    <td><strong>Staff</strong></td>
+                    <td>Full names, phone numbers, email addresses, assigned roles</td>
+                </tr>
+                <tr>
+                    <td><strong>Services & Pricing</strong></td>
+                    <td>Complete service list with prices per garment type, express fees</td>
+                </tr>
+                <tr>
+                    <td><strong>Customers</strong></td>
+                    <td>Customer names, phone numbers (+254 format), delivery addresses</td>
+                </tr>
+                <tr>
+                    <td><strong>Business Rules</strong></td>
+                    <td>Working hours, delivery zones, payment terms, credit policies</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Go-Live Checklist -->
+        <div class="two-column">
+            <div class="feature-card">
+                <h3>Go-Live Checklist</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li>☐ All branch data entered</li>
+                    <li>☐ Staff accounts created & trained</li>
+                    <li>☐ Pricing configured & verified</li>
+                    <li>☐ Payment gateway tested (M-Pesa & Card)</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>&nbsp;</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li>☐ WhatsApp templates approved</li>
+                    <li>☐ Customer data imported</li>
+                    <li>☐ Backup procedures verified</li>
+                    <li>☐ Support contact established</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 17: Questions -->
+    <section class="slide">
+        <h1>Questions?</h1>
+
+        <div class="highlight" style="max-width: 600px; margin: 4rem auto; text-align: center;">
+            <h3>System Status</h3>
+            <p style="font-size: 2rem; margin: 1rem 0;">96% Production Ready</p>
+            <div class="progress-bar" style="background: rgba(255,255,255,0.3);">
+                <div class="progress-fill" style="width: 96%;">96%</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 18: Thank You -->
+    <section class="slide slide-end">
+        <h1>Thank You</h1>
+        <h2 style="color: #D4AF37; font-weight: 400; margin-bottom: 2rem;">Lorenzo Dry Cleaners Management System</h2>
+        <p><em>We Clean So That You Can Shine!</em></p>
+        <div style="margin-top: 3rem;">
+            <p style="color: #D4AF37;"><strong>Developer:</strong> Jerry Ndururi</p>
+            <p>In collaboration with AI Agents Plus</p>
+            <p style="margin-top: 1rem;">ndururij@gmail.com | 0700 075 810</p>
+        </div>
+        <div style="margin-top: 3rem; font-size: 0.875rem; opacity: 0.7;">
+            <p>Presentation Date: January 7, 2026</p>
+            <p>System Status: Production Ready (96%)</p>
+        </div>
+    </section>
+
+</body>
+</html>

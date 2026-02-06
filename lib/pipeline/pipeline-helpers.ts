@@ -17,15 +17,17 @@ import type { OrderExtended, OrderStatus, Timestamp } from '@/lib/db/schema';
 export function groupOrdersByStatus(
   orders: OrderExtended[]
 ): Record<OrderStatus, OrderExtended[]> {
+  // FR-008: Updated to include 'inspection' and use 'queued_for_delivery' instead of 'ready'
   const grouped: Record<string, OrderExtended[]> = {
     received: [],
+    inspection: [],
     queued: [],
     washing: [],
     drying: [],
     ironing: [],
     quality_check: [],
     packaging: [],
-    ready: [],
+    queued_for_delivery: [],
     out_for_delivery: [],
     delivered: [],
     collected: [],
@@ -80,15 +82,17 @@ export function calculateTotalProcessingTime(order: OrderExtended): number {
 export function calculateAverageTimePerStage(
   orders: OrderExtended[]
 ): Record<OrderStatus, number> {
+  // FR-008: Updated to include 'inspection' and use 'queued_for_delivery' instead of 'ready'
   const stageTimes: Record<string, number[]> = {
     received: [],
+    inspection: [],
     queued: [],
     washing: [],
     drying: [],
     ironing: [],
     quality_check: [],
     packaging: [],
-    ready: [],
+    queued_for_delivery: [],
     out_for_delivery: [],
     delivered: [],
     collected: [],

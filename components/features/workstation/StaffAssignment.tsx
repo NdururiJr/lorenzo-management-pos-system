@@ -52,7 +52,7 @@ export function StaffAssignment() {
     userData?.role === 'general_manager';
 
   // Fetch workstation staff at this branch
-  const { data: workstationStaff = [], refetch: refetchStaff } = useQuery({
+  const { data: workstationStaff = [], refetch: _refetchStaff } = useQuery({
     queryKey: ['workstation-staff', userData?.branchId],
     queryFn: () => {
       if (!userData?.branchId) return [];

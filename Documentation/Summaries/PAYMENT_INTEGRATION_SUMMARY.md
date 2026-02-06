@@ -448,7 +448,7 @@ See **PAYMENT_INTEGRATION_GUIDE.md** for:
 
 ### Team Contacts
 
-- **Gachengoh Marugu** (Lead Dev): hello@ai-agentsplus.com, +254 725 462 859
+- **Gachengoh Marugu** (Lead Dev): jerry@ai-agentsplus.com, +254 725 462 859
 - **Arthur Tutu** (Backend): arthur@ai-agentsplus.com
 - **Jerry Nduriri** (POS & Product): jerry@ai-agentsplus.com, +254 725 462 859
 

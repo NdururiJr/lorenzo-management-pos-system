@@ -373,7 +373,7 @@ firebase functions:list | grep schedule
 For issues or questions:
 - Check logs: `firebase functions:log`
 - Review documentation above
-- Contact: hello@ai-agentsplus.com
+- Contact: jerry@ai-agentsplus.com
 
 ---
 

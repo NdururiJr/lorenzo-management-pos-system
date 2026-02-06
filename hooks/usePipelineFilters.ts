@@ -72,13 +72,15 @@ function matchesStatusGroup(
 
   switch (statusGroup) {
     case 'pending':
-      return ['received', 'queued'].includes(status);
+      // Issue 33: Added 'inspection' to pending statuses
+      return ['received', 'inspection', 'queued'].includes(status);
     case 'processing':
       return ['washing', 'drying', 'ironing', 'quality_check', 'packaging'].includes(
         status
       );
     case 'ready':
-      return ['ready', 'out_for_delivery'].includes(status);
+      // FR-008: Use 'queued_for_delivery' instead of 'ready' (renamed in schema)
+      return ['queued_for_delivery', 'out_for_delivery'].includes(status);
     case 'completed':
       return ['delivered', 'collected'].includes(status);
     default:
@@ -157,15 +159,17 @@ export function usePipelineFilters(orders: OrderExtended[]) {
 
   // Count orders per status
   const statusCounts = useMemo(() => {
+    // FR-008: Updated to include 'inspection' and use 'queued_for_delivery' instead of 'ready'
     const counts: Record<string, number> = {
       received: 0,
+      inspection: 0,
       queued: 0,
       washing: 0,
       drying: 0,
       ironing: 0,
       quality_check: 0,
       packaging: 0,
-      ready: 0,
+      queued_for_delivery: 0,
       out_for_delivery: 0,
       delivered: 0,
       collected: 0,

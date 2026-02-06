@@ -289,7 +289,7 @@ npm run perf:audit
 ## Support
 
 For performance issues or questions:
-- Gachengoh Marugu: hello@ai-agentsplus.com
+- Gachengoh Marugu: jerry@ai-agentsplus.com
 - GitHub Issues: [Repository URL]
 
 ## Conclusion

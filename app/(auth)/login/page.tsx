@@ -101,12 +101,12 @@ export default function LoginPage() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="w-20 h-20 bg-gradient-to-br from-brand-blue to-brand-blue-dark rounded-full flex items-center justify-center shadow-glow-blue/30"
+              className="w-20 h-20 bg-linear-to-br from-brand-blue to-brand-blue-dark rounded-full flex items-center justify-center shadow-glow-blue/30"
             >
               <UserCircle className="w-12 h-12 text-white" />
             </motion.div>
           </div>
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold bg-linear-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
             Staff Login
           </h2>
           <p className="mt-2 text-gray-600">

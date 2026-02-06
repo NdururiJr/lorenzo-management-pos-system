@@ -19,12 +19,14 @@ dotenv.config({ path: path.resolve(__dirname, '../.env.local') });
 
 // Initialize Firebase Admin
 if (!admin.apps.length) {
+  const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+  if (!serviceAccountKey) {
+    console.error('❌ FIREBASE_SERVICE_ACCOUNT_KEY not found in environment');
+    process.exit(1);
+  }
+  const serviceAccount = JSON.parse(serviceAccountKey);
   admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    }),
+    credential: admin.credential.cert(serviceAccount),
   });
 }
 
@@ -303,7 +305,7 @@ async function seedOrders() {
       totalAmount: 530,
       paidAmount: 530,
       paymentStatus: 'paid',
-      paymentMethod: 'cash',
+      paymentMethod: 'mpesa',
       estimatedCompletion: admin.firestore.Timestamp.fromDate(twoDaysLater),
       createdAt: now,
       updatedAt: now,
@@ -360,7 +362,7 @@ async function seedOrders() {
       customerName: 'Peter Ochieng',
       customerPhone: '+254734567890',
       branchId: 'MAIN',
-      status: 'ready',
+      status: 'queued_for_delivery',
       garments: [
         {
           garmentId: 'ORD-MAIN-20251015-0003-G01',
@@ -369,7 +371,7 @@ async function seedOrders() {
           brand: 'Hugo Boss',
           services: ['dryClean', 'iron'],
           price: 600,
-          status: 'ready',
+          status: 'queued_for_delivery',
         },
         {
           garmentId: 'ORD-MAIN-20251015-0003-G02',
@@ -377,7 +379,7 @@ async function seedOrders() {
           color: 'Light Blue',
           services: ['wash', 'iron', 'starch'],
           price: 230,
-          status: 'ready',
+          status: 'queued_for_delivery',
         },
       ],
       totalAmount: 830,
@@ -394,7 +396,7 @@ async function seedOrders() {
           updatedBy: 'test-admin',
         },
         {
-          status: 'ready',
+          status: 'queued_for_delivery',
           timestamp: now,
           updatedBy: 'test-admin',
         },
@@ -482,7 +484,7 @@ async function seedOrders() {
       totalAmount: 700,
       paidAmount: 350,
       paymentStatus: 'partial',
-      paymentMethod: 'cash',
+      paymentMethod: 'mpesa',
       estimatedCompletion: admin.firestore.Timestamp.fromDate(twoDaysLater),
       createdAt: now,
       updatedAt: now,
@@ -526,7 +528,7 @@ async function seedTransactions() {
       orderId: 'ORD-MAIN-20251015-0001',
       customerId: 'CUST-TEST-001',
       amount: 530,
-      method: 'cash',
+      method: 'mpesa',
       status: 'completed',
       timestamp: now,
       processedBy: 'test-admin',
@@ -564,7 +566,7 @@ async function seedTransactions() {
       orderId: 'ORD-MAIN-20251015-0005',
       customerId: 'CUST-TEST-005',
       amount: 350,
-      method: 'cash',
+      method: 'mpesa',
       status: 'completed',
       timestamp: now,
       processedBy: 'test-admin',

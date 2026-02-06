@@ -510,7 +510,7 @@ const notifications = await adminDb
 - Docs: https://docs.wati.io
 
 **Internal Support:**
-- Gachengoh Marugu: hello@ai-agentsplus.com
+- Gachengoh Marugu: jerry@ai-agentsplus.com
 - Phone: +254 725 462 859
 
 ---
@@ -565,5 +565,5 @@ All code is production-ready with:
 ---
 
 For questions or support, contact:
-- **Email:** hello@ai-agentsplus.com
+- **Email:** jerry@ai-agentsplus.com
 - **Phone:** +254 725 462 859

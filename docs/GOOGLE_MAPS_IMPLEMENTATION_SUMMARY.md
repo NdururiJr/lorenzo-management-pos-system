@@ -492,7 +492,7 @@ try {
 - [Google Cloud Console](https://console.cloud.google.com)
 
 ### Team Support
-- **Email:** hello@ai-agentsplus.com
+- **Development Team:** Jerry Ndururi in collaboration with AI Agents Plus
 - **Phone:** +254 725 462 859
 
 ---

@@ -58,7 +58,14 @@ export function PaymentInfo({ order }: PaymentInfoProps) {
           icon: Clock,
           className: 'bg-amber-100 text-amber-700 border-amber-300',
         };
+      case 'overpaid':
+        return {
+          label: 'Overpaid',
+          icon: CheckCircle2,
+          className: 'bg-blue-100 text-blue-700 border-blue-300',
+        };
       case 'pending':
+      default:
         return {
           label: 'Pending',
           icon: AlertCircle,

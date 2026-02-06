@@ -16,7 +16,6 @@ import {
   CheckCircle2,
   Circle,
   Clock,
-  Calendar,
   Truck,
   Package,
 } from 'lucide-react';
@@ -43,7 +42,7 @@ const STATUS_TIMELINE: { status: OrderStatus; label: string }[] = [
   { status: 'ironing', label: 'Ironing' },
   { status: 'quality_check', label: 'Quality Check' },
   { status: 'packaging', label: 'Packaging' },
-  { status: 'ready', label: 'Ready for Pickup/Delivery' },
+  { status: 'queued_for_delivery', label: 'Ready for Pickup/Delivery' }, // FR-008
   { status: 'out_for_delivery', label: 'Out for Delivery' },
   { status: 'delivered', label: 'Delivered' },
 ];
@@ -215,8 +214,8 @@ export function OrderTrackingTimeline({
         </Card>
       )}
 
-      {/* Ready for Pickup */}
-      {currentStatus === 'ready' && (
+      {/* Ready for Pickup - FR-008: Updated to use 'queued_for_delivery' */}
+      {currentStatus === 'queued_for_delivery' && (
         <Card className="p-4 bg-green-50 border-green-200">
           <div className="flex items-center gap-3">
             <Package className="w-5 h-5 text-green-600 flex-shrink-0" />

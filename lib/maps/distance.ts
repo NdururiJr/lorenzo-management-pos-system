@@ -105,6 +105,7 @@ export async function calculateDistances(
 
     const elements = data.rows[0]?.elements || [];
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return elements.map((element: any) => {
       if (element.status !== 'OK') {
         return {

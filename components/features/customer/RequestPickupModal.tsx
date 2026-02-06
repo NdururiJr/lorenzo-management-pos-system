@@ -5,6 +5,8 @@
  * This is a placeholder implementation - actual pickup scheduling
  * will be integrated with the order system later.
  *
+ * Issue 83 Fix: Added proper fallbacks for missing address components.
+ *
  * @module components/features/customer/RequestPickupModal
  */
 
@@ -39,6 +41,50 @@ import { Calendar, Clock, MapPin } from 'lucide-react';
 interface RequestPickupModalProps {
   open: boolean;
   onClose: () => void;
+}
+
+/**
+ * Get display text for an address with proper fallbacks (Issue 83 Fix)
+ */
+function getAddressDisplayText(address: Address): string {
+  // Check for the main address field
+  if (address.address && address.address.trim()) {
+    return address.address;
+  }
+
+  // Fallback: try to construct from components if available
+  const components: string[] = [];
+  const addr = address as unknown as Record<string, unknown>;
+  if (addr.street) components.push(String(addr.street));
+  if (addr.city) components.push(String(addr.city));
+  if (addr.region || addr.state) components.push(String(addr.region || addr.state));
+
+  if (components.length > 0) {
+    return components.join(', ');
+  }
+
+  return 'Address details not available';
+}
+
+/**
+ * Get label for an address with fallback (Issue 83 Fix)
+ */
+function getAddressLabel(address: Address): string {
+  if (address.label && address.label.trim()) {
+    return address.label;
+  }
+  return 'Unnamed Address';
+}
+
+/**
+ * Get truncated address for display in select dropdown
+ */
+function getTruncatedAddress(address: Address, maxLength: number = 40): string {
+  const fullAddress = getAddressDisplayText(address);
+  if (fullAddress.length <= maxLength) {
+    return fullAddress;
+  }
+  return fullAddress.substring(0, maxLength) + '...';
 }
 
 export function RequestPickupModal({ open, onClose }: RequestPickupModalProps) {
@@ -78,6 +124,7 @@ export function RequestPickupModal({ open, onClose }: RequestPickupModalProps) {
     if (!preferredDate) {
       setPreferredDate(minDate);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const handleReset = () => {
@@ -101,6 +148,7 @@ export function RequestPickupModal({ open, onClose }: RequestPickupModalProps) {
       // TODO: Integrate with actual pickup scheduling system
       // For now, just show a success message
       const selectedAddress = addresses[parseInt(selectedAddressIndex)];
+      const addressLabel = getAddressLabel(selectedAddress);
 
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -108,7 +156,7 @@ export function RequestPickupModal({ open, onClose }: RequestPickupModalProps) {
       toast.success(
         'Pickup request submitted! We\'ll contact you shortly to confirm.',
         {
-          description: `${selectedAddress.label} - ${preferredDate} (${preferredTime})`,
+          description: `${addressLabel} - ${preferredDate} (${preferredTime})`,
         }
       );
 
@@ -160,9 +208,9 @@ export function RequestPickupModal({ open, onClose }: RequestPickupModalProps) {
                         <div className="flex items-center gap-2">
                           <MapPin className="h-4 w-4 text-gray-400" />
                           <div>
-                            <span className="font-medium">{addr.label}</span>
+                            <span className="font-medium">{getAddressLabel(addr)}</span>
                             <span className="text-sm text-gray-500 ml-2">
-                              {addr.address.substring(0, 40)}...
+                              {getTruncatedAddress(addr)}
                             </span>
                           </div>
                         </div>

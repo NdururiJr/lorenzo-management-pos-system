@@ -24,7 +24,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Package,
   AlertTriangle,
-  TrendingUp,
   DollarSign,
   Plus,
   Search,
@@ -44,9 +43,8 @@ import {
 import { InventoryTable } from '@/components/features/inventory/InventoryTable';
 import { AddItemModal } from '@/components/features/inventory/AddItemModal';
 import { LowStockAlerts } from '@/components/features/inventory/LowStockAlerts';
-import { format } from 'date-fns';
 import { ModernSection } from '@/components/modern/ModernLayout';
-import { ModernCard, ModernCardContent, ModernCardHeader } from '@/components/modern/ModernCard';
+import { ModernCard, ModernCardContent } from '@/components/modern/ModernCard';
 import { ModernStatCard } from '@/components/modern/ModernStatCard';
 import { ModernButton } from '@/components/modern/ModernButton';
 import { ModernBadge } from '@/components/modern/ModernBadge';
@@ -62,24 +60,19 @@ export interface InventoryItem {
   reorderLevel: number;
   costPerUnit?: number;
   supplier?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   expiryDate?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   lastRestocked?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createdAt?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   updatedAt?: any;
 }
 
-const CATEGORY_LABELS: Record<string, string> = {
-  detergents: 'Detergents',
-  softeners: 'Softeners',
-  hangers: 'Hangers',
-  packaging: 'Packaging',
-  stain_removers: 'Stain Removers',
-  others: 'Others',
-};
-
 export default function InventoryPage() {
   const { userData } = useAuth();
-  const queryClient = useQueryClient();
+  const _queryClient = useQueryClient();
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');

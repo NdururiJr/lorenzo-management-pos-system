@@ -13,7 +13,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import { Loader2, AlertCircle, TestTube } from 'lucide-react';
+import { Loader2, TestTube } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface PortalLayoutProps {

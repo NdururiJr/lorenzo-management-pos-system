@@ -50,8 +50,8 @@ function ServicesHero() {
   return (
     <section className="relative pt-32 pb-20 overflow-hidden bg-white">
       {/* Blue Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-blue via-brand-blue-dark to-brand-blue-900" />
-      <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue-50 via-transparent to-brand-blue-900 opacity-40" />
+      <div className="absolute inset-0 bg-linear-to-br from-brand-blue via-brand-blue-dark to-brand-blue-900" />
+      <div className="absolute inset-0 bg-linear-to-tr from-brand-blue-50 via-transparent to-brand-blue-900 opacity-40" />
 
       {/* Decorative blur elements */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-brand-blue-light rounded-full blur-3xl opacity-30" />
@@ -80,7 +80,7 @@ function ServicesHero() {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
             <div className="bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-2xl p-4">
-              <div className="text-3xl font-bold text-white mb-1">24hrs</div>
+              <div className="text-3xl font-bold text-white mb-1">2hrs</div>
               <div className="text-sm text-white/80">Express Service</div>
             </div>
             <div className="bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-2xl p-4">
@@ -102,7 +102,7 @@ function ServicesCTA() {
   return (
     <section className="relative py-16 overflow-hidden bg-white">
       {/* Blue Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-blue-50 via-white to-brand-blue-100" />
+      <div className="absolute inset-0 bg-linear-to-br from-brand-blue-50 via-white to-brand-blue-100" />
 
       {/* Decorative blur elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-blue-light rounded-full blur-3xl opacity-20" />

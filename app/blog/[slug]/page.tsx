@@ -73,7 +73,7 @@ const blogPosts = {
   },
 };
 
-type BlogPost = (typeof blogPosts)[keyof typeof blogPosts];
+type _BlogPost = (typeof blogPosts)[keyof typeof blogPosts];
 
 interface PageProps {
   params: Promise<{ slug: string }>;

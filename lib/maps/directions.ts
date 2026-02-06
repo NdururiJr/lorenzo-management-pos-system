@@ -116,6 +116,7 @@ export async function getDirections(
       duration: leg.duration.value,
       durationText: leg.duration.text,
       polyline: route.overview_polyline.points,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       steps: leg.steps.map((step: any) => ({
         instruction: step.html_instructions.replace(/<[^>]*>/g, ''), // Strip HTML
         distance: step.distance.value,

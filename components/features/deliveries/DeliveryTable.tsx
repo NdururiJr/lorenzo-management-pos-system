@@ -48,8 +48,11 @@ import {
   ExternalLink,
   RefreshCw,
   Calendar,
+  Bike,
+  Truck,
 } from 'lucide-react';
-import type { Order } from '@/lib/db/schema';
+import type { Order, DeliveryClassification } from '@/lib/db/schema';
+import { classifyDelivery, getClassificationColor } from '@/lib/delivery/classification';
 import { markDeliveryCompleted, assignDeliveryDriver } from '@/lib/db/orders';
 import { toast } from 'sonner';
 
@@ -105,6 +108,7 @@ export function DeliveryTable({
     setShowCompleteDialog(true);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const formatDate = (timestamp: any): string => {
     if (!timestamp) return '-';
     const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
@@ -142,6 +146,40 @@ export function DeliveryTable({
       <Badge variant="outline" className="border-yellow-300 text-yellow-700">
         <Clock className="w-3 h-3 mr-1" />
         Pending
+      </Badge>
+    );
+  };
+
+  /**
+   * V2.0: Get classification badge for delivery type
+   */
+  const getClassificationBadge = (order: Order) => {
+    // Use stored classification or calculate it
+    const classification: DeliveryClassification = order.deliveryClassification || classifyDelivery(order).classification;
+    const colors = getClassificationColor(classification);
+    const isOverridden = order.classificationBasis === 'manual';
+
+    if (classification === 'Small') {
+      return (
+        <Badge
+          variant="outline"
+          className={`${colors.bg} ${colors.text} ${colors.border} ${isOverridden ? 'ring-1 ring-blue-400' : ''}`}
+          title={isOverridden ? 'Manually overridden' : 'Auto-classified'}
+        >
+          <Bike className="w-3 h-3 mr-1" />
+          Small
+        </Badge>
+      );
+    }
+
+    return (
+      <Badge
+        variant="outline"
+        className={`${colors.bg} ${colors.text} ${colors.border} ${isOverridden ? 'ring-1 ring-blue-400' : ''}`}
+        title={isOverridden ? 'Manually overridden' : 'Auto-classified'}
+      >
+        <Truck className="w-3 h-3 mr-1" />
+        Bulk
       </Badge>
     );
   };
@@ -184,6 +222,7 @@ export function DeliveryTable({
               <TableRow>
                 <TableHead>Order ID</TableHead>
                 <TableHead>Customer</TableHead>
+                <TableHead>Type</TableHead>
                 <TableHead>Delivery Address</TableHead>
                 <TableHead>Scheduled Time</TableHead>
                 <TableHead>Status</TableHead>
@@ -211,6 +250,11 @@ export function DeliveryTable({
                         <span>{order.customerPhone}</span>
                       </div>
                     </div>
+                  </TableCell>
+
+                  {/* V2.0: Delivery Type Classification */}
+                  <TableCell>
+                    {getClassificationBadge(order)}
                   </TableCell>
 
                   {/* Delivery Address */}

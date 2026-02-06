@@ -153,6 +153,7 @@ export async function getAddressSuggestions(
       return [];
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return data.predictions.map((prediction: any) => ({
       description: prediction.description,
       placeId: prediction.place_id,

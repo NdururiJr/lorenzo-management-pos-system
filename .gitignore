@@ -47,3 +47,6 @@ node_modules/.cache
 
 # firebase admin credentials
 *-firebase-adminsdk-*.json
+
+# Standalone website (local development only)
+/website/

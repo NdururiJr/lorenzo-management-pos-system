@@ -17,8 +17,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TransferBatchCard } from './TransferBatchCard';
 import { ReceiveBatchModal } from './ReceiveBatchModal';
-import { getTransferBatchesByMainStore, getTransferBatchesByStatus } from '@/lib/db/transfers';
-import type { TransferBatch } from '@/lib/db/schema';
+import { getTransferBatchesByStatus } from '@/lib/db/transfers';
 
 export function IncomingBatchesList() {
   const { userData } = useAuth();

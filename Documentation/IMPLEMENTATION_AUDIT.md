@@ -1108,7 +1108,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 ## Appendix C: Contact Information
 
 **Development Team:**
-- **Gachengoh Marugu** (Lead Developer) - hello@ai-agentsplus.com, +254 725 462 859
+- **Gachengoh Marugu** (Lead Developer) - jerry@ai-agentsplus.com, +254 725 462 859
 - **Arthur Tutu** (Backend Developer) - arthur@ai-agentsplus.com
 - **Jerry Nduriri** (POS & Product Manager) - jerry@ai-agentsplus.com, +254 725 462 859
 

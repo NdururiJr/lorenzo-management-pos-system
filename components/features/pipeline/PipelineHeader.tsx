@@ -57,14 +57,14 @@ export function PipelineHeader({
             <h1 className="text-2xl font-semibold text-black">
               Order Pipeline
             </h1>
-            <p className="text-sm text-gray-600 mt-1">
-              Showing {filteredCount} of {totalOrders} orders
+            <div className="text-sm text-gray-600 mt-1 flex items-center gap-2">
+              <span>Showing {filteredCount} of {totalOrders} orders</span>
               {hasActiveFilters && (
-                <Badge variant="secondary" className="ml-2">
+                <Badge variant="secondary">
                   Filtered
                 </Badge>
               )}
-            </p>
+            </div>
           </div>
 
           <div className="flex items-center gap-2">

@@ -9,7 +9,7 @@
 'use client';
 
 import React from 'react';
-import { User, Edit, X } from 'lucide-react';
+import { Edit, X } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -34,7 +34,7 @@ export function CustomerCard({
         <div className="flex items-start gap-3 flex-1 min-w-0">
           {/* Avatar */}
           <Avatar className="h-12 w-12">
-            <AvatarFallback className="bg-black text-white text-lg">
+            <AvatarFallback className="bg-linear-to-br from-lorenzo-deep-teal to-lorenzo-teal text-white text-lg">
               {getInitials(customer.name)}
             </AvatarFallback>
           </Avatar>

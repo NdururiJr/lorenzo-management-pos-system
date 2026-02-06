@@ -1,0 +1,221 @@
+[
+  {
+    "_id": "DEL-COMPLETE-001",
+    "deliveryId": "DEL-COMPLETE-001",
+    "driverId": "8LEPmPwswJUw9sHW1G16isD3YLF3",
+    "orders": [
+      "ORD-MAIN-20251123-9090",
+      "ORD-MAIN-20251123-6286"
+    ],
+    "status": "completed",
+    "scheduledDate": {
+      "_type": "Timestamp",
+      "_seconds": 1763825798,
+      "_nanoseconds": 466000000
+    },
+    "startTime": {
+      "_type": "Timestamp",
+      "_seconds": 1763825798,
+      "_nanoseconds": 466000000
+    },
+    "endTime": {
+      "_type": "Timestamp",
+      "_seconds": 1763829398,
+      "_nanoseconds": 466000000
+    },
+    "notes": "All deliveries completed successfully",
+    "route": {
+      "distance": 6300,
+      "estimatedDuration": 1080,
+      "stops": [
+        {
+          "id": "CUST-TEST-001",
+          "orderId": "ORD-MAIN-20251123-9090",
+          "address": "Riverside Drive, Westlands, Nairobi",
+          "coordinates": {
+            "lat": -1.2686,
+            "lng": 36.8086
+          },
+          "customerName": "Sarah Wanjiru",
+          "sequence": 1,
+          "status": "completed"
+        },
+        {
+          "id": "CUST-TEST-002",
+          "orderId": "ORD-MAIN-20251123-6286",
+          "address": "Wood Avenue, Kilimani, Nairobi",
+          "coordinates": {
+            "lat": -1.2899,
+            "lng": 36.7836
+          },
+          "customerName": "David Kamau",
+          "sequence": 2,
+          "status": "completed"
+        }
+      ]
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763825798,
+      "_nanoseconds": 466000000
+    }
+  },
+  {
+    "_id": "DEL-PENDING-001",
+    "deliveryId": "DEL-PENDING-001",
+    "driverId": "8LEPmPwswJUw9sHW1G16isD3YLF3",
+    "orders": [
+      "ORD-MAIN-20251123-5497",
+      "ORD-MAIN-20251123-3579",
+      "ORD-MAIN-20251123-5051"
+    ],
+    "status": "pending",
+    "scheduledDate": {
+      "_type": "Timestamp",
+      "_seconds": 1763912193,
+      "_nanoseconds": 986000000
+    },
+    "notes": "Morning delivery batch",
+    "route": {
+      "distance": 8500,
+      "estimatedDuration": 1200,
+      "stops": [
+        {
+          "id": "CUST-TEST-001",
+          "orderId": "ORD-MAIN-20251123-5497",
+          "address": "Riverside Drive, Westlands, Nairobi",
+          "coordinates": {
+            "lat": -1.2686,
+            "lng": 36.8086
+          },
+          "customerName": "Sarah Wanjiru",
+          "sequence": 1,
+          "status": "pending"
+        },
+        {
+          "id": "CUST-TEST-002",
+          "orderId": "ORD-MAIN-20251123-3579",
+          "address": "Wood Avenue, Kilimani, Nairobi",
+          "coordinates": {
+            "lat": -1.2899,
+            "lng": 36.7836
+          },
+          "customerName": "David Kamau",
+          "sequence": 2,
+          "status": "pending"
+        },
+        {
+          "id": "CUST-TEST-003",
+          "orderId": "ORD-MAIN-20251123-5051",
+          "address": "Karen Road, Karen, Nairobi",
+          "coordinates": {
+            "lat": -1.3196,
+            "lng": 36.7073
+          },
+          "customerName": "Grace Achieng",
+          "sequence": 3,
+          "status": "pending"
+        }
+      ]
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912193,
+      "_nanoseconds": 986000000
+    }
+  },
+  {
+    "_id": "DEL-PROGRESS-001",
+    "deliveryId": "DEL-PROGRESS-001",
+    "driverId": "8LEPmPwswJUw9sHW1G16isD3YLF3",
+    "orders": [
+      "ORD-MAIN-20251123-6853",
+      "ORD-MAIN-20251123-8957"
+    ],
+    "status": "in_progress",
+    "scheduledDate": {
+      "_type": "Timestamp",
+      "_seconds": 1763912195,
+      "_nanoseconds": 710000000
+    },
+    "startTime": {
+      "_type": "Timestamp",
+      "_seconds": 1763910395,
+      "_nanoseconds": 710000000
+    },
+    "notes": "Afternoon delivery batch",
+    "route": {
+      "distance": 5200,
+      "estimatedDuration": 900,
+      "stops": [
+        {
+          "id": "CUST-TEST-004",
+          "orderId": "ORD-MAIN-20251123-6853",
+          "address": "Ngong Road, Kilimani, Nairobi",
+          "coordinates": {
+            "lat": -1.2949,
+            "lng": 36.7813
+          },
+          "customerName": "James Omondi",
+          "sequence": 1,
+          "status": "completed"
+        },
+        {
+          "id": "CUST-TEST-005",
+          "orderId": "ORD-MAIN-20251123-8957",
+          "address": "Dennis Pritt Road, Kilimani, Nairobi",
+          "coordinates": {
+            "lat": -1.2908,
+            "lng": 36.7864
+          },
+          "customerName": "Mary Njeri",
+          "sequence": 2,
+          "status": "pending"
+        }
+      ]
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912195,
+      "_nanoseconds": 710000000
+    }
+  },
+  {
+    "_id": "DEL202511264603",
+    "deliveryId": "DEL202511264603",
+    "driverId": "qgCXR31jewS0xqtj4q6MlCuteat2",
+    "branchId": "main-branch",
+    "orders": [
+      "ORD-MAIN-20251123-3579",
+      "ORD-MAIN-20251123-5497"
+    ],
+    "route": {
+      "optimized": false,
+      "stops": [
+        {
+          "orderId": "ORD-MAIN-20251123-3579",
+          "address": "Wood Avenue, Kilimani, Nairobi",
+          "coordinates": {
+            "lng": 36.7836,
+            "lat": -1.2899
+          },
+          "sequence": 1,
+          "status": "pending"
+        },
+        {
+          "orderId": "ORD-MAIN-20251123-5497",
+          "address": "Riverside Drive, Westlands, Nairobi",
+          "coordinates": {
+            "lat": -1.2686,
+            "lng": 36.8086
+          },
+          "sequence": 2,
+          "status": "pending"
+        }
+      ],
+      "distance": 0,
+      "estimatedDuration": 0
+    },
+    "status": "pending"
+  }
+]

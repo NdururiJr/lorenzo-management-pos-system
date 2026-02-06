@@ -4110,7 +4110,7 @@ Before each major test cycle:
 - Workstation: `http://localhost:3000/workstation`
 
 ### Support Contacts
-- **Technical Issues:** hello@ai-agentsplus.com
+- **Development Team:** Jerry Ndururi in collaboration with AI Agents Plus
 - **Product Questions:** jerry@ai-agentsplus.com
 - **Firebase/Backend:** arthur@ai-agentsplus.com
 

@@ -48,14 +48,14 @@ const services = [
     id: 3,
     icon: Zap,
     name: 'Express Service',
-    description: '24-hour turnaround for urgent needs when you need it done fast.',
+    description: '2-hour turnaround for urgent needs at no extra cost.',
     features: [
       'Same-day processing',
       'Priority handling',
       'Quality guaranteed',
-      'Available 7 days',
+      'FREE - No extra charge',
     ],
-    turnaround: '24 Hours',
+    turnaround: '2 Hours',
     href: '/services#express',
   },
   {
@@ -103,7 +103,7 @@ export function ServicesGrid() {
   return (
     <section className="relative py-24 overflow-hidden bg-white">
       {/* Blue Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-blue-50 via-white to-brand-blue-100" />
+      <div className="absolute inset-0 bg-linear-to-br from-brand-blue-50 via-white to-brand-blue-100" />
 
       {/* Decorative blur elements */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-brand-blue-light rounded-full blur-3xl opacity-20" />
@@ -185,7 +185,7 @@ function ServiceCard({ service, index }: ServiceCardProps) {
     >
       {/* Animated gradient on hover */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-brand-blue/10 via-brand-blue-light/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        className="absolute inset-0 bg-linear-to-br from-brand-blue/10 via-brand-blue-light/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
       />
 
       {/* Content */}
@@ -220,11 +220,11 @@ function ServiceCard({ service, index }: ServiceCardProps) {
         </p>
 
         {/* Features List */}
-        <ul className="space-y-3 mb-8 flex-grow">
+        <ul className="space-y-3 mb-8 grow">
           {service.features.map((feature, idx) => (
             <li key={idx} className="flex items-start gap-3">
               <div
-                className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5"
                 style={{ backgroundColor: '#22BBFF' }}
               >
                 <Check className="w-3 h-3 text-white" />

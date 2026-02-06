@@ -10,22 +10,17 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 import {
   collection,
-  query,
-  where,
-  getDocs,
   addDoc,
   Timestamp,
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { AlertTriangle, X } from 'lucide-react';
-import { toast } from 'sonner';
+import { AlertTriangle } from 'lucide-react';
 import type { InventoryItem } from '@/app/(dashboard)/inventory/page';
 
 interface LowStockAlertsProps {
@@ -97,6 +92,7 @@ export function LowStockAlerts({ items }: LowStockAlertsProps) {
         sessionStorage.setItem(notificationKey, now.toString());
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [criticalItems.length, userData?.branchId]);
 
   if (criticalItems.length === 0 && lowStockItems.length === 0) {

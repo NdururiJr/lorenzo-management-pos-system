@@ -88,6 +88,18 @@ function TermsContent() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white/70 backdrop-blur-xl border-2 border-white/60 rounded-3xl shadow-card p-8 md:p-12">
             <div className="prose prose-lg max-w-none">
+              {/* V2.0: Prominent Disclaimer Notice */}
+              <div className="not-prose mb-8 p-6 bg-amber-50 border-2 border-amber-400 rounded-xl">
+                <h2 className="text-2xl font-bold text-amber-900 text-center mb-3">
+                  ⚠️ CLEANED AT OWNER&apos;S RISK
+                </h2>
+                <p className="text-amber-800 text-center">
+                  We take utmost care with your garments. However, certain fabrics, dyes, and materials
+                  may react differently to cleaning processes. By using our services, you acknowledge
+                  and accept the inherent risks of dry cleaning and laundry services as outlined below.
+                </p>
+              </div>
+
               <h2>1. Acceptance of Terms</h2>
               <p>
                 By accessing and using the services of Lorenzo Dry Cleaners ("Company," "we," "our," or "us"), you accept and agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use our services.

@@ -306,7 +306,7 @@ No migration required. All changes are opt-in utilities and optimizations.
 ## Support
 
 For questions or issues:
-- Gachengoh Marugu: hello@ai-agentsplus.com
+- Gachengoh Marugu: jerry@ai-agentsplus.com
 - Documentation: See PERFORMANCE_OPTIMIZATION.md
 
 ## Conclusion

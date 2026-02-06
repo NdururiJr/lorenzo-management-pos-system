@@ -1,0 +1,22 @@
+{
+  "name": "Lorenzo Dry Cleaners",
+  "short_name": "Lorenzo",
+  "description": "Lorenzo Dry Cleaners Management System",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F5F0",
+  "theme_color": "#0A2F2C",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

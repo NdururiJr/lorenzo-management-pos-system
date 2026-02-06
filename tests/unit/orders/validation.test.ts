@@ -121,7 +121,7 @@ describe('Order Validation', () => {
             services: ['wash', 'iron'],
           },
         ],
-        paymentMethod: 'cash' as const,
+        paymentMethod: 'mpesa' as const,
         paidAmount: 500,
       };
 
@@ -243,8 +243,7 @@ describe('Order Validation', () => {
     });
 
     it('should validate all payment methods', () => {
-      const paymentMethods: Array<'cash' | 'mpesa' | 'card' | 'credit'> = [
-        'cash',
+      const paymentMethods: Array<'mpesa' | 'card' | 'credit'> = [
         'mpesa',
         'card',
         'credit',
@@ -415,7 +414,7 @@ describe('Order Validation', () => {
     it('should validate correct payment data', () => {
       const validPayment = {
         amount: 500,
-        method: 'cash' as const,
+        method: 'mpesa' as const,
       };
 
       const result = updateOrderPaymentSchema.safeParse(validPayment);
@@ -424,8 +423,8 @@ describe('Order Validation', () => {
 
     it('should reject zero or negative amount', () => {
       const invalidPayments = [
-        { amount: 0, method: 'cash' },
-        { amount: -100, method: 'cash' },
+        { amount: 0, method: 'mpesa' },
+        { amount: -100, method: 'mpesa' },
       ];
 
       invalidPayments.forEach((payment) => {
@@ -438,8 +437,7 @@ describe('Order Validation', () => {
     });
 
     it('should validate all payment methods', () => {
-      const methods: Array<'cash' | 'mpesa' | 'card' | 'credit'> = [
-        'cash',
+      const methods: Array<'mpesa' | 'card' | 'credit'> = [
         'mpesa',
         'card',
         'credit',

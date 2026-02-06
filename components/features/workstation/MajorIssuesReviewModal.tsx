@@ -12,7 +12,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
-import { AlertTriangle, CheckCircle, Clock, Image as ImageIcon, X } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Clock, Image as ImageIcon } from 'lucide-react';
 import {
   Dialog,
   DialogContent,

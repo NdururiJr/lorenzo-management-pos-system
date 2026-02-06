@@ -1,0 +1,659 @@
+T_ISSHOWITEM,Category,Garment,GarmentCode,Repairs & Alteration,Dry Cleaning,Extra Large Sheers,Express,Home Cleaning,Pressing Only,Laundry,Normal Laundry Bag,Load Wash,Long Laundry Bag,Long Suit Bag,Normal Suit Bag,Alteration & Repairs,Shoe Cleaning,Wash and Fold
+0,Adult,Normal Suit Bag,NSB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Cap,CAP,0,500,0,0,0,125,300,0,0,0,0,0,0,0,0
+1,Adult,2 Piece Sari Suit,2PSARI,0,1200,0,0,0,600,0,0,0,0,0,0,0,0,0
+1,Adult,White 2 Piece Suit,W2PS,0,1200,0,0,0,600,0,0,0,0,0,0,0,0,0
+1,Adult,3 Piece Sari Suit,3PSARI,0,1500,0,0,0,700,0,0,0,0,0,0,0,0,0
+1,Adult,Top,TP,0,350,0,600,0,200,350,0,0,0,0,0,0,0,0
+1,Adult,Tshirts,TST,0,400,0,450,0,200,350,0,0,0,0,0,0,0,0
+1,Adult,Shirt,SHRT,0,500,0,600,0,200,400,0,0,0,0,0,0,0,0
+1,Adult,Tight/Stockings,TSTK,0,0,0,0,0,125,300,0,0,0,0,0,0,0,0
+1,Adult,Socks,SCKS,0,0,0,0,0,25,70,0,0,0,0,0,0,0,0
+1,Adult,Scarf Small,SCFS,0,450,0,575,0,250,300,0,0,0,0,0,0,0,0
+1,Adult,Scarf Large,SCFL,0,600,0,0,0,300,550,0,0,0,0,0,0,0,0
+1,Adult,Polo Tshirt,PTST,0,0,0,0,0,150,350,0,0,0,0,0,0,0,0
+1,Adult,Pajama Suit,PJMS,0,800,0,0,0,450,800,0,0,0,0,0,0,0,0
+1,Adult,Trouser,TRS,0,500,0,750,0,250,600,0,0,0,0,0,0,0,0
+1,Adult,Advocate Gown,ADVG,0,1500,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,African Shirt,AFRSHT,0,550,0,0,0,300,0,0,0,0,0,0,0,0,0
+1,Adult,Jeans,JNS,0,0,0,750,0,250,500,0,0,0,0,0,0,0,0
+1,Adult,Kanzu,KNZ,0,800,0,900,0,300,700,0,0,0,0,0,0,0,0
+1,Adult,Labcoat,LBC,0,0,0,0,0,125,350,0,0,0,0,0,0,0,0
+1,Adult,2 Piece Suit,2PS,0,1000,0,1500,0,500,900,0,0,0,0,0,0,0,0
+1,Adult,Coat,CT,0,600,0,800,0,300,550,0,0,0,0,0,0,0,0
+1,Adult,3 Piece Suit,3PS,0,1300,0,1800,0,600,0,0,0,0,0,0,1300,0,0
+1,Adult,African Attire,AA,0,1200,0,1500,0,600,0,0,0,0,0,0,0,0,0
+1,Adult,Beaded Dress,BD,0,1800,0,0,0,600,0,0,0,0,0,0,0,0,0
+1,Adult,Blouse,BZ,0,600,0,525,0,225,450,0,0,0,0,0,0,0,0
+1,Adult,Bride Maid Dress,BMD,0,1800,0,0,0,700,1500,0,0,0,0,0,0,0,0
+1,Adult,Dress,DR,0,800,0,1200,0,325,700,0,0,0,0,0,0,0,0
+1,Adult,Long Dress,LDR,0,1200,0,1500,0,600,900,0,0,0,0,0,0,0,0
+1,Adult,Evening Dress,EVDR,0,1500,0,1800,0,600,1000,0,0,0,0,0,0,0,0
+1,Adult,Fleece Jacket,FLCJ,0,800,0,0,0,0,600,0,0,0,0,0,0,0,0
+1,Adult,Graduation Gown,GG,0,1500,0,2000,0,525,1000,0,0,0,0,0,0,0,0
+1,Adult,Wedding Dress Straight,WDS,0,3500,0,0,0,1750,3500,0,0,0,0,0,0,0,0
+1,Adult,Wedding Dress Beaded,WDB,0,5000,0,0,0,2500,4000,0,0,0,0,0,0,0,0
+1,Adult,Wedding Dress Princess,WDP,0,4500,0,0,0,2000,5000,0,0,0,0,0,0,0,0
+1,Adult,Half Jacket,HJ,0,550,0,0,0,200,550,0,0,0,0,0,0,0,0
+0,Adult,Sari Scarf Small,SRS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Half Coat,HC,0,400,0,0,0,200,400,0,0,0,0,0,0,0,0
+1,Adult,Half Leather,HL,0,1800,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Half Sweater,HS,0,550,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Jacket,JCK,0,800,0,1000,0,400,700,0,0,0,0,0,0,0,0
+1,Adult,Jacket Light,JCKL,0,600,0,1000,0,400,600,0,0,0,0,0,0,0,0
+1,Adult,Jacket Puffy,JCKTP,0,1000,0,1500,0,0,850,0,0,0,0,0,0,0,0
+1,Adult,Jumper,JMP,0,600,0,800,0,225,450,0,0,0,0,0,0,0,0
+1,Adult,Kaunda Suit,KUS,0,850,0,0,0,425,850,0,0,0,0,0,0,0,0
+1,Adult,Kurt Suit,KS,0,750,0,0,0,375,750,0,0,0,0,0,0,0,0
+1,Adult,Khaki,KHK,0,500,0,0,0,225,450,0,0,0,0,0,0,0,0
+1,Adult,Leather Jacket,LJKT,0,3500,0,0,0,1775,0,0,0,0,0,0,0,0,0
+1,Adult,Coat Long,CL,0,700,0,0,0,375,0,0,0,0,0,0,0,0,0
+1,Adult,Skirt Long,SKTL,0,650,0,0,0,275,700,0,0,0,0,0,0,0,0
+1,Adult,Pleated Skirt,PLTS,0,700,0,0,0,325,650,0,0,0,0,0,0,0,0
+1,Adult,Pleated Dress,PLTD,0,900,0,0,0,425,850,0,0,0,0,0,0,0,0
+1,Adult,Punjabi Suit,PJBS,0,1100,0,0,0,375,750,0,0,0,0,0,0,0,0
+1,Adult,Punjabi Top,PJBT,0,550,0,0,0,275,400,0,0,0,0,0,0,0,0
+1,Adult,School Blazer,SCB,0,450,0,0,0,225,0,0,0,0,0,0,0,0,0
+1,Adult,Trench Coat Short,TRCS,0,800,0,1000,0,275,750,0,0,0,0,0,0,0,0
+1,Adult,Trench Coat Long,TRCL,0,1000,0,1500,0,375,1000,0,0,0,0,0,0,0,0
+1,Adult,Suede Jacket,SJCKT,0,3500,0,0,0,1250,0,0,0,0,0,0,0,0,0
+1,Adult,Sweater,SWT,0,600,0,800,0,200,450,0,0,0,0,0,0,0,0
+1,Adult,Sweater Top,SWTT,0,450,0,0,0,500,0,0,0,0,0,0,0,0,0
+1,Adult,Vests,VST,0,0,0,0,0,100,250,0,0,0,0,0,0,0,0
+1,Adult,Undergarments,UDGM,0,0,0,0,0,50,200,0,0,0,0,0,0,0,0
+1,Adult,Track Suit,TRCKS,0,1000,0,0,0,375,1000,0,0,0,0,0,0,0,0
+1,Adult,Towel Large,TWL,0,0,0,0,0,0,600,0,0,0,0,0,0,0,0
+1,Adult,Towel Medium,TWM,0,0,0,0,0,0,500,0,0,0,0,0,0,0,0
+1,Adult,Towel Small,TWS,0,0,0,0,0,0,400,0,0,0,0,0,0,0,0
+1,Adult,Short,SHT,0,0,0,525,0,125,350,0,0,0,0,0,0,0,0
+1,Adult,Overall,OVRL,0,0,0,0,0,0,850,0,0,0,0,0,0,0,0
+1,Adult,Tie,TIE,0,100,0,0,0,75,0,0,0,0,0,0,0,0,0
+0,Adult,Tie Complementary,TIEC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Waist Coat,WC,0,400,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Kurt Shirt,KRTSHT,0,450,0,0,0,0,450,0,0,0,0,0,0,0,0
+1,Adult,Shawl,SHWL,0,450,0,0,0,0,550,0,0,0,0,0,0,0,0
+1,Adult,Skirt,SKT,0,500,0,700,0,300,0,0,0,0,0,0,0,0,0
+0,Adult,Gown,Gwn,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,White Coat,Wct,0,700,0,0,0,0,650,0,0,0,0,0,0,0,0
+1,Adult,Sari Scarf,Sscf,0,550,0,0,0,150,0,0,0,0,0,0,0,0,0
+1,Adult,Jump Suit,Jmps,0,0,0,0,0,425,750,0,0,0,0,0,0,0,0
+1,Adult,Bed Cover,Bdcvr,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Pleated Dress Long,PDL,0,1100,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Active Wear Short,AWS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Active Wear Shirt,AWShrt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Active Wear Jacket,AWJ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Bomber Jacket,Bjckt,0,1500,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Sweat Tops,Swtop,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Sweat Pants,Swtp,0,0,0,0,0,175,350,0,0,0,0,0,0,0,0
+0,Adult,Kaftan,Kftn,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Jeans Jacket,JJ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Jeans Trouser,JT,0,0,0,0,0,0,550,0,0,0,0,0,0,0,0
+0,Adult,Jeans Short,JS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Small Suede/Leather Handbag,SSHB,0,700,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Laundry Garment,LDG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Cassock,Cask,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Priest Robe,Prstr,0,850,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,2pc Indian Suit,2ISUT,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,3Pc Indian Suit,3PSUT,0,1100,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Sari Dress,SRD,0,1200,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Sari Scarf Extra Large,Scel,0,950,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Sari Scarf Large,SScl,0,850,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Sari Scarf small,SSS,0,450,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Sari Scarf Medium,Sscm,0,650,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Coat S,Coats,0,800,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Hat,Ht,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Sari,Sar,0,2000,0,0,0,525,0,0,0,0,0,0,0,0,0
+1,Adult,Sari Skirt,Sars,0,1000,0,0,0,0,800,0,0,0,0,0,800,0,0
+1,Adult,Cardigan,Cdg,0,450,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Fur Coat,Fct,0,1200,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Indian Attire,Indatt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Boots,Bts,0,0,0,0,0,0,1100,0,0,0,0,0,0,0,0
+1,Adult,Fancy Jumpsuit,Fjspt,0,0,0,0,0,0,1100,0,0,0,0,0,0,0,0
+0,Adult,Beaded Skirt,Bds,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Handkerchief,HCF,0,100,0,0,0,0,100,0,0,0,0,0,0,0,0
+1,Adult,Long Sweater,LS,0,800,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Fancy Dress,1 pse,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Offer Shirt,OS,0,0,0,0,0,0,300,0,0,0,0,0,0,0,0
+0,Adult,Blanket,B,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Dress Suit,DS,0,1100,0,0,0,0,1050,0,0,0,0,0,0,0,0
+1,Adult,Skirt Suit,SS,0,900,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Starched Shirt,SSHRT,0,0,0,0,0,0,500,0,0,0,0,0,0,0,0
+0,Adult,Long Starched Dress,SSDrs,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Short Starched Dress,SSDrss,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Fancy Sari,FCSR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Drivers Suit,DDS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Chef uniform,CHU,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Jerseys,Jz,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Short Games Kit,STK,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Trouser Games Kit,Tgk,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Suede Skirt,SSKT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Petticoat,PTC,0,500,0,0,0,0,500,0,0,0,0,0,0,0,0
+0,Adult,Pleated Dress Suit,PDRSUIT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Special Item 1,SpI,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Buibui,Bbi,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Beaded African Dress,BAD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,African Dress,AD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Dinner Dress,DDRS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Leather Bag,LB,0,0,0,0,0,0,1500,0,0,0,0,0,0,0,0
+0,Adult,Leather Shoes,LSH,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Starch,STR,0,0,0,0,0,0,100,0,0,0,0,0,0,0,0
+0,Adult,Throw Blanket,TB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Shirt + Starch,SH,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Sashes,Sas,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Pair of sneakers,POS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Storage Fee,SF,0,0,0,0,0,0,1200,0,0,0,0,0,0,0,0
+1,Adult,Saree Scarf,SSCRF,0,0,0,0,0,150,0,0,0,0,0,0,0,0,0
+0,Adult,Saree Skirt,SKRT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Saree Top,SRTP,0,400,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Saree Dress,SRDR,0,1200,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Bearded Short Dress,BSDR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Bearded Long Dress,BLDRS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Bearded Top/Blouse,BTBS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Bearded Scarf,BSF,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Bearded Jumpsuit,BDJS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Bearded Coat/Blazer,BCBZ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Bearded Saree Dress,BDSD,0,2500,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Jumpsuit,JST,0,1000,0,0,0,0,900,0,0,0,0,0,0,0,0
+0,Adult,Blanket Small,BLKTS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Blanket King size,BLKTKS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Kimono Short,KSHORT,0,800,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Kimono Long,KMLNG,0,1000,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Poncho,PONCHO,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Ladies 2pc Set,LD2PC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Kurt Suit 2pc,Kurt2pc,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Kurt Suit 3pc,Kurt3pc,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Pressing Shirt,PressShirt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Pressing Tshirt,PressTshirt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Pressing 2pc Suit,Press 2pc,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Pressing 3pc suit,Press3pc,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Pleated Jumpsuit,PJMPST,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Sporting Overal,SPOVRL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Jacket Heavy,JKT,0,1000,0,1500,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Bearded Skirt,BDSKRT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Sash,SASH,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Veil,Veil,0,300,0,0,0,0,300,0,0,0,0,0,0,0,0
+0,Adult,Leather Skirt,LSKT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Sari Skirt Beaded,SSB,0,1600,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Dust Coat,DSTCt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Hood,Hood,0,0,0,800,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Bow Tie,Bowtie,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Camisol,Camisol,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Apron,Apron,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Scarf,Scarf,0,400,0,0,0,250,350,0,0,0,0,0,0,0,0
+0,Adult,Biker,Biker,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Leggings,Leggings,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Night Dress,NGTDRS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Slack,Slack,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Sweat Tshirt,swtsrt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Bra,Bra,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Chef Jacket,chefjkt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,3 PC Punjabi Suit,3PCPJS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Special Suit,SPST,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Hijab,LA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,4 Suits Offer,DC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Rain Coat,RC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Reflector Vest,RV,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Fancy Coat,FC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Kanzu short,Kanzushort,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,2pc Outfit,2pcOutfit,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,3 Shirts Offer,3shirts,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Belt,Blt,0,0,0,0,0,0,200,0,0,0,0,0,0,0,0
+0,Adult,Basket Offer,bskt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Basket Offer 2,bsktoffer,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Small Leather Handbag,SLHB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Medium Leather Handbag,MLHB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Large Leather Handbag,LLHB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Scatter Cushions,SCSN,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Helmet,Hmt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Staff Dress,SDRS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Sweater Dress,SD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Tshirt test wash,TTW,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Bodycon Dress,BDRS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Leather Trouser,Ltr,0,0,0,0,0,0,2000,0,0,0,0,0,0,0,0
+0,Adult,baptism Robe,BPR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Half Leather Dress,HLD,0,2000,0,0,0,0,2000,0,0,0,0,0,0,0,0
+0,Adult,Large wedding Dress,LWD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Pocho,PCO,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,African Coat,AFC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Pocket Square,Psq,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Kitenge Dress,KD,0,1200,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Kitenge shirt,KitS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Marvin,MR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Leather Shirt,Lsrt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Adult,Wedding Tail,WT,0,2000,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,2pc African Attire,2pc,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Kanzu Trouser,KTr,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Light Leather Jacket,LLJ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Suede Trench Coat,STCo,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Suede Dress,SDR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Scrubs,SCR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,2pc Short Suit,2pc ss,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,African Detailed Dress,ADD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Adult,Special Riders Jacket,SRJ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Kids,Blanket,BKTK,0,600,0,0,0,0,600,0,0,0,0,0,0,0,0
+1,Kids,2 Piece Suit,2pcs,0,500,0,0,0,225,450,0,0,0,0,0,0,0,0
+1,Kids,School Blazer,Schlblz,0,450,0,0,0,0,400,0,0,0,0,0,0,0,0
+1,Kids,Dress,Drs,0,500,0,0,0,175,300,0,0,0,0,0,0,0,0
+1,Kids,Shirt,KShrt,0,250,0,0,0,0,200,0,0,0,0,0,0,0,0
+1,Kids,Trouser,KTrs,0,250,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Kids,Fancy Dress,Kfdrs,0,600,0,0,0,275,600,0,0,0,0,0,0,0,0
+1,Kids,Tshirts,Ktshrt,0,150,0,0,0,0,150,0,0,0,0,0,0,0,0
+1,Kids,3 Piece Suit,K3Pcsut,0,650,0,0,0,325,0,0,0,0,0,0,0,0,0
+1,Kids,Jacket,Jckt,0,350,0,0,0,0,300,0,0,0,0,0,0,0,0
+1,Kids,Coat,Kcot,0,400,0,0,0,125,0,0,0,0,0,0,0,0,0
+1,Kids,Jumper,Kjum,0,350,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Kids,Sweater,SWTR,0,250,0,0,0,125,0,0,0,0,0,0,0,0,0
+1,Kids,Teddy Bear Small,TBS,0,550,0,0,0,0,500,0,0,0,0,0,0,0,0
+1,Kids,Teddy Bear Medium,TBM,0,850,0,0,0,0,800,0,0,0,0,0,0,0,0
+1,Kids,Teddy Bear Large,TBL,0,1250,0,0,0,0,1200,0,0,0,0,0,0,0,0
+0,Kids,Skirt,KSkts,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Kids,Track Suit,Trck,0,700,0,0,0,0,700,0,0,0,0,0,0,0,0
+0,Kids,Graduation Gown,GGK,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Kids,Vest,vstk,0,60,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Kids,Undergarments,Undg,0,60,0,0,0,0,50,0,0,0,0,0,0,0,0
+1,Kids,Socks,KScks,0,0,0,0,0,0,50,0,0,0,0,0,0,0,0
+1,Kids,Short,Ksht,0,150,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Kaunda Suit,Kkus,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,3 Piece Sari Suit,SST,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Trench Coats,Trnct,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Kids 3 Pc Suit,K3PC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Tie,Kids Tie,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Blazer,Blazer,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Kids Short,Kdsrt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Teddy Bear,T,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Baby Nest,Bnest,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Half coat,KidsHCoat,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Car seat,Cars,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Kids,Baby shawl,Bshawl,0,0,0,0,0,0,350,0,0,0,0,0,0,0,0
+0,Kids,Kanzu,KKDS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Kids,Baby Romper,BBRP,0,0,0,0,0,0,250,0,0,0,0,0,0,0,0
+0,Kids,Baby Feeder,BFD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Teddy Bear Extra Large,TBEL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Waist Coat,WCK,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Kids Cap,KC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Kids,Baby BathRobe,BBR,0,0,0,0,0,0,300,0,0,0,0,0,0,0,0
+1,Kids,Baby Pillow,BP,0,0,0,0,0,0,150,0,0,0,0,0,0,0,0
+1,Kids,Baby Swaddle,BS,0,0,0,0,0,0,250,0,0,0,0,0,0,0,0
+1,Kids,Top,Top,0,150,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Baby Carrier,BBC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Leather Jacket Kids,LJk,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Bearded Dress,Bdre,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Baby Carrier Medium,BCM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Baby Carrier Large,BCL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Baby Net,BNt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Kids,Baby Net Small,BNts,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Hand Towel,HTWL,0,0,0,0,0,0,250,0,0,0,0,0,0,0,0
+1,Household,Face Towel,FCTWL,0,0,0,0,0,0,150,0,0,0,0,0,0,0,0
+1,Household,Shoe Cleaning,SHOC,0,0,0,0,0,0,1000,0,0,0,0,0,0,0,0
+1,Household,Sheer Per Piece,SHPP,0,0,0,0,0,0,600,0,0,0,0,0,0,0,0
+1,Household,Sheer Large,SHRL,0,0,0,0,0,0,1000,0,0,0,0,0,0,0,0
+1,Household,Seat Cover Small,SCS,0,0,0,0,0,0,500,0,0,0,0,0,0,0,0
+1,Household,Seat Cover Medium,SCM,0,0,0,0,0,0,800,0,0,0,0,0,250,0,0
+1,Household,Seat Cover Large,SCL,0,0,0,0,0,0,1000,0,0,0,0,0,0,0,0
+1,Household,Carpet Per Sqft,CPT,0,70,0,0,0,0,70,0,0,0,0,0,0,0,0
+1,Household,Rug Small,RGS,0,0,0,0,0,0,1000,0,0,0,0,0,0,0,0
+1,Household,Rug Medium,RGM,0,0,0,0,0,0,1500,0,0,0,0,0,0,0,0
+1,Household,Rug Large,RGL,0,0,0,0,0,0,2000,0,0,0,0,0,0,0,0
+1,Household,Pillow Small,PLWS,0,0,0,0,0,0,300,0,0,0,0,0,0,0,0
+1,Household,Pillow Medium,PLWM,0,0,0,0,0,0,500,0,0,0,0,0,0,0,0
+1,Household,Pillow Large,PLWL,0,0,0,0,0,0,800,0,0,0,0,0,0,0,0
+1,Household,Pillow Case,PLWC,0,0,0,0,0,100,200,0,0,0,0,0,0,0,0
+1,Household,Duvet,DV,0,1000,0,1800,0,0,1200,0,0,0,0,0,0,0,0
+1,Household,Table Mat Small,TMS,0,0,0,0,0,0,200,0,0,0,0,0,0,0,0
+1,Household,Table Mat Medium,TMM,0,0,0,0,0,0,300,0,0,0,0,0,0,0,0
+1,Household,Table Mat Large,TML,0,0,0,0,0,0,500,0,0,0,0,0,0,0,0
+1,Household,Sleeping Bag Large,SLPBL,0,0,0,0,0,0,1500,0,0,0,0,0,0,0,0
+1,Household,Sleeping Bag Medium,SPBG,0,0,0,0,0,0,1200,0,0,0,0,0,0,0,0
+1,Household,Mattress/Duvet Cover small,MTCS,0,0,0,0,0,0,400,0,0,0,0,0,0,0,0
+1,Household,Mattress/Duvet Cover Medium,MTCM,0,0,0,0,0,275,500,0,0,0,0,0,0,0,0
+1,Household,Mattress/Duvet Cover Large,MTCL,0,0,0,0,0,450,800,0,0,0,0,0,0,0,0
+1,Household,Curtains,CTNS,0,420,0,0,0,0,600,0,0,0,0,0,0,0,0
+1,Household,Bed Sheet Single,BSTS,0,0,0,0,0,175,350,0,0,0,0,0,0,0,0
+1,Household,Bed Sheet Double,BSTD,0,0,0,0,0,300,700,0,0,0,0,0,0,0,0
+1,Household,Blanket King Size,BKS,0,0,0,0,0,0,1800,0,0,0,0,0,0,0,0
+1,Household,Blanket,BKT,0,1000,0,0,0,0,1200,0,0,0,0,0,0,0,0
+1,Household,Bathrobe,BTB,0,0,0,0,0,425,800,0,0,0,0,0,0,0,0
+1,Household,Bag Large,BG,0,0,0,0,0,0,1200,0,0,0,0,0,0,0,0
+1,Household,Bag Medium,BM,0,0,0,0,0,0,1000,0,0,0,0,0,0,0,0
+1,Household,Bag Small,BGS,0,0,0,0,0,0,800,0,0,0,0,0,0,0,0
+1,Household,Travelling Bag,TVGB,0,0,0,0,0,0,1500,0,0,0,0,0,0,0,0
+1,Household,Duvet Offer,DO,0,700,0,0,0,0,1000,0,0,0,0,0,0,0,0
+1,Household,Shoes ,Soe,0,0,0,0,0,0,1000,0,0,0,0,0,0,0,0
+1,Household,Extra Large Seat Cover,ELSTC,0,0,0,0,0,0,1500,0,0,0,0,0,0,0,0
+1,Household,Cushion Cover,CC,0,0,0,0,0,0,450,0,0,0,0,0,0,0,0
+1,Household,Seat Cover,SC,0,0,0,0,0,0,350,0,0,0,0,0,0,0,0
+1,Household,Cushions Small,CS,0,0,0,0,0,0,300,0,0,0,0,0,0,0,0
+1,Household,Apron,Aprn,0,0,0,0,0,0,400,0,0,0,0,0,0,0,0
+1,Household,Bed Cover Small,Bcrs,0,0,0,0,0,0,700,0,0,0,0,0,0,0,0
+1,Household,Bed Cover Medium,Bcvrm,0,0,0,0,0,325,1000,0,0,0,0,0,0,0,0
+1,Household,Bed Cover Large,Bcvrl,0,0,0,0,0,425,1200,0,0,0,0,0,0,0,0
+1,Household,Table Cloth Extra Large,Tclthel,0,1300,0,0,0,0,1000,0,0,0,0,0,0,0,0
+1,Household,Table Cloth Small,Tbclths,0,0,0,0,0,0,250,0,0,0,0,0,0,0,0
+1,Household,Table Cloth Medium,Tbcthm,0,0,0,0,0,0,450,0,0,0,0,0,0,0,0
+1,Household,Table Cloth Large,Tbclthl,0,0,0,0,0,425,650,0,0,0,0,0,0,0,0
+1,Household,Scrubs,Scrb,0,0,0,0,0,0,900,0,0,0,0,0,0,0,0
+1,Household,Phlebotomy,Plbtmy,0,0,0,0,0,0,300,0,0,0,0,0,0,0,0
+1,Household,Labcoat Long,Lbctl,0,0,0,0,0,0,400,0,0,0,0,0,0,0,0
+1,Household,Door Mat,DM,0,0,0,0,0,0,1000,0,0,0,0,0,0,0,0
+1,Household,Flag,Flg,0,0,0,0,0,0,400,0,0,0,0,0,0,0,0
+1,Household,Sheer Extra Large,Shrexl,0,0,0,0,0,0,1200,0,0,0,0,0,0,0,0
+1,Household,Baby Blanket,Bblkt,0,0,0,0,0,0,600,0,0,0,0,0,0,0,0
+1,Household,Napkin,Npk,0,0,0,0,0,0,150,0,0,0,0,0,0,0,0
+1,Household,Lab Coat Short,Lbcs,0,0,0,0,0,0,300,0,0,0,0,0,0,0,0
+1,Household,Mosquito Net Medium,MNM,0,0,0,0,0,0,800,0,0,0,0,0,0,0,0
+1,Household,Bath Towel,BTW,0,600,0,700,0,0,500,0,0,0,0,0,0,0,0
+1,Household,Single Duvet Cover,SDC,0,0,0,0,0,0,200,0,0,0,0,0,0,0,0
+1,Household,Double Duvet Cover,DDC,0,0,0,0,0,0,900,0,0,0,0,0,0,0,0
+1,Household,Bath Mat,BTM,0,0,0,0,0,0,500,0,0,0,0,0,0,0,0
+0,Household,Laundry Bag,LDB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Cushion Medium,CSM,0,0,0,0,0,0,550,0,0,0,0,0,0,0,0
+1,Household,Cushion Large,CSL,0,0,0,0,0,0,850,0,0,0,0,0,0,0,0
+1,Household,Mattress Protector,MTP,0,0,0,0,0,0,850,0,0,0,0,0,0,0,0
+0,Household,Dust Coat,Dstc,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Stroller Small,Strm,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Stroller Medium,Strlm,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Stroller Large,Strll,0,0,0,0,0,0,2000,0,0,0,0,0,0,0,0
+0,Household,Car Seat Small,Css,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Car Seat Medium,Cstm,0,0,0,0,0,0,1500,0,0,0,0,0,0,0,0
+1,Household,Car Seat Large,Cstl,0,0,0,0,0,0,1800,0,0,0,0,0,0,0,0
+0,Household,Blinds,Bld,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Tent Liner Large,TLL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Tent Liners Small,TLS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Woolen Gloves,Wglv,0,0,0,0,0,0,200,0,0,0,0,0,0,0,0
+0,Household,Overalls,Cvrls,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Tie Backs,TBcs,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Sheers/kg,Shr,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Roman Blind/Kg,Rmb,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,King Size Comforter Duvet,Kscd,0,0,0,0,0,0,2000,0,0,0,0,0,0,0,0
+1,Household,Queen Size Comforter Duvet,Qsd,0,0,0,0,0,0,1500,0,0,0,0,0,0,0,0
+1,Household,Double Size Comforter Duvet,Dsd,0,0,0,0,0,0,1300,0,0,0,0,0,0,0,0
+0,Household,Single Size Comforter Duvet,Sscd,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table/ Dish Cloths/kg,Table Cloth/kg,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Pillow Cases/ Protectors,Pcp,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Bedsheets/kg,Bdsht,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Towels/kg,Twlkg,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Mattress Protectors,Mtpc,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Blankets/kg,Blnk,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Oven Mittens/kg,Ovnm,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Shower Curtains/kg,Swc,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Games Kit,GMkt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Pillows/kg,Plwskg,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Curtain Offer,CTO,0,0,0,0,0,0,550,0,0,0,0,0,0,0,0
+0,Household,Big Curtains ,Bcrtn,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Small Curtains,Smcrtns,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Rug Extra Large,REXL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Small Blanket,Hse,0,0,0,0,0,0,1000,0,0,0,0,0,0,0,0
+0,Household,Flag Buntings,Flgb,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Drip,Drp,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Towel Large,TL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Towel Medium,TM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Seat Cleaning,STC,0,0,0,0,800,0,800,0,0,0,0,0,0,0,0
+1,Household,Lavish Seat,Lvs,0,0,0,0,1200,0,1000,0,0,0,0,0,0,0,0
+0,Household,Executive Kitchen Napkins,EKNTM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Canteen and Executive kitchen seat Covers,CESC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Mailbags,Mbg,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Media banners,MDB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Blanket Medium,Blkm,0,0,0,0,0,0,1200,0,0,0,0,0,0,0,0
+1,Household,Pillow Case Small,PCS,0,0,0,0,0,0,200,0,0,0,0,0,0,0,0
+1,Household,Pillow Case Large,PCL,0,0,0,0,0,0,300,0,0,0,0,0,0,0,0
+0,Household,Flag Medium,FM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Flag Large,FL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Flag Small,FS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Curtains/Pc,CPC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Massage Towel,Mst,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Maasai Shuka,MSS,0,0,0,0,0,0,600,0,0,0,0,0,0,0,0
+1,Household,Duvet Large,Dvtl,0,0,0,1500,0,0,1500,0,0,0,0,0,0,0,0
+0,Household,Extra Large Sheers,ELS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Mat,Mt,0,0,0,0,0,0,300,0,0,0,0,0,0,0,0
+0,Household,Seat Cover (One Seater),SC1S,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Seat Cover (Three Seater),SC3S,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Head Cover (one seater),HC1S,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Fitted Bedsheet,FB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Sheer Medium,SM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Bag Cushion,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Pillow Case Medium,PCM,0,0,0,0,0,0,250,0,0,0,0,0,0,0,0
+0,Household,Gym Bath Towel,GBT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Shade Cover,SHC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Bed Runner,BDR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Pool Towel ,POT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Gym Hand Towel,GHT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Sheers Small,SHS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Curtains/Kg,CTG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Duvet Cover,DVC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Throw Cushion Covers,TCCs,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Skirting,SKRTG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Kitchen Clothes,KTCHS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table Clothes,TBCTHS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table Runners,TBRNRS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Duvet King Size,DVKSZ,0,0,0,1800,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Curtains Pressing Only/Kg,CPRSOY,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Throw Pillow,THRPLW,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Sheers Large,SHLG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Maasai Blanket,MSSHT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Extra Large Rug,XLR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table Clothes Small,TCSM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table Clothes Medium,TCM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table Clothes Large,TCL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table clothes extra large,TCXL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Throw pillow small,TPSM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Throw pillow medium,TPM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Throw pillow large,TPLG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Throw pillow extra large,TPXXL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Cushion covers/ seat covers small,CCSM,0,0,0,0,0,0,350,0,0,0,0,0,0,0,0
+1,Household,Cushion covers/ seat covers MEDIUM,CSCM,0,0,0,0,0,0,600,0,0,0,0,0,0,0,0
+1,Household,Cushion covers/ seat covers LARGE,CCSL,0,0,0,0,0,0,800,0,0,0,0,0,0,0,0
+1,Household,Cushion covers/ seat covers EXTRA LARGE,CCXL,0,0,0,0,0,0,1000,0,0,0,0,0,0,0,0
+0,Household,Table Runners small,TRNRS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table Runners medium,TRMDM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table Runners LARGE,TRLG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Baby seat,BBYST,0,0,0,0,0,0,1500,0,0,0,0,0,0,0,0
+0,Household,Bed Sheet Small,BSS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Bed Sheet Large,BSL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table Cloth ,TBCH,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Bedsheets,BDSHS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Shawl,SHAWL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Ceiling Lining,CELNG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Wiping Cloth,WPCLTH,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Jug Net,JGNET,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Food Net,Foodnet,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Fleece,Fleece,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Double Fitted Sheet,DBFTSHT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Single Fitted Sheet,SNGSHT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Tissue Bag Holder,TBH,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Room Divider Curtains,RDC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table Cover,TBLCVR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Bed Throw,BDTRW,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Laundry Basket Skirting,lbsk,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Cushion,CSHN,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Ottoman Base Covers,OBC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Dressing Gown,DRSGWN,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Mattress Protector Single,MPS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Mattress Protector Double,MPD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Overlayers,OVRLYRS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Puff,Puff,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Sheers/pc,SHRPC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Mosquito Net Large,MN,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,small media banner,smb,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,large media banner,lmb,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,medium media banner,mmb,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Carrier Bag,CB,0,0,0,0,0,0,2000,0,0,0,0,0,0,0,0
+0,Household,Maasai Shuka Large,MSL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Starched Napkin,SN,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Linen Bag,LBs,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Nursing Pillow,Npillow,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Maasai fleece,Mshawl,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Leso,leso,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Large Apron,LAP,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Medium Apron,MAP,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Kitchen Towel,KTW,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Double Blankets,DBB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Single Blankets,SBK,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Sofa Covers,SCVS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Amenity Bag,AMB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Room Bathroom Curtain,RBC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Scatter Cushion,SCTC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Towel(Big),TLB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Towel(Small) ,TlSm,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table Cloth Double,TCB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Table Cloth Single,TCS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Single Mattress Cover,SMC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Double Mattress Covers,DMC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Beaded Duvet,BDD,0,0,0,0,0,0,6000,0,0,0,0,0,0,0,0
+0,Household,Medium Blinds,MBLD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Pillow,PW,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Mattress Cover,MTC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Throw Blanket,Thrb,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Curtains Offer 15% off,CTO15,0,0,0,0,0,0,480,0,0,0,0,0,0,0,0
+0,Household,Drapes,DP,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Ear plugs,EP,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Small purse,SP,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Mascot,MaST,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Curtain/KG,CKG,0,500,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Neck Support Pillow,NSP,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Door Mat Small,DMS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Lampshades,LSS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Bearded Cushion cover,BCC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,SuitCase,SuTC,0,0,0,0,0,0,2500,0,0,0,0,0,0,0,0
+0,Household,Hot Water Bottle Cover,HWBC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Wheel cover,WHC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Picnic Box,PB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Cooler Box Cover,CBC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Dustbin Cover,DbC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Picnic Shuka,PS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Utility Pockets,UPS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Fleece Blankets,FLB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Feather Duvet,FDT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Black Out Curtains,BOC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,House Shoes,HSS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Suitcase large,SUTCL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Suitcase Medium,SUTCM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Suitcase Small,SUTCS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Suitcase Smallest,SUTCsm,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Large Blanket,LBk,0,1100,0,1500,0,0,1500,0,0,0,0,0,0,0,0
+0,Household,Curtain Steaming,CTS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Sheer Steaming,SHSG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Duvet Inner,DVI,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Gloves,GLS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Door mat Medium,DMM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Door mat Large,DML,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Bath mats,BMS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Big Umbrella,BGU,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Small Umbrella,SMU,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Medium Umbrella,MDU,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Rug,R,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Sleeping Bag Small,SBS,0,0,0,0,0,0,1000,0,0,0,0,0,0,0,0
+1,Household,Small Apron,SMAp,0,0,0,0,0,0,250,0,0,0,0,0,0,0,0
+0,Household,Maasai shuka small,MShS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Medium Leather Bag,MLB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,car seat cover,CSC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Car Top cover,CTC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Car Arm rest Cover,Cac,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Neck Pillow Medium,NPM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Swimming Custome,SWMC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Household,Extra Large Towel,EXLT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Household,Sling Bag,SLB,0,0,0,0,0,0,350,0,0,0,0,0,0,0,0
+1,Home Cleaning,Normal Seat,Nst,0,0,0,0,1000,0,4,0,0,0,0,0,0,0,0
+1,Home Cleaning,Seats Steaming,SSM,0,0,0,0,1500,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Mattress 5 by 6,M5*6,0,0,0,0,4500,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Mattress 6 by 6,M6*6,0,0,0,0,5000,0,6000,0,0,0,0,0,0,0,0
+1,Home Cleaning,One Bedroom House,OBH,0,0,0,0,7000,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Two Bedroom House,2BH,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,3 Bedroom House,3BH,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,4 Bedroom House,4BH,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Leather Seat,LST,0,0,0,0,1200,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Suede Seat,St,0,0,0,0,1200,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Mattress 4 by 6,M4*6,0,0,0,0,4000,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Carpets,Cpts,0,0,0,0,60,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Dining Chair,DCH,0,0,0,0,500,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Windows Cleaning ,WCN,0,0,0,0,2000,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Bath Rooms,Btrm,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Kitchen/Pantry,Kpty,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Fridge,Frdg,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Bedrooms,Bdrm,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Curtains/Kg,Crt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Dusting /Arrangement,Dstarng,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Foot Stool,Fts,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Small Arm Chair,SAC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Arm Chair,AC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,1 Seater,1Str,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,2 Seater,2Str,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,3 Seater,3Str,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Fumigation,FG,0,0,0,0,0,0,5000,0,0,0,0,0,0,0,0
+0,Home Cleaning,Room vacuuming,ROV,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Homecleaning,HMC,0,0,0,0,0,0,28000,0,0,0,0,0,0,0,0
+0,Home Cleaning,Duvet King Size,DVKS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Feather Duvet,FDVT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Seat Cleaning,stclng,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Seat Cover(one seater),STCVR1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Seat Cover ( two Seater),STCV2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Seat Cover ( Three Seater),STCV3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Matress Cleaning,MTRS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,4 Seater ,4STR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Sofa Bed,SB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Car Cleaning,Carc,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,lavish seat,LVSS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Mattress 3 By 6,Mtrs 3*6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Garment Frame Small,GFS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Garment Frame Large,GFL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Garment Frame Medium,GFM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Dining Seat(small),DST,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Car Cover,CrC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Outdoor Seat,OdS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Dining Chair Medium,DCM,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Head bed,HB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Carpet Vacuuming,CV,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Head Bed Cleaning,HBC,0,0,0,0,0,0,2000,0,0,0,0,0,0,0,0
+1,Home Cleaning,Ottoman,OTM,0,0,0,0,0,0,1500,0,0,0,0,0,0,0,0
+0,Home Cleaning,Steaming,STG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Balcony,BLC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Living Rooms/Lounge,LRL,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Tent,tnt,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Home Cleaning,Salon Cleaning,SCLe,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Home Cleaning,Small Mattress,Smtr,0,0,0,0,0,0,2500,0,0,0,0,0,0,0,0
+0,Home Cleaning,Full Bed Cleaning,FBC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Client Package,Package,PCKG,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Client Package,Package 1,PCKJ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Load Wash,Load Drying,Ldry,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Load Wash,Load Wash,ldwash,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Alterations,Button Replacement,BR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Alterations,Canvas Replacement,CVSR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Coat Lining Repair,CLR,0,500,0,0,0,0,0,0,0,0,0,0,1500,0,0
+1,Alterations,Coat lining Replacement,CLRp,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Coat Metallic Button set,CMB,0,400,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Coat Pockets Repair,CPR,0,300,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Coat Sleeve Reduction,CSR,0,500,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Dress Hemming,DH,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Dress Shoulder Pads repair,DSP,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Dress Waist Reduction,DWR,0,300,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Dress Zip Replacement,DZR,0,300,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Duvet Patch Work,DPW,0,400,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Duvet Restitch Tear Large,DRTL,0,500,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Duvet Restitch Tear Small,DRT,0,300,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Jacket Zip Repair,JZR,0,500,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Alterations,Labour Charges,LC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Lint Removal,LR,0,300,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Major Repairs A,MaRA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Major Repairs B,MaRB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Major Repairs C,MaRC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Major Repairs D,MaRD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Major Repairs E,MaRE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Minor Repairs A,MRA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Minor Repairs B,MRB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Minor Repairs C,MRC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Minor Tear,MTS,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Minor Tears Repair,MTR,0,300,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Moderate Repairs A,MoRA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Moderate Repairs B,MoRB,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Moderate Repairs C,MoRC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Moderate Repairs D,MoRD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Moderate Repairs E,MoRE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Alterations,Skirt Waist Smoking,SWS,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Alterations,Tie Repair,TR,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Trouser Button Replacement,TBR,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Trouser Gum Patch,TGP,0,350,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Trouser Hemming,TH,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Trouser Length,Tle,0,300,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Alterations,Trouser Loop Repair,TLP,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Trouser Waist Reduction,TWR,0,350,0,0,0,0,0,0,0,0,0,0,0,0,0
+1,Alterations,Trouser Zip,TZ,0,370,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,Alterations,Zip replacement Duvet Cover,ZRDC,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

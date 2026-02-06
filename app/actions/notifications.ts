@@ -25,6 +25,7 @@ interface NotificationParams {
     branchPhone?: string;
     trackingUrl?: string;
     receiptUrl?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     garments?: any[];
   };
   customer: {
@@ -44,10 +45,11 @@ interface NotificationParams {
  * SECURITY: This runs only on the server, protecting WEBHOOK_API_KEY from client exposure.
  *
  * @param params - Notification parameters
- * @returns Promise<{ success: boolean; error?: string; data?: any }>
+ * @returns Promise<{ success: boolean; error?: string; data?: unknown }>
  */
 export async function triggerOrderNotification(
   params: NotificationParams
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<{ success: boolean; error?: string; data?: any }> {
   try {
     const webhookUrl =
@@ -80,6 +82,7 @@ export async function triggerOrderNotification(
       success: true,
       data,
     };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('[Server Action] Failed to trigger notification:', error);
     return {
@@ -176,4 +179,88 @@ export async function notifyOrderCollected(params: {
     event: 'order.collected',
     ...params,
   });
+}
+
+/**
+ * Driver Transfer Batch Notification Parameters
+ */
+interface DriverTransferNotificationParams {
+  event: 'transfer.assigned';
+  transfer: {
+    batchId: string;
+    totalOrders: number;
+    satelliteBranchName: string;
+    satelliteAddress: string;
+    mainStoreName: string;
+    mainStoreAddress: string;
+    mainStorePhone: string;
+  };
+  driver: {
+    driverId: string;
+    name: string;
+    phone: string;
+  };
+}
+
+/**
+ * Notify driver about assigned transfer batch
+ *
+ * Sends WhatsApp notification to driver with pickup/destination details.
+ * This runs only on the server to protect API keys.
+ *
+ * @param params - Transfer notification parameters
+ * @returns Promise<{ success: boolean; error?: string; data?: unknown }>
+ */
+export async function notifyDriverTransferAssigned(
+  params: DriverTransferNotificationParams
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<{ success: boolean; error?: string; data?: any }> {
+  try {
+    const webhookUrl =
+      process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const apiKey = process.env.WEBHOOK_API_KEY || 'dev-webhook-key';
+
+    const response = await fetch(
+      `${webhookUrl}/api/webhooks/driver-notifications`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify(params),
+      }
+    );
+
+    // Handle 404 gracefully (webhook not yet implemented)
+    if (response.status === 404) {
+      console.warn('[Server Action] Driver notification webhook not implemented yet');
+      return {
+        success: true,
+        data: { message: 'Notification skipped - webhook not implemented' },
+      };
+    }
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('[Server Action] Driver notification webhook failed:', data);
+      return {
+        success: false,
+        error: data.error || 'Webhook request failed',
+      };
+    }
+
+    return {
+      success: true,
+      data,
+    };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    console.error('[Server Action] Failed to trigger driver notification:', error);
+    return {
+      success: false,
+      error: error.message || 'Failed to trigger notification',
+    };
+  }
 }

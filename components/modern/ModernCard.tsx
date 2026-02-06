@@ -24,9 +24,9 @@ export const ModernCard = forwardRef<HTMLDivElement, ModernCardProps>(
     ...props
   }, ref) => {
     const glowStyles = {
-      low: 'hover:shadow-glow-blue/10',
-      medium: 'hover:shadow-glow-blue/20',
-      high: 'hover:shadow-glow-blue/30'
+      low: 'hover:shadow-glow-teal/10',
+      medium: 'hover:shadow-glow-teal/20',
+      high: 'hover:shadow-glow-teal/30'
     };
 
     return (
@@ -45,7 +45,7 @@ export const ModernCard = forwardRef<HTMLDivElement, ModernCardProps>(
           'bg-white/70',
           'backdrop-blur-xl',
           'border-2',
-          'border-white/60',
+          'border-lorenzo-teal/10',
           'rounded-3xl',
           'shadow-card',
           hover && glowStyles[glowIntensity],
@@ -57,7 +57,7 @@ export const ModernCard = forwardRef<HTMLDivElement, ModernCardProps>(
         {...props}
       >
         {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-blue/5 via-transparent to-brand-blue-100/5 pointer-events-none" />
+        <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-lorenzo-teal/5 via-transparent to-lorenzo-cream/5 pointer-events-none" />
 
         {/* Content */}
         <div className="relative z-10">
@@ -80,7 +80,7 @@ export const ModernCardHeader = ({
 }) => {
   return (
     <div className={cn(
-      'px-6 py-4 border-b border-brand-blue/10',
+      'px-6 py-4 border-b border-lorenzo-teal/10',
       className
     )}>
       {children}
@@ -111,7 +111,7 @@ export const ModernCardFooter = ({
 }) => {
   return (
     <div className={cn(
-      'px-6 py-4 border-t border-brand-blue/10',
+      'px-6 py-4 border-t border-lorenzo-teal/10',
       className
     )}>
       {children}

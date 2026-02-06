@@ -5,11 +5,12 @@ import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
 import { PageContainer } from '@/components/ui/page-container';
 import { SectionHeader } from '@/components/ui/section-header';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
 import {
   Table,
   TableBody,
@@ -26,6 +27,12 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
   DollarSign,
   Clock,
   XCircle,
@@ -35,28 +42,45 @@ import {
   Loader2,
   Search,
   FileText,
+  FileSpreadsheet,
+  Filter,
+  ChevronDown,
 } from 'lucide-react';
 import { collection, query, where, getDocs, Timestamp, orderBy, doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { getActiveBranches } from '@/lib/db/index';
 import type { Transaction, Branch, PaymentMethod, TransactionStatus } from '@/lib/db/schema';
 import { formatCurrency } from '@/lib/utils';
+import { exportTransactionsToExcel } from '@/lib/reports/export-excel';
+import { exportTransactionsToPDF } from '@/lib/reports/export-pdf';
 
-type DateRange = 'today' | '7d' | '30d' | 'all';
+type DateRangePreset = 'today' | '7d' | '30d' | '90d' | 'custom' | 'all';
 
 interface TransactionExtended extends Transaction {
   customerName?: string;
   branchName?: string;
 }
 
+interface DateRange {
+  start: Date;
+  end: Date;
+}
+
 export default function TransactionsPage() {
   const { userData } = useAuth();
-  const [dateRange, setDateRange] = useState<DateRange>('30d');
+  const [dateRangePreset, setDateRangePreset] = useState<DateRangePreset>('30d');
+  const [customDateRange, setCustomDateRange] = useState<DateRange>({
+    start: new Date(new Date().setDate(new Date().getDate() - 30)),
+    end: new Date(),
+  });
   const [selectedBranchId, setSelectedBranchId] = useState<string>('all');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [selectedMethod, setSelectedMethod] = useState<string>('all');
+  const [minAmount, setMinAmount] = useState<string>('');
+  const [maxAmount, setMaxAmount] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTransaction, setSelectedTransaction] = useState<TransactionExtended | null>(null);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   const isSuperAdmin = userData?.isSuperAdmin || false;
   const allowedBranches = isSuperAdmin
@@ -75,38 +99,45 @@ export default function TransactionsPage() {
     enabled: isSuperAdmin,
   });
 
-  // Calculate date range
-  const dateFilter = useMemo(() => {
+  // Calculate date range based on preset or custom
+  const activeDateRange = useMemo((): DateRange | null => {
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const endOfDay = new Date(today);
+    endOfDay.setHours(23, 59, 59, 999);
 
-    let rangeStart: Date | null = null;
-    switch (dateRange) {
+    switch (dateRangePreset) {
       case 'today':
-        rangeStart = today;
-        break;
-      case '7d':
-        rangeStart = new Date(today);
-        rangeStart.setDate(rangeStart.getDate() - 7);
-        break;
-      case '30d':
-        rangeStart = new Date(today);
-        rangeStart.setDate(rangeStart.getDate() - 30);
-        break;
+        return { start: today, end: endOfDay };
+      case '7d': {
+        const start = new Date(today);
+        start.setDate(start.getDate() - 7);
+        return { start, end: endOfDay };
+      }
+      case '30d': {
+        const start = new Date(today);
+        start.setDate(start.getDate() - 30);
+        return { start, end: endOfDay };
+      }
+      case '90d': {
+        const start = new Date(today);
+        start.setDate(start.getDate() - 90);
+        return { start, end: endOfDay };
+      }
+      case 'custom':
+        return customDateRange;
       case 'all':
       default:
-        rangeStart = null;
-        break;
+        return null;
     }
-
-    return rangeStart ? Timestamp.fromDate(rangeStart) : null;
-  }, [dateRange]);
+  }, [dateRangePreset, customDateRange]);
 
   // Fetch transactions
   const { data: transactions = [], isLoading } = useQuery<TransactionExtended[]>({
-    queryKey: ['transactions', selectedBranchId, dateRange, allowedBranches],
+    queryKey: ['transactions', selectedBranchId, dateRangePreset, customDateRange, allowedBranches],
     queryFn: async () => {
       const transactionsRef = collection(db, 'transactions');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const constraints: any[] = [];
 
       // Apply branch filter
@@ -116,12 +147,12 @@ export default function TransactionsPage() {
         if (allowedBranches.length <= 10) {
           constraints.push(where('branchId', 'in', allowedBranches));
         }
-        // For >10 branches, we'd need to fetch separately and merge (simplified here)
       }
 
       // Apply date filter
-      if (dateFilter) {
-        constraints.push(where('timestamp', '>=', dateFilter));
+      if (activeDateRange) {
+        constraints.push(where('timestamp', '>=', Timestamp.fromDate(activeDateRange.start)));
+        constraints.push(where('timestamp', '<=', Timestamp.fromDate(activeDateRange.end)));
       }
 
       constraints.push(orderBy('timestamp', 'desc'));
@@ -191,19 +222,29 @@ export default function TransactionsPage() {
       filtered = filtered.filter((t) => t.method === selectedMethod);
     }
 
+    // Amount range filter
+    const minAmt = parseFloat(minAmount);
+    const maxAmt = parseFloat(maxAmount);
+    if (!isNaN(minAmt)) {
+      filtered = filtered.filter((t) => t.amount >= minAmt);
+    }
+    if (!isNaN(maxAmt)) {
+      filtered = filtered.filter((t) => t.amount <= maxAmt);
+    }
+
     // Search filter (transaction ID, order ID, customer name)
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
         (t) =>
           t.transactionId.toLowerCase().includes(query) ||
-          t.orderId.toLowerCase().includes(query) ||
+          (t.orderId && t.orderId.toLowerCase().includes(query)) ||
           (t.customerName && t.customerName.toLowerCase().includes(query))
       );
     }
 
     return filtered;
-  }, [transactions, selectedStatus, selectedMethod, searchQuery]);
+  }, [transactions, selectedStatus, selectedMethod, minAmount, maxAmount, searchQuery]);
 
   // Calculate summary stats
   const summaryStats = useMemo(() => {
@@ -220,8 +261,8 @@ export default function TransactionsPage() {
     };
   }, [filteredTransactions]);
 
-  // CSV Export
-  const handleExport = () => {
+  // Export handlers
+  const handleExportCSV = () => {
     if (filteredTransactions.length === 0) return;
 
     const csvContent = [
@@ -233,6 +274,8 @@ export default function TransactionsPage() {
         'Method',
         'Status',
         ...(isSuperAdmin ? ['Branch'] : []),
+        'Pesapal Ref',
+        'Processed By',
         'Timestamp',
       ],
       ...filteredTransactions.map((t) => [
@@ -243,6 +286,8 @@ export default function TransactionsPage() {
         t.method,
         t.status,
         ...(isSuperAdmin ? [t.branchName || t.branchId] : []),
+        t.pesapalRef || '',
+        t.processedBy || '',
         new Date(t.timestamp.seconds * 1000).toLocaleString(),
       ]),
     ]
@@ -256,6 +301,47 @@ export default function TransactionsPage() {
     link.download = `transactions-${new Date().toISOString().split('T')[0]}.csv`;
     link.click();
     URL.revokeObjectURL(url);
+  };
+
+  const handleExportExcel = () => {
+    if (filteredTransactions.length === 0) return;
+
+    const branchName = selectedBranchId !== 'all'
+      ? branches.find((b) => b.branchId === selectedBranchId)?.name
+      : undefined;
+
+    exportTransactionsToExcel(filteredTransactions, {
+      filename: `transactions-${new Date().toISOString().split('T')[0]}.xlsx`,
+      sheetName: 'Transactions',
+      includeSummary: true,
+    });
+  };
+
+  const handleExportPDF = () => {
+    if (filteredTransactions.length === 0) return;
+
+    const branchName = selectedBranchId !== 'all'
+      ? branches.find((b) => b.branchId === selectedBranchId)?.name
+      : undefined;
+
+    exportTransactionsToPDF(filteredTransactions, {
+      filename: `payment-report-${new Date().toISOString().split('T')[0]}.pdf`,
+      title: 'Lorenzo Dry Cleaners - Payment Report',
+      dateRange: activeDateRange || undefined,
+      branchName,
+      showSummary: true,
+    });
+  };
+
+  // Clear all filters
+  const handleClearFilters = () => {
+    setDateRangePreset('30d');
+    setSelectedBranchId('all');
+    setSelectedStatus('all');
+    setSelectedMethod('all');
+    setMinAmount('');
+    setMaxAmount('');
+    setSearchQuery('');
   };
 
   // Status badge helper
@@ -287,18 +373,27 @@ export default function TransactionsPage() {
     }
   };
 
-  // Method badge helper
-  const getMethodBadge = (method: PaymentMethod) => {
-    const colors: Record<PaymentMethod, string> = {
-      cash: 'bg-gray-100 text-gray-700 border-gray-200',
+  // Method badge helper (includes 'cash' for historical transactions display)
+  const getMethodBadge = (method: PaymentMethod | 'cash') => {
+    const colors: Record<PaymentMethod | 'cash', string> = {
       mpesa: 'bg-green-100 text-green-700 border-green-200',
       card: 'bg-blue-100 text-blue-700 border-blue-200',
       credit: 'bg-purple-100 text-purple-700 border-purple-200',
+      cash: 'bg-amber-100 text-amber-700 border-amber-200', // Historical transactions
+      customer_credit: 'bg-teal-100 text-teal-700 border-teal-200',
+    };
+
+    const labels: Record<PaymentMethod | 'cash', string> = {
+      mpesa: 'M-Pesa',
+      card: 'Card',
+      credit: 'Credit',
+      cash: 'Cash (Legacy)', // Mark as legacy for historical transactions
+      customer_credit: 'Store Credit',
     };
 
     return (
-      <Badge className={colors[method]}>
-        {method === 'mpesa' ? 'M-Pesa' : method.charAt(0).toUpperCase() + method.slice(1)}
+      <Badge className={colors[method] || 'bg-gray-100 text-gray-700'}>
+        {labels[method] || method}
       </Badge>
     );
   };
@@ -309,14 +404,32 @@ export default function TransactionsPage() {
         title="Transactions"
         description="View and manage all financial transactions"
         action={
-          <Button
-            onClick={handleExport}
-            variant="outline"
-            disabled={isLoading || filteredTransactions.length === 0}
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Export CSV
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                disabled={isLoading || filteredTransactions.length === 0}
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Export
+                <ChevronDown className="w-4 h-4 ml-2" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={handleExportCSV}>
+                <FileText className="w-4 h-4 mr-2" />
+                Export CSV
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleExportExcel}>
+                <FileSpreadsheet className="w-4 h-4 mr-2" />
+                Export Excel
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleExportPDF}>
+                <FileText className="w-4 h-4 mr-2" />
+                Export PDF
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         }
       />
 
@@ -371,10 +484,10 @@ export default function TransactionsPage() {
       <Card className="mb-6">
         <CardContent className="pt-6">
           <div className="flex flex-wrap gap-4">
-            {/* Date Range */}
+            {/* Date Range Preset */}
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-gray-500" />
-              <Select value={dateRange} onValueChange={(v) => setDateRange(v as DateRange)}>
+              <Select value={dateRangePreset} onValueChange={(v) => setDateRangePreset(v as DateRangePreset)}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue />
                 </SelectTrigger>
@@ -382,10 +495,46 @@ export default function TransactionsPage() {
                   <SelectItem value="today">Today</SelectItem>
                   <SelectItem value="7d">Last 7 Days</SelectItem>
                   <SelectItem value="30d">Last 30 Days</SelectItem>
+                  <SelectItem value="90d">Last 90 Days</SelectItem>
+                  <SelectItem value="custom">Custom Range</SelectItem>
                   <SelectItem value="all">All Time</SelectItem>
                 </SelectContent>
               </Select>
             </div>
+
+            {/* Custom Date Range */}
+            {dateRangePreset === 'custom' && (
+              <>
+                <div className="flex items-center gap-2">
+                  <Label className="text-sm text-gray-500">From:</Label>
+                  <Input
+                    type="date"
+                    value={customDateRange.start.toISOString().split('T')[0]}
+                    onChange={(e) =>
+                      setCustomDateRange((prev) => ({
+                        ...prev,
+                        start: new Date(e.target.value),
+                      }))
+                    }
+                    className="w-[150px]"
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Label className="text-sm text-gray-500">To:</Label>
+                  <Input
+                    type="date"
+                    value={customDateRange.end.toISOString().split('T')[0]}
+                    onChange={(e) =>
+                      setCustomDateRange((prev) => ({
+                        ...prev,
+                        end: new Date(e.target.value),
+                      }))
+                    }
+                    className="w-[150px]"
+                  />
+                </div>
+              </>
+            )}
 
             {/* Branch Filter (Super Admin Only) */}
             {isSuperAdmin && branches.length > 0 && (
@@ -424,15 +573,59 @@ export default function TransactionsPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Methods</SelectItem>
-                <SelectItem value="cash">Cash</SelectItem>
                 <SelectItem value="mpesa">M-Pesa</SelectItem>
                 <SelectItem value="card">Card</SelectItem>
+                <SelectItem value="cash">Cash</SelectItem>
                 <SelectItem value="credit">Credit</SelectItem>
+                <SelectItem value="customer_credit">Store Credit</SelectItem>
               </SelectContent>
             </Select>
 
-            {/* Search */}
-            <div className="relative flex-1 min-w-[250px]">
+            {/* Advanced Filters Toggle */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+              className="text-gray-600"
+            >
+              <Filter className="w-4 h-4 mr-2" />
+              {showAdvancedFilters ? 'Hide' : 'More'} Filters
+            </Button>
+
+            {/* Clear Filters */}
+            <Button variant="ghost" size="sm" onClick={handleClearFilters} className="text-gray-600">
+              Clear All
+            </Button>
+          </div>
+
+          {/* Advanced Filters */}
+          {showAdvancedFilters && (
+            <div className="flex flex-wrap gap-4 mt-4 pt-4 border-t">
+              {/* Amount Range */}
+              <div className="flex items-center gap-2">
+                <Label className="text-sm text-gray-500">Amount:</Label>
+                <Input
+                  type="number"
+                  placeholder="Min"
+                  value={minAmount}
+                  onChange={(e) => setMinAmount(e.target.value)}
+                  className="w-[100px]"
+                />
+                <span className="text-gray-400">-</span>
+                <Input
+                  type="number"
+                  placeholder="Max"
+                  value={maxAmount}
+                  onChange={(e) => setMaxAmount(e.target.value)}
+                  className="w-[100px]"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Search - Always visible */}
+          <div className="mt-4">
+            <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
                 placeholder="Search by transaction ID, order ID, or customer..."

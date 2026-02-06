@@ -30,7 +30,7 @@ import { StaffPerformance } from '@/components/features/workstation/StaffPerform
 import { WorkstationAnalytics } from '@/components/features/workstation/WorkstationAnalytics';
 
 export default function WorkstationPage() {
-  const { user, userData } = useAuth();
+  const { user: _user, userData } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
 
   // Check user permissions

@@ -12,7 +12,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
-import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
+import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
@@ -32,24 +32,33 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ModernCard, ModernCardHeader, ModernCardContent } from '@/components/modern/ModernCard';
 import { ModernButton } from '@/components/modern/ModernButton';
+import type { Timestamp } from 'firebase/firestore';
 import { ModernSection } from '@/components/modern/ModernLayout';
 import { ModernStatCard } from '@/components/modern/ModernStatCard';
 import { ModernBadge } from '@/components/modern/ModernBadge';
+import { DriverTransferBatchList } from '@/components/features/drivers/DriverTransferBatchList';
+import { getActiveTransferBatchesByDriver } from '@/lib/db/transfers';
 
 interface Delivery {
   deliveryId: string;
   driverId: string;
   orders: string[];
   status: 'pending' | 'in_progress' | 'completed';
-  scheduledDate?: any;
-  startTime?: any;
-  endTime?: any;
+  scheduledDate?: Timestamp;
+  startTime?: Timestamp;
+  endTime?: Timestamp;
   notes?: string;
   route?: {
     distance: number;
     estimatedDuration: number;
-    stops: any[];
+    stops: RouteStop[];
   };
+}
+
+interface RouteStop {
+  orderId: string;
+  address: string;
+  sequence: number;
 }
 
 export default function DriversPage() {
@@ -73,6 +82,16 @@ export default function DriversPage() {
         deliveryId: doc.id,
         ...doc.data(),
       })) as Delivery[];
+    },
+    enabled: !!user?.uid,
+  });
+
+  // Fetch active transfer batches count for driver
+  const { data: activeTransferBatches = [] } = useQuery({
+    queryKey: ['driver-active-transfers', user?.uid],
+    queryFn: () => {
+      if (!user?.uid) return [];
+      return getActiveTransferBatchesByDriver(user.uid);
     },
     enabled: !!user?.uid,
   });
@@ -240,7 +259,7 @@ export default function DriversPage() {
         transition={{ duration: 0.5 }}
         className="mb-8"
       >
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent flex items-center gap-3">
+        <h1 className="text-4xl font-bold bg-linear-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent flex items-center gap-3">
           <motion.div
             initial={{ rotate: -10 }}
             animate={{ rotate: 0 }}
@@ -289,8 +308,16 @@ export default function DriversPage() {
         transition={{ duration: 0.5, delay: 0.5 }}
       >
         <Tabs value={selectedTab} onValueChange={setSelectedTab}>
-          <TabsList className="bg-white/70 backdrop-blur-xl border border-brand-blue/20 mb-6">
+          <TabsList className="bg-white/70 backdrop-blur-xl border border-brand-blue/20 mb-6 flex-wrap">
             <TabsTrigger value="today">Today ({todayDeliveries.length})</TabsTrigger>
+            <TabsTrigger value="transfers" className="relative">
+              Transfers
+              {activeTransferBatches.length > 0 && (
+                <span className="ml-1 px-1.5 py-0.5 text-xs bg-lorenzo-teal text-white rounded-full">
+                  {activeTransferBatches.length}
+                </span>
+              )}
+            </TabsTrigger>
             <TabsTrigger value="pending">Pending ({pendingDeliveries.length})</TabsTrigger>
             <TabsTrigger value="in-progress">In Progress ({inProgressDeliveries.length})</TabsTrigger>
             <TabsTrigger value="completed">Completed ({completedDeliveries.length})</TabsTrigger>
@@ -305,7 +332,7 @@ export default function DriversPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                 >
-                  <ModernCard className="bg-gradient-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
+                  <ModernCard className="bg-linear-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
                     <ModernCardContent className="py-12">
                       <div className="text-center space-y-4">
                         <motion.div
@@ -346,6 +373,18 @@ export default function DriversPage() {
             </AnimatePresence>
           </TabsContent>
 
+          {/* Transfer Batches Tab */}
+          <TabsContent value="transfers">
+            <motion.div
+              key="transfers"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              {user?.uid && <DriverTransferBatchList driverId={user.uid} />}
+            </motion.div>
+          </TabsContent>
+
           <TabsContent value="pending">
             <AnimatePresence mode="wait">
               {pendingDeliveries.length === 0 ? (
@@ -355,7 +394,7 @@ export default function DriversPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                 >
-                  <ModernCard className="bg-gradient-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
+                  <ModernCard className="bg-linear-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
                     <ModernCardContent className="py-12">
                       <div className="text-center space-y-4">
                         <motion.div
@@ -402,7 +441,7 @@ export default function DriversPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                 >
-                  <ModernCard className="bg-gradient-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
+                  <ModernCard className="bg-linear-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
                     <ModernCardContent className="py-12">
                       <div className="text-center space-y-4">
                         <motion.div
@@ -449,7 +488,7 @@ export default function DriversPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                 >
-                  <ModernCard className="bg-gradient-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
+                  <ModernCard className="bg-linear-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
                     <ModernCardContent className="py-12">
                       <div className="text-center space-y-4">
                         <motion.div

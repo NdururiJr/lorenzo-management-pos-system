@@ -46,6 +46,7 @@ interface Notification {
   itemCount?: number;
   items?: Array<{ id: string; name: string; quantity: number }>;
   orderId?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createdAt: any;
   read: boolean;
 }

@@ -50,7 +50,7 @@ const SAMPLE_ORDERS = [
     ],
     status: 'washing',
     paymentStatus: 'paid',
-    paymentMethod: 'cash',
+    paymentMethod: 'mpesa',
   },
   {
     garments: [
@@ -63,7 +63,7 @@ const SAMPLE_ORDERS = [
         specialInstructions: 'Delicate fabric',
       },
     ],
-    status: 'ready',
+    status: 'queued_for_delivery',
     paymentStatus: 'paid',
     paymentMethod: 'mpesa',
   },
@@ -88,7 +88,7 @@ const SAMPLE_ORDERS = [
     ],
     status: 'delivered',
     paymentStatus: 'paid',
-    paymentMethod: 'cash',
+    paymentMethod: 'mpesa',
   },
 ];
 

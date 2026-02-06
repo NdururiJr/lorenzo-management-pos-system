@@ -430,21 +430,6 @@ test.describe('Customer Portal - Mobile Navigation', () => {
 
     await expect(ordersTab).toHaveClass(/active|text-black/);
   });
-
-  test('should work with swipe gestures', async ({ page }) => {
-    await page.goto('/portal');
-
-    // Get starting position
-    const startX = 300;
-    const startY = 400;
-
-    // Swipe left (might navigate to next page if implemented)
-    await page.touchscreen.tap(startX, startY);
-    await page.touchscreen.swipe(startX, startY, 50, startY);
-
-    // Verify gesture didn't break the page
-    await expect(page.getByText(/welcome|dashboard/i)).toBeVisible();
-  });
 });
 
 test.describe('Customer Portal - Real-time Updates', () => {

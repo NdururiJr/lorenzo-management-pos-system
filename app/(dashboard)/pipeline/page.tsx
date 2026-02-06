@@ -41,6 +41,8 @@ import { getAllStatuses, canTransitionTo } from '@/lib/pipeline/status-manager';
 export default function PipelinePage() {
   const { user, userData } = useAuth();
   const [orders, setOrders] = useState<OrderExtended[]>([]);
+  // Issue 34: Add separate state for completed orders (for stats calculation)
+  const [completedOrders, setCompletedOrders] = useState<OrderExtended[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState<OrderExtended | null>(
     null
@@ -68,8 +70,10 @@ export default function PipelinePage() {
   // Group filtered orders by status
   const ordersByStatus = groupOrdersByStatus(filteredOrders);
 
-  // Calculate statistics
-  const statistics = calculatePipelineStatistics(filteredOrders);
+  // Issue 35-36: Calculate statistics including completed orders for accurate completion rate and avg processing time
+  // Combine active orders with completed orders for full statistics
+  const allOrdersForStats = [...filteredOrders, ...completedOrders];
+  const statistics = calculatePipelineStatistics(allOrdersForStats);
 
   // Real-time listener for orders
   useEffect(() => {
@@ -79,15 +83,18 @@ export default function PipelinePage() {
     setIsLoading(true);
 
     const ordersRef = collection(db, 'orders');
+    // FR-008: Updated to use 'queued_for_delivery' instead of 'ready'
+    // Issue 33: Added 'inspection' status to activeStatuses
     const activeStatuses: OrderStatus[] = [
       'received',
+      'inspection',
       'queued',
       'washing',
       'drying',
       'ironing',
       'quality_check',
       'packaging',
-      'ready',
+      'queued_for_delivery',
       'out_for_delivery',
     ];
 
@@ -110,6 +117,31 @@ export default function PipelinePage() {
       );
     }
 
+    // Issue 34: Add separate query for completed orders (for stats calculation)
+    // Query completed orders from the last 30 days for meaningful stats
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const completedStatuses: OrderStatus[] = ['delivered', 'collected'];
+
+    let completedQuery;
+    if (userData?.role === 'admin') {
+      completedQuery = query(
+        ordersRef,
+        where('status', 'in', completedStatuses),
+        where('createdAt', '>=', thirtyDaysAgo),
+        orderBy('createdAt', 'desc')
+      );
+    } else {
+      completedQuery = query(
+        ordersRef,
+        where('branchId', '==', userData?.branchId),
+        where('status', 'in', completedStatuses),
+        where('createdAt', '>=', thirtyDaysAgo),
+        orderBy('createdAt', 'desc')
+      );
+    }
+
     const unsubscribe = onSnapshot(
       q,
       (snapshot) => {
@@ -128,7 +160,27 @@ export default function PipelinePage() {
       }
     );
 
-    return () => unsubscribe();
+    // Issue 34: Subscribe to completed orders for statistics
+    const unsubscribeCompleted = onSnapshot(
+      completedQuery,
+      (snapshot) => {
+        const completedData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as unknown as OrderExtended[];
+
+        setCompletedOrders(completedData);
+      },
+      (error) => {
+        console.error('Error fetching completed orders:', error);
+        // Non-critical error - stats will just show 0
+      }
+    );
+
+    return () => {
+      unsubscribe();
+      unsubscribeCompleted();
+    };
   }, [userData?.branchId, userData?.role]);
 
   // Handle status change
@@ -242,11 +294,11 @@ export default function PipelinePage() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-                className="inline-flex p-4 rounded-full bg-gradient-to-br from-red-400 to-red-600 shadow-lg shadow-red-500/30 mb-4"
+                className="inline-flex p-4 rounded-full bg-linear-to-br from-red-400 to-red-600 shadow-lg shadow-red-500/30 mb-4"
               >
                 <AlertTriangle className="h-8 w-8 text-white" />
               </motion.div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent mb-2">
+              <h3 className="text-xl font-bold bg-linear-to-r from-red-600 to-red-700 bg-clip-text text-transparent mb-2">
                 Access Restricted
               </h3>
               <p className="text-gray-600">
@@ -274,12 +326,12 @@ export default function PipelinePage() {
             initial={{ rotate: -180, scale: 0 }}
             animate={{ rotate: 0, scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="p-3 rounded-2xl bg-gradient-to-br from-brand-blue/20 to-brand-blue/10"
+            className="p-3 rounded-2xl bg-linear-to-br from-brand-blue/20 to-brand-blue/10"
           >
             <GitBranch className="h-6 w-6 text-brand-blue" />
           </motion.div>
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-linear-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
               Order Pipeline
             </h1>
             <p className="text-sm text-gray-600">
@@ -410,7 +462,7 @@ export default function PipelinePage() {
                                       whileHover={{ scale: 1.02 }}
                                       whileTap={{ scale: 0.98 }}
                                       onClick={() => handleOrderClick(order)}
-                                      className="p-4 bg-gradient-to-r from-brand-blue/5 to-brand-blue/10 border border-brand-blue/20 rounded-2xl cursor-pointer hover:shadow-glow-blue/10 transition-all"
+                                      className="p-4 bg-linear-to-r from-brand-blue/5 to-brand-blue/10 border border-brand-blue/20 rounded-2xl cursor-pointer hover:shadow-glow-blue/10 transition-all"
                                     >
                                       <p className="font-mono font-semibold text-sm text-brand-blue">
                                         {order.orderId}

@@ -14,7 +14,9 @@
 export async function sendReceiptEmail(
   customerEmail: string,
   customerName: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   order: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   customer: any
 ): Promise<{ success: boolean; error?: string }> {
   try {
@@ -42,6 +44,7 @@ export async function sendReceiptEmail(
 
     console.log('Receipt email sent successfully');
     return { success: true };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Error sending receipt email:', error);
     return {
@@ -58,7 +61,9 @@ export async function sendBatchReceiptEmails(
   receipts: Array<{
     email: string;
     name: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     order: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     customer: any;
   }>
 ): Promise<{

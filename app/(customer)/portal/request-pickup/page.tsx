@@ -69,6 +69,7 @@ export default function RequestPickupPage() {
     if (!preferredDate) {
       setPreferredDate(minDate);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getMinDate = () => {

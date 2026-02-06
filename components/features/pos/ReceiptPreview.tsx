@@ -32,7 +32,9 @@ import { sendReceiptEmail } from '@/lib/email/receipt-mailer';
 import { toast } from 'sonner';
 
 interface ReceiptPreviewProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   order: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   customer: any;
   open: boolean;
   onClose: () => void;
@@ -48,9 +50,9 @@ interface Size {
   height: number;
 }
 
-const MIN_WIDTH = 600;
+const MIN_WIDTH = 400;
 const MIN_HEIGHT = 400;
-const MAX_WIDTH_VW = 90;
+const MAX_WIDTH_VW = 95;
 const MAX_HEIGHT_VH = 90;
 
 export function ReceiptPreview({
@@ -65,7 +67,14 @@ export function ReceiptPreview({
 
   // Draggable and resizable state
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
-  const [size, setSize] = useState<Size>({ width: 900, height: 700 });
+  // Calculate initial size based on viewport (for laptop screens like 1366x768)
+  const getInitialSize = () => {
+    if (typeof window === 'undefined') return { width: 800, height: 600 };
+    const maxW = Math.min(900, window.innerWidth * 0.9);
+    const maxH = Math.min(700, window.innerHeight * 0.85);
+    return { width: maxW, height: maxH };
+  };
+  const [size, setSize] = useState<Size>(getInitialSize);
   const [isDragging, setIsDragging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [dragStart, setDragStart] = useState<Position>({ x: 0, y: 0 });
@@ -74,12 +83,16 @@ export function ReceiptPreview({
 
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Center modal on open
+  // Center modal on open and recalculate size for viewport
   useEffect(() => {
-    if (open && modalRef.current) {
-      const modalRect = modalRef.current.getBoundingClientRect();
-      const centerX = (window.innerWidth - modalRect.width) / 2;
-      const centerY = (window.innerHeight - modalRect.height) / 2;
+    if (open) {
+      // Recalculate size for current viewport
+      const newSize = getInitialSize();
+      setSize(newSize);
+
+      // Center the modal ensuring it stays within viewport bounds
+      const centerX = Math.max(10, (window.innerWidth - newSize.width) / 2);
+      const centerY = Math.max(10, (window.innerHeight - newSize.height) / 2);
       setPosition({ x: centerX, y: centerY });
     }
   }, [open]);
@@ -179,7 +192,8 @@ export function ReceiptPreview({
     setError(null);
 
     try {
-      const blob = generateReceiptBlob(order, customer);
+      // V2.0: Now async for QR code generation
+      const blob = await generateReceiptBlob(order, customer);
       const url = URL.createObjectURL(blob);
       setPdfUrl(url);
     } catch (err) {
@@ -190,10 +204,10 @@ export function ReceiptPreview({
     }
   };
 
-  // Handle download
-  const handleDownload = () => {
+  // Handle download (V2.0: Now async)
+  const handleDownload = async () => {
     try {
-      downloadReceiptPDF(order, customer);
+      await downloadReceiptPDF(order, customer);
       toast.success('Receipt downloaded successfully');
     } catch (err) {
       console.error('Download error:', err);
@@ -201,10 +215,10 @@ export function ReceiptPreview({
     }
   };
 
-  // Handle print
-  const handlePrint = () => {
+  // Handle print (V2.0: Now async)
+  const handlePrint = async () => {
     try {
-      printReceiptPDF(order, customer);
+      await printReceiptPDF(order, customer);
       toast.success('Opening print dialog');
     } catch (err) {
       console.error('Print error:', err);
@@ -391,7 +405,7 @@ export function ReceiptPreview({
               <iframe
                 src={pdfUrl}
                 className="w-full"
-                style={{ height: `${size.height - 400}px`, minHeight: '300px' }}
+                style={{ height: `${Math.max(200, size.height - 450)}px`, minHeight: '200px' }}
                 title="Receipt Preview"
               />
             </div>

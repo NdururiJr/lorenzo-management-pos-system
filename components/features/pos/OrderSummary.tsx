@@ -76,7 +76,7 @@ export function OrderSummary({
       <div className="p-6 space-y-6">
         {/* Header */}
         <div>
-          <h2 className="text-xl font-semibold text-black">Order Summary</h2>
+          <h2 className="text-xl font-semibold text-lorenzo-dark-teal">Order Summary</h2>
         </div>
 
         <Separator />
@@ -123,7 +123,7 @@ export function OrderSummary({
                       {garment.services.join(', ')}
                     </p>
                   </div>
-                  <span className="font-semibold text-black ml-2 flex-shrink-0">
+                  <span className="font-semibold text-black ml-2 shrink-0">
                     KES {garment.price.toLocaleString()}
                   </span>
                 </div>
@@ -157,8 +157,8 @@ export function OrderSummary({
           <Separator />
 
           <div className="flex justify-between items-center">
-            <span className="text-lg font-semibold text-black">Total</span>
-            <span className="text-2xl font-bold text-black">
+            <span className="text-lg font-semibold text-lorenzo-dark-teal">Total</span>
+            <span className="text-2xl font-bold text-lorenzo-deep-teal">
               KES {total.toLocaleString()}
             </span>
           </div>
@@ -198,7 +198,7 @@ export function OrderSummary({
           <Button
             onClick={onProcessPayment}
             disabled={!hasItems || !customer || isProcessing}
-            className="w-full h-11 bg-brand-blue hover:bg-brand-blue-dark text-white"
+            className="w-full h-11 bg-linear-to-r from-lorenzo-deep-teal to-lorenzo-teal hover:from-lorenzo-teal hover:to-lorenzo-light-teal text-white"
           >
             <CreditCard className="w-5 h-5 mr-2" />
             Process Payment

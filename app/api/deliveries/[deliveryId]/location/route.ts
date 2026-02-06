@@ -14,7 +14,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import type { DriverLocation, Delivery, Order } from '@/lib/db/schema';
+import type { DriverLocation, Delivery } from '@/lib/db/schema';
 
 /**
  * GET /api/deliveries/[deliveryId]/location
@@ -97,12 +97,12 @@ export async function GET(
         isActive: location.isActive,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Driver location API error:', error);
     return NextResponse.json(
       {
         error: 'Internal server error',
-        message: error.message,
+        message: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

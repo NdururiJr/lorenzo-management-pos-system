@@ -1,0 +1,56 @@
+[
+  {
+    "_id": "ITM-1764169051135-1pi4z6jrx",
+    "itemId": "ITM-1764169051135-1pi4z6jrx",
+    "branchId": "BR-MAIN-001",
+    "name": "soap",
+    "category": "detergents",
+    "quantity": 5,
+    "unit": "kg",
+    "reorderLevel": 4,
+    "costPerUnit": 500,
+    "supplier": "",
+    "lastRestocked": {
+      "_type": "Timestamp",
+      "_seconds": 1764169051,
+      "_nanoseconds": 135000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764169051,
+      "_nanoseconds": 135000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764169051,
+      "_nanoseconds": 135000000
+    }
+  },
+  {
+    "_id": "ITM-1764169150007-bu73tkf74",
+    "itemId": "ITM-1764169150007-bu73tkf74",
+    "branchId": "BR-MAIN-001",
+    "name": "soap",
+    "category": "detergents",
+    "quantity": 4,
+    "unit": "kg",
+    "reorderLevel": 8,
+    "costPerUnit": 0,
+    "supplier": "",
+    "lastRestocked": {
+      "_type": "Timestamp",
+      "_seconds": 1764169150,
+      "_nanoseconds": 7000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764169150,
+      "_nanoseconds": 7000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764169150,
+      "_nanoseconds": 7000000
+    }
+  }
+]

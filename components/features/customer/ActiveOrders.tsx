@@ -41,7 +41,7 @@ function OrderCard({ order }: { order: OrderExtended }) {
   const isPastDue =
     order.estimatedCompletion &&
     order.estimatedCompletion.toDate() < new Date() &&
-    order.status !== 'ready' &&
+    order.status !== 'queued_for_delivery' &&
     order.status !== 'delivered' &&
     order.status !== 'collected';
 
@@ -96,7 +96,7 @@ function OrderCard({ order }: { order: OrderExtended }) {
 
           {/* ETA Display */}
           {order.estimatedCompletion &&
-            order.status !== 'ready' &&
+            order.status !== 'queued_for_delivery' &&
             order.status !== 'delivered' &&
             order.status !== 'collected' && (
               <div
@@ -115,7 +115,7 @@ function OrderCard({ order }: { order: OrderExtended }) {
             )}
 
           {/* Ready Status */}
-          {order.status === 'ready' && (
+          {order.status === 'queued_for_delivery' && (
             <div className="text-sm font-medium text-green-700 bg-green-50 px-3 py-1 rounded">
               Ready for pickup!
             </div>

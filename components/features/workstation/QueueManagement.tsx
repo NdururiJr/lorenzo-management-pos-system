@@ -24,7 +24,7 @@ import { Separator } from '@/components/ui/separator';
 import { getOrdersByBranchAndStatus } from '@/lib/db/orders';
 import { createProcessingBatch } from '@/lib/db/processing-batches';
 import { getStaffByStage } from '@/lib/db/workstation';
-import type { Order, ProcessingBatchStage, User } from '@/lib/db/schema';
+import type { ProcessingBatchStage } from '@/lib/db/schema';
 
 export function QueueManagement() {
   const { user, userData } = useAuth();
@@ -211,7 +211,7 @@ export function QueueManagement() {
                       </div>
                     </div>
                     <div className="text-xs text-gray-500">
-                      {order.garments.reduce((sum, g) => sum + 1, 0)} items
+                      {order.garments.reduce((sum, _g) => sum + 1, 0)} items
                     </div>
                   </label>
                 ))}

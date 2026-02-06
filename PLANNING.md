@@ -8,7 +8,7 @@
 **Timeline:** 6 weeks (October 14 - December 19, 2025)  
 **Budget:** $10,000  
 **Launch Date:** December 19, 2025  
-**Team Lead:** Gachengoh Marugu (hello@ai-agentsplus.com, +254 725 462 859)
+**Team Lead:** Jerry Ndururi in collaboration with AI Agents Plus (jerry@ai-agentsplus.com, +254 725 462 859)
 
 ---
 
@@ -187,10 +187,18 @@ Firebase Firestore Collections:
 ├── branches            # Branch information
 ├── deliveries          # Delivery batches
 ├── inventory           # Inventory items
+├── inventoryTransfers  # Inter-branch transfers
 ├── transactions        # Payment transactions
 ├── notifications       # Notification queue
-├── analytics           # Cached analytics data
-└── audit_logs          # System audit trail
+├── pricing             # Service pricing
+├── auditLogs           # System audit trail
+├── email_logs          # Email delivery logs
+├── driverLocations     # Real-time driver tracking
+├── attendance          # Staff clock-in/out records
+├── equipment           # Branch equipment status
+├── issues              # Operational issues/tickets
+├── customerFeedback    # Customer satisfaction data
+└── permissionRequests  # Staff permission approvals
 
 Firebase Cloud Functions:
 ├── api/                # RESTful API endpoints
@@ -304,18 +312,70 @@ User enters credentials → Firebase Auth validates
 #### Role-Based Access Control (RBAC)
 ```
 Roles Hierarchy:
-├── Admin (Level 5)       → Full system access
-├── Manager (Level 4)     → Branch operations + reports
-├── Front Desk (Level 3)  → Order creation + payments
-├── Workstation (Level 2) → Order status updates
-├── Driver (Level 1)      → Delivery management
-└── Customer (Level 0)    → Own orders only
+├── Director (Level 6)        → Executive cross-branch access, strategic view
+├── General Manager (Level 6) → Executive cross-branch access, operations view
+├── Admin (Level 5)           → Full system access
+├── Store Manager (Level 4)   → Branch operations + reports
+├── Workstation Manager (L4)  → Workstation operations + staff management
+├── Front Desk (Level 3)      → Order creation + payments
+├── Workstation Staff (L2)    → Order status updates
+├── Satellite Staff (Level 2) → Satellite store order creation + transfers
+├── Driver (Level 1)          → Delivery management
+└── Customer (Level 0)        → Own orders only
+
+Special Cases:
+├── HQ Staff                  → Branch-scoped access to HQ only
+├── Director/GM               → Cross-branch read access via isExecutive()
 
 Permissions checked on:
 - API endpoint level (Cloud Functions)
 - Database level (Firestore Security Rules)
 - UI level (Component visibility)
 ```
+
+### Executive Dashboard Architecture
+
+#### Director Dashboard (Strategic View)
+The Director sees a completely different navigation and dashboard focused on strategic clarity:
+
+```
+Director Navigation:
+├── Command Center          → /dashboard (main KPIs, AI insights)
+├── Strategic Intelligence  → /director/intelligence (market analysis)
+├── Financial Command       → /director/financial (P&L, cash flow)
+├── Growth Hub              → /director/growth (expansion, pipeline)
+├── Performance Deep Dive   → /director/performance (KPI history)
+├── Risk & Compliance       → /director/risk (risk register)
+├── Leadership & People     → /director/leadership (manager scorecards)
+├── Board Room              → /director/board (reports, documents)
+└── AI Strategy Lab         → /director/ai-lab (simulations)
+```
+
+#### GM Dashboard (Operations View)
+The General Manager sees operational dashboards with cross-branch visibility:
+
+```
+GM Navigation:
+├── Operations Dashboard    → Real-time KPIs across all branches
+├── Branch Comparison       → Performance metrics by branch
+├── Staff Management        → Cross-branch staff overview
+├── Issue Resolution        → Urgent issues across branches
+└── Equipment Status        → Equipment health all branches
+```
+
+#### Permission Approval Workflow
+```
+GM creates new staff → Permission Request created (status: pending)
+                              ↓
+                    Director reviews request
+                              ↓
+                    Director approves/rejects
+                              ↓
+                    If approved: Custom claims set on user
+                    If rejected: GM notified with reason
+```
+
+**Reference:** See `docs/DIRECTOR-SECURITY-SIDEBAR-PLAN.md` for full implementation details.
 
 ---
 
@@ -1035,6 +1095,43 @@ firebase deploy --only firestore:rules
   - Order history
   - Receipt download
 
+### Phase 2.5: Executive Dashboards (In Progress) 🔄
+**Status:** In Progress (January 2026)
+
+**Deliverables:**
+- ✅ Director Dashboard (Command Center at /dashboard)
+  - ✅ Role-based dashboard routing
+  - ✅ AI-powered recommendations (agent system integration)
+  - ✅ Executive narrative / morning briefing
+  - ✅ KPI cards with real-time data
+  - ✅ Risk radar and opportunity alerts
+  - ✅ Branch comparison analytics
+  - ✅ Operational health indicators
+
+- 🔄 Firebase Security Rules Fix
+  - Add `isExecutive()` helper for cross-branch access
+  - Add missing collection rules (attendance, equipment, issues, customerFeedback)
+  - Update users/branches rules for executive access
+  - Add `permissionRequests` collection rules
+
+- 🔄 Director Strategic Sidebar
+  - 8 new strategic pages (intelligence, financial, growth, etc.)
+  - Role-based navigation switching
+  - Section headers (MAIN, FINANCIAL, GOVERNANCE, AI-POWERED)
+
+- 🔄 GM Operations Dashboard
+  - Cross-branch operations view
+  - Staff management
+  - Equipment status monitoring
+  - Issue resolution workflow
+
+- 🔄 Permission Approval System
+  - GM creates staff → Director approves
+  - Permission request queue UI
+  - Custom claims management
+
+**Reference:** See `docs/DIRECTOR-SECURITY-SIDEBAR-PLAN.md` for implementation details.
+
 ### Phase 3: Advanced Features (Week 5) 🔄
 **Status:** Scheduled (November 9-15, 2025)
 
@@ -1045,27 +1142,27 @@ firebase deploy --only firestore:rules
   - Route optimization algorithm
   - Driver mobile interface
   - Real-time tracking
-  
+
 - WhatsApp Integration
   - Wati.io API setup
   - Message template creation
   - Automated notifications (order status updates)
   - Two-way communication handling
-  
+
 - AI Features
   - OpenAI API integration
   - Order completion time estimation
   - Analytics insights generation
   - Customer churn prediction
   - Report summarization
-  
+
 - Inventory Management
   - Stock tracking
   - Low stock alerts
   - Reorder reminders
   - Usage analytics
   - Supplier management
-  
+
 - Employee Tracking
   - Clock-in/clock-out
   - Shift management
@@ -1159,6 +1256,8 @@ firebase deploy --only firestore:rules
 - [Project PRD (Product Requirements Document)](./PRD.md)
 - [Claude Development Guide](./CLAUDE.md)
 - [Tasks List](./TASKS.md)
+- [Director Security & Sidebar Plan](./docs/DIRECTOR-SECURITY-SIDEBAR-PLAN.md)
+- [Director Dashboard Production Plan](./docs/DIRECTOR-DASHBOARD-PRODUCTION-PLAN.md)
 - [API Documentation](./docs/API.md) *(to be created)*
 - [Component Library](./docs/COMPONENTS.md) *(to be created)*
 
@@ -1246,16 +1345,10 @@ Before starting development, ensure:
 ## 📞 Support & Escalation
 
 ### Development Team
-- **Gachengoh Marugu** (Lead Developer)
-  - Email: hello@ai-agentsplus.com
-  - Phone: +254 725 462 859
-  
-- **Arthur Tutu** (Backend Developer)
-  - Email: arthur@ai-agentsplus.com
-  
-- **Jerry Nduriri** (POS & Product Manager)
+- **Jerry Ndururi** (Lead Developer & Product Manager)
   - Email: jerry@ai-agentsplus.com
   - Phone: +254 725 462 859
+  - In collaboration with **AI Agents Plus**
 
 ### Client Contact
 - **Lorenzo Dry Cleaners**

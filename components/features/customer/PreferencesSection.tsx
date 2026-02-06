@@ -30,7 +30,7 @@ export function PreferencesSection({
   const [notifications, setNotifications] = useState(
     customer.preferences?.notifications ?? true
   );
-  const [language, setLanguage] = useState(
+  const [language] = useState(
     customer.preferences?.language || 'en'
   );
   const [isSaving, setIsSaving] = useState(false);

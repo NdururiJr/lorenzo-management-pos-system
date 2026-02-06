@@ -66,7 +66,7 @@ describe('Pricing Operations', () => {
         dryClean: 250,
         iron: 50,
         starch: 30,
-        express: 50, // 50% surcharge
+        express: 0, // Express is FREE
       },
       active: true,
     };
@@ -97,13 +97,13 @@ describe('Pricing Operations', () => {
       expect(price).toBe(230); // 150 + 50 + 30
     });
 
-    it('applies express surcharge correctly', async () => {
+    it('express is FREE (no surcharge)', async () => {
       const price = await calculateGarmentPrice('KIL', 'Shirt', [
         'wash',
         'iron',
         'express',
       ]);
-      expect(price).toBe(300); // (150 + 50) + 50% = 300
+      expect(price).toBe(200); // Express is FREE, so just wash + iron = 150 + 50
     });
 
     it('handles case-insensitive service names', async () => {
@@ -136,16 +136,15 @@ describe('Pricing Operations', () => {
       expect(price).toBe(0);
     });
 
-    it('express surcharge applies to full price', async () => {
+    it('express is FREE with multiple services', async () => {
       const price = await calculateGarmentPrice('KIL', 'Shirt', [
         'wash',
         'iron',
         'starch',
         'express',
       ]);
-      // Base: 150 + 50 + 30 = 230
-      // Express: 230 + (230 * 0.5) = 345
-      expect(price).toBe(345);
+      // Express is FREE: 150 + 50 + 30 = 230
+      expect(price).toBe(230);
     });
   });
 
@@ -159,7 +158,7 @@ describe('Pricing Operations', () => {
         dryClean: 250,
         iron: 50,
         starch: 30,
-        express: 50,
+        express: 0,
       },
       active: true,
     };
@@ -173,7 +172,7 @@ describe('Pricing Operations', () => {
         dryClean: 250,
         iron: 50,
         starch: 30,
-        express: 50,
+        express: 0,
       },
       active: true,
     };
@@ -206,21 +205,21 @@ describe('Pricing Operations', () => {
       expect(total).toBe(0);
     });
 
-    it('calculates with express service', async () => {
+    it('calculates with express service (express is FREE)', async () => {
       const garments = [
         { type: 'Shirt', services: ['wash', 'iron', 'express'] },
       ];
       const total = await calculateTotalPrice('KIL', garments);
-      expect(total).toBe(300); // (150 + 50) + 50%
+      expect(total).toBe(200); // Express is FREE: 150 + 50
     });
 
     it('handles mixed express and regular', async () => {
       const garments = [
-        { type: 'Shirt', services: ['wash', 'iron', 'express'] }, // 300
+        { type: 'Shirt', services: ['wash', 'iron', 'express'] }, // Express FREE: 200
         { type: 'Pants', services: ['wash', 'iron'] }, // 200
       ];
       const total = await calculateTotalPrice('KIL', garments);
-      expect(total).toBe(500);
+      expect(total).toBe(400);
     });
 
     it('handles different service combinations', async () => {
@@ -233,7 +232,7 @@ describe('Pricing Operations', () => {
     });
   });
 
-  describe('Express Surcharge Calculations', () => {
+  describe('Express Service (FREE - No Surcharge)', () => {
     const mockPricing = {
       pricingId: 'PRICE-KIL-SHIRT',
       branchId: 'KIL',
@@ -243,7 +242,7 @@ describe('Pricing Operations', () => {
         dryClean: 200,
         iron: 50,
         starch: 25,
-        express: 50, // 50% surcharge
+        express: 0, // Express is FREE
       },
       active: true,
     };
@@ -252,26 +251,24 @@ describe('Pricing Operations', () => {
       (db.getDocument as jest.Mock).mockResolvedValue(mockPricing);
     });
 
-    it('50% surcharge on wash only', async () => {
+    it('express is FREE on wash only', async () => {
       const price = await calculateGarmentPrice('KIL', 'Shirt', [
         'wash',
         'express',
       ]);
-      expect(price).toBe(150); // 100 + 50%
+      expect(price).toBe(100); // Express is FREE, just wash
     });
 
-    it('50% surcharge on multiple services', async () => {
+    it('express is FREE on multiple services', async () => {
       const price = await calculateGarmentPrice('KIL', 'Shirt', [
         'wash',
         'iron',
         'express',
       ]);
-      expect(price).toBe(225); // (100 + 50) + 50%
+      expect(price).toBe(150); // Express is FREE, wash + iron
     });
 
-    it('rounds to nearest integer', async () => {
-      // If base is 175, 50% surcharge would be 87.5
-      // Total should be 263 (rounded)
+    it('returns integer price', async () => {
       const mockOddPricing = {
         ...mockPricing,
         services: {
@@ -287,6 +284,7 @@ describe('Pricing Operations', () => {
         'express',
       ]);
       expect(Number.isInteger(price)).toBe(true);
+      expect(price).toBe(175); // Express is FREE
     });
   });
 });

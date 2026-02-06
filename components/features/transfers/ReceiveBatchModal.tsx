@@ -12,7 +12,7 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useAuth } from '@/contexts/AuthContext';
-import { CheckCircle, Package, MapPin, AlertTriangle } from 'lucide-react';
+import { CheckCircle, Package, AlertTriangle } from 'lucide-react';
 import {
   Dialog,
   DialogContent,

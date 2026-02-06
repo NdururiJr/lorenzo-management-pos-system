@@ -598,7 +598,7 @@ When adding a new feature:
 ## Contact
 
 For questions about testing:
-- **Team Lead:** Gachengoh Marugu - hello@ai-agentsplus.com
+- **Team Lead:** Gachengoh Marugu - jerry@ai-agentsplus.com
 - **Testing Issues:** Create GitHub issue with `[TEST]` prefix
 
 ---

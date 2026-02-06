@@ -153,7 +153,7 @@ Each branch manager has access to their specific branch only:
 ## Contact
 
 For issues or questions about these test accounts:
-- **Gachengoh Marugu** - hello@ai-agentsplus.com, +254 725 462 859
+- **Development Team** - Jerry Ndururi in collaboration with AI Agents Plus, +254 725 462 859
 - **Jerry Nduriri** - jerry@ai-agentsplus.com, +254 725 462 859
 
 ---

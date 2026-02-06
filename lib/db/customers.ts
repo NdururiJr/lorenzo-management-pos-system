@@ -3,6 +3,7 @@
  *
  * This file provides type-safe CRUD operations for the customers collection.
  * All functions include proper error handling and validation.
+ * Updated for FR-014: International phone number support
  *
  * @module lib/db/customers
  */
@@ -17,6 +18,11 @@ import {
   DatabaseError,
 } from './index';
 import type { Customer, Address, CustomerPreferences } from './schema';
+import {
+  validatePhoneNumber,
+  formatPhoneE164,
+  isKenyanNumber,
+} from '@/lib/utils/phone-validator';
 
 /**
  * Generate a unique customer ID
@@ -30,8 +36,9 @@ export function generateCustomerId(): string {
 
 /**
  * Create a new customer
+ * Updated for FR-014: International phone support
  *
- * @param data - Customer data
+ * @param data - Customer data (phone can be in any format, will be normalized to E.164)
  * @returns The created customer ID
  */
 export async function createCustomer(
@@ -41,20 +48,30 @@ export async function createCustomer(
     email?: string;
     addresses?: Address[];
     preferences?: CustomerPreferences;
+    countryCode?: string;
   }
 ): Promise<string> {
   const customerId = generateCustomerId();
 
-  // Check if phone number already exists
-  const existingCustomer = await getCustomerByPhone(data.phone);
+  // Validate and normalize the phone number (FR-014)
+  const phoneValidation = validatePhoneNumber(data.phone, 'KE');
+  if (!phoneValidation.valid) {
+    throw new DatabaseError(`Invalid phone number: ${phoneValidation.error}`);
+  }
+
+  // Use E.164 format for storage (ensures consistent lookup)
+  const normalizedPhone = phoneValidation.e164 || data.phone;
+
+  // Check if phone number already exists (using normalized format)
+  const existingCustomer = await getCustomerByPhone(normalizedPhone);
   if (existingCustomer) {
-    throw new DatabaseError(`Customer with phone ${data.phone} already exists`);
+    throw new DatabaseError(`Customer with phone ${normalizedPhone} already exists`);
   }
 
   const customer = {
     customerId,
     name: data.name,
-    phone: data.phone,
+    phone: normalizedPhone,
     email: data.email,
     addresses: data.addresses || [],
     preferences: data.preferences || {
@@ -64,6 +81,11 @@ export async function createCustomer(
     orderCount: 0,
     totalSpent: 0,
     createdAt: Timestamp.now(),
+    // FR-014: Store international phone metadata
+    countryCode: phoneValidation.country || data.countryCode || 'KE',
+    phoneValidated: true,
+    nationalNumber: phoneValidation.nationalNumber,
+    phoneFormatted: phoneValidation.formatted,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -80,17 +102,40 @@ export async function getCustomer(customerId: string): Promise<Customer> {
 
 /**
  * Get customer by phone number
+ * Updated for FR-014: Normalizes phone to E.164 before lookup
+ *
+ * @param phone - Phone number (any format - will be normalized)
+ * @returns Customer or null if not found
  */
 export async function getCustomerByPhone(
   phone: string
 ): Promise<Customer | null> {
   try {
+    // Normalize the phone number to E.164 for lookup (FR-014)
+    const normalizedPhone = formatPhoneE164(phone, 'KE');
+
+    // Search using normalized format
     const customers = await getDocuments<Customer>(
       'customers',
-      where('phone', '==', phone),
+      where('phone', '==', normalizedPhone),
       limit(1)
     );
-    return customers.length > 0 ? customers[0] : null;
+
+    if (customers.length > 0) {
+      return customers[0];
+    }
+
+    // Fallback: try exact match with original input (for legacy data)
+    if (normalizedPhone !== phone) {
+      const legacyCustomers = await getDocuments<Customer>(
+        'customers',
+        where('phone', '==', phone),
+        limit(1)
+      );
+      return legacyCustomers.length > 0 ? legacyCustomers[0] : null;
+    }
+
+    return null;
   } catch (error) {
     throw new DatabaseError('Failed to get customer by phone', error);
   }
@@ -98,6 +143,7 @@ export async function getCustomerByPhone(
 
 /**
  * Search customers by name or phone
+ * Updated for FR-014: Supports international phone number searches
  *
  * @param searchTerm - Search term (name or phone)
  * @param limitCount - Maximum number of results
@@ -108,10 +154,38 @@ export async function searchCustomers(
   limitCount = 20
 ): Promise<Customer[]> {
   try {
-    // For phone search, try exact match
-    if (searchTerm.startsWith('+254') || searchTerm.startsWith('254')) {
-      const customer = await getCustomerByPhone(searchTerm);
-      return customer ? [customer] : [];
+    // FR-014: Check if search term looks like a phone number (starts with + or digits)
+    const looksLikePhone = /^[\+\d]/.test(searchTerm.replace(/[\s\-\(\)]/g, ''));
+
+    if (looksLikePhone) {
+      // Normalize and try exact match
+      const normalizedPhone = formatPhoneE164(searchTerm, 'KE');
+      const customer = await getCustomerByPhone(normalizedPhone);
+
+      if (customer) {
+        return [customer];
+      }
+
+      // If no exact match, try partial phone search
+      const allCustomers = await getDocuments<Customer>(
+        'customers',
+        orderBy('createdAt', 'desc'),
+        limit(100)
+      );
+
+      // Clean search term for partial matching
+      const cleanSearch = searchTerm.replace(/[\s\-\(\)]/g, '');
+
+      return allCustomers
+        .filter((c) => {
+          const cleanPhone = c.phone?.replace(/[\s\-\(\)]/g, '') || '';
+          const cleanNational = c.nationalNumber || '';
+          return (
+            cleanPhone.includes(cleanSearch) ||
+            cleanNational.includes(cleanSearch.replace(/^\+?\d{1,3}/, ''))
+          );
+        })
+        .slice(0, limitCount);
     }
 
     // For name search, we'll get all customers and filter client-side
@@ -134,6 +208,97 @@ export async function searchCustomers(
   } catch (error) {
     throw new DatabaseError('Failed to search customers', error);
   }
+}
+
+// ============================================
+// FR-014: INTERNATIONAL PHONE HELPER FUNCTIONS
+// ============================================
+
+/**
+ * Get customers by country code (FR-014)
+ *
+ * @param countryCode - ISO 3166-1 alpha-2 country code (e.g., 'KE', 'US')
+ * @param limitCount - Maximum results
+ * @returns Array of customers from that country
+ */
+export async function getCustomersByCountry(
+  countryCode: string,
+  limitCount = 50
+): Promise<Customer[]> {
+  return getDocuments<Customer>(
+    'customers',
+    where('countryCode', '==', countryCode.toUpperCase()),
+    orderBy('createdAt', 'desc'),
+    limit(limitCount)
+  );
+}
+
+/**
+ * Get international customers (non-Kenyan)
+ *
+ * @param limitCount - Maximum results
+ * @returns Array of international customers
+ */
+export async function getInternationalCustomers(
+  limitCount = 50
+): Promise<Customer[]> {
+  // Firestore doesn't support != queries with orderBy on different field
+  // So we fetch all and filter client-side
+  const allCustomers = await getDocuments<Customer>(
+    'customers',
+    orderBy('createdAt', 'desc'),
+    limit(200)
+  );
+
+  return allCustomers
+    .filter((c) => c.countryCode && c.countryCode !== 'KE')
+    .slice(0, limitCount);
+}
+
+/**
+ * Validate if a phone number is already registered
+ *
+ * @param phone - Phone number to check
+ * @returns True if phone is already registered
+ */
+export async function isPhoneRegistered(phone: string): Promise<boolean> {
+  const customer = await getCustomerByPhone(phone);
+  return customer !== null;
+}
+
+/**
+ * Update customer phone number with validation (FR-014)
+ *
+ * @param customerId - Customer ID
+ * @param newPhone - New phone number
+ * @returns Updated customer data
+ */
+export async function updateCustomerPhone(
+  customerId: string,
+  newPhone: string
+): Promise<void> {
+  // Validate the new phone number
+  const phoneValidation = validatePhoneNumber(newPhone, 'KE');
+  if (!phoneValidation.valid) {
+    throw new DatabaseError(`Invalid phone number: ${phoneValidation.error}`);
+  }
+
+  const normalizedPhone = phoneValidation.e164 || newPhone;
+
+  // Check if new phone is already used by another customer
+  const existingCustomer = await getCustomerByPhone(normalizedPhone);
+  if (existingCustomer && existingCustomer.customerId !== customerId) {
+    throw new DatabaseError(`Phone number ${normalizedPhone} is already registered to another customer`);
+  }
+
+  // Update the customer with new phone data
+  await updateDocument<Customer>('customers', customerId, {
+    phone: normalizedPhone,
+    countryCode: phoneValidation.country,
+    phoneValidated: true,
+    nationalNumber: phoneValidation.nationalNumber,
+    phoneFormatted: phoneValidation.formatted,
+  });
 }
 
 /**
@@ -268,4 +433,64 @@ export async function getTopCustomers(limitCount = 10): Promise<Customer[]> {
  */
 export async function deleteCustomer(customerId: string): Promise<void> {
   return deleteDocument('customers', customerId);
+}
+
+/**
+ * Get customer by phone OR email (Issue 81 Fix)
+ * Supports both phone-authenticated and email-authenticated users
+ *
+ * @param phone - Phone number (optional, any format - will be normalized)
+ * @param email - Email address (optional)
+ * @returns Customer or null if not found
+ */
+export async function getCustomerByPhoneOrEmail(
+  phone?: string | null,
+  email?: string | null
+): Promise<Customer | null> {
+  try {
+    // Try phone first if provided
+    if (phone) {
+      const customerByPhone = await getCustomerByPhone(phone);
+      if (customerByPhone) {
+        return customerByPhone;
+      }
+    }
+
+    // Try email if provided
+    if (email) {
+      const customers = await getDocuments<Customer>(
+        'customers',
+        where('email', '==', email),
+        limit(1)
+      );
+      if (customers.length > 0) {
+        return customers[0];
+      }
+    }
+
+    return null;
+  } catch (error) {
+    throw new DatabaseError('Failed to get customer by phone or email', error);
+  }
+}
+
+/**
+ * Get customer by email
+ *
+ * @param email - Email address to search for
+ * @returns Customer or null if not found
+ */
+export async function getCustomerByEmail(
+  email: string
+): Promise<Customer | null> {
+  try {
+    const customers = await getDocuments<Customer>(
+      'customers',
+      where('email', '==', email),
+      limit(1)
+    );
+    return customers.length > 0 ? customers[0] : null;
+  } catch (error) {
+    throw new DatabaseError('Failed to get customer by email', error);
+  }
 }

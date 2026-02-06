@@ -314,7 +314,7 @@ All documentation is in the `functions/` directory:
 
 - **Technical Issues:** Check logs with `firebase functions:log`
 - **Documentation:** See `/functions/README.md`
-- **Contact:** hello@ai-agentsplus.com
+- **Contact:** jerry@ai-agentsplus.com
 - **Team:** Gachengoh Marugu (Lead), Arthur Tutu (Backend), Jerry Nduriri (Product)
 
 ---

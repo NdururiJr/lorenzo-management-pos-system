@@ -783,9 +783,8 @@ Closes #123
 ## Team Communication
 
 ### Development Team
-- **Gachengoh Marugu** (Lead Developer) - hello@ai-agentsplus.com, +254 725 462 859
-- **Arthur Tutu** (Backend Developer) - arthur@ai-agentsplus.com
-- **Jerry Nduriri** (POS & Product Manager) - jerry@ai-agentsplus.com, +254 725 462 859
+- **Jerry Ndururi** (Lead Developer & Product Manager) - jerry@ai-agentsplus.com, +254 725 462 859
+- In collaboration with **AI Agents Plus**
 
 ### Daily Standup Format
 - What did I accomplish yesterday?

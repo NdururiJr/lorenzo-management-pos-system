@@ -25,17 +25,17 @@ export function ModernLayout({
   noPadding = false
 }: ModernLayoutProps) {
   const gradients = {
-    default: 'bg-gradient-to-br from-brand-blue-100 via-white to-brand-blue-50',
-    subtle: 'bg-gradient-to-br from-gray-50 via-white to-brand-blue-50',
-    vibrant: 'bg-gradient-to-br from-brand-blue via-brand-blue-100 to-white',
-    dark: 'bg-gradient-to-br from-gray-900 via-brand-blue-dark to-gray-800'
+    default: 'bg-lorenzo-cream',
+    subtle: 'bg-linear-to-br from-lorenzo-cream via-white to-lorenzo-cream',
+    vibrant: 'bg-linear-to-br from-lorenzo-light-teal/10 via-lorenzo-cream to-white',
+    dark: 'bg-linear-to-br from-lorenzo-dark-teal via-lorenzo-deep-teal to-lorenzo-dark-teal'
   };
 
   const overlays = {
-    default: 'bg-gradient-to-t from-brand-blue/5 via-transparent to-white/50',
-    subtle: 'bg-gradient-to-t from-transparent via-transparent to-white/30',
-    vibrant: 'bg-gradient-to-t from-brand-blue/10 via-transparent to-white/70',
-    dark: 'bg-gradient-to-t from-black/20 via-transparent to-brand-blue-dark/10'
+    default: 'bg-linear-to-t from-lorenzo-teal/5 via-transparent to-white/50',
+    subtle: 'bg-linear-to-t from-transparent via-transparent to-white/30',
+    vibrant: 'bg-linear-to-t from-lorenzo-teal/10 via-transparent to-white/70',
+    dark: 'bg-linear-to-t from-black/20 via-transparent to-lorenzo-dark-teal/10'
   };
 
   const maxWidthClasses = {
@@ -60,10 +60,10 @@ export function ModernLayout({
       {showOrbs && <FloatingOrbs />}
 
       {/* Top decorative blur */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white/20 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-32 bg-linear-to-b from-white/20 to-transparent" />
 
       {/* Bottom decorative wave */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-blue/10 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-lorenzo-teal/10 to-transparent" />
 
       {/* Content Container */}
       <div className={cn(
@@ -131,7 +131,7 @@ export function ModernSection({
       {(title || description) && (
         <div className="space-y-2">
           {title && (
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
+            <h2 className="text-3xl font-bold bg-linear-to-r from-lorenzo-dark-teal via-lorenzo-teal to-lorenzo-dark-teal bg-clip-text text-transparent">
               {title}
             </h2>
           )}

@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 import { CheckCircle2, AlertCircle, Clock } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
-export type PaymentStatus = 'paid' | 'partial' | 'pending' | 'overdue' | 'refunded';
+export type PaymentStatus = 'paid' | 'partial' | 'pending' | 'overdue' | 'refunded' | 'overpaid';
 
 interface PaymentConfig {
   label: string;
@@ -56,6 +56,13 @@ const paymentConfig: Record<PaymentStatus, PaymentConfig> = {
     bgColor: 'bg-purple-500',
     textColor: 'text-white',
     borderColor: 'border-purple-500',
+    icon: CheckCircle2,
+  },
+  overpaid: {
+    label: 'Overpaid',
+    bgColor: 'bg-blue-500',
+    textColor: 'text-white',
+    borderColor: 'border-blue-500',
     icon: CheckCircle2,
   },
 };
@@ -132,6 +139,10 @@ export function getPaymentStatus(
       return 'overdue';
     }
     return 'pending';
+  }
+
+  if (paidAmount > totalAmount) {
+    return 'overpaid';
   }
 
   if (paidAmount >= totalAmount) {

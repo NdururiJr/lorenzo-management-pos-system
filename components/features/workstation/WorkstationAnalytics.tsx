@@ -90,13 +90,13 @@ export function WorkstationAnalytics() {
 
   const totalInProgress = Object.values(ordersByStage).reduce((sum, count) => sum + count, 0);
 
-  // Completed orders (ready status)
-  const completedOrders = allOrders.filter((o) => o.status === 'ready').length;
+  // Completed orders (queued_for_delivery status) - FR-008
+  const completedOrders = allOrders.filter((o) => o.status === 'queued_for_delivery').length;
 
   // Calculate average processing time for completed orders
   const calculateAvgProcessingTime = (orders: Order[]) => {
     const completedWithTimes = orders.filter(
-      (o) => o.status === 'ready' && o.createdAt && o.actualCompletion
+      (o) => o.status === 'queued_for_delivery' && o.createdAt && o.actualCompletion
     );
 
     if (completedWithTimes.length === 0) return 0;

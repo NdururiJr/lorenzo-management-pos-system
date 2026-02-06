@@ -1,17 +1,18 @@
 /**
- * Payment Module Exports
+ * Payment Module Exports (Client-Safe)
  *
- * Central export point for all payment-related functionality.
+ * Central export point for client-safe payment functionality.
+ *
+ * For server-only functions (handlePaymentCallback, checkPaymentStatusServer),
+ * import directly from './payment-service.server' in API routes.
  *
  * @module lib/payments
  */
 
-// Payment service functions
+// Payment service functions (client-safe)
 export {
-  processCashPayment,
   initiateDigitalPayment,
   processCreditPayment,
-  handlePaymentCallback,
   checkPaymentStatus,
   retryPayment,
   getAvailablePaymentMethods,
@@ -20,7 +21,6 @@ export {
 // Payment types
 export type {
   PaymentResult,
-  CashPaymentData,
   DigitalPaymentData,
   CreditPaymentData,
   PaymentStatusResult,

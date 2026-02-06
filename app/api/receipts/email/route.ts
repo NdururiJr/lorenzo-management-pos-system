@@ -32,8 +32,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate PDF blob
-    const pdfBlob = generateReceiptBlob(order, customer);
+    // Generate PDF blob (V2.0: Now async for QR code generation)
+    const pdfBlob = await generateReceiptBlob(order, customer);
     const pdfBuffer = Buffer.from(await pdfBlob.arrayBuffer());
 
     // Create email HTML
@@ -63,6 +63,7 @@ export async function POST(request: NextRequest) {
 
     console.log('Receipt email sent successfully:', data?.id);
     return NextResponse.json({ success: true, emailId: data?.id });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Email API error:', error);
     return NextResponse.json(
@@ -75,6 +76,7 @@ export async function POST(request: NextRequest) {
 /**
  * Create beautiful HTML email template for receipt
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createReceiptEmailHTML(customerName: string, order: any): string {
   const items = order.items || order.garments || [];
 
@@ -164,7 +166,8 @@ function createReceiptEmailHTML(customerName: string, order: any): string {
                 Items (${items.length})
               </h3>
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border: 1px solid #e4e4e7; border-radius: 8px;">
-                ${items.map((item: any, index: number) => `
+                ${/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+                items.map((item: any, index: number) => `
                   <tr style="${index > 0 ? 'border-top: 1px solid #e4e4e7;' : ''}">
                     <td style="padding: 12px 15px; color: #18181b; font-size: 14px;">
                       <div style="font-weight: 500;">${item.type || 'Item'}</div>

@@ -19,11 +19,11 @@ import {
   Shirt,
   Shield,
   Gift,
-  MapPin,
   ClipboardCheck,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
+// FR-008: Updated to use 'queued_for_delivery' instead of 'ready'
 export type OrderStatus =
   | 'received'
   | 'inspection'
@@ -33,7 +33,7 @@ export type OrderStatus =
   | 'ironing'
   | 'quality_check'
   | 'packaging'
-  | 'ready'
+  | 'queued_for_delivery'
   | 'out_for_delivery'
   | 'delivered'
   | 'collected';
@@ -107,8 +107,9 @@ const statusConfig: Record<OrderStatus, StatusConfig> = {
     textColor: 'text-cyan-700',
     icon: Gift,
   },
-  ready: {
-    label: 'Ready',
+  // FR-008: 'ready' renamed to 'queued_for_delivery'
+  queued_for_delivery: {
+    label: 'Queued for Delivery',
     color: 'green',
     bgColor: 'bg-green-100',
     textColor: 'text-green-700',

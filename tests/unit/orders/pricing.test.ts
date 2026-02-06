@@ -69,7 +69,7 @@ describe('Pricing Calculations', () => {
           dryClean: 250,
           iron: 50,
           starch: 30,
-          express: 50,
+          express: 0,
         },
         active: true,
         createdAt: new Date(),
@@ -97,7 +97,7 @@ describe('Pricing Calculations', () => {
           dryClean: 250,
           iron: 50,
           starch: 30,
-          express: 50,
+          express: 0,
         },
         active: true,
         createdAt: new Date(),
@@ -115,7 +115,7 @@ describe('Pricing Calculations', () => {
       expect(price).toBe(230); // 150 + 50 + 30
     });
 
-    it('should apply express surcharge correctly', async () => {
+    it('should not apply express surcharge (express is FREE)', async () => {
       const mockPricing = {
         pricingId: 'PRICE-BR-MAIN-001-SHIRT',
         branchId: TEST_BRANCHES.mainStore.branchId,
@@ -125,7 +125,7 @@ describe('Pricing Calculations', () => {
           dryClean: 250,
           iron: 50,
           starch: 30,
-          express: 50, // 50% surcharge
+          express: 0, // Express is FREE
         },
         active: true,
         createdAt: new Date(),
@@ -140,11 +140,11 @@ describe('Pricing Calculations', () => {
         ['wash', 'express']
       );
 
-      // 150 (wash) + 50% of 150 (express surcharge) = 150 + 75 = 225
-      expect(price).toBe(225);
+      // Express is FREE, so price is just wash = 150
+      expect(price).toBe(150);
     });
 
-    it('should apply express surcharge on total of all services', async () => {
+    it('should not apply express surcharge on total (express is FREE)', async () => {
       const mockPricing = {
         pricingId: 'PRICE-BR-MAIN-001-SHIRT',
         branchId: TEST_BRANCHES.mainStore.branchId,
@@ -154,7 +154,7 @@ describe('Pricing Calculations', () => {
           dryClean: 250,
           iron: 50,
           starch: 30,
-          express: 50, // 50% surcharge
+          express: 0, // Express is FREE
         },
         active: true,
         createdAt: new Date(),
@@ -169,8 +169,8 @@ describe('Pricing Calculations', () => {
         ['wash', 'iron', 'express']
       );
 
-      // (150 + 50) + 50% of 200 = 200 + 100 = 300
-      expect(price).toBe(300);
+      // Express is FREE, so price is wash + iron = 150 + 50 = 200
+      expect(price).toBe(200);
     });
 
     it('should handle dryClean service (case insensitive)', async () => {
@@ -183,7 +183,7 @@ describe('Pricing Calculations', () => {
           dryClean: 500,
           iron: 100,
           starch: 50,
-          express: 50,
+          express: 0,
         },
         active: true,
         createdAt: new Date(),
@@ -211,7 +211,7 @@ describe('Pricing Calculations', () => {
           dryClean: 500,
           iron: 100,
           starch: 50,
-          express: 50,
+          express: 0,
         },
         active: true,
         createdAt: new Date(),
@@ -282,7 +282,7 @@ describe('Pricing Calculations', () => {
           dryClean: 250,
           iron: 50,
           starch: 30,
-          express: 50,
+          express: 0,
         },
         active: true,
         createdAt: new Date(),
@@ -298,7 +298,7 @@ describe('Pricing Calculations', () => {
           dryClean: 250,
           iron: 50,
           starch: 30,
-          express: 50,
+          express: 0,
         },
         active: true,
         createdAt: new Date(),
@@ -330,7 +330,7 @@ describe('Pricing Calculations', () => {
           dryClean: 250,
           iron: 50,
           starch: 30,
-          express: 50,
+          express: 0,
         },
         active: true,
         createdAt: new Date(),
@@ -373,7 +373,7 @@ describe('Pricing Calculations', () => {
           dryClean: 250,
           iron: 50,
           starch: 30,
-          express: 50,
+          express: 0,
         },
         active: true,
         createdAt: new Date(),
@@ -401,7 +401,7 @@ describe('Pricing Calculations', () => {
           dryClean: 500,
           iron: 100,
           starch: 50,
-          express: 50,
+          express: 0,
         },
         active: true,
         createdAt: new Date(),
@@ -429,7 +429,7 @@ describe('Pricing Calculations', () => {
           dryClean: 350,
           iron: 80,
           starch: 40,
-          express: 50,
+          express: 0,
         },
         active: true,
         createdAt: new Date(),

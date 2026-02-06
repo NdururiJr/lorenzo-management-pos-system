@@ -16,7 +16,6 @@ import {
   DatabaseError,
 } from './index';
 import type {
-  Transaction,
   TransactionExtended,
   TransactionStatus,
   PaymentMethod,
@@ -45,23 +44,29 @@ export async function createTransaction(
     'transactionId' | 'timestamp' | 'status'
   > & {
     status?: TransactionStatus;
+    paymentType?: 'partial' | 'full' | 'advance' | 'refund' | 'credit_applied';
+    note?: string;
   }
 ): Promise<string> {
   const transactionId = generateTransactionId();
 
   // Create transaction object with required fields only
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const transaction: Record<string, any> = {
     transactionId,
-    orderId: data.orderId,
     customerId: data.customerId,
     branchId: data.branchId,
     amount: data.amount,
     method: data.method,
     status: data.status || 'pending',
+    paymentType: data.paymentType || 'partial',
     timestamp: Timestamp.now(),
   };
 
   // Add optional fields only if they are defined
+  if (data.orderId !== undefined) {
+    transaction.orderId = data.orderId;
+  }
   if (data.pesapalRef !== undefined) {
     transaction.pesapalRef = data.pesapalRef;
   }
@@ -71,12 +76,15 @@ export async function createTransaction(
   if (data.metadata !== undefined) {
     transaction.metadata = data.metadata;
   }
+  if (data.note !== undefined) {
+    transaction.note = data.note;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await setDocument<TransactionExtended>('transactions', transactionId, transaction as any);
 
-  // If transaction is completed, update order payment status
-  if (transaction.status === 'completed') {
+  // If transaction is completed and has an order, update order payment status
+  if (transaction.status === 'completed' && data.orderId) {
     await updateOrderPayment(data.orderId, data.amount, data.method);
   }
 
@@ -119,8 +127,8 @@ export async function updateTransactionStatus(
 
   await updateDocument<TransactionExtended>('transactions', transactionId, updates);
 
-  // If transaction is now completed, update order payment status
-  if (status === 'completed') {
+  // If transaction is now completed and has an order, update order payment status
+  if (status === 'completed' && transaction.orderId) {
     await updateOrderPayment(transaction.orderId, transaction.amount, transaction.method);
   }
 }
@@ -255,7 +263,6 @@ export async function getTransactionTotals(
     total: 0,
     count: transactions.length,
     byMethod: {
-      cash: 0,
       mpesa: 0,
       card: 0,
       credit: 0,
@@ -276,7 +283,6 @@ export async function getTransactionTotals(
 export async function getTodayTransactionSummary(): Promise<{
   total: number;
   count: number;
-  cash: number;
   mpesa: number;
   card: number;
   credit: number;
@@ -291,9 +297,47 @@ export async function getTodayTransactionSummary(): Promise<{
   return {
     total: totals.total,
     count: totals.count,
-    cash: totals.byMethod.cash,
     mpesa: totals.byMethod.mpesa,
     card: totals.byMethod.card,
     credit: totals.byMethod.credit,
   };
+}
+
+/**
+ * Get transactions by branch with optional date range
+ *
+ * @param branchId - Branch ID
+ * @param options - Optional date range filter
+ * @returns Array of transactions
+ */
+export async function getTransactionsByBranch(
+  branchId: string,
+  options?: {
+    startDate?: Date;
+    endDate?: Date;
+    limitCount?: number;
+  }
+): Promise<TransactionExtended[]> {
+  // Build constraints array - filter and order constraints first
+  const filterConstraints: Parameters<typeof getDocuments>[1][] = [
+    where('branchId', '==', branchId),
+  ];
+
+  if (options?.startDate) {
+    filterConstraints.push(where('timestamp', '>=', Timestamp.fromDate(options.startDate)));
+  }
+
+  if (options?.endDate) {
+    filterConstraints.push(where('timestamp', '<=', Timestamp.fromDate(options.endDate)));
+  }
+
+  // Add orderBy
+  filterConstraints.push(orderBy('timestamp', 'desc'));
+
+  // Add limit at the end if specified
+  if (options?.limitCount) {
+    filterConstraints.push(limit(options.limitCount));
+  }
+
+  return getDocuments<TransactionExtended>('transactions', ...filterConstraints);
 }

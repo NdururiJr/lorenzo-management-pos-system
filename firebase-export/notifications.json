@@ -1,0 +1,295 @@
+[
+  {
+    "_id": "393s6BPqBrS8WWd89gH7",
+    "message": "Hi Alex Mwakideu, your order ORD-HURLINGHAM-20260107-0001 has been received. Total: KES 1,750. Estimated completion: 1/8/2026. Thank you for choosing Lorenzo Dry Cleaners!",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767776329,
+      "_nanoseconds": 74000000
+    },
+    "orderId": "ORD-HURLINGHAM-20260107-0001",
+    "notificationId": "393s6BPqBrS8WWd89gH7",
+    "recipientId": "CUST-MK3SCJ4X-J7064",
+    "channel": "whatsapp",
+    "recipientPhone": "254722336699",
+    "type": "order_confirmation",
+    "status": "sent",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767776332,
+      "_nanoseconds": 969000000
+    }
+  },
+  {
+    "_id": "8Br9ymsvNqRnPMGWcRQq",
+    "notificationId": "8Br9ymsvNqRnPMGWcRQq",
+    "type": "order_confirmation",
+    "recipientId": "",
+    "recipientPhone": "254725462859",
+    "message": "",
+    "channel": "whatsapp",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1763916523,
+      "_nanoseconds": 717000000
+    },
+    "status": "sent",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763916527,
+      "_nanoseconds": 606000000
+    }
+  },
+  {
+    "_id": "DOrI6MgUVk8G68VIhpmK",
+    "notificationId": "DOrI6MgUVk8G68VIhpmK",
+    "type": "order_confirmation",
+    "recipientId": "",
+    "recipientPhone": "254725462859",
+    "message": "",
+    "channel": "whatsapp",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1763915712,
+      "_nanoseconds": 539000000
+    },
+    "errorMessage": "Request failed with status code 404",
+    "status": "failed",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763915721,
+      "_nanoseconds": 157000000
+    }
+  },
+  {
+    "_id": "F5JmUNCki0Wqxt2SzYwE",
+    "notificationId": "F5JmUNCki0Wqxt2SzYwE",
+    "type": "order_confirmation",
+    "recipientId": "CUST-MIYN8W4G-L78PQ",
+    "recipientPhone": "254790732448",
+    "message": "Hi Maniac, your order ORD-BR-MAIN-001-20260113-0001 has been received. Total: KES 500. Estimated completion: 1/14/2026. Thank you for choosing Lorenzo Dry Cleaners!",
+    "channel": "whatsapp",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1768295297,
+      "_nanoseconds": 701000000
+    },
+    "orderId": "ORD-BR-MAIN-001-20260113-0001",
+    "status": "sent",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1768295301,
+      "_nanoseconds": 27000000
+    }
+  },
+  {
+    "_id": "PqKVGYbiTmd64qAmJmnP",
+    "notificationId": "PqKVGYbiTmd64qAmJmnP",
+    "recipientPhone": "254722336699",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767780928,
+      "_nanoseconds": 485000000
+    },
+    "recipientId": "CUST-MK3SCJ4X-J7064",
+    "channel": "whatsapp",
+    "message": "Hi Alex Mwakideu, your order ORD-HURLINGHAM-20260107-0002 has been received. Total: KES 4,350. Estimated completion: 1/9/2026. Thank you for choosing Lorenzo Dry Cleaners!",
+    "orderId": "ORD-HURLINGHAM-20260107-0002",
+    "type": "order_confirmation",
+    "status": "sent",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767780934,
+      "_nanoseconds": 683000000
+    }
+  },
+  {
+    "_id": "UmSg2KARH1bqskR90A6Q",
+    "orderId": "ORD-BR-MAIN-001-20260109-0001",
+    "channel": "whatsapp",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767966985,
+      "_nanoseconds": 588000000
+    },
+    "recipientId": "CUST-MK3SCJ4X-J7064",
+    "message": "Hi Alex Mwakideu, your order ORD-BR-MAIN-001-20260109-0001 has been received. Total: KES 2,800. Estimated completion: 1/10/2026. Thank you for choosing Lorenzo Dry Cleaners!",
+    "recipientPhone": "254722336699",
+    "notificationId": "UmSg2KARH1bqskR90A6Q",
+    "type": "order_confirmation",
+    "status": "sent",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767966989,
+      "_nanoseconds": 231000000
+    }
+  },
+  {
+    "_id": "Wo8iwiojyazms5CtSjH4",
+    "notificationId": "Wo8iwiojyazms5CtSjH4",
+    "type": "order_confirmation",
+    "recipientId": "",
+    "recipientPhone": "254725462859",
+    "message": "",
+    "channel": "whatsapp",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1763916428,
+      "_nanoseconds": 418000000
+    },
+    "errorMessage": "Request failed with status code 401",
+    "status": "failed",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763916431,
+      "_nanoseconds": 948000000
+    }
+  },
+  {
+    "_id": "dfXDvkzDqvQO2eklUYxq",
+    "notificationId": "dfXDvkzDqvQO2eklUYxq",
+    "type": "order_confirmation",
+    "recipientId": "",
+    "recipientPhone": "254725462859",
+    "message": "",
+    "channel": "whatsapp",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1763915376,
+      "_nanoseconds": 582000000
+    },
+    "errorMessage": "WATI_ACCESS_TOKEN environment variable is not set. Please add your Wati.io Access Token to .env.local",
+    "status": "failed",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763915382,
+      "_nanoseconds": 138000000
+    }
+  },
+  {
+    "_id": "k8qj8FUUR116aQCZjsir",
+    "notificationId": "k8qj8FUUR116aQCZjsir",
+    "type": "order_confirmation",
+    "recipientId": "",
+    "recipientPhone": "254725462859",
+    "message": "",
+    "channel": "whatsapp",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1763915437,
+      "_nanoseconds": 147000000
+    },
+    "errorMessage": "Request failed with status code 404",
+    "status": "failed",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763915445,
+      "_nanoseconds": 724000000
+    }
+  },
+  {
+    "_id": "kIcvo8lPcuREGail4Qz8",
+    "channel": "whatsapp",
+    "notificationId": "kIcvo8lPcuREGail4Qz8",
+    "orderId": "ORD-BR-MAIN-001-20260105-0002",
+    "recipientPhone": "254722111222",
+    "type": "order_confirmation",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767597461,
+      "_nanoseconds": 806000000
+    },
+    "message": "Hi Sarah Wanjiru, your order ORD-BR-MAIN-001-20260105-0002 has been received. Total: KES 1,200. Estimated completion: 1/6/2026. Thank you for choosing Lorenzo Dry Cleaners!",
+    "recipientId": "CUST-TEST-001",
+    "status": "sent",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767597466,
+      "_nanoseconds": 424000000
+    }
+  },
+  {
+    "_id": "kal4BJiSL0xymzq7Fmjz",
+    "recipientId": "CUST-MIYMP2CB-MX24O",
+    "notificationId": "kal4BJiSL0xymzq7Fmjz",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767600859,
+      "_nanoseconds": 876000000
+    },
+    "message": "Hi Jane Smith, your order ORD-BR-MAIN-001-20260105-0004 has been received. Total: KES 600. Estimated completion: 1/7/2026. Thank you for choosing Lorenzo Dry Cleaners!",
+    "recipientPhone": "254733445566",
+    "type": "order_confirmation",
+    "channel": "whatsapp",
+    "orderId": "ORD-BR-MAIN-001-20260105-0004",
+    "status": "sent",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767600863,
+      "_nanoseconds": 672000000
+    }
+  },
+  {
+    "_id": "lju9iG0JzKZ2Qhs7zSwh",
+    "notificationId": "lju9iG0JzKZ2Qhs7zSwh",
+    "type": "order_confirmation",
+    "recipientId": "",
+    "recipientPhone": "254725462859",
+    "message": "",
+    "channel": "whatsapp",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1763915572,
+      "_nanoseconds": 630000000
+    },
+    "errorMessage": "Request failed with status code 404",
+    "status": "failed",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763915580,
+      "_nanoseconds": 458000000
+    }
+  },
+  {
+    "_id": "rceCcN19awBgfmhPbHVp",
+    "recipientPhone": "254766000111",
+    "recipientId": "CUST-TEST-005",
+    "orderId": "ORD-BR-MAIN-001-20260105-0003",
+    "message": "Hi Mary Njeri, your order ORD-BR-MAIN-001-20260105-0003 has been received. Total: KES 1,500. Estimated completion: 1/6/2026. Thank you for choosing Lorenzo Dry Cleaners!",
+    "type": "order_confirmation",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767599300,
+      "_nanoseconds": 665000000
+    },
+    "channel": "whatsapp",
+    "notificationId": "rceCcN19awBgfmhPbHVp",
+    "status": "sent",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767599303,
+      "_nanoseconds": 403000000
+    }
+  },
+  {
+    "_id": "wj2eK0mp9J5G6jGkfLPk",
+    "notificationId": "wj2eK0mp9J5G6jGkfLPk",
+    "type": "order_confirmation",
+    "recipientId": "",
+    "recipientPhone": "254725462859",
+    "message": "",
+    "channel": "whatsapp",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1763915796,
+      "_nanoseconds": 794000000
+    },
+    "errorMessage": "Request failed with status code 404",
+    "status": "failed",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763915804,
+      "_nanoseconds": 681000000
+    }
+  }
+]

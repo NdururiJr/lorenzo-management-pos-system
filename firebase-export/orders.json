@@ -1,0 +1,5739 @@
+[
+  {
+    "_id": "ORD-BR-MAIN-001-20251126-0001",
+    "orderId": "ORD-BR-MAIN-001-20251126-0001",
+    "customerId": "CUST-MIG470I9-23IZK",
+    "customerName": "Arthur",
+    "customerPhone": "+254722488508",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20251126-0001-G01",
+        "type": "Suit",
+        "color": "white",
+        "services": [
+          "wash",
+          "iron"
+        ],
+        "price": 150,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 150,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1764341268,
+      "_nanoseconds": 197000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764168469,
+      "_nanoseconds": 470000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764168469,
+      "_nanoseconds": 469000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1764168469,
+          "_nanoseconds": 469000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ]
+  },
+  {
+    "_id": "ORD-BR-MAIN-001-20251209-0001",
+    "orderId": "ORD-BR-MAIN-001-20251209-0001",
+    "customerId": "CUST-001",
+    "customerName": "Jane Customer",
+    "customerPhone": "+254712345001",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20251209-0001-G01",
+        "type": "Pants",
+        "color": "black",
+        "services": [
+          "wash",
+          "iron",
+          "dry-clean"
+        ],
+        "price": 350,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 350,
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1765460282,
+      "_nanoseconds": 478000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765287484,
+      "_nanoseconds": 505000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1765287484,
+          "_nanoseconds": 505000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ],
+    "paymentMethod": "cash",
+    "paidAmount": 350,
+    "paymentStatus": "paid",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765287512,
+      "_nanoseconds": 619000000
+    }
+  },
+  {
+    "_id": "ORD-BR-MAIN-001-20251209-0002",
+    "orderId": "ORD-BR-MAIN-001-20251209-0002",
+    "customerId": "CUST-MIYMP2CB-MX24O",
+    "customerName": "Jane Smith",
+    "customerPhone": "+254733445566",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20251209-0002-G01",
+        "type": "Dress",
+        "color": "Red",
+        "services": [
+          "dry-clean",
+          "iron"
+        ],
+        "price": 250,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 250,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1765460523,
+      "_nanoseconds": 751000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765287725,
+      "_nanoseconds": 44000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765287725,
+      "_nanoseconds": 44000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1765287725,
+          "_nanoseconds": 44000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ]
+  },
+  {
+    "_id": "ORD-BR-MAIN-001-20251209-0003",
+    "orderId": "ORD-BR-MAIN-001-20251209-0003",
+    "customerId": "CUST-MIYMP2CB-MX24O",
+    "customerName": "Jane Smith",
+    "customerPhone": "+254733445566",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20251209-0003-G01",
+        "type": "Dress",
+        "color": "Red",
+        "services": [
+          "dry-clean",
+          "iron"
+        ],
+        "price": 250,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 250,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1765460668,
+      "_nanoseconds": 138000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765287870,
+      "_nanoseconds": 296000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765287870,
+      "_nanoseconds": 296000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1765287870,
+          "_nanoseconds": 296000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ]
+  },
+  {
+    "_id": "ORD-BR-MAIN-001-20251209-0004",
+    "orderId": "ORD-BR-MAIN-001-20251209-0004",
+    "customerId": "CUST-MIYN8W4G-L78PQ",
+    "customerName": "Maniac",
+    "customerPhone": "+254790732448",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20251209-0004-G01",
+        "type": "Suit",
+        "color": "black and white",
+        "services": [
+          "iron",
+          "dry-clean",
+          "express",
+          "wash"
+        ],
+        "price": 525,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 525,
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1765375046,
+      "_nanoseconds": 47000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765288646,
+      "_nanoseconds": 951000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1765288646,
+          "_nanoseconds": 951000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ],
+    "paymentMethod": "cash",
+    "paidAmount": 200,
+    "paymentStatus": "partial",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765288667,
+      "_nanoseconds": 691000000
+    }
+  },
+  {
+    "_id": "ORD-BR-MAIN-001-20251209-0005",
+    "orderId": "ORD-BR-MAIN-001-20251209-0005",
+    "customerId": "CUST-MIYN8W4G-L78PQ",
+    "customerName": "Maniac",
+    "customerPhone": "+254790732448",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20251209-0005-G01",
+        "type": "Bedding",
+        "color": "Blue",
+        "services": [
+          "wash",
+          "iron",
+          "starch",
+          "dry-clean"
+        ],
+        "price": 380,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 380,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1765461969,
+      "_nanoseconds": 944000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765289171,
+      "_nanoseconds": 301000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765289171,
+      "_nanoseconds": 301000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1765289171,
+          "_nanoseconds": 301000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ]
+  },
+  {
+    "_id": "ORD-BR-MAIN-001-20260105-0001",
+    "orderId": "ORD-BR-MAIN-001-20260105-0001",
+    "customerId": "CUST-MIG470I9-23IZK",
+    "customerName": "Arthur",
+    "customerPhone": "+254722488508",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20260105-0001-G01",
+        "type": "Shirt",
+        "color": "Blue",
+        "services": [
+          "dry-clean"
+        ],
+        "price": 500,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 500,
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1767768236,
+      "_nanoseconds": 624000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767595438,
+      "_nanoseconds": 231000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1767595438,
+          "_nanoseconds": 231000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ],
+    "paymentMethod": "credit",
+    "paidAmount": 500,
+    "paymentStatus": "paid",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767595515,
+      "_nanoseconds": 265000000
+    }
+  },
+  {
+    "_id": "ORD-BR-MAIN-001-20260105-0002",
+    "orderId": "ORD-BR-MAIN-001-20260105-0002",
+    "customerId": "CUST-TEST-001",
+    "customerName": "Sarah Wanjiru",
+    "customerPhone": "+254722111222",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20260105-0002-G01",
+        "type": "Suit",
+        "color": "Blue",
+        "services": [
+          "dry-clean",
+          "express"
+        ],
+        "price": 1200,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 1200,
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1767683830,
+      "_nanoseconds": 801000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767597432,
+      "_nanoseconds": 169000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1767597432,
+          "_nanoseconds": 169000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ],
+    "paymentMethod": "credit",
+    "paidAmount": 1200,
+    "paymentStatus": "paid",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767598640,
+      "_nanoseconds": 553000000
+    }
+  },
+  {
+    "_id": "ORD-BR-MAIN-001-20260105-0003",
+    "orderId": "ORD-BR-MAIN-001-20260105-0003",
+    "customerId": "CUST-TEST-005",
+    "customerName": "Mary Njeri",
+    "customerPhone": "+254766000111",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20260105-0003-G01",
+        "type": "Suit",
+        "color": "Yellow",
+        "services": [
+          "dry-clean",
+          "express"
+        ],
+        "price": 1500,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 1500,
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1767685680,
+      "_nanoseconds": 667000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767599282,
+      "_nanoseconds": 297000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1767599282,
+          "_nanoseconds": 297000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ],
+    "paymentMethod": "credit",
+    "paidAmount": 1500,
+    "paymentStatus": "paid",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767599314,
+      "_nanoseconds": 456000000
+    }
+  },
+  {
+    "_id": "ORD-BR-MAIN-001-20260105-0004",
+    "orderId": "ORD-BR-MAIN-001-20260105-0004",
+    "customerId": "CUST-MIYMP2CB-MX24O",
+    "customerName": "Jane Smith",
+    "customerPhone": "+254733445566",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20260105-0004-G01",
+        "type": "Blouse",
+        "color": "navy blue",
+        "services": [
+          "dry-clean"
+        ],
+        "price": 600,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 600,
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1767773636,
+      "_nanoseconds": 370000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767600837,
+      "_nanoseconds": 965000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1767600837,
+          "_nanoseconds": 965000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ],
+    "paymentMethod": "credit",
+    "paidAmount": 600,
+    "paymentStatus": "paid",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767600854,
+      "_nanoseconds": 474000000
+    }
+  },
+  {
+    "_id": "ORD-BR-MAIN-001-20260109-0001",
+    "orderId": "ORD-BR-MAIN-001-20260109-0001",
+    "customerId": "CUST-MK3SCJ4X-J7064",
+    "customerName": "Alex Mwakideu",
+    "customerPhone": "+254722336699",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20260109-0001-G01",
+        "type": "Suit",
+        "color": "Green",
+        "services": [
+          "dry-clean",
+          "express"
+        ],
+        "price": 1000,
+        "status": "received",
+        "photos": []
+      },
+      {
+        "garmentId": "ORD-BR-MAIN-001-20260109-0001-G02",
+        "type": "Dress",
+        "color": "white",
+        "services": [
+          "dry-clean",
+          "express"
+        ],
+        "price": 1800,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 2800,
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1768053369,
+      "_nanoseconds": 891000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767966971,
+      "_nanoseconds": 352000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1767966971,
+          "_nanoseconds": 352000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ],
+    "paymentMethod": "credit",
+    "paidAmount": 2800,
+    "paymentStatus": "paid",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767967398,
+      "_nanoseconds": 48000000
+    }
+  },
+  {
+    "_id": "ORD-BR-MAIN-001-20260113-0001",
+    "orderId": "ORD-BR-MAIN-001-20260113-0001",
+    "customerId": "CUST-MIYN8W4G-L78PQ",
+    "customerName": "Maniac",
+    "customerPhone": "+254790732448",
+    "branchId": "BR-MAIN-001",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-BR-MAIN-001-20260113-0001-G01",
+        "type": "Shirt",
+        "color": "Green",
+        "services": [
+          "dry-clean",
+          "express"
+        ],
+        "price": 500,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 500,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1768381636,
+      "_nanoseconds": 447000000
+    },
+    "createdBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1768295237,
+      "_nanoseconds": 787000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1768295237,
+      "_nanoseconds": 787000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1768295237,
+          "_nanoseconds": 787000000
+        },
+        "updatedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1"
+      }
+    ]
+  },
+  {
+    "_id": "ORD-HURLINGHAM-20260107-0001",
+    "orderId": "ORD-HURLINGHAM-20260107-0001",
+    "customerId": "CUST-MK3SCJ4X-J7064",
+    "customerName": "Alex Mwakideu",
+    "customerPhone": "+254722336699",
+    "branchId": "HURLINGHAM",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-HURLINGHAM-20260107-0001-G01",
+        "type": "Shirt",
+        "color": "black",
+        "services": [
+          "dry-clean",
+          "express"
+        ],
+        "price": 500,
+        "status": "received",
+        "photos": []
+      },
+      {
+        "garmentId": "ORD-HURLINGHAM-20260107-0001-G02",
+        "type": "Scarf",
+        "color": "Blue",
+        "services": [
+          "pressing",
+          "express"
+        ],
+        "price": 250,
+        "status": "received",
+        "photos": []
+      },
+      {
+        "garmentId": "ORD-HURLINGHAM-20260107-0001-G03",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "dry-clean"
+        ],
+        "price": 1000,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 1750,
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1767862686,
+      "_nanoseconds": 960000000
+    },
+    "createdBy": "9y7IbJW4snO7tzpIpQ9mqcXUrsf2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767776288,
+      "_nanoseconds": 463000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1767776288,
+          "_nanoseconds": 463000000
+        },
+        "updatedBy": "9y7IbJW4snO7tzpIpQ9mqcXUrsf2"
+      }
+    ],
+    "paymentMethod": "credit",
+    "paidAmount": 1750,
+    "paymentStatus": "paid",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767776324,
+      "_nanoseconds": 896000000
+    }
+  },
+  {
+    "_id": "ORD-HURLINGHAM-20260107-0002",
+    "orderId": "ORD-HURLINGHAM-20260107-0002",
+    "customerId": "CUST-MK3SCJ4X-J7064",
+    "customerName": "Alex Mwakideu",
+    "customerPhone": "+254722336699",
+    "branchId": "HURLINGHAM",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-HURLINGHAM-20260107-0002-G01",
+        "type": "Other",
+        "color": "black",
+        "services": [
+          "dry-clean"
+        ],
+        "price": 850,
+        "status": "received",
+        "photos": []
+      },
+      {
+        "garmentId": "ORD-HURLINGHAM-20260107-0002-G02",
+        "type": "Other",
+        "color": "black",
+        "services": [
+          "dry-clean"
+        ],
+        "price": 3500,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 4350,
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1767953691,
+      "_nanoseconds": 370000000
+    },
+    "createdBy": "9y7IbJW4snO7tzpIpQ9mqcXUrsf2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767780893,
+      "_nanoseconds": 174000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1767780893,
+          "_nanoseconds": 174000000
+        },
+        "updatedBy": "9y7IbJW4snO7tzpIpQ9mqcXUrsf2"
+      }
+    ],
+    "paymentMethod": "credit",
+    "paidAmount": 4350,
+    "paymentStatus": "paid",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767780904,
+      "_nanoseconds": 74000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-1287",
+    "orderId": "ORD-MAIN-20251123-1287",
+    "customerId": "CUST-TEST-001",
+    "customerName": "Sarah Wanjiru",
+    "phoneNumber": "+254722111222",
+    "branchId": "main-branch",
+    "status": "delivered",
+    "deliveryId": "DEL-COMPLETE-001",
+    "collectionMethod": "delivery",
+    "returnMethod": "delivery",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "street": "Riverside Drive, Westlands, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2686,
+      "lng": 36.8086
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-1287-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-1287-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-1287-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "delivered"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "delivered",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763908676,
+      "_nanoseconds": 400000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763995076,
+      "_nanoseconds": 400000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-1343",
+    "orderId": "ORD-MAIN-20251123-1343",
+    "customerId": "CUST-TEST-005",
+    "customerName": "Mary Njeri",
+    "phoneNumber": "+254766000111",
+    "branchId": "main-branch",
+    "status": "out_for_delivery",
+    "deliveryId": "DEL-PROGRESS-001",
+    "collectionMethod": "delivery",
+    "returnMethod": "delivery",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "street": "Dennis Pritt Road, Kilimani, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2908,
+      "lng": 36.7864
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-1343-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-1343-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-1343-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763908674,
+      "_nanoseconds": 731000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763995074,
+      "_nanoseconds": 731000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-1853",
+    "orderId": "ORD-MAIN-20251123-1853",
+    "customerId": "CUST-TEST-003",
+    "customerName": "Grace Achieng",
+    "phoneNumber": "+254744666777",
+    "branchId": "main-branch",
+    "status": "ready",
+    "deliveryId": "DEL-PENDING-001",
+    "collectionMethod": "delivery",
+    "returnMethod": "delivery",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "street": "Karen Road, Karen, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.3196,
+      "lng": 36.7073
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-1853-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-1853-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-1853-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763908672,
+      "_nanoseconds": 280000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763995072,
+      "_nanoseconds": 280000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-2017",
+    "orderId": "ORD-MAIN-20251123-2017",
+    "customerId": "CUST-TEST-003",
+    "customerName": "Grace Achieng",
+    "phoneNumber": "+254744666777",
+    "branchId": "main-branch",
+    "status": "ready",
+    "deliveryId": "DEL-PENDING-001",
+    "deliveryAddress": {
+      "street": "Karen Road, Karen, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.3196,
+      "lng": 36.7073
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-2017-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-2017-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-2017-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763907611,
+      "_nanoseconds": 546000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763994011,
+      "_nanoseconds": 546000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-3016",
+    "orderId": "ORD-MAIN-20251123-3016",
+    "customerId": "CUST-TEST-001",
+    "customerName": "Sarah Wanjiru",
+    "phoneNumber": "+254722111222",
+    "branchId": "main-branch",
+    "status": "delivered",
+    "deliveryId": "DEL-COMPLETE-001",
+    "deliveryAddress": {
+      "street": "Riverside Drive, Westlands, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2686,
+      "lng": 36.8086
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-3016-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-3016-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-3016-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "delivered"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "delivered",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763907615,
+      "_nanoseconds": 656000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763994015,
+      "_nanoseconds": 656000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-3567",
+    "orderId": "ORD-MAIN-20251123-3567",
+    "customerId": "CUST-TEST-002",
+    "customerName": "David Kamau",
+    "phoneNumber": "+254733444555",
+    "branchId": "main-branch",
+    "status": "delivered",
+    "deliveryId": "DEL-COMPLETE-001",
+    "collectionMethod": "delivery",
+    "returnMethod": "delivery",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "street": "Wood Avenue, Kilimani, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2899,
+      "lng": 36.7836
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-3567-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-3567-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-3567-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "delivered"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "delivered",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763908677,
+      "_nanoseconds": 492000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763995077,
+      "_nanoseconds": 492000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-3579",
+    "orderId": "ORD-MAIN-20251123-3579",
+    "customerId": "CUST-TEST-002",
+    "customerName": "David Kamau",
+    "phoneNumber": "+254733444555",
+    "branchId": "main-branch",
+    "collectionMethod": "pickup_required",
+    "returnMethod": "delivery_required",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "label": "Home",
+      "address": "Wood Avenue, Kilimani, Nairobi",
+      "coordinates": {
+        "lat": -1.2899,
+        "lng": 36.7836
+      }
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-3579-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-3579-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-3579-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912192,
+      "_nanoseconds": 624000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763998592,
+      "_nanoseconds": 624000000
+    },
+    "deliveryId": "DEL202511264603",
+    "status": "out_for_delivery",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764182197,
+      "_nanoseconds": 465000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-4404",
+    "orderId": "ORD-MAIN-20251123-4404",
+    "customerId": "CUST-TEST-002",
+    "customerName": "David Kamau",
+    "phoneNumber": "+254733444555",
+    "branchId": "main-branch",
+    "status": "ready",
+    "deliveryId": "DEL-PENDING-001",
+    "collectionMethod": "delivery",
+    "returnMethod": "delivery",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "street": "Wood Avenue, Kilimani, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2899,
+      "lng": 36.7836
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-4404-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-4404-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-4404-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763908671,
+      "_nanoseconds": 976000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763995071,
+      "_nanoseconds": 976000000
+    },
+    "deliveryInstructions": "Call before arrival"
+  },
+  {
+    "_id": "ORD-MAIN-20251123-4441",
+    "orderId": "ORD-MAIN-20251123-4441",
+    "customerId": "CUST-TEST-004",
+    "customerName": "James Omondi",
+    "phoneNumber": "+254755888999",
+    "branchId": "main-branch",
+    "deliveryId": "DEL-PROGRESS-001",
+    "collectionMethod": "delivery",
+    "returnMethod": "delivery",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "street": "Ngong Road, Kilimani, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2949,
+      "lng": 36.7813
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-4441-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-4441-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-4441-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763908673,
+      "_nanoseconds": 649000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763995073,
+      "_nanoseconds": 649000000
+    },
+    "deliveryStatus": "delivered",
+    "deliveredAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763908676,
+      "_nanoseconds": 111000000
+    },
+    "status": "delivered"
+  },
+  {
+    "_id": "ORD-MAIN-20251123-5051",
+    "orderId": "ORD-MAIN-20251123-5051",
+    "customerId": "CUST-TEST-003",
+    "customerName": "Grace Achieng",
+    "phoneNumber": "+254744666777",
+    "branchId": "main-branch",
+    "status": "ready",
+    "deliveryId": "DEL-PENDING-001",
+    "collectionMethod": "pickup_required",
+    "returnMethod": "delivery_required",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "label": "Home",
+      "address": "Karen Road, Karen, Nairobi",
+      "coordinates": {
+        "lat": -1.3196,
+        "lng": 36.7073
+      }
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-5051-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-5051-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-5051-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912192,
+      "_nanoseconds": 937000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763998592,
+      "_nanoseconds": 937000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-5497",
+    "orderId": "ORD-MAIN-20251123-5497",
+    "customerId": "CUST-TEST-001",
+    "customerName": "Sarah Wanjiru",
+    "phoneNumber": "+254722111222",
+    "branchId": "main-branch",
+    "collectionMethod": "pickup_required",
+    "returnMethod": "delivery_required",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "label": "Home",
+      "address": "Riverside Drive, Westlands, Nairobi",
+      "coordinates": {
+        "lat": -1.2686,
+        "lng": 36.8086
+      }
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-5497-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-5497-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-5497-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912191,
+      "_nanoseconds": 520000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763998591,
+      "_nanoseconds": 520000000
+    },
+    "deliveryId": "DEL202511264603",
+    "status": "out_for_delivery",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764182197,
+      "_nanoseconds": 466000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-5774",
+    "orderId": "ORD-MAIN-20251123-5774",
+    "customerId": "CUST-TEST-005",
+    "customerName": "Mary Njeri",
+    "phoneNumber": "+254766000111",
+    "branchId": "main-branch",
+    "status": "out_for_delivery",
+    "deliveryId": "DEL-PROGRESS-001",
+    "deliveryAddress": {
+      "street": "Dennis Pritt Road, Kilimani, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2908,
+      "lng": 36.7864
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-5774-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-5774-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-5774-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763907613,
+      "_nanoseconds": 905000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763994013,
+      "_nanoseconds": 905000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-6286",
+    "orderId": "ORD-MAIN-20251123-6286",
+    "customerId": "CUST-TEST-002",
+    "customerName": "David Kamau",
+    "phoneNumber": "+254733444555",
+    "branchId": "main-branch",
+    "status": "delivered",
+    "deliveryId": "DEL-COMPLETE-001",
+    "collectionMethod": "pickup_required",
+    "returnMethod": "delivery_required",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "label": "Home",
+      "address": "Wood Avenue, Kilimani, Nairobi",
+      "coordinates": {
+        "lat": -1.2899,
+        "lng": 36.7836
+      }
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-6286-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-6286-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-6286-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "delivered"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "delivered",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912198,
+      "_nanoseconds": 122000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763998598,
+      "_nanoseconds": 122000000
+    },
+    "deliveryInstructions": "Call before arrival"
+  },
+  {
+    "_id": "ORD-MAIN-20251123-6393",
+    "orderId": "ORD-MAIN-20251123-6393",
+    "customerId": "CUST-TEST-002",
+    "customerName": "David Kamau",
+    "phoneNumber": "+254733444555",
+    "branchId": "main-branch",
+    "status": "ready",
+    "deliveryId": "DEL-PENDING-001",
+    "deliveryAddress": {
+      "street": "Wood Avenue, Kilimani, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2899,
+      "lng": 36.7836
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-6393-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-6393-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-6393-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763907611,
+      "_nanoseconds": 137000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763994011,
+      "_nanoseconds": 137000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-6853",
+    "orderId": "ORD-MAIN-20251123-6853",
+    "customerId": "CUST-TEST-004",
+    "customerName": "James Omondi",
+    "phoneNumber": "+254755888999",
+    "branchId": "main-branch",
+    "deliveryId": "DEL-PROGRESS-001",
+    "collectionMethod": "pickup_required",
+    "returnMethod": "delivery_required",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "label": "Home",
+      "address": "Ngong Road, Kilimani, Nairobi",
+      "coordinates": {
+        "lat": -1.2949,
+        "lng": 36.7813
+      }
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-6853-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-6853-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-6853-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912194,
+      "_nanoseconds": 333000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763998594,
+      "_nanoseconds": 333000000
+    },
+    "deliveryStatus": "delivered",
+    "deliveredAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912196,
+      "_nanoseconds": 757000000
+    },
+    "status": "delivered"
+  },
+  {
+    "_id": "ORD-MAIN-20251123-7485",
+    "orderId": "ORD-MAIN-20251123-7485",
+    "customerId": "CUST-TEST-004",
+    "customerName": "James Omondi",
+    "phoneNumber": "+254755888999",
+    "branchId": "main-branch",
+    "deliveryId": "DEL-PROGRESS-001",
+    "deliveryAddress": {
+      "street": "Ngong Road, Kilimani, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2949,
+      "lng": 36.7813
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-7485-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-7485-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-7485-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763907612,
+      "_nanoseconds": 919000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763994012,
+      "_nanoseconds": 919000000
+    },
+    "deliveryStatus": "delivered",
+    "deliveredAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763907615,
+      "_nanoseconds": 294000000
+    },
+    "status": "delivered"
+  },
+  {
+    "_id": "ORD-MAIN-20251123-7878",
+    "orderId": "ORD-MAIN-20251123-7878",
+    "customerId": "CUST-TEST-002",
+    "customerName": "David Kamau",
+    "phoneNumber": "+254733444555",
+    "branchId": "main-branch",
+    "status": "delivered",
+    "deliveryId": "DEL-COMPLETE-001",
+    "deliveryAddress": {
+      "street": "Wood Avenue, Kilimani, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2899,
+      "lng": 36.7836
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-7878-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-7878-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-7878-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "delivered"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "delivered",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763907616,
+      "_nanoseconds": 681000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763994016,
+      "_nanoseconds": 681000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-8957",
+    "orderId": "ORD-MAIN-20251123-8957",
+    "customerId": "CUST-TEST-005",
+    "customerName": "Mary Njeri",
+    "phoneNumber": "+254766000111",
+    "branchId": "main-branch",
+    "status": "out_for_delivery",
+    "deliveryId": "DEL-PROGRESS-001",
+    "collectionMethod": "pickup_required",
+    "returnMethod": "delivery_required",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "label": "Home",
+      "address": "Dennis Pritt Road, Kilimani, Nairobi",
+      "coordinates": {
+        "lat": -1.2908,
+        "lng": 36.7864
+      }
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-8957-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-8957-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-8957-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912195,
+      "_nanoseconds": 370000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763998595,
+      "_nanoseconds": 371000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-9090",
+    "orderId": "ORD-MAIN-20251123-9090",
+    "customerId": "CUST-TEST-001",
+    "customerName": "Sarah Wanjiru",
+    "phoneNumber": "+254722111222",
+    "branchId": "main-branch",
+    "status": "delivered",
+    "deliveryId": "DEL-COMPLETE-001",
+    "collectionMethod": "pickup_required",
+    "returnMethod": "delivery_required",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "label": "Home",
+      "address": "Riverside Drive, Westlands, Nairobi",
+      "coordinates": {
+        "lat": -1.2686,
+        "lng": 36.8086
+      }
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-9090-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-9090-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "delivered"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-9090-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "delivered"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "delivered",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912197,
+      "_nanoseconds": 78000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763998597,
+      "_nanoseconds": 78000000
+    },
+    "deliveryInstructions": "Call before arrival"
+  },
+  {
+    "_id": "ORD-MAIN-20251123-9714",
+    "orderId": "ORD-MAIN-20251123-9714",
+    "customerId": "CUST-TEST-001",
+    "customerName": "Sarah Wanjiru",
+    "phoneNumber": "+254722111222",
+    "branchId": "main-branch",
+    "status": "ready",
+    "deliveryId": "DEL-PENDING-001",
+    "deliveryAddress": {
+      "street": "Riverside Drive, Westlands, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2686,
+      "lng": 36.8086
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-9714-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-9714-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-9714-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763907610,
+      "_nanoseconds": 153000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763994010,
+      "_nanoseconds": 153000000
+    }
+  },
+  {
+    "_id": "ORD-MAIN-20251123-9879",
+    "orderId": "ORD-MAIN-20251123-9879",
+    "customerId": "CUST-TEST-001",
+    "customerName": "Sarah Wanjiru",
+    "phoneNumber": "+254722111222",
+    "branchId": "main-branch",
+    "status": "ready",
+    "deliveryId": "DEL-PENDING-001",
+    "collectionMethod": "delivery",
+    "returnMethod": "delivery",
+    "pickupAddress": "Lorenzo Dry Cleaners, Kilimani, Nairobi",
+    "deliveryAddress": {
+      "street": "Riverside Drive, Westlands, Nairobi",
+      "city": "Nairobi",
+      "state": "Nairobi County",
+      "zipCode": "00100"
+    },
+    "deliveryCoordinates": {
+      "lat": -1.2686,
+      "lng": 36.8086
+    },
+    "items": [
+      {
+        "type": "Suit",
+        "service": "Dry Clean",
+        "price": 800,
+        "color": "Navy Blue"
+      },
+      {
+        "type": "Shirt",
+        "service": "Wash & Iron",
+        "price": 150,
+        "color": "White"
+      },
+      {
+        "type": "Trousers",
+        "service": "Dry Clean",
+        "price": 400,
+        "color": "Grey"
+      }
+    ],
+    "garments": [
+      {
+        "garmentId": "ORD-MAIN-20251123-9879-G01",
+        "type": "Suit",
+        "color": "Navy Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 800,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-9879-G02",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash & Iron"
+        ],
+        "price": 150,
+        "status": "ready"
+      },
+      {
+        "garmentId": "ORD-MAIN-20251123-9879-G03",
+        "type": "Trousers",
+        "color": "Grey",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 400,
+        "status": "ready"
+      }
+    ],
+    "totalAmount": 1350,
+    "paidAmount": 1350,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "deliveryStatus": "pending",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763908670,
+      "_nanoseconds": 884000000
+    },
+    "createdBy": "admin-test",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763995070,
+      "_nanoseconds": 884000000
+    }
+  },
+  {
+    "_id": "ORD-main-branch-20251025-0001",
+    "orderId": "ORD-main-branch-20251025-0001",
+    "customerId": "CUST-TEST004",
+    "customerName": "Grace Njeri",
+    "customerPhone": "+254745678901",
+    "branchId": "main-branch",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-main-branch-20251025-0001-G01",
+        "type": "Blouse",
+        "color": "Black",
+        "brand": "",
+        "services": [
+          "wash",
+          "iron"
+        ],
+        "price": 150,
+        "status": "received",
+        "specialInstructions": "",
+        "photos": []
+      },
+      {
+        "garmentId": "ORD-main-branch-20251025-0001-G02",
+        "type": "Dress",
+        "color": "Blue",
+        "brand": "",
+        "services": [
+          "wash",
+          "iron"
+        ],
+        "price": 150,
+        "status": "received",
+        "specialInstructions": "",
+        "photos": []
+      },
+      {
+        "garmentId": "ORD-main-branch-20251025-0001-G03",
+        "type": "Suit",
+        "color": "Nevy Blue",
+        "brand": "",
+        "services": [
+          "iron",
+          "dry-clean",
+          "starch"
+        ],
+        "price": 280,
+        "status": "received",
+        "specialInstructions": "",
+        "photos": []
+      },
+      {
+        "garmentId": "ORD-main-branch-20251025-0001-G04",
+        "type": "Curtains",
+        "color": "Mustard",
+        "brand": "",
+        "services": [
+          "dry-clean",
+          "express"
+        ],
+        "price": 300,
+        "status": "received",
+        "specialInstructions": "",
+        "photos": []
+      }
+    ],
+    "totalAmount": 880,
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1761490828,
+      "_nanoseconds": 40000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761404429,
+      "_nanoseconds": 53000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1761404429,
+          "_nanoseconds": 53000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "paymentMethod": "cash",
+    "paidAmount": 880,
+    "paymentStatus": "paid",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761404485,
+      "_nanoseconds": 349000000
+    }
+  },
+  {
+    "_id": "ORD-main-branch-20251027-0001",
+    "orderId": "ORD-main-branch-20251027-0001",
+    "customerId": "CUST-TEST003",
+    "customerName": "Peter Omondi",
+    "customerPhone": "+254734567890",
+    "branchId": "main-branch",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-main-branch-20251027-0001-G01",
+        "type": "Pants",
+        "color": "Blue",
+        "services": [
+          "wash",
+          "iron",
+          "starch"
+        ],
+        "price": 180,
+        "status": "received",
+        "photos": [],
+        "hasNotableDamage": true,
+        "initialInspectionNotes": "Oil stain on the back, tear on the inner thigh and missing zip."
+      }
+    ],
+    "totalAmount": 180,
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1761744188,
+      "_nanoseconds": 973000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761571390,
+      "_nanoseconds": 54000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1761571390,
+          "_nanoseconds": 53000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "paymentMethod": "cash",
+    "paidAmount": 180,
+    "paymentStatus": "paid",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761571406,
+      "_nanoseconds": 469000000
+    }
+  },
+  {
+    "_id": "ORD-main-branch-20251028-0001",
+    "orderId": "ORD-main-branch-20251028-0001",
+    "customerId": "CUST-TEST004",
+    "customerName": "Grace Njeri",
+    "customerPhone": "+254745678901",
+    "branchId": "main-branch",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "ORD-main-branch-20251028-0001-G01",
+        "type": "Dress",
+        "color": "Black",
+        "services": [
+          "dry-clean",
+          "express"
+        ],
+        "price": 300,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 300,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1761748568,
+      "_nanoseconds": 576000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761662169,
+      "_nanoseconds": 644000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761662169,
+      "_nanoseconds": 644000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1761662169,
+          "_nanoseconds": 644000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ]
+  },
+  {
+    "_id": "ORD-main-branch-20251030-0001",
+    "orderId": "ORD-main-branch-20251030-0001",
+    "customerId": "CUST-MH1QJ4JL-5ULGV",
+    "customerName": "John Kamau",
+    "customerPhone": "+254700075810",
+    "branchId": "main-branch",
+    "garments": [
+      {
+        "garmentId": "ORD-main-branch-20251030-0001-G01",
+        "type": "Suit",
+        "color": "Black",
+        "services": [
+          "dry-clean",
+          "iron",
+          "express"
+        ],
+        "price": 375,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 375,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1761909437,
+      "_nanoseconds": 372000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761823038,
+      "_nanoseconds": 498000000
+    },
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1761823038,
+          "_nanoseconds": 497000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1761823125,
+          "_nanoseconds": 94000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "status": "queued",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761823125,
+      "_nanoseconds": 94000000
+    }
+  },
+  {
+    "_id": "ORD-main-branch-20251120-0001",
+    "orderId": "ORD-main-branch-20251120-0001",
+    "customerId": "CUST-MI7TQ5ND-RODHV",
+    "customerName": "Gachengoh Marugu",
+    "customerPhone": "+254725462859",
+    "branchId": "main-branch",
+    "garments": [
+      {
+        "garmentId": "ORD-main-branch-20251120-0001-G01",
+        "type": "Dress",
+        "color": "White",
+        "services": [
+          "iron",
+          "wash"
+        ],
+        "price": 150,
+        "status": "received",
+        "photos": []
+      }
+    ],
+    "totalAmount": 150,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763839759,
+      "_nanoseconds": 910000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763666960,
+      "_nanoseconds": 956000000
+    },
+    "statusHistory": [
+      {
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763666960,
+          "_nanoseconds": 956000000
+        },
+        "status": "received"
+      },
+      {
+        "status": "inspection",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763667010,
+          "_nanoseconds": 814000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "status": "inspection",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763667010,
+      "_nanoseconds": 814000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220001",
+    "orderId": "WESTLANDS202511220001",
+    "customerId": "CUST1763815885782607",
+    "customerName": "Dev Super Admin",
+    "customerPhone": "+254725462859",
+    "branchId": "WESTLANDS",
+    "status": "delivered",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220001G01",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220001G02",
+        "type": "Jacket",
+        "color": "Black",
+        "services": [
+          "Wash",
+          "Iron"
+        ],
+        "price": 200,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 350,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763491715,
+      "_nanoseconds": 775000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763318915,
+      "_nanoseconds": 775000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763318915,
+          "_nanoseconds": 775000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763333315,
+          "_nanoseconds": 775000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763347715,
+          "_nanoseconds": 775000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763362115,
+          "_nanoseconds": 775000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763376515,
+          "_nanoseconds": 775000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "quality_check",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763390915,
+          "_nanoseconds": 775000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "packaging",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763405315,
+          "_nanoseconds": 775000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ready",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763419715,
+          "_nanoseconds": 775000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "out_for_delivery",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763434115,
+          "_nanoseconds": 775000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "delivered",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763448515,
+          "_nanoseconds": 775000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822915,
+      "_nanoseconds": 775000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220002",
+    "orderId": "WESTLANDS202511220002",
+    "customerId": "CUST1763815885782607",
+    "customerName": "Dev Super Admin",
+    "customerPhone": "+254725462859",
+    "branchId": "WESTLANDS",
+    "status": "drying",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220002G01",
+        "type": "Suit",
+        "color": "Beige",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220002G02",
+        "type": "Skirt",
+        "color": "Black",
+        "services": [
+          "Wash",
+          "Iron",
+          "Starch"
+        ],
+        "price": 230,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 380,
+    "paidAmount": 380,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763473717,
+      "_nanoseconds": 269000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763300917,
+      "_nanoseconds": 269000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763300917,
+          "_nanoseconds": 269000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763315317,
+          "_nanoseconds": 269000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763329717,
+          "_nanoseconds": 269000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763344117,
+          "_nanoseconds": 269000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822917,
+      "_nanoseconds": 270000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220003",
+    "orderId": "WESTLANDS202511220003",
+    "customerId": "CUST1763815885782607",
+    "customerName": "Dev Super Admin",
+    "customerPhone": "+254725462859",
+    "branchId": "WESTLANDS",
+    "status": "quality_check",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220003G01",
+        "type": "Suit",
+        "color": "Black",
+        "services": [
+          "Wash",
+          "Iron"
+        ],
+        "price": 200,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220003G02",
+        "type": "Skirt",
+        "color": "Gray",
+        "services": [
+          "Wash",
+          "Iron",
+          "Starch"
+        ],
+        "price": 230,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 430,
+    "paidAmount": 430,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763902117,
+      "_nanoseconds": 843000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763729317,
+      "_nanoseconds": 843000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763729317,
+          "_nanoseconds": 843000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763743717,
+          "_nanoseconds": 843000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763758117,
+          "_nanoseconds": 843000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763772517,
+          "_nanoseconds": 843000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763786917,
+          "_nanoseconds": 843000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "quality_check",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763801317,
+          "_nanoseconds": 843000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822917,
+      "_nanoseconds": 844000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220004",
+    "orderId": "WESTLANDS202511220004",
+    "customerId": "CUST1763815885782607",
+    "customerName": "Dev Super Admin",
+    "customerPhone": "+254725462859",
+    "branchId": "WESTLANDS",
+    "status": "packaging",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220004G01",
+        "type": "Coat",
+        "color": "Red",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220004G02",
+        "type": "Pants",
+        "color": "Red",
+        "services": [
+          "Dry Clean",
+          "Starch"
+        ],
+        "price": 280,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220004G03",
+        "type": "Jacket",
+        "color": "White",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 780,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763527718,
+      "_nanoseconds": 426000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763354918,
+      "_nanoseconds": 426000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763354918,
+          "_nanoseconds": 426000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763369318,
+          "_nanoseconds": 426000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763383718,
+          "_nanoseconds": 426000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763398118,
+          "_nanoseconds": 426000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763412518,
+          "_nanoseconds": 426000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "quality_check",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763426918,
+          "_nanoseconds": 426000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "packaging",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763441318,
+          "_nanoseconds": 426000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822918,
+      "_nanoseconds": 427000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220005",
+    "orderId": "WESTLANDS202511220005",
+    "customerId": "CUST1763815885782607",
+    "customerName": "Dev Super Admin",
+    "customerPhone": "+254725462859",
+    "branchId": "WESTLANDS",
+    "status": "quality_check",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220005G01",
+        "type": "Skirt",
+        "color": "Beige",
+        "services": [
+          "Dry Clean",
+          "Iron",
+          "Starch"
+        ],
+        "price": 330,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220005G02",
+        "type": "Suit",
+        "color": "Black",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220005G03",
+        "type": "Pants",
+        "color": "Red",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 730,
+    "paidAmount": 730,
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763603319,
+      "_nanoseconds": 36000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763430519,
+      "_nanoseconds": 36000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763430519,
+          "_nanoseconds": 36000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763444919,
+          "_nanoseconds": 36000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763459319,
+          "_nanoseconds": 36000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763473719,
+          "_nanoseconds": 36000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763488119,
+          "_nanoseconds": 36000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "quality_check",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763502519,
+          "_nanoseconds": 36000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822919,
+      "_nanoseconds": 36000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220006",
+    "orderId": "WESTLANDS202511220006",
+    "customerId": "CUST1763815885782607",
+    "customerName": "Dev Super Admin",
+    "customerPhone": "+254725462859",
+    "branchId": "WESTLANDS",
+    "status": "drying",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220006G01",
+        "type": "Blouse",
+        "color": "Navy",
+        "services": [
+          "Dry Clean",
+          "Starch"
+        ],
+        "price": 280,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220006G02",
+        "type": "Pants",
+        "color": "Beige",
+        "services": [
+          "Dry Clean",
+          "Iron"
+        ],
+        "price": 300,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220006G03",
+        "type": "Coat",
+        "color": "Blue",
+        "services": [
+          "Dry Clean",
+          "Iron"
+        ],
+        "price": 300,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 880,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763675319,
+      "_nanoseconds": 691000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763502519,
+      "_nanoseconds": 691000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763502519,
+          "_nanoseconds": 691000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763516919,
+          "_nanoseconds": 691000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763531319,
+          "_nanoseconds": 691000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763545719,
+          "_nanoseconds": 691000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822919,
+      "_nanoseconds": 691000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220007",
+    "orderId": "WESTLANDS202511220007",
+    "customerId": "CUST1763815885782607",
+    "customerName": "Dev Super Admin",
+    "customerPhone": "+254725462859",
+    "branchId": "WESTLANDS",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220007G01",
+        "type": "Pants",
+        "color": "Red",
+        "services": [
+          "Wash",
+          "Starch"
+        ],
+        "price": 180,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220007G02",
+        "type": "Blouse",
+        "color": "Black",
+        "services": [
+          "Dry Clean",
+          "Starch"
+        ],
+        "price": 280,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220007G03",
+        "type": "Jacket",
+        "color": "Black",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 610,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763632120,
+      "_nanoseconds": 276000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763459320,
+      "_nanoseconds": 276000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763459320,
+          "_nanoseconds": 276000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822920,
+      "_nanoseconds": 276000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220008",
+    "orderId": "WESTLANDS202511220008",
+    "customerId": "CUST1763815885782607",
+    "customerName": "Dev Super Admin",
+    "customerPhone": "+254725462859",
+    "branchId": "WESTLANDS",
+    "status": "out_for_delivery",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220008G01",
+        "type": "Coat",
+        "color": "Blue",
+        "services": [
+          "Wash",
+          "Iron",
+          "Starch"
+        ],
+        "price": 230,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220008G02",
+        "type": "Pants",
+        "color": "White",
+        "services": [
+          "Wash",
+          "Iron"
+        ],
+        "price": 200,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 430,
+    "paidAmount": 430,
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763671720,
+      "_nanoseconds": 857000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763498920,
+      "_nanoseconds": 857000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763498920,
+          "_nanoseconds": 857000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763513320,
+          "_nanoseconds": 857000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763527720,
+          "_nanoseconds": 857000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763542120,
+          "_nanoseconds": 857000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763556520,
+          "_nanoseconds": 857000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "quality_check",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763570920,
+          "_nanoseconds": 857000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "packaging",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763585320,
+          "_nanoseconds": 857000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ready",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763599720,
+          "_nanoseconds": 857000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "out_for_delivery",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763614120,
+          "_nanoseconds": 857000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822920,
+      "_nanoseconds": 857000000
+    },
+    "deliveryAddress": "Westlands, Nairobi, Kenya"
+  },
+  {
+    "_id": "WESTLANDS202511220009",
+    "orderId": "WESTLANDS202511220009",
+    "customerId": "CUST1763815885782607",
+    "customerName": "Dev Super Admin",
+    "customerPhone": "+254725462859",
+    "branchId": "WESTLANDS",
+    "status": "queued",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220009G01",
+        "type": "Pants",
+        "color": "Blue",
+        "services": [
+          "Dry Clean",
+          "Iron"
+        ],
+        "price": 300,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220009G02",
+        "type": "Pants",
+        "color": "White",
+        "services": [
+          "Wash",
+          "Iron"
+        ],
+        "price": 200,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 500,
+    "paidAmount": 500,
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763520521,
+      "_nanoseconds": 417000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763347721,
+      "_nanoseconds": 417000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763347721,
+          "_nanoseconds": 417000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763362121,
+          "_nanoseconds": 417000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822921,
+      "_nanoseconds": 417000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220010",
+    "orderId": "WESTLANDS202511220010",
+    "customerId": "CUST1763815885782607",
+    "customerName": "Dev Super Admin",
+    "customerPhone": "+254725462859",
+    "branchId": "WESTLANDS",
+    "status": "quality_check",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220010G01",
+        "type": "Suit",
+        "color": "Red",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220010G02",
+        "type": "Coat",
+        "color": "Blue",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220010G03",
+        "type": "Dress",
+        "color": "White",
+        "services": [
+          "Wash",
+          "Iron"
+        ],
+        "price": 200,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 600,
+    "paidAmount": 600,
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763876921,
+      "_nanoseconds": 994000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763704121,
+      "_nanoseconds": 994000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763704121,
+          "_nanoseconds": 994000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763718521,
+          "_nanoseconds": 994000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763732921,
+          "_nanoseconds": 994000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763747321,
+          "_nanoseconds": 994000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763761721,
+          "_nanoseconds": 994000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "quality_check",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763776121,
+          "_nanoseconds": 994000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822921,
+      "_nanoseconds": 994000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220011",
+    "orderId": "WESTLANDS202511220011",
+    "customerId": "CUST1763815886823001",
+    "customerName": "Rachel Wangare",
+    "customerPhone": "+254712345001",
+    "branchId": "WESTLANDS",
+    "status": "ironing",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220011G01",
+        "type": "Pants",
+        "color": "Black",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220011G02",
+        "type": "Dress",
+        "color": "Black",
+        "services": [
+          "Wash",
+          "Starch"
+        ],
+        "price": 180,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220011G03",
+        "type": "Pants",
+        "color": "White",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 580,
+    "paidAmount": 580,
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763545722,
+      "_nanoseconds": 627000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763372922,
+      "_nanoseconds": 627000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763372922,
+          "_nanoseconds": 627000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763387322,
+          "_nanoseconds": 627000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763401722,
+          "_nanoseconds": 627000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763416122,
+          "_nanoseconds": 627000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763430522,
+          "_nanoseconds": 627000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822922,
+      "_nanoseconds": 627000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220012",
+    "orderId": "WESTLANDS202511220012",
+    "customerId": "CUST1763815887285090",
+    "customerName": "Kelvin Kamau",
+    "customerPhone": "+254723456002",
+    "branchId": "WESTLANDS",
+    "status": "queued",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220012G01",
+        "type": "Skirt",
+        "color": "Black",
+        "services": [
+          "Wash",
+          "Starch"
+        ],
+        "price": 180,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220012G02",
+        "type": "Suit",
+        "color": "Navy",
+        "services": [
+          "Wash",
+          "Iron",
+          "Starch"
+        ],
+        "price": 230,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 410,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763394523,
+      "_nanoseconds": 202000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763221723,
+      "_nanoseconds": 202000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763221723,
+          "_nanoseconds": 202000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763236123,
+          "_nanoseconds": 202000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822923,
+      "_nanoseconds": 202000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220013",
+    "orderId": "WESTLANDS202511220013",
+    "customerId": "CUST1763815887744035",
+    "customerName": "Rose Reeves Wangechi",
+    "customerPhone": "+254734567003",
+    "branchId": "WESTLANDS",
+    "status": "quality_check",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220013G01",
+        "type": "Skirt",
+        "color": "Navy",
+        "services": [
+          "Dry Clean",
+          "Iron"
+        ],
+        "price": 300,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220013G02",
+        "type": "Coat",
+        "color": "Black",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 450,
+    "paidAmount": 450,
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763765323,
+      "_nanoseconds": 764000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763592523,
+      "_nanoseconds": 764000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763592523,
+          "_nanoseconds": 764000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763606923,
+          "_nanoseconds": 764000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763621323,
+          "_nanoseconds": 764000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763635723,
+          "_nanoseconds": 764000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763650123,
+          "_nanoseconds": 764000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "quality_check",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763664523,
+          "_nanoseconds": 764000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822923,
+      "_nanoseconds": 764000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220014",
+    "orderId": "WESTLANDS202511220014",
+    "customerId": "CUST1763815888212579",
+    "customerName": "David Mwangi",
+    "customerPhone": "+254745678004",
+    "branchId": "WESTLANDS",
+    "status": "ironing",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220014G01",
+        "type": "Pants",
+        "color": "White",
+        "services": [
+          "Dry Clean",
+          "Starch"
+        ],
+        "price": 280,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220014G02",
+        "type": "Skirt",
+        "color": "Black",
+        "services": [
+          "Dry Clean",
+          "Iron"
+        ],
+        "price": 300,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220014G03",
+        "type": "Coat",
+        "color": "Beige",
+        "services": [
+          "Dry Clean",
+          "Starch",
+          "Iron"
+        ],
+        "price": 330,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220014G04",
+        "type": "Jacket",
+        "color": "Red",
+        "services": [
+          "Wash",
+          "Iron"
+        ],
+        "price": 200,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 1110,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763754524,
+      "_nanoseconds": 304000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763581724,
+      "_nanoseconds": 304000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763581724,
+          "_nanoseconds": 304000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763596124,
+          "_nanoseconds": 304000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763610524,
+          "_nanoseconds": 304000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763624924,
+          "_nanoseconds": 304000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763639324,
+          "_nanoseconds": 304000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822924,
+      "_nanoseconds": 304000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220015",
+    "orderId": "WESTLANDS202511220015",
+    "customerId": "CUST-TEST004",
+    "customerName": "Grace Njeri",
+    "customerPhone": "+254745678901",
+    "branchId": "WESTLANDS",
+    "status": "drying",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220015G01",
+        "type": "Coat",
+        "color": "White",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220015G02",
+        "type": "Pants",
+        "color": "Navy",
+        "services": [
+          "Dry Clean",
+          "Starch"
+        ],
+        "price": 280,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 530,
+    "paidAmount": 530,
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763808524,
+      "_nanoseconds": 896000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763635724,
+      "_nanoseconds": 896000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763635724,
+          "_nanoseconds": 896000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763650124,
+          "_nanoseconds": 896000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763664524,
+          "_nanoseconds": 896000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763678924,
+          "_nanoseconds": 896000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822924,
+      "_nanoseconds": 896000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220016",
+    "orderId": "WESTLANDS202511220016",
+    "customerId": "CUST1763815886823001",
+    "customerName": "Rachel Wangare",
+    "customerPhone": "+254712345001",
+    "branchId": "WESTLANDS",
+    "status": "out_for_delivery",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220016G01",
+        "type": "Coat",
+        "color": "Black",
+        "services": [
+          "Dry Clean",
+          "Starch"
+        ],
+        "price": 280,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220016G02",
+        "type": "Dress",
+        "color": "Navy",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220016G03",
+        "type": "Shirt",
+        "color": "White",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220016G04",
+        "type": "Suit",
+        "color": "Navy",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220016G05",
+        "type": "Suit",
+        "color": "Black",
+        "services": [
+          "Dry Clean",
+          "Starch"
+        ],
+        "price": 280,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 1210,
+    "paidAmount": 1210,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763765325,
+      "_nanoseconds": 469000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763592525,
+      "_nanoseconds": 469000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763592525,
+          "_nanoseconds": 469000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763606925,
+          "_nanoseconds": 469000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763621325,
+          "_nanoseconds": 469000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763635725,
+          "_nanoseconds": 469000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763650125,
+          "_nanoseconds": 469000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "quality_check",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763664525,
+          "_nanoseconds": 469000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "packaging",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763678925,
+          "_nanoseconds": 469000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ready",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763693325,
+          "_nanoseconds": 469000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "out_for_delivery",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763707725,
+          "_nanoseconds": 469000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822925,
+      "_nanoseconds": 469000000
+    },
+    "deliveryAddress": "Westlands, Nairobi, Kenya"
+  },
+  {
+    "_id": "WESTLANDS202511220017",
+    "orderId": "WESTLANDS202511220017",
+    "customerId": "CUST1763815887285090",
+    "customerName": "Kelvin Kamau",
+    "customerPhone": "+254723456002",
+    "branchId": "WESTLANDS",
+    "status": "queued",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220017G01",
+        "type": "Pants",
+        "color": "Beige",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220017G02",
+        "type": "Coat",
+        "color": "Gray",
+        "services": [
+          "Dry Clean",
+          "Starch"
+        ],
+        "price": 280,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220017G03",
+        "type": "Jacket",
+        "color": "Beige",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 580,
+    "paidAmount": 0,
+    "paymentStatus": "pending",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763434126,
+      "_nanoseconds": 106000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763261326,
+      "_nanoseconds": 106000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763261326,
+          "_nanoseconds": 106000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763275726,
+          "_nanoseconds": 106000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822926,
+      "_nanoseconds": 106000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220018",
+    "orderId": "WESTLANDS202511220018",
+    "customerId": "CUST1763815887744035",
+    "customerName": "Rose Reeves Wangechi",
+    "customerPhone": "+254734567003",
+    "branchId": "WESTLANDS",
+    "status": "packaging",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220018G01",
+        "type": "Skirt",
+        "color": "White",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220018G02",
+        "type": "Suit",
+        "color": "Brown",
+        "services": [
+          "Wash",
+          "Starch"
+        ],
+        "price": 180,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220018G03",
+        "type": "Blouse",
+        "color": "Navy",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220018G04",
+        "type": "Skirt",
+        "color": "Blue",
+        "services": [
+          "Wash",
+          "Starch"
+        ],
+        "price": 180,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220018G05",
+        "type": "Skirt",
+        "color": "White",
+        "services": [
+          "Wash",
+          "Starch"
+        ],
+        "price": 180,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 1040,
+    "paidAmount": 1040,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763426926,
+      "_nanoseconds": 669000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763254126,
+      "_nanoseconds": 669000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763254126,
+          "_nanoseconds": 669000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763268526,
+          "_nanoseconds": 669000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763282926,
+          "_nanoseconds": 669000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763297326,
+          "_nanoseconds": 669000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763311726,
+          "_nanoseconds": 669000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "quality_check",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763326126,
+          "_nanoseconds": 669000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "packaging",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763340526,
+          "_nanoseconds": 669000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822926,
+      "_nanoseconds": 669000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220019",
+    "orderId": "WESTLANDS202511220019",
+    "customerId": "CUST1763815888212579",
+    "customerName": "David Mwangi",
+    "customerPhone": "+254745678004",
+    "branchId": "WESTLANDS",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220019G01",
+        "type": "Pants",
+        "color": "Gray",
+        "services": [
+          "Dry Clean",
+          "Iron",
+          "Starch"
+        ],
+        "price": 330,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220019G02",
+        "type": "Skirt",
+        "color": "Navy",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220019G03",
+        "type": "Blouse",
+        "color": "Red",
+        "services": [
+          "Wash",
+          "Starch"
+        ],
+        "price": 180,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220019G04",
+        "type": "Coat",
+        "color": "Gray",
+        "services": [
+          "Wash",
+          "Iron"
+        ],
+        "price": 200,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 960,
+    "paidAmount": 960,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763416127,
+      "_nanoseconds": 246000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763243327,
+      "_nanoseconds": 246000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763243327,
+          "_nanoseconds": 246000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822927,
+      "_nanoseconds": 246000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220020",
+    "orderId": "WESTLANDS202511220020",
+    "customerId": "CUST-TEST004",
+    "customerName": "Grace Njeri",
+    "customerPhone": "+254745678901",
+    "branchId": "WESTLANDS",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220020G01",
+        "type": "Coat",
+        "color": "Brown",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220020G02",
+        "type": "Suit",
+        "color": "Blue",
+        "services": [
+          "Wash",
+          "Starch"
+        ],
+        "price": 180,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 330,
+    "paidAmount": 330,
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763884127,
+      "_nanoseconds": 818000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763711327,
+      "_nanoseconds": 818000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763711327,
+          "_nanoseconds": 818000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822927,
+      "_nanoseconds": 818000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220021",
+    "orderId": "WESTLANDS202511220021",
+    "customerId": "CUST1763815886823001",
+    "customerName": "Rachel Wangare",
+    "customerPhone": "+254712345001",
+    "branchId": "WESTLANDS",
+    "status": "out_for_delivery",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220021G01",
+        "type": "Coat",
+        "color": "Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220021G02",
+        "type": "Dress",
+        "color": "Black",
+        "services": [
+          "Wash",
+          "Iron",
+          "Starch"
+        ],
+        "price": 230,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220021G03",
+        "type": "Skirt",
+        "color": "Gray",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 630,
+    "paidAmount": 630,
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763628528,
+      "_nanoseconds": 394000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763455728,
+      "_nanoseconds": 394000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763455728,
+          "_nanoseconds": 394000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763470128,
+          "_nanoseconds": 394000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763484528,
+          "_nanoseconds": 394000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763498928,
+          "_nanoseconds": 394000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763513328,
+          "_nanoseconds": 394000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "quality_check",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763527728,
+          "_nanoseconds": 394000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "packaging",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763542128,
+          "_nanoseconds": 394000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ready",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763556528,
+          "_nanoseconds": 394000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "out_for_delivery",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763570928,
+          "_nanoseconds": 394000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822928,
+      "_nanoseconds": 394000000
+    },
+    "deliveryAddress": "Westlands, Nairobi, Kenya"
+  },
+  {
+    "_id": "WESTLANDS202511220022",
+    "orderId": "WESTLANDS202511220022",
+    "customerId": "CUST1763815887285090",
+    "customerName": "Kelvin Kamau",
+    "customerPhone": "+254723456002",
+    "branchId": "WESTLANDS",
+    "status": "packaging",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220022G01",
+        "type": "Coat",
+        "color": "Navy",
+        "services": [
+          "Dry Clean",
+          "Starch"
+        ],
+        "price": 280,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220022G02",
+        "type": "Skirt",
+        "color": "Gray",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220022G03",
+        "type": "Skirt",
+        "color": "Navy",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220022G04",
+        "type": "Dress",
+        "color": "Blue",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220022G05",
+        "type": "Skirt",
+        "color": "Gray",
+        "services": [
+          "Dry Clean",
+          "Iron"
+        ],
+        "price": 300,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 1330,
+    "paidAmount": 1330,
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763761729,
+      "_nanoseconds": 66000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763588929,
+      "_nanoseconds": 66000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763588929,
+          "_nanoseconds": 66000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763603329,
+          "_nanoseconds": 66000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "washing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763617729,
+          "_nanoseconds": 66000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "drying",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763632129,
+          "_nanoseconds": 66000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "ironing",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763646529,
+          "_nanoseconds": 66000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "quality_check",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763660929,
+          "_nanoseconds": 66000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "packaging",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763675329,
+          "_nanoseconds": 66000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822929,
+      "_nanoseconds": 66000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220023",
+    "orderId": "WESTLANDS202511220023",
+    "customerId": "CUST1763815887744035",
+    "customerName": "Rose Reeves Wangechi",
+    "customerPhone": "+254734567003",
+    "branchId": "WESTLANDS",
+    "status": "received",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220023G01",
+        "type": "Suit",
+        "color": "Gray",
+        "services": [
+          "Wash",
+          "Iron"
+        ],
+        "price": 200,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220023G02",
+        "type": "Blouse",
+        "color": "Navy",
+        "services": [
+          "Wash",
+          "Iron"
+        ],
+        "price": 200,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 400,
+    "paidAmount": 200,
+    "paymentStatus": "partial",
+    "paymentMethod": "mpesa",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763725729,
+      "_nanoseconds": 673000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763552929,
+      "_nanoseconds": 673000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763552929,
+          "_nanoseconds": 673000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822929,
+      "_nanoseconds": 673000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220024",
+    "orderId": "WESTLANDS202511220024",
+    "customerId": "CUST1763815888212579",
+    "customerName": "David Mwangi",
+    "customerPhone": "+254745678004",
+    "branchId": "WESTLANDS",
+    "status": "queued",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220024G01",
+        "type": "Dress",
+        "color": "Gray",
+        "services": [
+          "Dry Clean",
+          "Starch"
+        ],
+        "price": 280,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220024G02",
+        "type": "Skirt",
+        "color": "White",
+        "services": [
+          "Wash",
+          "Iron"
+        ],
+        "price": 200,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220024G03",
+        "type": "Skirt",
+        "color": "Black",
+        "services": [
+          "Wash",
+          "Iron"
+        ],
+        "price": 200,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220024G04",
+        "type": "Pants",
+        "color": "Gray",
+        "services": [
+          "Wash",
+          "Starch"
+        ],
+        "price": 180,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 860,
+    "paidAmount": 860,
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763855330,
+      "_nanoseconds": 255000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763682530,
+      "_nanoseconds": 255000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763682530,
+          "_nanoseconds": 255000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763696930,
+          "_nanoseconds": 255000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822930,
+      "_nanoseconds": 255000000
+    }
+  },
+  {
+    "_id": "WESTLANDS202511220025",
+    "orderId": "WESTLANDS202511220025",
+    "customerId": "CUST-TEST004",
+    "customerName": "Grace Njeri",
+    "customerPhone": "+254745678901",
+    "branchId": "WESTLANDS",
+    "status": "queued",
+    "garments": [
+      {
+        "garmentId": "WESTLANDS202511220025G01",
+        "type": "Blouse",
+        "color": "White",
+        "services": [
+          "Wash"
+        ],
+        "price": 150,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220025G02",
+        "type": "Blouse",
+        "color": "Blue",
+        "services": [
+          "Wash",
+          "Iron",
+          "Starch"
+        ],
+        "price": 230,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220025G03",
+        "type": "Suit",
+        "color": "Red",
+        "services": [
+          "Dry Clean"
+        ],
+        "price": 250,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220025G04",
+        "type": "Coat",
+        "color": "White",
+        "services": [
+          "Dry Clean",
+          "Iron"
+        ],
+        "price": 300,
+        "status": "received"
+      },
+      {
+        "garmentId": "WESTLANDS202511220025G05",
+        "type": "Coat",
+        "color": "Beige",
+        "services": [
+          "Wash",
+          "Iron",
+          "Starch"
+        ],
+        "price": 230,
+        "status": "received"
+      }
+    ],
+    "totalAmount": 1160,
+    "paidAmount": 1160,
+    "paymentStatus": "paid",
+    "paymentMethod": "mpesa",
+    "estimatedCompletion": {
+      "_type": "Timestamp",
+      "_seconds": 1763444930,
+      "_nanoseconds": 804000000
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763272130,
+      "_nanoseconds": 804000000
+    },
+    "createdBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "statusHistory": [
+      {
+        "status": "received",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763272130,
+          "_nanoseconds": 804000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      },
+      {
+        "status": "queued",
+        "timestamp": {
+          "_type": "Timestamp",
+          "_seconds": 1763286530,
+          "_nanoseconds": 804000000
+        },
+        "updatedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2"
+      }
+    ],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822930,
+      "_nanoseconds": 804000000
+    }
+  }
+]

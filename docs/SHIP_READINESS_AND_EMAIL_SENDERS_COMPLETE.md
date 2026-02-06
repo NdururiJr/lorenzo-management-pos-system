@@ -634,7 +634,7 @@ These items are nice-to-have but not critical for ship-readiness:
 - **Original Ship Report**: [`docs/SHIP_READINESS_COMPLETION_REPORT.md`](./SHIP_READINESS_COMPLETION_REPORT.md)
 
 ### Team Contacts
-- **Lead Developer**: hello@ai-agentsplus.com, +254 725 462 859
+- **Development Team**: Jerry Ndururi in collaboration with AI Agents Plus, +254 725 462 859
 - **Resend Support**: support@resend.com
 - **Firebase Support**: Firebase Console > Support
 

@@ -9,7 +9,7 @@
 
 import { getDocuments } from '../db/index';
 import { where } from 'firebase/firestore';
-import type { User, Branch } from '../db/schema';
+import type { User } from '../db/schema';
 
 /**
  * Calculate distance between two locations (simplified)
@@ -21,7 +21,7 @@ import type { User, Branch } from '../db/schema';
  * @param lon2 - Longitude of second location
  * @returns Distance in kilometers
  */
-function calculateDistance(
+function _calculateDistance(
   lat1: number,
   lon1: number,
   lat2: number,
@@ -65,7 +65,7 @@ export async function getAvailableDrivers(branchId: string): Promise<User[]> {
  */
 export async function autoAssignDriver(
   satelliteBranchId: string,
-  mainStoreBranchId: string
+  _mainStoreBranchId: string
 ): Promise<string | null> {
   // Get all drivers at satellite branch
   const drivers = await getAvailableDrivers(satelliteBranchId);
@@ -75,6 +75,7 @@ export async function autoAssignDriver(
   }
 
   // Get active transfer batches to calculate workload
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const activeBatches = await getDocuments<any>(
     'transferBatches',
     where('status', 'in', ['pending', 'in_transit'])
@@ -82,6 +83,7 @@ export async function autoAssignDriver(
 
   // Calculate workload for each driver
   const driverWorkload = new Map<string, number>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   activeBatches.forEach((batch: any) => {
     if (batch.assignedDriverId) {
       const current = driverWorkload.get(batch.assignedDriverId) || 0;
@@ -122,13 +124,16 @@ export async function getDriverWorkload(driverId: string): Promise<{
   inTransitBatches: number;
   totalActive: number;
 }> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const activeBatches = await getDocuments<any>(
     'transferBatches',
     where('assignedDriverId', '==', driverId),
     where('status', 'in', ['pending', 'in_transit'])
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pending = activeBatches.filter((b: any) => b.status === 'pending').length;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const inTransit = activeBatches.filter((b: any) => b.status === 'in_transit').length;
 
   return {

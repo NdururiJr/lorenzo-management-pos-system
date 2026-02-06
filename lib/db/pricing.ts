@@ -7,7 +7,7 @@
  * @module lib/db/pricing
  */
 
-import { Timestamp, where, orderBy, limit } from 'firebase/firestore';
+import { Timestamp, where, orderBy } from 'firebase/firestore';
 import {
   getDocument,
   getDocuments,
@@ -43,14 +43,14 @@ export async function setPricing(
 
   // Check if pricing already exists
   try {
-    const existing = await getDocument<Pricing>('pricing', pricingId);
+    await getDocument<Pricing>('pricing', pricingId);
     // If exists, update it
     await updateDocument<Pricing>('pricing', pricingId, {
       ...data,
       updatedAt: Timestamp.now(),
     });
     return pricingId;
-  } catch (error) {
+  } catch {
     // If doesn't exist, create new
     const pricing = {
       pricingId,
@@ -82,7 +82,7 @@ export async function getPricingByGarmentType(
   const pricingId = generatePricingId(branchId, garmentType);
   try {
     return await getPricing(pricingId);
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -135,7 +135,7 @@ export async function calculateGarmentPrice(
   }
 
   let totalPrice = 0;
-  let hasExpress = false;
+  let _hasExpress = false;
 
   services.forEach((service) => {
     const serviceLower = service.toLowerCase();
@@ -149,14 +149,12 @@ export async function calculateGarmentPrice(
     } else if (serviceLower === 'starch') {
       totalPrice += pricing.services.starch;
     } else if (serviceLower === 'express') {
-      hasExpress = true;
+      _hasExpress = true;
     }
   });
 
-  // Apply express surcharge (percentage)
-  if (hasExpress) {
-    totalPrice += totalPrice * (pricing.services.express / 100);
-  }
+  // Express is FREE (no surcharge) - 2-hour turnaround at no extra cost
+  // hasExpress is tracked but doesn't affect pricing
 
   return Math.round(totalPrice);
 }
@@ -263,7 +261,7 @@ export async function seedDefaultPricing(branchId: string): Promise<void> {
         dryClean: 250,
         iron: 50,
         starch: 30,
-        express: 50, // 50% surcharge
+        express: 0, // Express is FREE
       },
     },
     {
@@ -273,7 +271,7 @@ export async function seedDefaultPricing(branchId: string): Promise<void> {
         dryClean: 250,
         iron: 50,
         starch: 30,
-        express: 50,
+        express: 0,
       },
     },
     {
@@ -283,7 +281,7 @@ export async function seedDefaultPricing(branchId: string): Promise<void> {
         dryClean: 350,
         iron: 80,
         starch: 40,
-        express: 50,
+        express: 0,
       },
     },
     {
@@ -293,7 +291,7 @@ export async function seedDefaultPricing(branchId: string): Promise<void> {
         dryClean: 500,
         iron: 100,
         starch: 50,
-        express: 50,
+        express: 0,
       },
     },
     {
@@ -303,7 +301,7 @@ export async function seedDefaultPricing(branchId: string): Promise<void> {
         dryClean: 400,
         iron: 80,
         starch: 40,
-        express: 50,
+        express: 0,
       },
     },
     {
@@ -313,7 +311,7 @@ export async function seedDefaultPricing(branchId: string): Promise<void> {
         dryClean: 500,
         iron: 100,
         starch: 50,
-        express: 50,
+        express: 0,
       },
     },
     {
@@ -323,7 +321,7 @@ export async function seedDefaultPricing(branchId: string): Promise<void> {
         dryClean: 280,
         iron: 60,
         starch: 0, // Not applicable
-        express: 50,
+        express: 0,
       },
     },
     {
@@ -333,7 +331,7 @@ export async function seedDefaultPricing(branchId: string): Promise<void> {
         dryClean: 250,
         iron: 50,
         starch: 30,
-        express: 50,
+        express: 0,
       },
     },
     {
@@ -343,7 +341,7 @@ export async function seedDefaultPricing(branchId: string): Promise<void> {
         dryClean: 250,
         iron: 50,
         starch: 30,
-        express: 50,
+        express: 0,
       },
     },
     {
@@ -353,7 +351,7 @@ export async function seedDefaultPricing(branchId: string): Promise<void> {
         dryClean: 250,
         iron: 50,
         starch: 30,
-        express: 50,
+        express: 0,
       },
     },
   ];

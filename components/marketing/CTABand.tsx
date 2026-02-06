@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Phone, Calendar } from 'lucide-react';
+import { ArrowRight, Calendar } from 'lucide-react';
 
 interface CTABandProps {
   title?: string;

@@ -210,7 +210,7 @@ async function createSampleOrders(db: any, deliveryId: string, customerIds: stri
       customerName: customer.name,
       phoneNumber: customer.phone,
       branchId: 'main-branch',
-      status: status === 'completed' ? 'delivered' : status === 'in_progress' ? 'out_for_delivery' : 'ready',
+      status: status === 'completed' ? 'delivered' : status === 'in_progress' ? 'out_for_delivery' : 'queued_for_delivery',
       deliveryId,
       collectionMethod: 'pickup_required', // Customer requests pickup
       returnMethod: 'delivery_required', // Will be delivered back
@@ -227,7 +227,7 @@ async function createSampleOrders(db: any, deliveryId: string, customerIds: stri
         color: g.color,
         services: [g.service],
         price: g.price,
-        status: status === 'completed' ? 'delivered' : 'ready',
+        status: status === 'completed' ? 'delivered' : 'queued_for_delivery',
       })),
       totalAmount,
       paidAmount: totalAmount,

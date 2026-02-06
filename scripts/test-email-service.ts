@@ -185,7 +185,7 @@ async function testStatusUpdate(toEmail: string) {
     customerName: 'Test Customer',
     customerEmail: toEmail,
     oldStatus: 'washing',
-    newStatus: 'ready',
+    newStatus: 'queued_for_delivery',
     statusMessage: 'Great news! Your order is ready for pickup at our Kilimani branch.',
     trackingUrl: 'https://lorenzo-dry-cleaners.com/track/ORD-KIL-20251114-TEST',
     estimatedCompletion: new Date(),

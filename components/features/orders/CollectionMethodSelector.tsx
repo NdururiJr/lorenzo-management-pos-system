@@ -10,7 +10,6 @@
 
 'use client';
 
-import { useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
@@ -46,7 +45,7 @@ export function CollectionMethodSelector({
     <Card className="p-6">
       <div className="space-y-4">
         <div>
-          <h3 className="text-lg font-semibold mb-2">How will garments be collected?</h3>
+          <h3 className="text-lg font-semibold text-lorenzo-dark-teal mb-2">How will garments be collected?</h3>
           <p className="text-sm text-muted-foreground mb-4">
             Select whether the customer will bring garments to the shop or if staff will pick them up.
           </p>
@@ -55,12 +54,11 @@ export function CollectionMethodSelector({
         <RadioGroup value={value} onValueChange={(val) => onChange(val as 'dropped_off' | 'pickup_required')}>
           <div className="space-y-3">
             {/* Customer Dropped Off Option */}
-            <div className="flex items-start space-x-3 p-4 rounded-lg border-2 transition-colors hover:border-primary cursor-pointer"
-                 style={{ borderColor: value === 'dropped_off' ? 'hsl(var(--primary))' : 'transparent' }}>
+            <div className={`flex items-start space-x-3 p-4 rounded-lg border-2 transition-colors hover:border-lorenzo-teal cursor-pointer ${value === 'dropped_off' ? 'border-lorenzo-teal bg-lorenzo-cream/50' : 'border-transparent'}`}>
               <RadioGroupItem value="dropped_off" id="dropped_off" className="mt-1" />
               <Label htmlFor="dropped_off" className="flex-1 cursor-pointer">
                 <div className="flex items-center gap-2 mb-1">
-                  <Store className="w-5 h-5 text-primary" />
+                  <Store className="w-5 h-5 text-lorenzo-teal" />
                   <span className="font-medium">Customer Dropped Off</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -70,12 +68,11 @@ export function CollectionMethodSelector({
             </div>
 
             {/* Pick Up from Customer Option */}
-            <div className="flex items-start space-x-3 p-4 rounded-lg border-2 transition-colors hover:border-primary cursor-pointer"
-                 style={{ borderColor: value === 'pickup_required' ? 'hsl(var(--primary))' : 'transparent' }}>
+            <div className={`flex items-start space-x-3 p-4 rounded-lg border-2 transition-colors hover:border-lorenzo-teal cursor-pointer ${value === 'pickup_required' ? 'border-lorenzo-teal bg-lorenzo-cream/50' : 'border-transparent'}`}>
               <RadioGroupItem value="pickup_required" id="pickup_required" className="mt-1" />
               <Label htmlFor="pickup_required" className="flex-1 cursor-pointer">
                 <div className="flex items-center gap-2 mb-1">
-                  <Home className="w-5 h-5 text-primary" />
+                  <Home className="w-5 h-5 text-lorenzo-teal" />
                   <span className="font-medium">Pick Up from Customer</span>
                 </div>
                 <p className="text-sm text-muted-foreground">

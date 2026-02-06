@@ -240,7 +240,7 @@ Blockers: [issues] or "None"
 **Gachengoh Marugu**
 - Phone: +254 725 462 859
 - WhatsApp: +254 725 462 859
-- Email: hello@ai-agentsplus.com
+- Email: jerry@ai-agentsplus.com
 
 **Arthur Tutu**
 - Email: arthur@ai-agentsplus.com

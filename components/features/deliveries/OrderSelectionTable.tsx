@@ -19,14 +19,22 @@ import { Card } from '@/components/ui/card';
 import { Loader2, MapPin, Phone, DollarSign, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 
+interface DeliveryAddressObject {
+  address: string;
+  label?: string;
+  coordinates?: { lat: number; lng: number };
+}
+
 interface Order {
   id: string;
   orderId: string;
   customerName: string;
   customerPhone: string;
-  deliveryAddress?: string;
+  deliveryAddress?: DeliveryAddressObject | string;
   totalAmount: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createdAt: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   estimatedCompletion: any;
 }
 
@@ -34,6 +42,15 @@ interface OrderSelectionTableProps {
   selectedOrders: string[];
   onSelectionChange: (orderIds: string[]) => void;
   onCreateBatch: () => void;
+}
+
+/**
+ * Extract address string from deliveryAddress which can be string or object
+ */
+function getAddressString(deliveryAddress?: DeliveryAddressObject | string): string {
+  if (!deliveryAddress) return 'No delivery address';
+  if (typeof deliveryAddress === 'string') return deliveryAddress;
+  return deliveryAddress.address || 'No delivery address';
 }
 
 export function OrderSelectionTable({
@@ -63,6 +80,7 @@ export function OrderSelectionTable({
   // Filter orders that require delivery and have delivery addresses
   const deliverableOrders = useMemo(() => {
     return orders.filter(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (order: any) =>
         order.returnMethod === 'delivery_required' &&
         order.deliveryAddress
@@ -207,7 +225,7 @@ export function OrderSelectionTable({
                       <div className="flex items-start gap-2">
                         <MapPin className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                         <div className="text-sm text-gray-700">
-                          {order.deliveryAddress || 'No delivery address'}
+                          {getAddressString(order.deliveryAddress)}
                         </div>
                       </div>
                     </div>

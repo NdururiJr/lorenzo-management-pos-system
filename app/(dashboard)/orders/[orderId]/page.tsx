@@ -12,13 +12,13 @@ import { Loader2, ArrowLeft, User, Phone, MapPin, Navigation, ExternalLink, Aler
 import { Button } from '@/components/ui/button';
 import { useRouter, useParams } from 'next/navigation';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { MapView, type MapMarker, MarkerIcons } from '@/components/maps/MapView';
+import { MapView, MarkerIcons } from '@/components/maps/MapView';
 import type { OrderExtended } from '@/lib/db/schema';
 
 export default function DashboardOrderDetailsPage() {
   const router = useRouter();
   const params = useParams();
-  const { user, userData } = useAuth();
+  const { user: _user, userData } = useAuth();
   const orderId = params.orderId as string;
   const [showContactModal, setShowContactModal] = useState(false);
 

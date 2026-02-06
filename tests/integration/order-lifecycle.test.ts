@@ -136,7 +136,7 @@ describe('Order Lifecycle Integration Tests', () => {
         customerId: mockCustomer.customerId,
         branchId: TEST_BRANCHES.mainStore.branchId,
         garments: pricedGarments,
-        paymentMethod: 'cash',
+        paymentMethod: 'mpesa',
         paidAmount: 500,
       });
       expect(orderId).toBe('ORD-BR-MAIN-001-20250123-0001');
@@ -146,7 +146,7 @@ describe('Order Lifecycle Integration Tests', () => {
         customerId: mockCustomer.customerId,
         branchId: TEST_BRANCHES.mainStore.branchId,
         amount: 500,
-        method: 'cash',
+        method: 'mpesa',
         status: 'completed',
         processedBy: TEST_USERS.frontDesk.uid,
       });
@@ -255,7 +255,7 @@ describe('Order Lifecycle Integration Tests', () => {
           transactionId: 'TXN-001',
           orderId,
           amount: 400,
-          method: 'cash',
+          method: 'mpesa',
           status: 'completed',
           timestamp: createMockTimestamp(new Date()),
         },
@@ -267,12 +267,12 @@ describe('Order Lifecycle Integration Tests', () => {
         customerId: 'CUST-001',
         branchId: TEST_BRANCHES.mainStore.branchId,
         amount: 400,
-        method: 'cash',
+        method: 'mpesa',
         status: 'completed',
         processedBy: TEST_USERS.frontDesk.uid,
       });
 
-      await updateOrderPayment(orderId, 400, 'cash');
+      await updateOrderPayment(orderId, 400, 'mpesa');
 
       // Update mock for second payment
       createTransaction.mockResolvedValue('TXN-002');
@@ -281,7 +281,7 @@ describe('Order Lifecycle Integration Tests', () => {
           transactionId: 'TXN-001',
           orderId,
           amount: 400,
-          method: 'cash',
+          method: 'mpesa',
           status: 'completed',
           timestamp: createMockTimestamp(new Date()),
         },
@@ -364,7 +364,7 @@ describe('Order Lifecycle Integration Tests', () => {
         customerId: customer.customerId,
         branchId: TEST_BRANCHES.mainStore.branchId,
         garments: pricedGarments,
-        paymentMethod: 'cash',
+        paymentMethod: 'credit',
         paidAmount: 350,
       });
 

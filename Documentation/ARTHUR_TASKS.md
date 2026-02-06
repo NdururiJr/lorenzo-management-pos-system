@@ -574,7 +574,7 @@ git push origin feature/milestone-3-backend
 ## Support
 
 **Team Lead:** Gachengoh Marugu
-- Email: hello@ai-agentsplus.com
+- Email: jerry@ai-agentsplus.com
 - Phone/WhatsApp: +254 725 462 859
 
 **Teammate:** Jerry Nduriri

@@ -138,15 +138,16 @@ export default function OrdersPage() {
     {
       header: 'Payment',
       accessor: (order) => {
-        const paymentColors = {
+        const paymentColors: Record<string, string> = {
           paid: 'bg-green-100 text-green-800 border-green-200',
           partial: 'bg-amber-100 text-amber-800 border-amber-200',
           pending: 'bg-red-100 text-red-800 border-red-200',
+          overpaid: 'bg-blue-100 text-blue-800 border-blue-200',
         };
         return (
           <Badge
             variant="outline"
-            className={paymentColors[order.paymentStatus]}
+            className={paymentColors[order.paymentStatus] || paymentColors.pending}
           >
             {order.paymentStatus.charAt(0).toUpperCase() +
               order.paymentStatus.slice(1)}

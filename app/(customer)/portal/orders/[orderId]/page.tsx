@@ -40,6 +40,7 @@ export default function CustomerOrderDetailsPage() {
       const snapshot = await getDocs(q);
 
       if (!snapshot.empty) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as any;
       }
       return null;

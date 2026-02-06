@@ -16,4 +16,4 @@ export { onNotificationFailed, cleanupOldNotifications } from './triggers/notifi
 // Export Scheduled Functions
 export { dailyReports } from './scheduled/reports';
 export { inventoryAlerts } from './scheduled/inventory';
-export { paymentReminders } from './scheduled/reminders';
+export { paymentReminders, uncollectedOrderReminders } from './scheduled/reminders';

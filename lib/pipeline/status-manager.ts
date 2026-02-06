@@ -12,6 +12,7 @@ import type { OrderStatus } from '@/lib/db/schema';
  * Valid status transitions map
  * Defines which statuses can transition to which statuses
  */
+// FR-008: Updated to use 'queued_for_delivery' instead of 'ready'
 export const VALID_TRANSITIONS: Record<OrderStatus, OrderStatus[]> = {
   received: ['inspection'],
   inspection: ['queued'],
@@ -20,8 +21,8 @@ export const VALID_TRANSITIONS: Record<OrderStatus, OrderStatus[]> = {
   drying: ['ironing'],
   ironing: ['quality_check'],
   quality_check: ['packaging', 'washing'], // Can return to washing if QA fails
-  packaging: ['ready'],
-  ready: ['out_for_delivery', 'collected'],
+  packaging: ['queued_for_delivery'],
+  queued_for_delivery: ['out_for_delivery', 'collected'],
   out_for_delivery: ['delivered'],
   delivered: [], // Terminal state
   collected: [], // Terminal state
@@ -142,7 +143,7 @@ export function getStatusConfig(status: OrderStatus) {
       description: 'Being packaged',
       requiresNotification: false,
     },
-    ready: {
+    queued_for_delivery: { // FR-008: Updated from 'ready'
       label: 'Ready',
       color: 'green',
       bgColor: 'bg-green-50',
@@ -199,6 +200,7 @@ export function requiresNotification(status: OrderStatus): boolean {
  *
  * @returns Array of all order statuses
  */
+// FR-008: Updated to use 'queued_for_delivery' instead of 'ready'
 export function getAllStatuses(): OrderStatus[] {
   return [
     'received',
@@ -209,7 +211,7 @@ export function getAllStatuses(): OrderStatus[] {
     'ironing',
     'quality_check',
     'packaging',
-    'ready',
+    'queued_for_delivery',
     'out_for_delivery',
     'delivered',
     'collected',
@@ -232,11 +234,12 @@ export function isTerminalStatus(status: OrderStatus): boolean {
  * @param status - Order status
  * @returns Status group name
  */
+// FR-008: Updated to use 'queued_for_delivery' instead of 'ready'
 export function getStatusGroup(status: OrderStatus): string {
   if (['received', 'inspection', 'queued'].includes(status)) return 'Pending';
   if (['washing', 'drying', 'ironing', 'quality_check', 'packaging'].includes(status))
     return 'Processing';
-  if (['ready', 'out_for_delivery'].includes(status)) return 'Ready';
+  if (['queued_for_delivery', 'out_for_delivery'].includes(status)) return 'Ready';
   if (['delivered', 'collected'].includes(status)) return 'Completed';
   return 'Unknown';
 }

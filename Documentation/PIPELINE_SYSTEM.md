@@ -403,7 +403,7 @@ test('should update order status', async ({ page }) => {
 ## Support
 
 For issues or questions:
-- **Technical**: Gachengoh Marugu (hello@ai-agentsplus.com)
+- **Technical**: Gachengoh Marugu (jerry@ai-agentsplus.com)
 - **Product**: Jerry Nduriri (jerry@ai-agentsplus.com)
 - **GitHub Issues**: Create issue in repository
 

@@ -24,10 +24,16 @@ import {
   sendDelivered as sendDeliveredWhatsApp,
 } from '@/services/wati';
 
-// Verify webhook signature (simple API key for now)
+// Verify webhook signature (API key authentication)
 function verifyWebhook(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
-  const apiKey = process.env.WEBHOOK_API_KEY || 'dev-webhook-key';
+  const apiKey = process.env.WEBHOOK_API_KEY;
+
+  // In production, API key must be configured
+  if (!apiKey) {
+    console.error('WEBHOOK_API_KEY environment variable is not set');
+    return false;
+  }
 
   return authHeader === `Bearer ${apiKey}`;
 }
@@ -49,9 +55,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const results = {
-      email: null as any,
-      whatsapp: null as any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const results: { email: any; whatsapp: any } = {
+      email: null,
+      whatsapp: null,
     };
 
     // Handle different order events
@@ -139,7 +146,7 @@ export async function POST(request: NextRequest) {
             customerEmail: customer.email,
             totalAmount: order.totalAmount,
             paidAmount: order.paidAmount,
-            paymentMethod: order.paymentMethod || 'cash',
+            paymentMethod: order.paymentMethod || 'mpesa',
             transactionDate: new Date(),
             receiptUrl: order.receiptUrl,
           };
@@ -171,6 +178,7 @@ export async function POST(request: NextRequest) {
           : null,
       },
     });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Order notification webhook error:', error);
     return NextResponse.json(

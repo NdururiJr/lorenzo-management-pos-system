@@ -41,8 +41,8 @@ export const SERVICE_TYPES = [
   { value: 'starch', label: 'Starch', description: 'Starch treatment' },
   {
     value: 'express',
-    label: 'Express (50% extra)',
-    description: '24-hour turnaround',
+    label: 'Express (2hrs)',
+    description: '2-hour turnaround - FREE',
   },
 ] as const;
 
@@ -71,7 +71,6 @@ export const COMMON_COLORS = [
  * Payment methods
  */
 export const PAYMENT_METHODS = [
-  { value: 'cash', label: 'Cash', icon: 'Banknote' },
   { value: 'mpesa', label: 'M-Pesa', icon: 'Smartphone' },
   { value: 'card', label: 'Card', icon: 'CreditCard' },
   { value: 'credit', label: 'Credit Account', icon: 'Wallet' },
@@ -100,7 +99,7 @@ export const ORDER_STATUSES = [
     label: 'Packaging',
     color: 'bg-pink-100 text-pink-800',
   },
-  { value: 'ready', label: 'Ready', color: 'bg-green-100 text-green-800' },
+  { value: 'queued_for_delivery', label: 'Queued for Delivery', color: 'bg-green-100 text-green-800' }, // FR-008
   {
     value: 'out_for_delivery',
     label: 'Out for Delivery',

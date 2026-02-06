@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { getOrdersByCustomer } from '@/lib/db/orders';
+import { getCustomerByPhoneOrEmail } from '@/lib/db/customers';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { OrdersList } from '@/components/features/customer/OrdersList';
@@ -19,10 +20,8 @@ import { ModernSection } from '@/components/modern/ModernLayout';
 import { ModernCard, ModernCardContent } from '@/components/modern/ModernCard';
 import { FloatingOrbs } from '@/components/auth/FloatingOrbs';
 import { motion } from 'framer-motion';
-import { Loader2, Search, AlertCircle } from 'lucide-react';
+import { AlertCircle, Loader2, Search } from 'lucide-react';
 import type { OrderExtended } from '@/lib/db/schema';
-import { collection, query, where, getDocs, limit } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 
 type TabValue = 'all' | 'active' | 'completed';
 
@@ -31,22 +30,17 @@ export default function OrdersListPage() {
   const [activeTab, setActiveTab] = useState<TabValue>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Fetch customer profile to get customerId
+  // Fetch customer profile by phone OR email (Issue 81 Fix)
+  // Supports both phone-authenticated and email-authenticated users
   const { data: customer } = useQuery({
-    queryKey: ['customer-profile', user?.email],
+    queryKey: ['customer-profile', user?.phoneNumber, user?.email],
     queryFn: async () => {
-      if (!user?.email) return null;
+      if (!user?.email && !user?.phoneNumber) return null;
 
-      const customersRef = collection(db, 'customers');
-      const q = query(customersRef, where('email', '==', user.email), limit(1));
-      const snapshot = await getDocs(q);
-
-      if (!snapshot.empty) {
-        return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as any;
-      }
-      return null;
+      // Use the new combined lookup function
+      return getCustomerByPhoneOrEmail(user?.phoneNumber, user?.email);
     },
-    enabled: !!user?.email,
+    enabled: !!(user?.email || user?.phoneNumber),
   });
 
   // Fetch all orders using customerId

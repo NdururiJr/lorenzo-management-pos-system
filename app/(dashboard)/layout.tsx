@@ -16,6 +16,7 @@ import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
 import { ModernSidebar } from '@/components/modern/ModernSidebar';
 import { FloatingOrbs } from '@/components/auth/FloatingOrbs';
+import { InactivityMonitor } from '@/components/features/auth/InactivityMonitor';
 
 export default function DashboardLayout({
   children,
@@ -36,7 +37,7 @@ export default function DashboardLayout({
     return (
       <div className="relative min-h-screen overflow-hidden">
         {/* Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-blue-100 via-white to-brand-blue-50" />
+        <div className="absolute inset-0 bg-lorenzo-cream" />
         <FloatingOrbs />
 
         <div className="relative z-10 min-h-screen flex items-center justify-center">
@@ -44,14 +45,14 @@ export default function DashboardLayout({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}
-            className="p-8 bg-white/70 backdrop-blur-xl rounded-3xl shadow-card border-2 border-white/60"
+            className="p-8 bg-white/70 backdrop-blur-xl rounded-3xl shadow-card border-2 border-lorenzo-teal/10"
           >
             <div className="text-center space-y-4">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
               >
-                <Loader2 className="h-8 w-8 mx-auto text-brand-blue" />
+                <Loader2 className="h-8 w-8 mx-auto text-lorenzo-accent-teal" />
               </motion.div>
               <p className="text-sm text-gray-600">Loading...</p>
             </div>
@@ -69,16 +70,19 @@ export default function DashboardLayout({
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-blue-100 via-white to-brand-blue-50" />
+      <div className="absolute inset-0 bg-lorenzo-cream" />
 
       {/* Additional gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/5 via-transparent to-white/50" />
+      <div className="absolute inset-0 bg-linear-to-t from-lorenzo-teal/5 via-transparent to-white/50" />
 
       {/* Floating decorative orbs */}
       <FloatingOrbs />
 
       {/* Modern Sidebar Navigation */}
       <ModernSidebar />
+
+      {/* Inactivity Monitor for Auto-Logout */}
+      <InactivityMonitor enabled={true} />
 
       {/* Main Content Area */}
       <main className="relative z-10 lg:pl-64">

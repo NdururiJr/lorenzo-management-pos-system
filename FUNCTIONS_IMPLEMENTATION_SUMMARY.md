@@ -489,7 +489,7 @@ Firebase Cloud Functions are now fully set up and ready to deploy! The system wi
 
 - **Documentation:** See files in `/functions/` directory
 - **Issues:** Check logs with `firebase functions:log`
-- **Contact:** hello@ai-agentsplus.com
+- **Contact:** jerry@ai-agentsplus.com
 - **Team:**
   - Gachengoh Marugu (Lead Developer)
   - Arthur Tutu (Backend Developer)

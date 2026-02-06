@@ -250,7 +250,7 @@ See [.github/SETUP_INSTRUCTIONS.md](./.github/SETUP_INSTRUCTIONS.md) for setup.
 ## 👥 Team
 
 ### Development Team
-- **Gachengoh Marugu** - Lead Developer (hello@ai-agentsplus.com)
+- **Gachengoh Marugu** - Lead Developer (jerry@ai-agentsplus.com)
 - **Arthur Tutu** - Backend Developer (arthur@ai-agentsplus.com)
 - **Jerry Nduriri** - POS & Product Manager (jerry@ai-agentsplus.com)
 
@@ -276,7 +276,7 @@ This is a private project for Lorenzo Dry Cleaners. For team members:
 ## 📧 Support
 
 For questions or issues:
-- Email: hello@ai-agentsplus.com
+- Email: jerry@ai-agentsplus.com
 - Phone: +254 725 462 859
 
 ---

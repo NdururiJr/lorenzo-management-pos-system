@@ -546,5 +546,5 @@ firebase emulators:start
 **Last Updated**: October 10, 2025
 
 For questions or issues, contact the development team:
-- **Gachengoh Marugu** - hello@ai-agentsplus.com
+- **Gachengoh Marugu** - jerry@ai-agentsplus.com
 - **Arthur Tutu** - arthur@ai-agentsplus.com

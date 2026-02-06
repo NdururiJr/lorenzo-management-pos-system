@@ -236,7 +236,7 @@ Only optimize when:
 
 - **Documentation:** `/docs/GOOGLE_MAPS_INTEGRATION.md`
 - **Google Maps Docs:** https://developers.google.com/maps
-- **Team Support:** hello@ai-agentsplus.com
+- **Development Team:** Jerry Ndururi in collaboration with AI Agents Plus
 
 ---
 

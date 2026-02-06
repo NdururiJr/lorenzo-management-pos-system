@@ -30,6 +30,7 @@ const SERVICES_OPTIONS = [
   { name: 'Starch', price: 30 },
 ];
 
+// FR-008: Updated to use 'queued_for_delivery' instead of 'ready'
 const ORDER_STATUSES = [
   'received',
   'queued',
@@ -38,12 +39,12 @@ const ORDER_STATUSES = [
   'ironing',
   'quality_check',
   'packaging',
-  'ready',
+  'queued_for_delivery',
   'out_for_delivery',
   'delivered',
 ] as const;
 
-const PAYMENT_METHODS = ['cash', 'mpesa', 'card'] as const;
+const PAYMENT_METHODS = ['mpesa', 'card', 'credit'] as const;
 
 function randomSelect<T>(arr: readonly T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -105,6 +106,7 @@ export default function SeedDataPage() {
 
     if (!existingCustomer.empty) {
       // Return existing customer
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const existingData = { id: existingCustomer.docs[0].id, ...existingCustomer.docs[0].data() } as any;
       console.log(`Customer already exists: ${customerData.email} (${existingData.customerId})`);
       return existingData;

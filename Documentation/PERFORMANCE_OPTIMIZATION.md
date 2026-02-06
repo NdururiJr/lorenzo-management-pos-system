@@ -291,4 +291,4 @@ Use Sentry for error monitoring:
 
 For performance issues, contact the development team:
 
-- Gachengoh Marugu: hello@ai-agentsplus.com
+- Gachengoh Marugu: jerry@ai-agentsplus.com

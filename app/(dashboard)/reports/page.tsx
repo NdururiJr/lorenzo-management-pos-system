@@ -18,7 +18,7 @@ import {
   Calendar,
   Loader2,
 } from 'lucide-react';
-import { collection, query, where, getDocs, Timestamp, orderBy } from 'firebase/firestore';
+import { collection, query, where, getDocs, Timestamp, orderBy, type QueryConstraint } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { getActiveBranches } from '@/lib/db/index';
 import type { Order, Branch } from '@/lib/db/schema';
@@ -108,7 +108,7 @@ export default function ReportsPage() {
     queryKey: ['reports', selectedBranchId, dateRange, allowedBranches],
     queryFn: async () => {
       const ordersRef = collection(db, 'orders');
-      const constraints: any[] = [];
+      const constraints: QueryConstraint[] = [];
 
       // Apply branch filter
       if (selectedBranchId !== 'all') {
@@ -359,6 +359,7 @@ export default function ReportsPage() {
                       cx="50%"
                       cy="50%"
                       labelLine={false}
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       label={(props: any) => {
                         const { name, percent } = props;
                         return `${name}: ${(percent * 100).toFixed(0)}%`;

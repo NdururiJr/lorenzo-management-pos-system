@@ -4,6 +4,8 @@
  * This endpoint allows testing the Wati.io integration via HTTP requests.
  * Useful for testing from tools like Postman or browser.
  *
+ * SECURITY: This endpoint is DISABLED in production.
+ *
  * Endpoints:
  * - GET  /api/test/wati         - Test connection and get templates
  * - POST /api/test/wati/send    - Send test notification
@@ -18,6 +20,26 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+
+/**
+ * Check if we're in production - disable test endpoints
+ */
+function isProduction(): boolean {
+  return process.env.NODE_ENV === 'production';
+}
+
+/**
+ * Production guard - returns 404 in production
+ */
+function productionGuard(): NextResponse | null {
+  if (isProduction()) {
+    return NextResponse.json(
+      { error: 'Not found' },
+      { status: 404 }
+    );
+  }
+  return null;
+}
 import {
   testWatiConnection,
   getMessageTemplates,
@@ -32,7 +54,11 @@ import {
  * GET /api/test/wati
  * Test connection and retrieve approved templates
  */
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
+  // Block in production
+  const blocked = productionGuard();
+  if (blocked) return blocked;
+
   try {
     // Test connection
     const connectionResult = await testWatiConnection();
@@ -80,6 +106,7 @@ export async function GET(request: NextRequest) {
       },
       timestamp: new Date().toISOString(),
     });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Wati test endpoint error:', error);
 
@@ -104,6 +131,10 @@ export async function GET(request: NextRequest) {
  * }
  */
 export async function POST(request: NextRequest) {
+  // Block in production
+  const blocked = productionGuard();
+  if (blocked) return blocked;
+
   try {
     const body = await request.json();
     const { phone, type } = body;
@@ -225,6 +256,7 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Wati test send error:', error);
 

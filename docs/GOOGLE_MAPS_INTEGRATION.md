@@ -672,7 +672,7 @@ if (stops.length > 25) {
 ## Support
 
 For issues or questions:
-- **Technical Team:** hello@ai-agentsplus.com
+- **Development Team:** Jerry Ndururi in collaboration with AI Agents Plus
 - **GitHub Issues:** [Repository Issues](https://github.com/ai-agentsplus/lorenzo-dry-cleaners/issues)
 - **Google Maps Support:** [Google Maps Platform Support](https://developers.google.com/maps/support)
 

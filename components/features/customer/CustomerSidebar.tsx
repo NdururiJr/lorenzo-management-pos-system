@@ -65,7 +65,7 @@ const navigationItems: NavItem[] = [
 
 export function CustomerSidebar() {
   const pathname = usePathname();
-  const { user, userData, signOut } = useAuth();
+  const { user: _user, userData, signOut } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleSignOut = async () => {

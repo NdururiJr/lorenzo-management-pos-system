@@ -2,6 +2,7 @@
  * PDF Receipt Generator
  *
  * Generates professional PDF receipts for orders using jsPDF.
+ * V2.0: Includes QR codes, disclaimers, and express service indicators.
  *
  * @module lib/receipts/pdf-generator
  */
@@ -16,12 +17,18 @@ import {
   getStatusText,
   getPaymentMethodText,
   calculateOrderTotals,
+  QR_CODE_CONFIG,
+  DISCLAIMER_CONFIG,
+  getServiceTypeText,
 } from './receipt-template';
+import { generateOrderTrackingQRCode, getOrderTrackingUrl } from './qr-generator';
 
 /**
- * Generate PDF receipt for an order
+ * Generate PDF receipt for an order (async for QR code generation)
+ * V2.0: Includes QR code, disclaimer, and express service indicator
  */
-export function generateReceiptPDF(order: any, customer: any): jsPDF {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function generateReceiptPDF(order: any, customer: any): Promise<jsPDF> {
   const doc = new jsPDF();
   const { margins, fonts, colors, company } = RECEIPT_CONFIG;
 
@@ -134,6 +141,7 @@ export function generateReceiptPDF(order: any, customer: any): jsPDF {
 
   // Table rows
   const items = order.items || order.garments || [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items.forEach((item: any, index: number) => {
     // Item number
     addText(`${index + 1}`, tableLeft + 2, yPos + 2, fonts.body, colors.primary);
@@ -181,6 +189,23 @@ export function generateReceiptPDF(order: any, customer: any): jsPDF {
   addLine(yPos);
   yPos += 6;
 
+  // ========== SERVICE TYPE INDICATOR (V2.0) ==========
+  if (order.serviceType && order.serviceType !== 'Normal') {
+    doc.setFillColor(255, 193, 7); // Amber for express
+    doc.rect(margins.left, yPos - 4, 210 - margins.left - margins.right, 8, 'F');
+    doc.setFont('helvetica', 'bold');
+    addText(
+      getServiceTypeText(order.serviceType),
+      105,
+      yPos + 1,
+      fonts.body,
+      colors.primary,
+      'center'
+    );
+    doc.setFont('helvetica', 'normal');
+    yPos += 10;
+  }
+
   // ========== TOTALS ==========
   const totals = calculateOrderTotals(order);
   const totalsLeft = 120;
@@ -196,6 +221,20 @@ export function generateReceiptPDF(order: any, customer: any): jsPDF {
     'right'
   );
   yPos += 6;
+
+  // Express surcharge (V2.0)
+  if (totals.expressSurcharge > 0) {
+    addText('Express Surcharge (50%):', totalsLeft, yPos, fonts.body, colors.secondary);
+    addText(
+      formatPrice(totals.expressSurcharge),
+      210 - margins.right - 2,
+      yPos,
+      fonts.body,
+      [255, 140, 0], // Orange for express
+      'right'
+    );
+    yPos += 6;
+  }
 
   // Tax (if applicable)
   if (totals.tax > 0) {
@@ -292,6 +331,75 @@ export function generateReceiptPDF(order: any, customer: any): jsPDF {
     yPos += 8;
   }
 
+  // ========== V2.0: DISCLAIMER SECTION ==========
+  yPos += 4;
+  addLine(yPos);
+  yPos += 6;
+
+  // CLEANED AT OWNER'S RISK notice (bold, centered)
+  doc.setFont('helvetica', 'bold');
+  addText(
+    DISCLAIMER_CONFIG.cleanedAtOwnersRisk,
+    105,
+    yPos,
+    fonts.subheader,
+    [180, 0, 0], // Dark red for emphasis
+    'center'
+  );
+  doc.setFont('helvetica', 'normal');
+  yPos += 6;
+
+  // Supporting disclaimer text
+  addText(
+    DISCLAIMER_CONFIG.disclaimerNote,
+    105,
+    yPos,
+    fonts.small,
+    colors.secondary,
+    'center'
+  );
+  yPos += 5;
+
+  // Terms & Conditions reference
+  // Construct base URL from order tracking URL (remove the order-specific path)
+  const baseUrl = getOrderTrackingUrl(order.orderId).split('/portal/')[0];
+  const termsUrl = `${baseUrl}${DISCLAIMER_CONFIG.termsUrl}`;
+  addText(
+    `${DISCLAIMER_CONFIG.termsReference}: ${termsUrl}`,
+    105,
+    yPos,
+    fonts.small,
+    colors.secondary,
+    'center'
+  );
+  yPos += 8;
+
+  // ========== V2.0: QR CODE SECTION ==========
+  try {
+    const qrCodeDataUrl = await generateOrderTrackingQRCode(order.orderId);
+
+    // Position QR code in the bottom-left area
+    const qrX = margins.left + 5;
+    const qrY = 245;
+    const qrSize = QR_CODE_CONFIG.receiptSize;
+
+    // Add QR code image
+    doc.addImage(qrCodeDataUrl, 'PNG', qrX, qrY, qrSize, qrSize);
+
+    // Add label under QR code
+    addText(
+      'Scan to track order',
+      qrX + qrSize / 2,
+      qrY + qrSize + 5,
+      fonts.small,
+      colors.secondary,
+      'center'
+    );
+  } catch (error) {
+    console.error('Failed to add QR code to receipt:', error);
+    // Continue without QR code if generation fails
+  }
+
   // ========== FOOTER ==========
   yPos = 280; // Position near bottom
 
@@ -332,8 +440,9 @@ export function generateReceiptPDF(order: any, customer: any): jsPDF {
 /**
  * Download receipt PDF to device
  */
-export function downloadReceipt(order: any, customer: any): void {
-  const pdf = generateReceiptPDF(order, customer);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function downloadReceipt(order: any, customer: any): Promise<void> {
+  const pdf = await generateReceiptPDF(order, customer);
   const filename = `receipt-${order.orderId}.pdf`;
   pdf.save(filename);
 }
@@ -341,24 +450,27 @@ export function downloadReceipt(order: any, customer: any): void {
 /**
  * Generate receipt as Blob (for email attachments)
  */
-export function generateReceiptBlob(order: any, customer: any): Blob {
-  const pdf = generateReceiptPDF(order, customer);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function generateReceiptBlob(order: any, customer: any): Promise<Blob> {
+  const pdf = await generateReceiptPDF(order, customer);
   return pdf.output('blob');
 }
 
 /**
  * Generate receipt as base64 string
  */
-export function generateReceiptBase64(order: any, customer: any): string {
-  const pdf = generateReceiptPDF(order, customer);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function generateReceiptBase64(order: any, customer: any): Promise<string> {
+  const pdf = await generateReceiptPDF(order, customer);
   return pdf.output('dataurlstring');
 }
 
 /**
  * Open receipt in new window for printing
  */
-export function printReceipt(order: any, customer: any): void {
-  const pdf = generateReceiptPDF(order, customer);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function printReceipt(order: any, customer: any): Promise<void> {
+  const pdf = await generateReceiptPDF(order, customer);
   const pdfBlob = pdf.output('blob');
   const pdfUrl = URL.createObjectURL(pdfBlob);
 

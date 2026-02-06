@@ -39,8 +39,12 @@ const roleHierarchy: Record<UserRole, number> = {
   front_desk: 4,
   workstation: 4,
   manager: 4,
+  inspector: 4,           // V2.0: Order inspection at reception
   workstation_manager: 5,
+  auditor: 5,             // V2.0: Read-only financial access
+  logistics_manager: 6,   // V2.0: Delivery tracking, driver management
   store_manager: 6,
+  finance_manager: 7,     // V2.0: Financial reports, cash out approvals
   general_manager: 7,
   director: 8,
   admin: 9,
@@ -375,6 +379,11 @@ export function getRoleDisplayName(role: UserRole): string {
     workstation: 'Workstation',
     driver: 'Delivery Driver',
     customer: 'Customer',
+    // V2.0 New Roles
+    finance_manager: 'Finance Manager',
+    auditor: 'Auditor',
+    logistics_manager: 'Logistics Manager',
+    inspector: 'Inspector',
   };
 
   return displayNames[role] || role;
@@ -400,6 +409,11 @@ export function getRoleBadgeColor(role: UserRole): string {
     workstation: 'bg-gray-600 text-white',
     driver: 'bg-gray-600 text-white',
     customer: 'bg-gray-400 text-white',
+    // V2.0 New Roles
+    finance_manager: 'bg-green-700 text-white',
+    auditor: 'bg-amber-700 text-white',
+    logistics_manager: 'bg-cyan-700 text-white',
+    inspector: 'bg-orange-600 text-white',
   };
 
   return colors[role] || 'bg-gray-400 text-white';

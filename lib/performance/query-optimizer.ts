@@ -15,7 +15,6 @@ import {
   limit,
   startAfter,
   getDocs,
-  type Query,
   type DocumentSnapshot,
   type QueryConstraint,
 } from 'firebase/firestore';
@@ -90,7 +89,7 @@ export async function batchQueries<T extends Record<string, unknown>>(
   return measureDatabaseQuery('batch_queries', async () => {
     const entries = Object.entries(queries);
     const results = await Promise.all(
-      entries.map(([key, queryFn]) => queryFn())
+      entries.map(([_key, queryFn]) => queryFn())
     );
 
     return Object.fromEntries(

@@ -38,7 +38,7 @@ const stats = [
   },
   {
     id: 4,
-    value: 24,
+    value: 2,
     suffix: 'hrs',
     label: 'Express Service',
     duration: 1500,
@@ -54,8 +54,8 @@ export function StatsBar() {
   return (
     <section className="relative py-20 overflow-hidden bg-white">
       {/* Blue Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-blue via-brand-blue-dark to-brand-blue-900" />
-      <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue-50 via-transparent to-brand-blue-900 opacity-40" />
+      <div className="absolute inset-0 bg-linear-to-br from-brand-blue via-brand-blue-dark to-brand-blue-900" />
+      <div className="absolute inset-0 bg-linear-to-tr from-brand-blue-50 via-transparent to-brand-blue-900 opacity-40" />
 
       {/* Decorative blur elements */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-brand-blue-light rounded-full blur-3xl opacity-30" />
@@ -134,7 +134,7 @@ function StatCard({ stat, index, inView }: StatCardProps) {
     >
       {/* Animated gradient on hover */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-white/5 via-brand-blue-light/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        className="absolute inset-0 bg-linear-to-br from-white/5 via-brand-blue-light/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"
       />
 
       {/* Content */}

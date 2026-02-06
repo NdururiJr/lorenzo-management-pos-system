@@ -269,7 +269,7 @@ export function createTestOrder(overrides: Partial<Order> = {}): Order {
     totalAmount: 500,
     paidAmount: 500,
     paymentStatus: 'paid',
-    paymentMethod: 'cash',
+    paymentMethod: 'mpesa',
     estimatedCompletion: createMockTimestamp(estimatedCompletion),
     createdAt: createMockTimestamp(now),
     createdBy: 'fd-001',

@@ -25,7 +25,6 @@ import {
   Route as RouteIcon,
 } from 'lucide-react';
 import {
-  optimizeRoute,
   formatDistance,
   formatDuration,
   calculateETA,
@@ -69,7 +68,32 @@ export function RouteOptimizer({
     setError(null);
 
     try {
-      const result = await optimizeRoute(startLocation, stops, returnToStart);
+      // Call server-side API endpoint for route optimization
+      // The @googlemaps/google-maps-services-js client only works server-side
+      const response = await fetch('/api/maps/optimize-route', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          branchLocation: startLocation,
+          stops,
+          returnToStart,
+        }),
+      });
+
+      // Handle non-JSON responses gracefully
+      const contentType = response.headers.get('content-type');
+      if (!contentType?.includes('application/json')) {
+        throw new Error('Server returned an invalid response. Please try again later.');
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to optimize route');
+      }
+
+      const result: OptimizedRoute = await response.json();
       setOptimizedRoute(result);
 
       if (onRouteOptimized) {
@@ -214,7 +238,7 @@ export function RouteOptimizer({
               </div>
 
               {/* Delivery stops */}
-              {optimizedRoute.stops.map((stop, index) => (
+              {optimizedRoute.stops.map((stop, _index) => (
                 <div
                   key={stop.orderId}
                   className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"

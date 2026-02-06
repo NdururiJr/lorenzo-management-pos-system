@@ -20,18 +20,6 @@ export interface PaymentResult {
 }
 
 /**
- * Cash payment data
- */
-export interface CashPaymentData {
-  orderId: string;
-  customerId: string;
-  amount: number;
-  amountTendered?: number;
-  change?: number;
-  userId: string;
-}
-
-/**
  * Digital payment data (M-Pesa/Card via Pesapal)
  */
 export interface DigitalPaymentData {
@@ -60,7 +48,7 @@ export interface CreditPaymentData {
  */
 export interface PaymentStatusResult {
   transactionId: string;
-  orderId: string;
+  orderId?: string;
   status: TransactionStatus;
   amount: number;
   method: PaymentMethod;

@@ -28,14 +28,14 @@ describe('Pipeline Helper Functions', () => {
         createTestOrder({ orderId: 'ORD-001', status: 'washing' }),
         createTestOrder({ orderId: 'ORD-002', status: 'washing' }),
         createTestOrder({ orderId: 'ORD-003', status: 'ironing' }),
-        createTestOrder({ orderId: 'ORD-004', status: 'ready' }),
+        createTestOrder({ orderId: 'ORD-004', status: 'queued_for_delivery' }), // FR-008
       ];
 
       const grouped = groupOrdersByStatus(orders);
 
       expect(grouped.washing).toHaveLength(2);
       expect(grouped.ironing).toHaveLength(1);
-      expect(grouped.ready).toHaveLength(1);
+      expect(grouped.queued_for_delivery).toHaveLength(1); // FR-008
       expect(grouped.queued).toHaveLength(0);
     });
 

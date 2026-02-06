@@ -70,15 +70,15 @@ export function PackagingStation() {
       );
 
       // Check if all garments in order are complete for packaging
-      const garment = order.garments.find((g) => g.garmentId === garmentId);
+      const _garment = order.garments.find((g) => g.garmentId === garmentId);
       const allComplete = order.garments.every((g) => {
         if (g.garmentId === garmentId) return true; // Current garment we just completed
         return g.stageHandlers?.packaging && g.stageHandlers.packaging.length > 0;
       });
 
       if (allComplete) {
-        // Move order to ready stage - FINAL STAGE!
-        await updateOrderStatus(order.orderId, 'ready', user.uid);
+        // Move order to queued_for_delivery stage - FINAL STAGE! (FR-008: Updated from 'ready')
+        await updateOrderStatus(order.orderId, 'queued_for_delivery', user.uid);
         toast.success(
           `Order ${order.orderId} packaging complete! Order is now READY for collection/delivery.`,
           { duration: 5000 }

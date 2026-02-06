@@ -76,14 +76,15 @@ describe('Transaction Database Operations', () => {
   });
 
   describe('EC-TXN-002: Create Transaction', () => {
-    it('should create completed cash transaction', async () => {
+    it('should create completed credit transaction', async () => {
       const transactionData = {
         orderId: 'ORD-001',
         customerId: 'CUST-001',
         branchId: TEST_BRANCHES.mainStore.branchId,
         amount: 1000,
-        method: 'cash' as const,
+        method: 'credit' as const,
         status: 'completed' as const,
+        paymentType: 'full' as const,
         processedBy: 'USER-001',
       };
 
@@ -98,11 +99,11 @@ describe('Transaction Database Operations', () => {
           orderId: 'ORD-001',
           customerId: 'CUST-001',
           amount: 1000,
-          method: 'cash',
+          method: 'credit',
           status: 'completed',
         })
       );
-      expect(updateOrderPayment).toHaveBeenCalledWith('ORD-001', 1000, 'cash');
+      expect(updateOrderPayment).toHaveBeenCalledWith('ORD-001', 1000, 'credit');
     });
 
     it('should create pending digital transaction with Pesapal ref', async () => {
@@ -113,6 +114,7 @@ describe('Transaction Database Operations', () => {
         amount: 1000,
         method: 'mpesa' as const,
         status: 'pending' as const,
+        paymentType: 'full' as const,
         pesapalRef: 'PESAPAL-001',
         processedBy: 'USER-001',
       };
@@ -138,10 +140,10 @@ describe('Transaction Database Operations', () => {
         amount: 1000,
         method: 'credit' as const,
         status: 'completed' as const,
+        paymentType: 'full' as const,
         processedBy: 'USER-001',
         metadata: {
-          creditNote: 'Corporate account',
-          approvedBy: 'MANAGER-001',
+          gatewayResponse: 'Corporate account approval',
         },
       };
 
@@ -152,8 +154,7 @@ describe('Transaction Database Operations', () => {
         result,
         expect.objectContaining({
           metadata: {
-            creditNote: 'Corporate account',
-            approvedBy: 'MANAGER-001',
+            gatewayResponse: 'Corporate account approval',
           },
         })
       );
@@ -165,7 +166,8 @@ describe('Transaction Database Operations', () => {
         customerId: 'CUST-001',
         branchId: TEST_BRANCHES.mainStore.branchId,
         amount: 1000,
-        method: 'cash' as const,
+        method: 'credit' as const,
+        paymentType: 'full' as const,
         processedBy: 'USER-001',
       };
 
@@ -187,8 +189,9 @@ describe('Transaction Database Operations', () => {
         customerId: 'CUST-001',
         branchId: TEST_BRANCHES.mainStore.branchId,
         amount: 1000,
-        method: 'cash',
+        method: 'credit',
         status: 'completed',
+        paymentType: 'full',
         timestamp: createMockTimestamp(new Date()),
         processedBy: 'USER-001',
       };
@@ -212,6 +215,7 @@ describe('Transaction Database Operations', () => {
         amount: 1000,
         method: 'mpesa',
         status: 'pending',
+        paymentType: 'full',
         timestamp: createMockTimestamp(new Date()),
         processedBy: 'USER-001',
       };
@@ -239,6 +243,7 @@ describe('Transaction Database Operations', () => {
         amount: 1000,
         method: 'mpesa',
         status: 'pending',
+        paymentType: 'full',
         timestamp: createMockTimestamp(new Date()),
         processedBy: 'USER-001',
       };
@@ -266,10 +271,11 @@ describe('Transaction Database Operations', () => {
         amount: 1000,
         method: 'mpesa',
         status: 'pending',
+        paymentType: 'full',
         timestamp: createMockTimestamp(new Date()),
         processedBy: 'USER-001',
         metadata: {
-          initiatedAt: '2025-01-01T10:00:00Z',
+          gatewayResponse: 'Initiated at 2025-01-01T10:00:00Z',
         },
       };
 
@@ -285,7 +291,6 @@ describe('Transaction Database Operations', () => {
         'TXN-001',
         expect.objectContaining({
           metadata: {
-            initiatedAt: '2025-01-01T10:00:00Z',
             gatewayResponse: 'Payment successful',
             mpesaTransactionCode: 'MPE123456',
           },
@@ -303,8 +308,9 @@ describe('Transaction Database Operations', () => {
           customerId: 'CUST-001',
           branchId: TEST_BRANCHES.mainStore.branchId,
           amount: 500,
-          method: 'cash',
+          method: 'credit',
           status: 'completed',
+          paymentType: 'partial',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -316,6 +322,7 @@ describe('Transaction Database Operations', () => {
           amount: 500,
           method: 'mpesa',
           status: 'completed',
+          paymentType: 'full',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -338,8 +345,9 @@ describe('Transaction Database Operations', () => {
           customerId: 'CUST-001',
           branchId: TEST_BRANCHES.mainStore.branchId,
           amount: 1000,
-          method: 'cash',
+          method: 'credit',
           status: 'completed',
+          paymentType: 'full',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -363,6 +371,7 @@ describe('Transaction Database Operations', () => {
           amount: 1000,
           method: 'mpesa',
           status: 'pending',
+          paymentType: 'full',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -386,6 +395,7 @@ describe('Transaction Database Operations', () => {
           amount: 1000,
           method: 'mpesa',
           status: 'completed',
+          paymentType: 'full',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -426,6 +436,7 @@ describe('Transaction Database Operations', () => {
         amount: 1000,
         method: 'mpesa',
         status: 'pending',
+        paymentType: 'full',
         timestamp: createMockTimestamp(new Date()),
         pesapalRef: 'PESAPAL-001',
         processedBy: 'USER-001',
@@ -457,8 +468,9 @@ describe('Transaction Database Operations', () => {
           customerId: 'CUST-001',
           branchId: TEST_BRANCHES.mainStore.branchId,
           amount: 500,
-          method: 'cash',
+          method: 'credit',
           status: 'completed',
+          paymentType: 'partial',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -470,6 +482,7 @@ describe('Transaction Database Operations', () => {
           amount: 800,
           method: 'mpesa',
           status: 'completed',
+          paymentType: 'full',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -479,8 +492,9 @@ describe('Transaction Database Operations', () => {
           customerId: 'CUST-001',
           branchId: TEST_BRANCHES.mainStore.branchId,
           amount: 200,
-          method: 'cash',
+          method: 'credit',
           status: 'pending', // Should not be included
+          paymentType: 'full',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -501,8 +515,9 @@ describe('Transaction Database Operations', () => {
           customerId: 'CUST-001',
           branchId: TEST_BRANCHES.mainStore.branchId,
           amount: 500,
-          method: 'cash',
+          method: 'credit',
           status: 'completed',
+          paymentType: 'full',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -514,6 +529,7 @@ describe('Transaction Database Operations', () => {
           amount: 300,
           method: 'mpesa',
           status: 'completed',
+          paymentType: 'full',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -525,6 +541,7 @@ describe('Transaction Database Operations', () => {
           amount: 200,
           method: 'card',
           status: 'completed',
+          paymentType: 'full',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -539,10 +556,9 @@ describe('Transaction Database Operations', () => {
 
       expect(totals.total).toBe(1000);
       expect(totals.count).toBe(3);
-      expect(totals.byMethod.cash).toBe(500);
+      expect(totals.byMethod.credit).toBe(500);
       expect(totals.byMethod.mpesa).toBe(300);
       expect(totals.byMethod.card).toBe(200);
-      expect(totals.byMethod.credit).toBe(0);
     });
 
     it('should get today transaction summary', async () => {
@@ -553,8 +569,9 @@ describe('Transaction Database Operations', () => {
           customerId: 'CUST-001',
           branchId: TEST_BRANCHES.mainStore.branchId,
           amount: 1000,
-          method: 'cash',
+          method: 'credit',
           status: 'completed',
+          paymentType: 'full',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -566,6 +583,7 @@ describe('Transaction Database Operations', () => {
           amount: 500,
           method: 'mpesa',
           status: 'completed',
+          paymentType: 'full',
           timestamp: createMockTimestamp(new Date()),
           processedBy: 'USER-001',
         },
@@ -577,10 +595,9 @@ describe('Transaction Database Operations', () => {
 
       expect(summary.total).toBe(1500);
       expect(summary.count).toBe(2);
-      expect(summary.cash).toBe(1000);
+      expect(summary.credit).toBe(1000);
       expect(summary.mpesa).toBe(500);
       expect(summary.card).toBe(0);
-      expect(summary.credit).toBe(0);
     });
   });
 });

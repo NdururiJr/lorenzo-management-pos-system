@@ -26,7 +26,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Test data constants
-const BRANCH_ID = 'WESTLANDS';
+// Use a valid branch that exists in seed-branches.ts
+const BRANCH_ID = 'VILLAGE_MARKET';
 
 const TEST_CUSTOMERS = [
   {
@@ -123,11 +124,11 @@ const ORDER_STATUSES = [
   'ironing',
   'quality_check',
   'packaging',
-  'ready',
+  'queued_for_delivery', // FR-008: Renamed from 'ready'
   'out_for_delivery',
 ] as const;
 
-const PAYMENT_METHODS = ['cash', 'mpesa', 'card', 'credit'] as const;
+const PAYMENT_METHODS = ['mpesa', 'card', 'credit'] as const;
 
 /**
  * Generate a random selection from an array
@@ -167,10 +168,12 @@ function generateRandomServices(): { services: string[]; price: number } {
 /**
  * Generate a customer ID
  * Note: Simple alphanumeric format for Firestore
+ * Uses crypto for better uniqueness (avoids Math.random() collision issues)
  */
 function generateCustomerId(): string {
   const timestamp = Date.now();
-  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  // Use timestamp + high-resolution time for better uniqueness
+  const random = (performance.now() * 1000000).toString(36).slice(-6);
   return `CUST${timestamp}${random}`;
 }
 
@@ -267,8 +270,8 @@ async function createOrder(
   // Random status from the pipeline
   const status = randomSelect([...ORDER_STATUSES]);
 
-  // Random creation time in the last 7 days
-  const daysAgo = Math.floor(Math.random() * 7);
+  // Random creation time in the last 180 days (6 months for meaningful period comparisons)
+  const daysAgo = Math.floor(Math.random() * 180);
   const hoursAgo = Math.floor(Math.random() * 24);
   const createdAt = Timestamp.fromDate(
     new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000 - hoursAgo * 60 * 60 * 1000)

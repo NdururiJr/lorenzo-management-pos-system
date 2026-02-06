@@ -38,10 +38,10 @@ export function GarmentCard({
   className,
 }: GarmentCardProps) {
   return (
-    <Card className={cn('p-4 border border-gray-200 hover:shadow-md transition-shadow', className)}>
+    <Card className={cn('p-4 border border-lorenzo-teal/10 hover:shadow-card-teal hover:border-lorenzo-teal/30 transition-all', className)}>
       <div className="flex gap-4">
         {/* Thumbnail */}
-        <div className="w-16 h-16 flex-shrink-0 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
+        <div className="w-16 h-16 shrink-0 rounded-lg bg-lorenzo-cream flex items-center justify-center overflow-hidden">
           {garment.photos && garment.photos.length > 0 ? (
             <img
               src={garment.photos[0]}
@@ -49,17 +49,17 @@ export function GarmentCard({
               className="w-full h-full object-cover"
             />
           ) : (
-            <Package className="w-8 h-8 text-gray-400" />
+            <Package className="w-8 h-8 text-lorenzo-teal/50" />
           )}
         </div>
 
         {/* Details */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between mb-1">
-            <h3 className="font-semibold text-black">
+            <h3 className="font-semibold text-lorenzo-dark-teal">
               {garment.type} • {garment.color}
             </h3>
-            <span className="text-lg font-bold text-black ml-4 flex-shrink-0">
+            <span className="text-lg font-bold text-lorenzo-deep-teal ml-4 shrink-0">
               KES {garment.price.toLocaleString()}
             </span>
           </div>

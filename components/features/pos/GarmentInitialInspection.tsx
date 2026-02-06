@@ -14,7 +14,6 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { AlertCircle, Camera, X } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -86,11 +85,11 @@ export function GarmentInitialInspection({
   };
 
   return (
-    <Card className="border-l-4 border-l-yellow-400">
+    <Card className="border-l-4 border-l-lorenzo-gold">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <AlertCircle className="w-5 h-5 text-yellow-600" />
+            <AlertCircle className="w-5 h-5 text-lorenzo-gold" />
             <CardTitle className="text-base">
               Initial Inspection
               <Badge variant="secondary" className="ml-2 text-xs">
@@ -187,7 +186,7 @@ export function GarmentInitialInspection({
                   <button
                     type="button"
                     onClick={handlePhotoUpload}
-                    className="aspect-square border-2 border-dashed border-gray-300 rounded-md flex flex-col items-center justify-center hover:border-gray-400 hover:bg-gray-50 transition-colors"
+                    className="aspect-square border-2 border-dashed border-gray-300 rounded-md flex flex-col items-center justify-center hover:border-lorenzo-teal hover:bg-lorenzo-cream transition-colors"
                   >
                     <Camera className="w-6 h-6 text-gray-400 mb-1" />
                     <span className="text-xs text-gray-500">Add Photo</span>

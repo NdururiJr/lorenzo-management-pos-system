@@ -688,7 +688,7 @@ Before going live:
 
 ### Lorenzo Dry Cleaners Dev Team
 
-- **Gachengoh Marugu:** hello@ai-agentsplus.com, +254 725 462 859
+- **Gachengoh Marugu:** jerry@ai-agentsplus.com, +254 725 462 859
 - **Arthur Tutu:** arthur@ai-agentsplus.com
 - **Jerry Nduriri:** jerry@ai-agentsplus.com, +254 725 462 859
 

@@ -35,7 +35,7 @@ const features = [
   {
     icon: Zap,
     title: 'Express Service',
-    description: '24-hour turnaround available for when you need your garments cleaned fast.',
+    description: '2-hour turnaround available at no extra cost when you need your garments cleaned fast.',
   },
   {
     icon: Truck,
@@ -126,7 +126,7 @@ export function FeaturesGrid() {
         >
           <StatItem value="500+" label="Happy Customers" />
           <StatItem value="10,000+" label="Garments Cleaned" />
-          <StatItem value="24hrs" label="Express Service" />
+          <StatItem value="2hrs" label="Express Service" />
           <StatItem value="5.0★" label="Customer Rating" />
         </motion.div>
       </div>
@@ -162,7 +162,7 @@ function FeatureCard({ icon: Icon, title, description, index }: FeatureCardProps
     >
       {/* Animated gradient on hover */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-brand-blue/10 via-brand-blue-light/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute inset-0 bg-linear-to-br from-brand-blue/10 via-brand-blue-light/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
       />
 
       {/* Content */}

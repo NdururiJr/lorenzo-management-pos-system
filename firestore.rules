@@ -103,6 +103,14 @@ service cloud.firestore {
     }
 
     /**
+     * Check if user is an executive (Director/GM) who can view all branches
+     * Executives operate from HQ and need cross-branch read access for dashboards
+     */
+    function isExecutive() {
+      return isAuthenticated() && hasAnyRole(['director', 'general_manager']);
+    }
+
+    /**
      * Check if user is staff (any role except customer)
      */
     function isStaff() {
@@ -156,10 +164,12 @@ service cloud.firestore {
     match /users/{userId} {
       // Users can read their own profile
       // Super admins can read all profiles
+      // Executives can read all profiles (cross-branch access)
       // Managers can read profiles in their allowed branches
       allow read: if isAuthenticated() && (
         currentUserId() == userId ||
         isSuperAdmin() ||
+        isExecutive() ||
         (isManagement() && canAccessBranch(resource.data.branchId))
       );
 
@@ -259,8 +269,10 @@ service cloud.firestore {
     match /branches/{branchId} {
       // All authenticated users can read branches they have access to
       // Super admins can read all branches
+      // Executives can read all branches (cross-branch access)
       allow read: if isAuthenticated() && (
         isSuperAdmin() ||
+        isExecutive() ||
         canAccessBranch(branchId)
       );
 
@@ -276,11 +288,13 @@ service cloud.firestore {
       // Drivers can read their assigned deliveries from their branch
       // Staff can read deliveries from their allowed branches
       // Super admins can read all deliveries
+      // Executives can read all deliveries (cross-branch access)
       allow read: if isAuthenticated() && (
+        isSuperAdmin() ||
+        isExecutive() ||
         (resource.data.driverId == currentUserId() &&
           canAccessBranch(resource.data.branchId)) ||
-        canAccessBranch(resource.data.branchId) ||
-        isSuperAdmin()
+        canAccessBranch(resource.data.branchId)
       );
 
       // Management can create deliveries in their allowed branches
@@ -309,9 +323,11 @@ service cloud.firestore {
     match /inventory/{itemId} {
       // Staff can read inventory from their allowed branches
       // Super admins can read all inventory
+      // Executives can read all inventory (cross-branch access)
       allow read: if isAuthenticated() && (
-        canAccessBranch(resource.data.branchId) ||
-        isSuperAdmin()
+        isSuperAdmin() ||
+        isExecutive() ||
+        canAccessBranch(resource.data.branchId)
       );
 
       // Management and inventory staff can create and update inventory in their allowed branches
@@ -333,8 +349,10 @@ service cloud.firestore {
     match /inventoryTransfers/{transferId} {
       // Users can read transfers if they have access to either fromBranch or toBranch
       // Super admins can read all transfers
+      // Executives can read all transfers (cross-branch access)
       allow read: if isAuthenticated() && (
         isSuperAdmin() ||
+        isExecutive() ||
         canAccessBranch(resource.data.fromBranchId) ||
         canAccessBranch(resource.data.toBranchId)
       );
@@ -397,10 +415,12 @@ service cloud.firestore {
       // Customers can read their own transactions
       // Staff can read transactions from their allowed branches
       // Super admins can read all transactions
+      // Executives can read all transactions (cross-branch access)
       allow read: if isAuthenticated() && (
         resource.data.customerId == currentUserId() ||
-        (isStaff() && canAccessBranch(resource.data.branchId)) ||
-        isSuperAdmin()
+        isSuperAdmin() ||
+        isExecutive() ||
+        (isStaff() && canAccessBranch(resource.data.branchId))
       );
 
       // Front desk and management can create transactions in their allowed branches
@@ -531,6 +551,157 @@ service cloud.firestore {
       allow update: if false;
 
       // Only super admins can delete email logs
+      allow delete: if isSuperAdmin();
+    }
+
+    // ============================================
+    // ATTENDANCE COLLECTION
+    // ============================================
+
+    match /attendance/{attendanceId} {
+      // Executives and super admins can read all attendance (cross-branch)
+      // Staff can read attendance from their branch
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() ||
+        isExecutive() ||
+        (isStaff() && canAccessBranch(resource.data.branchId))
+      );
+
+      // Staff can create attendance records for their branch
+      allow create: if isAuthenticated() && isStaff() &&
+        canAccessBranch(request.resource.data.branchId);
+
+      // Staff can update attendance records for their branch
+      // branchId cannot be changed
+      allow update: if isAuthenticated() && !branchIdChanged() && (
+        isSuperAdmin() ||
+        (isStaff() && canAccessBranch(resource.data.branchId))
+      );
+
+      // Only super admins can delete attendance records
+      allow delete: if isSuperAdmin();
+    }
+
+    // ============================================
+    // EQUIPMENT COLLECTION
+    // ============================================
+
+    match /equipment/{equipmentId} {
+      // Executives and super admins can read all equipment (cross-branch)
+      // Staff can read equipment from their branch
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() ||
+        isExecutive() ||
+        (isStaff() && canAccessBranch(resource.data.branchId))
+      );
+
+      // Management can create equipment records
+      allow create: if isManagement() &&
+        canAccessBranch(request.resource.data.branchId);
+
+      // Management can update equipment records
+      // branchId cannot be changed
+      allow update: if isAuthenticated() && !branchIdChanged() && (
+        isSuperAdmin() ||
+        (isManagement() && canAccessBranch(resource.data.branchId))
+      );
+
+      // Only super admins can delete equipment records
+      allow delete: if isSuperAdmin();
+    }
+
+    // ============================================
+    // ISSUES COLLECTION
+    // ============================================
+
+    match /issues/{issueId} {
+      // Executives and super admins can read all issues (cross-branch)
+      // Staff can read issues from their branch
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() ||
+        isExecutive() ||
+        (isStaff() && canAccessBranch(resource.data.branchId))
+      );
+
+      // Staff can create issue reports for their branch
+      allow create: if isAuthenticated() && isStaff() &&
+        canAccessBranch(request.resource.data.branchId);
+
+      // Staff can update issues (status, resolution, etc.)
+      // Management can resolve/escalate issues
+      // branchId cannot be changed
+      allow update: if isAuthenticated() && !branchIdChanged() && (
+        isSuperAdmin() ||
+        isExecutive() ||
+        (isStaff() && canAccessBranch(resource.data.branchId))
+      );
+
+      // Only super admins can delete issues
+      allow delete: if isSuperAdmin();
+    }
+
+    // ============================================
+    // CUSTOMER FEEDBACK COLLECTION
+    // ============================================
+
+    match /customerFeedback/{feedbackId} {
+      // Executives and super admins can read all feedback (cross-branch)
+      // Staff can read feedback from their branch
+      // Customers can read their own feedback
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() ||
+        isExecutive() ||
+        (isStaff() && canAccessBranch(resource.data.branchId)) ||
+        resource.data.customerId == currentUserId()
+      );
+
+      // Staff can create feedback records
+      // Customers can submit feedback
+      allow create: if isAuthenticated() && (
+        isStaff() ||
+        request.resource.data.customerId == currentUserId()
+      );
+
+      // Staff can update feedback (add responses, mark as resolved)
+      // branchId cannot be changed
+      allow update: if isAuthenticated() && !branchIdChanged() && (
+        isSuperAdmin() ||
+        isExecutive() ||
+        (isStaff() && canAccessBranch(resource.data.branchId))
+      );
+
+      // Only super admins can delete feedback
+      allow delete: if isSuperAdmin();
+    }
+
+    // ============================================
+    // PERMISSION REQUESTS COLLECTION
+    // ============================================
+
+    match /permissionRequests/{requestId} {
+      // Executives and super admins can read all permission requests
+      // GMs can read requests they created
+      // Directors can read all requests for approval
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() ||
+        isExecutive() ||
+        resource.data.requestedBy == currentUserId()
+      );
+
+      // GMs can create permission requests
+      allow create: if isAuthenticated() &&
+        hasAnyRole(['general_manager']);
+
+      // Directors can approve/reject requests
+      // GMs can cancel their own requests
+      allow update: if isAuthenticated() && (
+        isSuperAdmin() ||
+        hasRole('director') ||
+        (resource.data.requestedBy == currentUserId() &&
+         request.resource.data.status == 'cancelled')
+      );
+
+      // Only super admins can delete permission requests
       allow delete: if isSuperAdmin();
     }
 

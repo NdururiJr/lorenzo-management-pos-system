@@ -23,7 +23,7 @@ interface PhoneLoginFormProps {
  * This component is no longer used.
  * Customer authentication has been changed to email/password.
  */
-export function PhoneLoginForm({ onSubmit, isLoading = false }: PhoneLoginFormProps) {
+export function PhoneLoginForm({ onSubmit: _onSubmit, isLoading: _isLoading = false }: PhoneLoginFormProps) {
   return (
     <Alert variant="destructive">
       <AlertCircle className="h-4 w-4" />

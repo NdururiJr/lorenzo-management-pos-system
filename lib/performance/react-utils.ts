@@ -98,6 +98,7 @@ export function useIntersectionObserver(
     return () => {
       observer.disconnect();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref]); // Removed options from deps to avoid recreating observer
 
   return isIntersecting;

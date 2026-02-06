@@ -18,7 +18,6 @@ import { useState, useMemo, memo } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import type { OrderStatus } from '@/components/ui/status-badge';
 import type { OrderExtended } from '@/lib/db/schema';
@@ -38,6 +37,7 @@ interface PipelineBoardProps {
   className?: string;
 }
 
+// FR-008: Updated to use 'queued_for_delivery' instead of 'ready'
 const PIPELINE_COLUMNS: Omit<PipelineColumn, 'orders'>[] = [
   { status: 'received', label: 'Received', color: 'gray' },
   { status: 'queued', label: 'Queued', color: 'gray' },
@@ -46,7 +46,7 @@ const PIPELINE_COLUMNS: Omit<PipelineColumn, 'orders'>[] = [
   { status: 'ironing', label: 'Ironing', color: 'blue' },
   { status: 'quality_check', label: 'Quality Check', color: 'purple' },
   { status: 'packaging', label: 'Packaging', color: 'cyan' },
-  { status: 'ready', label: 'Ready', color: 'green' },
+  { status: 'queued_for_delivery', label: 'Queued for Delivery', color: 'green' },
   { status: 'out_for_delivery', label: 'Out for Delivery', color: 'amber' },
   { status: 'delivered', label: 'Delivered', color: 'green' },
 ];

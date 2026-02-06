@@ -72,7 +72,7 @@ export default function RegisterPage() {
       } else {
         toast.error(result.error || 'Failed to register user');
       }
-    } catch (_error) {
+    } catch {
       toast.error('An unexpected error occurred');
     } finally {
       setIsLoading(false);

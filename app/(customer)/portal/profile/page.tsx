@@ -16,39 +16,30 @@ import { FloatingOrbs } from '@/components/auth/FloatingOrbs';
 import { PersonalInfoSection } from '@/components/features/customer/PersonalInfoSection';
 import { AddressesSection } from '@/components/features/customer/AddressesSection';
 import { PreferencesSection } from '@/components/features/customer/PreferencesSection';
+import { getCustomerByPhoneOrEmail } from '@/lib/db/customers';
 import { motion } from 'framer-motion';
 import { User, Loader2, AlertCircle } from 'lucide-react';
-import { collection, query, where, getDocs, limit } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 import type { Customer } from '@/lib/db/schema';
 
 export default function ProfilePage() {
   const { user, loading: authLoading } = useAuth();
 
-  // Fetch customer record by email
+  // Fetch customer record by phone OR email (Issue 81 Fix)
+  // Supports both phone-authenticated and email-authenticated users
   const {
     data: customer,
     isLoading: customerLoading,
     error,
     refetch,
   } = useQuery<Customer | null>({
-    queryKey: ['customer-profile', user?.email],
+    queryKey: ['customer-profile', user?.phoneNumber, user?.email],
     queryFn: async () => {
-      if (!user?.email) return null;
+      if (!user?.email && !user?.phoneNumber) return null;
 
-      const customersRef = collection(db, 'customers');
-      const q = query(customersRef, where('email', '==', user.email), limit(1));
-      const snapshot = await getDocs(q);
-
-      if (!snapshot.empty) {
-        return {
-          customerId: snapshot.docs[0].id,
-          ...snapshot.docs[0].data(),
-        } as Customer;
-      }
-      return null;
+      // Use the new combined lookup function
+      return getCustomerByPhoneOrEmail(user?.phoneNumber, user?.email);
     },
-    enabled: !!user?.email,
+    enabled: !!(user?.email || user?.phoneNumber),
   });
 
   const isLoading = authLoading || customerLoading;
@@ -108,7 +99,7 @@ export default function ProfilePage() {
         className="mb-6"
       >
         <div className="flex items-center gap-3 mb-2">
-          <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-brand-blue to-brand-blue-dark flex items-center justify-center text-white shadow-md">
+          <div className="h-12 w-12 rounded-xl bg-linear-to-br from-brand-blue to-brand-blue-dark flex items-center justify-center text-white shadow-md">
             <User className="h-6 w-6" />
           </div>
           <div>

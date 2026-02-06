@@ -146,7 +146,7 @@ Set budget alerts for:
 1. Check logs: `firebase functions:log`
 2. Read: `/functions/README.md`
 3. Test locally: `firebase emulators:start`
-4. Contact: hello@ai-agentsplus.com
+4. Contact: jerry@ai-agentsplus.com
 
 ## ⚡ Pro Tips
 

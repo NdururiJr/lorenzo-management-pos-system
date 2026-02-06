@@ -18,7 +18,6 @@ import {
   orderBy,
   Timestamp,
   deleteDoc,
-  WriteBatch,
   writeBatch,
 } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -152,6 +151,33 @@ export async function getAllDeliveries(status?: DeliveryStatus): Promise<Deliver
     );
   }
 
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => doc.data() as Delivery);
+}
+
+/**
+ * Get deliveries by branch with optional status filter
+ *
+ * @param branchId - Branch ID
+ * @param status - Optional status filter
+ * @returns Promise<Delivery[]>
+ */
+export async function getDeliveriesByBranch(
+  branchId: string,
+  status?: DeliveryStatus
+): Promise<Delivery[]> {
+  const deliveriesRef = collection(db, 'deliveries');
+
+  const constraints = [
+    where('branchId', '==', branchId),
+    orderBy('startTime', 'desc'),
+  ];
+
+  if (status) {
+    constraints.splice(1, 0, where('status', '==', status));
+  }
+
+  const q = query(deliveriesRef, ...constraints);
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => doc.data() as Delivery);
 }

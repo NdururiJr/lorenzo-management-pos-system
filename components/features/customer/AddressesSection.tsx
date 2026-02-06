@@ -3,6 +3,8 @@
  *
  * Manages customer addresses (add, edit, delete).
  *
+ * Issue 83 Fix: Added proper fallbacks for missing address components.
+ *
  * @module components/features/customer/AddressesSection
  */
 
@@ -12,11 +14,7 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import {
-  addCustomerAddress,
-  updateCustomerAddress,
-  removeCustomerAddress,
-} from '@/lib/db/customers';
+import { removeCustomerAddress } from '@/lib/db/customers';
 import { AddAddressModal } from './AddAddressModal';
 import { EditAddressModal } from './EditAddressModal';
 import { toast } from 'sonner';
@@ -38,6 +36,44 @@ interface AddressesSectionProps {
   onUpdate: () => void;
 }
 
+/**
+ * Get display text for an address with proper fallbacks (Issue 83 Fix)
+ */
+function getAddressDisplayText(address: Address & { id?: string }): string {
+  // Check for the main address field
+  if (address.address && address.address.trim()) {
+    return address.address;
+  }
+
+  // Fallback: try to construct from components if available
+  const components: string[] = [];
+
+  // Check for common address component fields
+  const addr = address as unknown as Record<string, unknown>;
+  if (addr.street) components.push(String(addr.street));
+  if (addr.city) components.push(String(addr.city));
+  if (addr.region || addr.state) components.push(String(addr.region || addr.state));
+  if (addr.postalCode || addr.zipCode) components.push(String(addr.postalCode || addr.zipCode));
+  if (addr.country) components.push(String(addr.country));
+
+  if (components.length > 0) {
+    return components.join(', ');
+  }
+
+  // Final fallback
+  return 'Address details not available';
+}
+
+/**
+ * Get display text for an address label with fallback (Issue 83 Fix)
+ */
+function getAddressLabel(address: Address & { id?: string }): string {
+  if (address.label && address.label.trim()) {
+    return address.label;
+  }
+  return 'Unnamed Address';
+}
+
 export function AddressesSection({ customer, onUpdate }: AddressesSectionProps) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingAddress, setEditingAddress] = useState<(Address & { id: string }) | null>(null);
@@ -57,8 +93,8 @@ export function AddressesSection({ customer, onUpdate }: AddressesSectionProps) 
     }
   };
 
-  const getAddressIcon = (label: string) => {
-    const lower = label.toLowerCase();
+  const getAddressIcon = (label: string | undefined | null) => {
+    const lower = (label || '').toLowerCase();
     if (lower.includes('home')) return Home;
     if (lower.includes('office') || lower.includes('work')) return Building2;
     return MapPin;
@@ -97,6 +133,8 @@ export function AddressesSection({ customer, onUpdate }: AddressesSectionProps) 
             {customer.addresses.map((address, index) => {
               const addressWithId = address as Address & { id: string };
               const Icon = getAddressIcon(addressWithId.label);
+              const displayLabel = getAddressLabel(addressWithId);
+              const displayAddress = getAddressDisplayText(addressWithId);
 
               return (
                 <div
@@ -105,11 +143,11 @@ export function AddressesSection({ customer, onUpdate }: AddressesSectionProps) 
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-3 flex-1">
-                      <Icon className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <Icon className="w-5 h-5 text-gray-400 mt-0.5 shrink-0" />
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <span className="font-semibold">
-                            {addressWithId.label}
+                            {displayLabel}
                           </span>
                           {index === 0 && (
                             <Badge variant="outline" className="text-xs">
@@ -118,7 +156,7 @@ export function AddressesSection({ customer, onUpdate }: AddressesSectionProps) 
                           )}
                         </div>
                         <p className="text-sm text-gray-600">
-                          {addressWithId.address}
+                          {displayAddress}
                         </p>
                       </div>
                     </div>

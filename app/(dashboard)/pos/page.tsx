@@ -1,64 +1,91 @@
 /**
  * POS (Point of Sale) Page
  *
- * Modern POS interface with glassmorphic design and blue theme.
- * Features animated cards and smooth transitions for order creation.
+ * Modern POS interface with category grid, service cards, and bottom order bar.
+ * Features quick-add service cards that pre-fill the detailed garment entry form.
  *
  * @module app/(dashboard)/pos/page
  */
 
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Timestamp } from 'firebase/firestore';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
-import { Loader2, ShoppingCart, User, Package, Plus, Trash2, Check } from 'lucide-react';
-import { ModernCard, ModernCardHeader, ModernCardContent } from '@/components/modern/ModernCard';
-import { ModernButton } from '@/components/modern/ModernButton';
-import { ModernSection, ModernGrid } from '@/components/modern/ModernLayout';
-import { ModernBadge } from '@/components/modern/ModernBadge';
-import { ModernStatCard, MiniStatCard } from '@/components/modern/ModernStatCard';
-import { CustomerSearch } from '@/components/features/pos/CustomerSearch';
+import { Loader2 } from 'lucide-react';
+import { ModernCard } from '@/components/modern/ModernCard';
+
+// POS Components
+import { POSHeader } from '@/components/features/pos/POSHeader';
+import { ServiceCategoryTabs } from '@/components/features/pos/ServiceCategoryTabs';
+import { ServiceGrid } from '@/components/features/pos/ServiceGrid';
+import { POSBottomBar } from '@/components/features/pos/POSBottomBar';
+import { GarmentEntryForm, type PrefillData } from '@/components/features/pos/GarmentEntryForm';
+import { CustomerSearchModal } from '@/components/features/pos/CustomerSearchModal';
+import { OrderOptionsModal, type OrderOptions } from '@/components/features/pos/OrderOptionsModal';
 import { CreateCustomerModal } from '@/components/features/pos/CreateCustomerModal';
-import { CustomerCard } from '@/components/features/pos/CustomerCard';
-import { GarmentEntryForm } from '@/components/features/pos/GarmentEntryForm';
-import { GarmentCard } from '@/components/features/pos/GarmentCard';
-import { GarmentInitialInspection } from '@/components/features/pos/GarmentInitialInspection';
-import { OrderSummary } from '@/components/features/pos/OrderSummary';
 import { PaymentModal } from '@/components/features/pos/PaymentModal';
 import { ReceiptPreview } from '@/components/features/pos/ReceiptPreview';
-import { CollectionMethodSelector } from '@/components/features/orders/CollectionMethodSelector';
-import { ReturnMethodSelector } from '@/components/features/orders/ReturnMethodSelector';
+import { GarmentInitialInspection } from '@/components/features/pos/GarmentInitialInspection';
+
+// Data and utilities
 import { getCustomer } from '@/lib/db/customers';
 import { createOrder, generateOrderId, generateGarmentId, calculateEstimatedCompletion } from '@/lib/db/orders';
-import type { Customer, Garment, OrderExtended, Address } from '@/lib/db/schema';
+import { getActiveUsers, getUsersByBranch } from '@/lib/db/users';
+import type { ServiceItem } from '@/lib/data/service-catalog';
+import type { Customer, Garment, OrderExtended, User } from '@/lib/db/schema';
+import type { CartItemData } from '@/components/features/pos/CartItemChip';
 
 interface GarmentFormData {
   type: string;
   color: string;
   brand?: string;
+  // V2.0: Category is mandatory
+  category?: 'Adult' | 'Children';
+  // V2.0: No Brand flag
+  noBrand?: boolean;
   services: string[];
   price: number;
   specialInstructions?: string;
   photos?: string[];
+  icon?: string;
   // Initial inspection fields (Stage 1 - Optional)
   hasNotableDamage?: boolean;
   initialInspectionNotes?: string;
   initialInspectionPhotos?: string[];
 }
 
+/**
+ * Service type for orders (V2.0)
+ */
+type ServiceType = 'Normal' | 'Express';
+
 export default function POSPage() {
   const { user, userData } = useAuth();
 
+  // Search and filter state
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All Services');
+
   // Customer state
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [showCustomerSearchModal, setShowCustomerSearchModal] = useState(false);
   const [showCreateCustomerModal, setShowCreateCustomerModal] = useState(false);
-  const [showCustomerSearch, setShowCustomerSearch] = useState(true);
 
-  // Garments state
+  // Pre-fill state for GarmentEntryForm
+  const [prefillData, setPrefillData] = useState<PrefillData | null>(null);
+
+  // Garments/Cart state
   const [garments, setGarments] = useState<GarmentFormData[]>([]);
+
+  // Order options state
+  const [showOrderOptionsModal, setShowOrderOptionsModal] = useState(false);
+  const [orderOptions, setOrderOptions] = useState<OrderOptions>({
+    collectionMethod: 'dropped_off',
+    returnMethod: 'customer_collects',
+  });
 
   // Order state
   const [isProcessing, setIsProcessing] = useState(false);
@@ -70,32 +97,106 @@ export default function POSPage() {
   // Receipt state
   const [showReceipt, setShowReceipt] = useState(false);
 
-  // Collection method state
-  const [collectionMethod, setCollectionMethod] = useState<'dropped_off' | 'pickup_required'>('dropped_off');
-  const [pickupAddress, setPickupAddress] = useState<Address | undefined>();
-  const [pickupInstructions, setPickupInstructions] = useState('');
-  const [pickupScheduledTime, setPickupScheduledTime] = useState<Date | undefined>();
+  // Inspection editing state
+  const [editingInspectionIndex, setEditingInspectionIndex] = useState<number | null>(null);
 
-  // Return method state
-  const [returnMethod, setReturnMethod] = useState<'customer_collects' | 'delivery_required'>('customer_collects');
-  const [deliveryAddress, setDeliveryAddress] = useState<Address | undefined>();
-  const [deliveryInstructions, setDeliveryInstructions] = useState('');
-  const [deliveryScheduledTime, setDeliveryScheduledTime] = useState<Date | undefined>();
+  // V2.0: Inspector (Checked By) and Service Type state
+  const [checkedBy, setCheckedBy] = useState<string>(user?.uid || '');
+  const [checkedByName, setCheckedByName] = useState<string>(userData?.name || '');
+  const [serviceType, setServiceType] = useState<ServiceType>('Normal');
+
+  // V2.0: Available staff for inspector dropdown
+  const [availableStaff, setAvailableStaff] = useState<{ uid: string; name: string }[]>([]);
+
+  // V2.0: Fetch available staff for inspector dropdown
+  useEffect(() => {
+    const fetchStaff = async () => {
+      try {
+        // Get staff from current branch if user has a branch, otherwise get all active users
+        let staff: User[];
+        if (userData?.branchId) {
+          staff = await getUsersByBranch(userData.branchId);
+        } else {
+          staff = await getActiveUsers();
+        }
+
+        // Filter to only active staff who can inspect (exclude customers)
+        const inspectors = staff
+          .filter(s => s.active && s.role !== 'customer' && s.role !== 'driver')
+          .map(s => ({ uid: s.uid, name: s.name }));
+
+        setAvailableStaff(inspectors);
+
+        // Set current user as default inspector if they are in the list
+        if (user?.uid && !checkedBy) {
+          const currentUserInList = inspectors.find(s => s.uid === user.uid);
+          if (currentUserInList) {
+            setCheckedBy(user.uid);
+            setCheckedByName(currentUserInList.name);
+          } else if (inspectors.length > 0) {
+            // Default to first available inspector
+            setCheckedBy(inspectors[0].uid);
+            setCheckedByName(inspectors[0].name);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching staff:', error);
+        // If fetch fails, at least include the current user
+        if (user?.uid && userData?.name) {
+          setAvailableStaff([{ uid: user.uid, name: userData.name }]);
+          setCheckedBy(user.uid);
+          setCheckedByName(userData.name);
+        }
+      }
+    };
+
+    if (user && userData) {
+      fetchStaff();
+    }
+  }, [user, userData, checkedBy]);
 
   // Calculate totals
   const subtotal = garments.reduce((sum, garment) => sum + garment.price, 0);
-  const tax = 0; // KES - no VAT on services for now
-  const total = subtotal + tax;
 
-  // Calculate estimated completion (48 hours default)
-  const estimatedCompletion = new Date(Date.now() + 48 * 60 * 60 * 1000);
+  // V2.0: Express pricing logic - 50% surcharge for express service
+  const EXPRESS_MULTIPLIER = 1.5;
+  const expressSurcharge = serviceType === 'Express' ? subtotal * 0.5 : 0;
+  const total = serviceType === 'Express' ? subtotal * EXPRESS_MULTIPLIER : subtotal;
+
+  // Calculate estimated completion (V2.0: Express = 24 hours, Normal = 48 hours)
+  const HOURS_EXPRESS = 24;
+  const HOURS_NORMAL = 48;
+  const completionHours = serviceType === 'Express' ? HOURS_EXPRESS : HOURS_NORMAL;
+  const estimatedCompletion = new Date(Date.now() + completionHours * 60 * 60 * 1000);
+
+  // Convert garments to cart items for bottom bar
+  const cartItems: CartItemData[] = garments.map((g, i) => ({
+    garmentId: `temp-${i}`,
+    type: g.type,
+    color: g.color,
+    services: g.services,
+    price: g.price,
+    icon: g.icon,
+  }));
+
+  /**
+   * Handle service card selection - pre-fills the form with pricing data
+   */
+  const handleSelectService = useCallback((service: ServiceItem) => {
+    setPrefillData({
+      type: service.type,
+      pricing: service.pricing,
+      serviceName: service.name,
+      icon: service.icon,
+    });
+    toast.success(`${service.name} selected - fill in details`);
+  }, []);
 
   /**
    * Handle customer selection
    */
   const handleSelectCustomer = useCallback((customer: Customer) => {
     setSelectedCustomer(customer);
-    setShowCustomerSearch(false);
     toast.success(`Customer selected: ${customer.name}`);
   }, []);
 
@@ -107,7 +208,6 @@ export default function POSPage() {
       const customer = await getCustomer(customerId);
       if (customer) {
         setSelectedCustomer(customer);
-        setShowCustomerSearch(false);
         toast.success(`Customer created: ${customer.name}`);
       }
     } catch (error) {
@@ -117,37 +217,33 @@ export default function POSPage() {
   }, []);
 
   /**
-   * Handle changing customer
+   * Handle adding garment from form
    */
-  const handleChangeCustomer = useCallback(() => {
-    setSelectedCustomer(null);
-    setShowCustomerSearch(true);
-  }, []);
-
-  /**
-   * Handle adding garment
-   */
-  const handleAddGarment = useCallback((garment: GarmentFormData) => {
+  const handleAddGarment = useCallback((garment: GarmentFormData & { price: number; icon?: string }) => {
     setGarments((prev) => [...prev, garment]);
     toast.success(`${garment.type} added to order`);
   }, []);
 
   /**
-   * Handle removing garment
+   * Handle removing garment from cart
    */
-  const handleRemoveGarment = useCallback((index: number) => {
+  const handleRemoveGarment = useCallback((garmentId: string) => {
+    const index = parseInt(garmentId.replace('temp-', ''), 10);
     setGarments((prev) => {
       const removed = prev[index];
-      toast.info(`${removed.type} removed from order`);
+      if (removed) {
+        toast.info(`${removed.type} removed from order`);
+      }
       return prev.filter((_, i) => i !== index);
     });
   }, []);
 
   /**
-   * Handle editing garment (simplified - just remove for now)
+   * Handle editing garment (opens inspection)
    */
-  const handleEditGarment = useCallback((index: number) => {
-    toast.info('Edit functionality coming soon. Please remove and re-add the item.');
+  const handleEditGarment = useCallback((item: CartItemData) => {
+    const index = parseInt(item.garmentId.replace('temp-', ''), 10);
+    setEditingInspectionIndex(index);
   }, []);
 
   /**
@@ -168,25 +264,51 @@ export default function POSPage() {
       };
       return updated;
     });
+    setEditingInspectionIndex(null);
+    toast.success('Inspection notes saved');
   }, []);
 
   /**
-   * Handle clearing order
+   * Handle new order (clear everything)
    */
-  const handleClearOrder = useCallback(() => {
-    if (garments.length === 0) return;
-
-    const confirmed = window.confirm(
-      'Are you sure you want to clear this order? All garments will be removed.'
-    );
-
-    if (confirmed) {
-      setGarments([]);
-      setSelectedCustomer(null);
-      setShowCustomerSearch(true);
-      toast.success('Order cleared');
+  const handleNewOrder = useCallback(() => {
+    if (garments.length > 0) {
+      const confirmed = window.confirm(
+        'Are you sure you want to start a new order? Current items will be cleared.'
+      );
+      if (!confirmed) return;
     }
-  }, [garments.length]);
+    setGarments([]);
+    setSelectedCustomer(null);
+    setSearchQuery('');
+    setActiveCategory('All Services');
+    setPrefillData(null);
+    setOrderOptions({
+      collectionMethod: 'dropped_off',
+      returnMethod: 'customer_collects',
+    });
+    // V2.0: Reset inspector and service type to defaults
+    setCheckedBy(user?.uid || '');
+    setCheckedByName(userData?.name || '');
+    setServiceType('Normal');
+    toast.success('Ready for new order');
+  }, [garments.length, user?.uid, userData?.name]);
+
+  /**
+   * Handle confirm order - opens order options modal
+   */
+  const handleConfirmOrder = useCallback(() => {
+    if (!selectedCustomer) {
+      setShowCustomerSearchModal(true);
+      toast.error('Please select a customer first');
+      return;
+    }
+    if (garments.length === 0) {
+      toast.error('Please add items to the order');
+      return;
+    }
+    setShowOrderOptionsModal(true);
+  }, [selectedCustomer, garments.length]);
 
   /**
    * Handle processing payment (create order first)
@@ -197,19 +319,26 @@ export default function POSPage() {
       return;
     }
 
+    // V2.0: Validate checkedBy is set
+    if (!checkedBy) {
+      toast.error('Please select an inspector (Checked By)');
+      return;
+    }
+
     // Validate pickup address if pickup is required
-    if (collectionMethod === 'pickup_required' && !pickupAddress) {
+    if (orderOptions.collectionMethod === 'pickup_required' && !orderOptions.pickupAddress) {
       toast.error('Please select a pickup address');
       return;
     }
 
     // Validate delivery address if delivery is required
-    if (returnMethod === 'delivery_required' && !deliveryAddress) {
+    if (orderOptions.returnMethod === 'delivery_required' && !orderOptions.deliveryAddress) {
       toast.error('Please select a delivery address');
       return;
     }
 
     setIsProcessing(true);
+    setShowOrderOptionsModal(false);
 
     try {
       // Generate order ID
@@ -228,17 +357,26 @@ export default function POSPage() {
 
       // Transform garments to proper format with initial inspection data
       const formattedGarments: Garment[] = garments.map((garment, index) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const baseGarment: any = {
           garmentId: generateGarmentId(orderId, index),
           type: garment.type,
           color: garment.color,
+          // V2.0: Brand is now mandatory
+          brand: garment.brand || 'No Brand',
+          // V2.0: Category is mandatory
+          category: garment.category || 'Adult',
           services: garment.services,
           price: garment.price,
           status: 'received',
         };
 
+        // V2.0: Add noBrand flag if set
+        if (garment.noBrand) {
+          baseGarment.noBrand = true;
+        }
+
         // Add optional fields only if they are defined
-        if (garment.brand) baseGarment.brand = garment.brand;
         if (garment.specialInstructions) baseGarment.specialInstructions = garment.specialInstructions;
         if (garment.photos) baseGarment.photos = garment.photos;
 
@@ -257,6 +395,7 @@ export default function POSPage() {
       });
 
       // Create order object
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const orderData: any = {
         orderId,
         customerId: selectedCustomer.customerId,
@@ -271,8 +410,8 @@ export default function POSPage() {
         estimatedCompletion: estimatedCompletionTimestamp,
         createdAt: Timestamp.now(),
         createdBy: user.uid,
-        collectionMethod,
-        returnMethod,
+        collectionMethod: orderOptions.collectionMethod,
+        returnMethod: orderOptions.returnMethod,
         statusHistory: [
           {
             status: 'received' as const,
@@ -281,21 +420,28 @@ export default function POSPage() {
           },
         ],
         updatedAt: Timestamp.now(),
+        // V2.0: New mandatory fields
+        checkedBy: checkedBy || user.uid, // Inspector who checked the order
+        checkedByName: checkedByName || userData?.name || '', // Inspector name (denormalized)
+        serviceType: serviceType, // Normal or Express
+        // V2.0: Express pricing breakdown
+        subtotal: subtotal, // Base price before express surcharge
+        expressSurcharge: expressSurcharge, // Express surcharge amount (0 for normal)
       };
 
       // Add pickup fields if pickup is required
-      if (collectionMethod === 'pickup_required') {
-        if (pickupAddress) orderData.pickupAddress = pickupAddress;
-        if (pickupInstructions) orderData.pickupInstructions = pickupInstructions;
-        if (pickupScheduledTime) orderData.pickupScheduledTime = Timestamp.fromDate(pickupScheduledTime);
+      if (orderOptions.collectionMethod === 'pickup_required') {
+        if (orderOptions.pickupAddress) orderData.pickupAddress = orderOptions.pickupAddress;
+        if (orderOptions.pickupInstructions) orderData.pickupInstructions = orderOptions.pickupInstructions;
+        if (orderOptions.pickupTime) orderData.pickupScheduledTime = Timestamp.fromDate(orderOptions.pickupTime);
       }
 
       // Add delivery fields if delivery is required
-      if (returnMethod === 'delivery_required') {
-        if (deliveryAddress) orderData.deliveryAddress = deliveryAddress;
-        if (deliveryInstructions) orderData.deliveryInstructions = deliveryInstructions;
-        if (deliveryScheduledTime) {
-          orderData.deliveryScheduledTime = Timestamp.fromDate(deliveryScheduledTime);
+      if (orderOptions.returnMethod === 'delivery_required') {
+        if (orderOptions.deliveryAddress) orderData.deliveryAddress = orderOptions.deliveryAddress;
+        if (orderOptions.deliveryInstructions) orderData.deliveryInstructions = orderOptions.deliveryInstructions;
+        if (orderOptions.deliveryTime) {
+          orderData.deliveryScheduledTime = Timestamp.fromDate(orderOptions.deliveryTime);
         } else {
           // Default to estimated completion time
           orderData.deliveryScheduledTime = estimatedCompletionTimestamp;
@@ -320,7 +466,7 @@ export default function POSPage() {
     } finally {
       setIsProcessing(false);
     }
-  }, [selectedCustomer, garments, user, userData, total, collectionMethod, pickupAddress, pickupInstructions, pickupScheduledTime, returnMethod, deliveryAddress, deliveryInstructions, deliveryScheduledTime]);
+  }, [selectedCustomer, garments, user, userData, total, subtotal, expressSurcharge, orderOptions, checkedBy, checkedByName, serviceType]);
 
   /**
    * Handle payment success
@@ -338,21 +484,39 @@ export default function POSPage() {
     setCreatedOrder(null);
     setGarments([]);
     setSelectedCustomer(null);
-    setShowCustomerSearch(true);
+    setSearchQuery('');
+    setActiveCategory('All Services');
+    setPrefillData(null);
+    setOrderOptions({
+      collectionMethod: 'dropped_off',
+      returnMethod: 'customer_collects',
+    });
+    // V2.0: Reset inspector and service type to defaults
+    setCheckedBy(user?.uid || '');
+    setCheckedByName(userData?.name || '');
+    setServiceType('Normal');
     toast.success('Ready for next order');
+  }, [user?.uid, userData?.name]);
+
+  /**
+   * Clear prefill data after it's been applied
+   */
+  const handlePrefillApplied = useCallback(() => {
+    // Don't clear immediately - let user see what was pre-filled
+    // Clear on next service selection instead
   }, []);
 
   // Loading state
   if (!user || !userData) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen bg-lorenzo-cream">
         <ModernCard className="p-8">
           <div className="text-center space-y-4">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
             >
-              <Loader2 className="w-8 h-8 mx-auto text-brand-blue" />
+              <Loader2 className="w-8 h-8 mx-auto text-lorenzo-accent-teal" />
             </motion.div>
             <p className="text-gray-600">Loading POS System...</p>
           </div>
@@ -362,305 +526,85 @@ export default function POSPage() {
   }
 
   return (
-    <ModernSection animate>
+    <div className="h-screen flex flex-col bg-lorenzo-cream">
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="mb-8"
-      >
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent flex items-center gap-3">
-              <motion.div
-                initial={{ rotate: -10 }}
-                animate={{ rotate: 0 }}
-                transition={{ type: "spring", stiffness: 200 }}
-              >
-                <ShoppingCart className="w-8 h-8 text-brand-blue" />
-              </motion.div>
-              Point of Sale
-            </h1>
-            <p className="text-gray-600 mt-1">Create new orders and process payments</p>
-          </div>
-          {selectedCustomer && garments.length > 0 && (
-            <ModernButton
-              variant="danger"
-              onClick={handleClearOrder}
-              leftIcon={<Trash2 className="h-4 w-4" />}
-            >
-              Clear Order
-            </ModernButton>
-          )}
-        </div>
-      </motion.div>
+      <POSHeader
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        customer={selectedCustomer}
+        onSelectCustomer={() => setShowCustomerSearchModal(true)}
+        onNewOrder={handleNewOrder}
+      />
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <MiniStatCard
-          label="Items in Order"
-          value={garments.length}
-          icon={<Package className="h-4 w-4" />}
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col overflow-hidden p-5 gap-4">
+        {/* Category Tabs */}
+        <ServiceCategoryTabs
+          activeCategory={activeCategory}
+          onCategoryChange={setActiveCategory}
         />
-        <MiniStatCard
-          label="Subtotal"
-          value={`KES ${subtotal.toLocaleString()}`}
-          icon={<ShoppingCart className="h-4 w-4" />}
-        />
-        <MiniStatCard
-          label="Customer"
-          value={selectedCustomer ? 'Selected' : 'None'}
-          icon={<User className="h-4 w-4" />}
-        />
-        <MiniStatCard
-          label="Status"
-          value={isProcessing ? 'Processing...' : 'Ready'}
-          icon={<Check className="h-4 w-4" />}
-        />
-      </div>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column: Customer Selection */}
-        <div className="lg:col-span-1 space-y-6">
-          <ModernCard delay={0.1} hover glowIntensity="medium">
-            <ModernCardHeader>
-              <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-brand-blue/10">
-                  <User className="w-5 h-5 text-brand-blue" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold text-gray-900">Customer</h2>
-                  <p className="text-sm text-gray-600">Select or create a customer</p>
-                </div>
-              </div>
-            </ModernCardHeader>
-            <ModernCardContent>
-              {showCustomerSearch ? (
-                <CustomerSearch
-                  onSelectCustomer={handleSelectCustomer}
-                  onCreateNewCustomer={() => setShowCreateCustomerModal(true)}
-                />
-              ) : selectedCustomer ? (
-                <CustomerCard
-                  customer={selectedCustomer}
-                  onChangeCustomer={handleChangeCustomer}
-                />
-              ) : null}
-            </ModernCardContent>
-          </ModernCard>
+        {/* Two-Column Layout: Service Grid + Form */}
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-5 overflow-hidden">
+          {/* Left: Service Cards Grid (scrollable) */}
+          <ServiceGrid
+            category={activeCategory}
+            searchQuery={searchQuery}
+            onSelectService={handleSelectService}
+            className="h-full"
+          />
 
-          {/* Order Summary - Desktop Sticky */}
-          <div className="hidden lg:block">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="sticky top-24"
-            >
-              <OrderSummary
-                customer={selectedCustomer || undefined}
-                garments={garments.map((g, i) => ({
-                  garmentId: `temp-${i}`,
-                  ...g,
-                }))}
-                subtotal={subtotal}
-                tax={tax}
-                total={total}
-                estimatedCompletion={estimatedCompletion}
-                onProcessPayment={handleProcessPayment}
-                onClearOrder={handleClearOrder}
-                isProcessing={isProcessing}
-              />
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Center Column: Garment Entry */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Garment Entry Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
+          {/* Right: Garment Entry Form (sticky) */}
+          <div className="overflow-auto">
             <GarmentEntryForm
+              prefillData={prefillData}
+              onPrefillApplied={handlePrefillApplied}
               onAddGarment={handleAddGarment}
-              onCancel={() => {
-                // Optional clear action
-              }}
+              onCancel={() => setPrefillData(null)}
             />
-          </motion.div>
 
-          {/* Garments List */}
-          {garments.length > 0 && (
-            <ModernCard delay={0.3} hover={false}>
-              <ModernCardHeader>
-                <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-xl bg-brand-blue/10">
-                    <Package className="w-5 h-5 text-brand-blue" />
-                  </div>
-                  <div>
-                    <h2 className="text-lg font-bold text-gray-900">
-                      Order Items ({garments.length})
-                    </h2>
-                    <p className="text-sm text-gray-600">
-                      Review and manage garments in this order
-                    </p>
-                  </div>
-                </div>
-              </ModernCardHeader>
-              <ModernCardContent>
-                <div className="space-y-4">
-                  {garments.map((garment, index) => (
-                    <motion.div
-                      key={`garment-${index}`}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1, duration: 0.3 }}
-                      className="space-y-3"
-                    >
-                      <GarmentCard
-                        garment={{
-                          garmentId: `temp-${index}`,
-                          type: garment.type,
-                          color: garment.color,
-                          brand: garment.brand,
-                          services: garment.services,
-                          price: garment.price,
-                          specialInstructions: garment.specialInstructions,
-                          photos: garment.photos,
-                        }}
-                        onEdit={() => handleEditGarment(index)}
-                        onRemove={() => handleRemoveGarment(index)}
-                      />
-                      <GarmentInitialInspection
-                        garmentId={`temp-${index}`}
-                        garmentType={garment.type}
-                        garmentColor={garment.color}
-                        value={{
-                          hasNotableDamage: garment.hasNotableDamage || false,
-                          initialInspectionNotes: garment.initialInspectionNotes || '',
-                          initialInspectionPhotos: garment.initialInspectionPhotos || [],
-                        }}
-                        onChange={(inspectionData) => handleUpdateInspection(index, inspectionData)}
-                      />
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="mt-6 pt-6 border-t border-brand-blue/10">
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-semibold text-gray-900">Subtotal:</span>
-                    <span className="text-2xl font-bold bg-gradient-to-r from-brand-blue to-brand-blue-dark bg-clip-text text-transparent">
-                      KES {subtotal.toLocaleString()}
-                    </span>
-                  </div>
-                </div>
-              </ModernCardContent>
-            </ModernCard>
-          )}
-
-          {/* Collection & Return Methods - Only show if customer selected and garments added */}
-          {selectedCustomer && garments.length > 0 && (
-            <>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-              >
-                <CollectionMethodSelector
-                  customerId={selectedCustomer.customerId}
-                  value={collectionMethod}
-                  onChange={setCollectionMethod}
-                  selectedAddress={pickupAddress}
-                  onAddressChange={setPickupAddress}
-                  instructions={pickupInstructions}
-                  onInstructionsChange={setPickupInstructions}
-                  scheduledTime={pickupScheduledTime}
-                  onScheduledTimeChange={setPickupScheduledTime}
+            {/* Inspection Modal for editing cart items */}
+            {editingInspectionIndex !== null && garments[editingInspectionIndex] && (
+              <div className="mt-4">
+                <GarmentInitialInspection
+                  garmentId={`temp-${editingInspectionIndex}`}
+                  garmentType={garments[editingInspectionIndex].type}
+                  garmentColor={garments[editingInspectionIndex].color}
+                  value={{
+                    hasNotableDamage: garments[editingInspectionIndex].hasNotableDamage || false,
+                    initialInspectionNotes: garments[editingInspectionIndex].initialInspectionNotes || '',
+                    initialInspectionPhotos: garments[editingInspectionIndex].initialInspectionPhotos || [],
+                  }}
+                  onChange={(data) => handleUpdateInspection(editingInspectionIndex, data)}
                 />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-              >
-                <ReturnMethodSelector
-                  customerId={selectedCustomer.customerId}
-                  value={returnMethod}
-                  onChange={setReturnMethod}
-                  selectedAddress={deliveryAddress}
-                  onAddressChange={setDeliveryAddress}
-                  instructions={deliveryInstructions}
-                  onInstructionsChange={setDeliveryInstructions}
-                  scheduledTime={deliveryScheduledTime}
-                  onScheduledTimeChange={setDeliveryScheduledTime}
-                  estimatedCompletion={estimatedCompletion}
-                />
-              </motion.div>
-            </>
-          )}
-
-          {/* Order Summary - Mobile */}
-          <div className="lg:hidden">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
-              <OrderSummary
-                customer={selectedCustomer || undefined}
-                garments={garments.map((g, i) => ({
-                  garmentId: `temp-${i}`,
-                  ...g,
-                }))}
-                subtotal={subtotal}
-                tax={tax}
-                total={total}
-                estimatedCompletion={estimatedCompletion}
-                onProcessPayment={handleProcessPayment}
-                onClearOrder={handleClearOrder}
-                isProcessing={isProcessing}
-              />
-            </motion.div>
+              </div>
+            )}
           </div>
-
-          {/* Empty State */}
-          {garments.length === 0 && (
-            <ModernCard
-              delay={0.3}
-              className="bg-gradient-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300"
-            >
-              <ModernCardContent className="py-12 text-center">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
-                >
-                  <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                </motion.div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  No garments added yet
-                </h3>
-                <p className="text-sm text-gray-500">
-                  Add garments using the form above to create an order
-                </p>
-                <ModernButton
-                  variant="secondary"
-                  size="sm"
-                  className="mt-4"
-                  leftIcon={<Plus className="h-4 w-4" />}
-                >
-                  Add First Garment
-                </ModernButton>
-              </ModernCardContent>
-            </ModernCard>
-          )}
         </div>
       </div>
+
+      {/* Bottom Bar */}
+      <POSBottomBar
+        customer={selectedCustomer}
+        cart={cartItems}
+        onRemoveItem={handleRemoveGarment}
+        onEditItem={handleEditGarment}
+        onSelectCustomer={() => setShowCustomerSearchModal(true)}
+        onConfirmOrder={handleConfirmOrder}
+        onOpenOptions={() => setShowOrderOptionsModal(true)}
+        isProcessing={isProcessing}
+      />
+
+      {/* Customer Search Modal */}
+      <CustomerSearchModal
+        open={showCustomerSearchModal}
+        onOpenChange={setShowCustomerSearchModal}
+        onSelectCustomer={handleSelectCustomer}
+        onCreateNewCustomer={() => {
+          setShowCustomerSearchModal(false);
+          setShowCreateCustomerModal(true);
+        }}
+      />
 
       {/* Create Customer Modal */}
       <CreateCustomerModal
@@ -668,6 +612,30 @@ export default function POSPage() {
         onOpenChange={setShowCreateCustomerModal}
         onCustomerCreated={handleCustomerCreated}
       />
+
+      {/* Order Options Modal */}
+      {selectedCustomer && (
+        <OrderOptionsModal
+          open={showOrderOptionsModal}
+          onOpenChange={setShowOrderOptionsModal}
+          customerId={selectedCustomer.customerId}
+          options={orderOptions}
+          onOptionsChange={setOrderOptions}
+          estimatedCompletion={estimatedCompletion}
+          onConfirm={handleProcessPayment}
+          isProcessing={isProcessing}
+          // V2.0: Service Type and Inspector
+          serviceType={serviceType}
+          onServiceTypeChange={setServiceType}
+          checkedBy={checkedBy}
+          checkedByName={checkedByName}
+          onCheckedByChange={(uid, name) => {
+            setCheckedBy(uid);
+            setCheckedByName(name);
+          }}
+          availableStaff={availableStaff}
+        />
+      )}
 
       {/* Payment Modal */}
       {createdOrder && (
@@ -689,6 +657,6 @@ export default function POSPage() {
           onClose={handleCloseReceipt}
         />
       )}
-    </ModernSection>
+    </div>
   );
 }

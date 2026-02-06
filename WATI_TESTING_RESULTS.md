@@ -205,7 +205,7 @@ npx tsx scripts/test-wati-custom-template.ts
 
 ### Project Team
 - **Developer**: AI Agents Plus
-- **Email**: hello@ai-agentsplus.com
+- **Email**: jerry@ai-agentsplus.com
 - **Phone**: +254 725 462 859
 
 ---

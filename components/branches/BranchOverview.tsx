@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { EmptyState } from '@/components/ui/empty-state';
 import { StatusBadge } from '@/components/ui/status-badge';
@@ -19,6 +18,7 @@ interface BranchOverviewProps {
 
 export function BranchOverview({ branchId }: BranchOverviewProps) {
   const [recentOrders, setRecentOrders] = useState<Order[]>([]);
+  // FR-008: Updated 'ready' to 'queued_for_delivery'
   const [pipelineStats, setPipelineStats] = useState<{
     received: number;
     queued: number;
@@ -27,7 +27,7 @@ export function BranchOverview({ branchId }: BranchOverviewProps) {
     ironing: number;
     quality_check: number;
     packaging: number;
-    ready: number;
+    queued_for_delivery: number;
     out_for_delivery: number;
     total: number;
   }>({
@@ -38,7 +38,7 @@ export function BranchOverview({ branchId }: BranchOverviewProps) {
     ironing: 0,
     quality_check: 0,
     packaging: 0,
-    ready: 0,
+    queued_for_delivery: 0,
     out_for_delivery: 0,
     total: 0,
   });
@@ -97,7 +97,7 @@ export function BranchOverview({ branchId }: BranchOverviewProps) {
     { status: 'ironing', label: 'Ironing', count: pipelineStats['ironing'] || 0 },
     { status: 'quality_check', label: 'Quality Check', count: pipelineStats['quality_check'] || 0 },
     { status: 'packaging', label: 'Packaging', count: pipelineStats['packaging'] || 0 },
-    { status: 'ready', label: 'Ready', count: pipelineStats['ready'] || 0 },
+    { status: 'queued_for_delivery', label: 'Ready', count: pipelineStats['queued_for_delivery'] || 0 }, // FR-008
   ];
 
   return (

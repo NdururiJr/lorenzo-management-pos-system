@@ -8,8 +8,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { handlePaymentCallback } from '@/lib/payments/payment-service';
-// import { verifyPesapalSignature } from '@/services/pesapal';
+import { handlePaymentCallback } from '@/lib/payments/payment-service.server';
+import { verifyPesapalSignature } from '@/services/pesapal';
 
 /**
  * Handle POST request from Pesapal IPN
@@ -43,20 +43,20 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify callback signature (important for security)
-    // const signature = request.headers.get('x-pesapal-signature') || '';
-    // const isValid = verifyPesapalSignature(
-    //   OrderTrackingId,
-    //   OrderMerchantReference,
-    //   signature
-    // );
+    const signature = request.headers.get('x-pesapal-signature') || '';
+    const isValid = verifyPesapalSignature(
+      OrderTrackingId,
+      OrderMerchantReference,
+      signature
+    );
 
-    // if (!isValid) {
-    //   console.error('Invalid Pesapal signature');
-    //   return NextResponse.json(
-    //     { error: 'Invalid signature' },
-    //     { status: 403 }
-    //   );
-    // }
+    if (!isValid) {
+      console.error('Invalid Pesapal signature');
+      return NextResponse.json(
+        { error: 'Invalid signature' },
+        { status: 403 }
+      );
+    }
 
     // Process the payment callback
     await handlePaymentCallback({

@@ -1,0 +1,748 @@
+[
+  {
+    "_id": "0KqtIpDmaLacpPIJEWdONaOPk5r1",
+    "branchId": "MAIN",
+    "uid": "0KqtIpDmaLacpPIJEWdONaOPk5r1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755226,
+      "_nanoseconds": 392000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Lorenzo Dry Cleaners - Kilimani",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "lorenzo-dry-cleaners-kilimani@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755226,
+      "_nanoseconds": 392000000
+    }
+  },
+  {
+    "_id": "19R6zUdnDMNi89ZwVY6PG8solZ03",
+    "branchId": "IMARA",
+    "uid": "19R6zUdnDMNi89ZwVY6PG8solZ03",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755219,
+      "_nanoseconds": 288000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Imara - Imara Mall Ground Floor",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "imara-imara-mall-ground-floor@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755219,
+      "_nanoseconds": 288000000
+    }
+  },
+  {
+    "_id": "2cGDCFhyBUSfMEeTlmgu6zXD5tU2",
+    "branchId": "ADLIFE",
+    "uid": "2cGDCFhyBUSfMEeTlmgu6zXD5tU2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755206,
+      "_nanoseconds": 961000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Adlife Plaza Mezzanine Flr",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "adlife-plaza-mezzanine-flr@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755206,
+      "_nanoseconds": 961000000
+    }
+  },
+  {
+    "_id": "2yB8VnO350bE5PKEKkhXCqiTCOA2",
+    "branchId": "KILELESHWA",
+    "uid": "2yB8VnO350bE5PKEKkhXCqiTCOA2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755221,
+      "_nanoseconds": 182000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Kileleshwa Quickmart",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "kileleshwa-quickmart@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755221,
+      "_nanoseconds": 182000000
+    }
+  },
+  {
+    "_id": "3D8j0Zx4f0WyrKh6hB6z2BwWbdC2",
+    "branchId": "BR-MAIN-001",
+    "uid": "3D8j0Zx4f0WyrKh6hB6z2BwWbdC2",
+    "role": "general_manager",
+    "active": true,
+    "email": "gm@lorenzo.test",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274135,
+      "_nanoseconds": 373000000
+    },
+    "phone": "+254708084073",
+    "name": "Grace Mwambeo",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274135,
+      "_nanoseconds": 373000000
+    }
+  },
+  {
+    "_id": "3Fd2gp3R4RSFLpVxlfICHoTiiws1",
+    "branchId": "NAIVAS_KILIMANI",
+    "uid": "3Fd2gp3R4RSFLpVxlfICHoTiiws1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755231,
+      "_nanoseconds": 775000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Naivas Kilimani Mall (Ground Floor)",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "naivas-kilimani-mall-ground-floor@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755231,
+      "_nanoseconds": 775000000
+    }
+  },
+  {
+    "_id": "4MctEFmylsYfy4K2gZoaMwS0Zhv2",
+    "branchId": "LAVINGTON",
+    "uid": "4MctEFmylsYfy4K2gZoaMwS0Zhv2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755224,
+      "_nanoseconds": 711000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Lavington Legend Valley Mall",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "lavington-legend-valley-mall@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755224,
+      "_nanoseconds": 711000000
+    }
+  },
+  {
+    "_id": "8LEPmPwswJUw9sHW1G16isD3YLF3",
+    "branchId": "main-branch",
+    "role": "driver",
+    "phone": "+254712345678",
+    "name": "John Mwangi",
+    "active": true,
+    "email": "driver@lorenzo.com",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912185,
+      "_nanoseconds": 579000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912185,
+      "_nanoseconds": 579000000
+    }
+  },
+  {
+    "_id": "8ZMcLE9ka6ZN3HbX1hzNCR23n0l1",
+    "branchId": "MYTOWN_KAREN",
+    "uid": "8ZMcLE9ka6ZN3HbX1hzNCR23n0l1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755229,
+      "_nanoseconds": 940000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Karen - My Town Mall Opp Karen Hosp",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "karen-my-town-mall-opp-karen-hosp@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755229,
+      "_nanoseconds": 940000000
+    }
+  },
+  {
+    "_id": "9RQjBp38rYh58c71fdxmPsG3LYL2",
+    "uid": "9RQjBp38rYh58c71fdxmPsG3LYL2",
+    "role": "customer",
+    "phone": "+254712345001",
+    "name": "Jane Customer",
+    "active": true,
+    "email": "customer1@test.com",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274148,
+      "_nanoseconds": 849000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274148,
+      "_nanoseconds": 849000000
+    }
+  },
+  {
+    "_id": "9y7IbJW4snO7tzpIpQ9mqcXUrsf2",
+    "branchId": "HURLINGHAM",
+    "uid": "9y7IbJW4snO7tzpIpQ9mqcXUrsf2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755217,
+      "_nanoseconds": 543000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Hurlingham Quickmart",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "hurlingham-quickmart@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755217,
+      "_nanoseconds": 543000000
+    }
+  },
+  {
+    "_id": "ElhRlS5Ca2UsL0GcVj2JNdPfcfD2",
+    "branchId": "SHUJAH_MALL",
+    "uid": "ElhRlS5Ca2UsL0GcVj2JNdPfcfD2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755237,
+      "_nanoseconds": 125000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Kilimani - Shujah Mall Opposite Adlife",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "kilimani-shujah-mall-opposite-adlife@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755237,
+      "_nanoseconds": 125000000
+    }
+  },
+  {
+    "_id": "ExkaD2cElYhI156ZomZf0L4Budk2",
+    "uid": "ExkaD2cElYhI156ZomZf0L4Budk2",
+    "role": "customer",
+    "phone": "+254712345002",
+    "name": "Mark Customer",
+    "active": true,
+    "email": "customer2@test.com",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274151,
+      "_nanoseconds": 546000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274151,
+      "_nanoseconds": 546000000
+    }
+  },
+  {
+    "_id": "IHVSYt3VpJNXFVmtj6CVJWGLM6p2",
+    "branchId": "WESTGATE",
+    "uid": "IHVSYt3VpJNXFVmtj6CVJWGLM6p2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755244,
+      "_nanoseconds": 126000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Westgate Mall 2nd Floor",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "westgate-mall-2nd-floor@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755244,
+      "_nanoseconds": 126000000
+    }
+  },
+  {
+    "_id": "KOzaxpCPsKVUdRJErvqKaKXjXkv2",
+    "branchId": "ARBORETUM",
+    "uid": "KOzaxpCPsKVUdRJErvqKaKXjXkv2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755208,
+      "_nanoseconds": 847000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Arboretum Shell",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "arboretum-shell@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755208,
+      "_nanoseconds": 847000000
+    }
+  },
+  {
+    "_id": "MDJq1CIFe6hEzJjzhi4ic20DWr22",
+    "branchId": "WATERFRONT_KAREN",
+    "uid": "MDJq1CIFe6hEzJjzhi4ic20DWr22",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755242,
+      "_nanoseconds": 374000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Waterfront Karen (Ground Floor)",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "waterfront-karen-ground-floor@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755242,
+      "_nanoseconds": 374000000
+    }
+  },
+  {
+    "_id": "QglAIokxukZsWJzo7tiw36DjYpM2",
+    "branchId": "DENNIS_PRITT",
+    "uid": "QglAIokxukZsWJzo7tiw36DjYpM2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755212,
+      "_nanoseconds": 340000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Dennis Pritt Rd",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "dennis-pritt-rd@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755212,
+      "_nanoseconds": 340000000
+    }
+  },
+  {
+    "_id": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "branchId": "BR-MAIN-001",
+    "uid": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "role": "front_desk",
+    "phone": "+254725462867",
+    "name": "Frank Front Desk",
+    "active": true,
+    "email": "frontdesk@lorenzo.test",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274144,
+      "_nanoseconds": 344000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274144,
+      "_nanoseconds": 344000000
+    }
+  },
+  {
+    "_id": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "email": "dev@lorenzo.com",
+    "role": "admin",
+    "active": true,
+    "branchId": null,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763677902,
+      "_nanoseconds": 535000000
+    },
+    "name": "Dev Super Admin",
+    "isSuperAdmin": true,
+    "branchAccess": [],
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763677902,
+      "_nanoseconds": 535000000
+    }
+  },
+  {
+    "_id": "bp8AgGlh9QaGDMpSNuxaOK4uMvV2",
+    "uid": "bp8AgGlh9QaGDMpSNuxaOK4uMvV2",
+    "email": "ndururij@gmail.com",
+    "displayName": "Jerry Ndururi",
+    "phoneNumber": "+254700075810",
+    "role": "front_desk",
+    "branchId": "BOMAS",
+    "branchAccess": [],
+    "isSuperAdmin": false,
+    "status": "active",
+    "startDate": {
+      "_type": "Timestamp",
+      "_seconds": 1764892800,
+      "_nanoseconds": 0
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764943706,
+      "_nanoseconds": 818000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764943706,
+      "_nanoseconds": 818000000
+    }
+  },
+  {
+    "_id": "bzNd05VZ6fh7ZgS2ch1Nm8FqZqA2",
+    "branchId": "MUTHAIGA",
+    "uid": "bzNd05VZ6fh7ZgS2ch1Nm8FqZqA2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755228,
+      "_nanoseconds": 127000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Muthaiga Mini Market",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "muthaiga-mini-market@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755228,
+      "_nanoseconds": 127000000
+    }
+  },
+  {
+    "_id": "customer_1761683500348_xtjrd",
+    "uid": "customer_1761683500348_xtjrd",
+    "phone": "+254722488509",
+    "role": "customer",
+    "name": "Customer",
+    "email": "",
+    "branchId": null,
+    "isActive": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761683500,
+      "_nanoseconds": 348000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761683500,
+      "_nanoseconds": 348000000
+    }
+  },
+  {
+    "_id": "epJZGkunrhW8UQrJj0IhAk0v8Q23",
+    "branchId": "BR-MAIN-001",
+    "uid": "epJZGkunrhW8UQrJj0IhAk0v8Q23",
+    "role": "director",
+    "active": true,
+    "email": "director@lorenzo.test",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274133,
+      "_nanoseconds": 412000000
+    },
+    "phone": "+254722569412",
+    "name": "Lawrence Njiru",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274133,
+      "_nanoseconds": 413000000
+    }
+  },
+  {
+    "_id": "hE6jfjqhDoQVzX56JBjDpINnD7k1",
+    "branchId": "BR-MAIN-001",
+    "uid": "hE6jfjqhDoQVzX56JBjDpINnD7k1",
+    "role": "store_manager",
+    "phone": "+254725462862",
+    "name": "Alice Store Manager",
+    "active": true,
+    "email": "sm.main@lorenzo.test",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274137,
+      "_nanoseconds": 584000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274137,
+      "_nanoseconds": 585000000
+    }
+  },
+  {
+    "_id": "haZ9KOgdqdMAcvVArhtB7JO4sM33",
+    "branchId": "BR-MAIN-001",
+    "uid": "haZ9KOgdqdMAcvVArhtB7JO4sM33",
+    "role": "admin",
+    "phone": "+254725462859",
+    "name": "John Admin",
+    "active": true,
+    "email": "admin@lorenzo.test",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274131,
+      "_nanoseconds": 339000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274131,
+      "_nanoseconds": 339000000
+    }
+  },
+  {
+    "_id": "ma1w5CqufLhowJCG9nIIYcSz8Om2",
+    "branchId": "SOUTH_C_NAIVAS",
+    "uid": "ma1w5CqufLhowJCG9nIIYcSz8Om2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755238,
+      "_nanoseconds": 822000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - South C Naivas- South C",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "south-c-naivas-south-c@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755238,
+      "_nanoseconds": 822000000
+    }
+  },
+  {
+    "_id": "n77JA8lJksbGKnpYrmsbKZomkij2",
+    "branchId": "VILLAGE_MARKET",
+    "uid": "n77JA8lJksbGKnpYrmsbKZomkij2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755240,
+      "_nanoseconds": 584000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Village Market Courtyard",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "village-market-courtyard@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755240,
+      "_nanoseconds": 584000000
+    }
+  },
+  {
+    "_id": "oQlmuR60SGW5aCULvVVQ2ADeEgo1",
+    "branchId": "NEXTGEN_SOUTH_C",
+    "uid": "oQlmuR60SGW5aCULvVVQ2ADeEgo1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755233,
+      "_nanoseconds": 586000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Nextgen Mall- South C (Ground Floor)",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "nextgen-mall-south-c-ground-floor@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755233,
+      "_nanoseconds": 586000000
+    }
+  },
+  {
+    "_id": "qgCXR31jewS0xqtj4q6MlCuteat2",
+    "branchId": "BR-MAIN-001",
+    "uid": "qgCXR31jewS0xqtj4q6MlCuteat2",
+    "role": "driver",
+    "phone": "+254725462868",
+    "name": "George Driver",
+    "active": true,
+    "email": "driver1@lorenzo.test",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274146,
+      "_nanoseconds": 597000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274146,
+      "_nanoseconds": 597000000
+    }
+  },
+  {
+    "_id": "r0uKBkKr76XPKoNj0aLb6DysQty1",
+    "branchId": "BR-MAIN-001",
+    "uid": "r0uKBkKr76XPKoNj0aLb6DysQty1",
+    "role": "workstation_manager",
+    "phone": "+254725462863",
+    "name": "Bob Workstation Manager",
+    "active": true,
+    "email": "wm@lorenzo.test",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274139,
+      "_nanoseconds": 836000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274139,
+      "_nanoseconds": 836000000
+    }
+  },
+  {
+    "_id": "rlbdwKNL60QOiScGMrkbba8m5vO2",
+    "branchId": "BR-MAIN-001",
+    "uid": "rlbdwKNL60QOiScGMrkbba8m5vO2",
+    "role": "workstation_staff",
+    "phone": "+254725462864",
+    "name": "Carol Washing Staff",
+    "active": true,
+    "email": "ws1@lorenzo.test",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274142,
+      "_nanoseconds": 90000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274142,
+      "_nanoseconds": 90000000
+    }
+  },
+  {
+    "_id": "ry77NduBNQWdv54KFDz01GhoDPM2",
+    "branchId": "NGONG_SHELL",
+    "uid": "ry77NduBNQWdv54KFDz01GhoDPM2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755235,
+      "_nanoseconds": 375000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Ngong Shell Kerarapon",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "ngong-shell-kerarapon@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755235,
+      "_nanoseconds": 375000000
+    }
+  },
+  {
+    "_id": "tW1tc0v63kb0SeIlbd6FBQmhxnk2",
+    "branchId": "FREEDOM_HEIGHTS",
+    "uid": "tW1tc0v63kb0SeIlbd6FBQmhxnk2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755214,
+      "_nanoseconds": 79000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Langata Freedom Heights (Ground Floor)",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "langata-freedom-heights-ground-floor@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755214,
+      "_nanoseconds": 79000000
+    }
+  },
+  {
+    "_id": "vWOdZyUbIjSSlKeOjcixYDpRamw2",
+    "branchId": "GREENPARK",
+    "uid": "vWOdZyUbIjSSlKeOjcixYDpRamw2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755215,
+      "_nanoseconds": 801000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Greenpark- Arcadia",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "greenpark-arcadia@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755215,
+      "_nanoseconds": 801000000
+    }
+  },
+  {
+    "_id": "wEd2qXgElPWj3asoMy6onimPvpk1",
+    "branchId": "LANGATA_KOBIL",
+    "uid": "wEd2qXgElPWj3asoMy6onimPvpk1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755223,
+      "_nanoseconds": 4000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Langata Kobil- 1st Floor",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "langata-kobil-1st-floor@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755223,
+      "_nanoseconds": 4000000
+    }
+  },
+  {
+    "_id": "zGKMb0CTf3UFb6pljkJCbWlukpA3",
+    "branchId": "BOMAS",
+    "uid": "zGKMb0CTf3UFb6pljkJCbWlukpA3",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755210,
+      "_nanoseconds": 593000000
+    },
+    "role": "manager",
+    "name": "Branch Manager - Bomas Rubis Petrol",
+    "active": true,
+    "isSuperAdmin": false,
+    "branchAccess": [],
+    "email": "bomas-rubis-petrol@lorenzo.com",
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763755210,
+      "_nanoseconds": 593000000
+    }
+  }
+]

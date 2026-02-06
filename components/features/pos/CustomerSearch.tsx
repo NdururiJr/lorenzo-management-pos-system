@@ -116,7 +116,7 @@ export function CustomerSearch({
           type="button"
           onClick={onCreateNewCustomer}
           variant="outline"
-          className="whitespace-nowrap"
+          className="whitespace-nowrap border-lorenzo-teal/30 text-lorenzo-teal hover:bg-lorenzo-teal/10 hover:border-lorenzo-teal"
         >
           <Plus className="h-4 w-4 mr-2" />
           New Customer
@@ -187,7 +187,7 @@ interface CustomerCardProps {
 function CustomerCard({ customer, onClick }: CustomerCardProps) {
   return (
     <Card
-      className="p-4 hover:bg-gray-50 cursor-pointer transition-colors"
+      className="p-4 hover:bg-lorenzo-cream cursor-pointer transition-colors border-lorenzo-teal/10 hover:border-lorenzo-teal/30"
       onClick={onClick}
     >
       <div className="flex items-start justify-between">

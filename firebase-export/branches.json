@@ -1,0 +1,592 @@
+[
+  {
+    "_id": "ADLIFE",
+    "branchId": "ADLIFE",
+    "name": "Adlife Plaza Mezzanine Flr",
+    "contactPhone": "+254 724 228 414",
+    "location": {
+      "address": "Adlife Plaza, Mezzanine Floor, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680918,
+      "_nanoseconds": 817000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680918,
+      "_nanoseconds": 817000000
+    }
+  },
+  {
+    "_id": "ARBORETUM",
+    "branchId": "ARBORETUM",
+    "name": "Arboretum Shell",
+    "contactPhone": "+254 703 726 656",
+    "location": {
+      "address": "Shell Arboretum, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680937,
+      "_nanoseconds": 530000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680937,
+      "_nanoseconds": 530000000
+    }
+  },
+  {
+    "_id": "BOMAS",
+    "branchId": "BOMAS",
+    "name": "Bomas Rubis Petrol",
+    "contactPhone": "+254 791 269 369",
+    "location": {
+      "address": "Rubis Petrol Station, Bomas, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680928,
+      "_nanoseconds": 187000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680928,
+      "_nanoseconds": 187000000
+    }
+  },
+  {
+    "_id": "BR-MAIN-001",
+    "branchId": "BR-MAIN-001",
+    "name": "Kilimani Main Store",
+    "active": true,
+    "location": {
+      "address": "Argwings Kodhek Road, Kilimani, Nairobi",
+      "coordinates": {
+        "lng": 36.7872,
+        "lat": -1.2921
+      }
+    },
+    "branchType": "main",
+    "contactPhone": "+254725462859",
+    "driverAvailability": 3,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274126,
+      "_nanoseconds": 578000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274126,
+      "_nanoseconds": 578000000
+    }
+  },
+  {
+    "_id": "DENNIS_PRITT",
+    "branchId": "DENNIS_PRITT",
+    "name": "Dennis Pritt Rd",
+    "contactPhone": "+254 745 294 808",
+    "location": {
+      "address": "Dennis Pritt Road, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680916,
+      "_nanoseconds": 141000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680916,
+      "_nanoseconds": 141000000
+    }
+  },
+  {
+    "_id": "FREEDOM_HEIGHTS",
+    "branchId": "FREEDOM_HEIGHTS",
+    "name": "Langata Freedom Heights (Ground Floor)",
+    "contactPhone": "+254 792 905 326",
+    "location": {
+      "address": "Freedom Heights Mall, Ground Floor, Langata, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680930,
+      "_nanoseconds": 849000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680930,
+      "_nanoseconds": 849000000
+    }
+  },
+  {
+    "_id": "GREENPARK",
+    "branchId": "GREENPARK",
+    "name": "Greenpark- Arcadia",
+    "contactPhone": "+254 769 573 764",
+    "location": {
+      "address": "Greenpark, Arcadia, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680924,
+      "_nanoseconds": 155000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680924,
+      "_nanoseconds": 155000000
+    }
+  },
+  {
+    "_id": "HURLINGHAM",
+    "branchId": "HURLINGHAM",
+    "name": "Hurlingham Quickmart",
+    "contactPhone": "+254 706 945 997",
+    "location": {
+      "address": "Hurlingham Quickmart, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680921,
+      "_nanoseconds": 504000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680921,
+      "_nanoseconds": 504000000
+    }
+  },
+  {
+    "_id": "IMARA",
+    "branchId": "IMARA",
+    "name": "Imara - Imara Mall Ground Floor",
+    "contactPhone": "+254 115 094 399",
+    "location": {
+      "address": "Imara Mall, Ground Floor, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680933,
+      "_nanoseconds": 542000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680933,
+      "_nanoseconds": 542000000
+    }
+  },
+  {
+    "_id": "KILELESHWA",
+    "branchId": "KILELESHWA",
+    "name": "Kileleshwa Quickmart",
+    "contactPhone": "+254 705 704 397",
+    "location": {
+      "address": "Quickmart Kileleshwa, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680936,
+      "_nanoseconds": 203000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680936,
+      "_nanoseconds": 203000000
+    }
+  },
+  {
+    "_id": "LANGATA_KOBIL",
+    "branchId": "LANGATA_KOBIL",
+    "name": "Langata Kobil- 1st Floor",
+    "contactPhone": "+254 792 875 647",
+    "location": {
+      "address": "Kobil Langata, 1st Floor, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680926,
+      "_nanoseconds": 859000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680926,
+      "_nanoseconds": 859000000
+    }
+  },
+  {
+    "_id": "LAVINGTON",
+    "branchId": "LAVINGTON",
+    "name": "Lavington Legend Valley Mall",
+    "contactPhone": "+254 741 350 858",
+    "location": {
+      "address": "Legend Valley Mall, Lavington, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680922,
+      "_nanoseconds": 829000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680922,
+      "_nanoseconds": 829000000
+    }
+  },
+  {
+    "_id": "MAIN",
+    "branchId": "MAIN",
+    "name": "Lorenzo Dry Cleaners - Kilimani",
+    "location": {
+      "address": "Kilimani, Nairobi, Kenya",
+      "coordinates": {
+        "lat": -1.2921,
+        "lng": 36.7856
+      }
+    },
+    "contactPhone": "+254725462859",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507919,
+      "_nanoseconds": 812000000
+    }
+  },
+  {
+    "_id": "MUTHAIGA",
+    "branchId": "MUTHAIGA",
+    "name": "Muthaiga Mini Market",
+    "contactPhone": "+254 759 602 282",
+    "location": {
+      "address": "Muthaiga Mini Market, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680917,
+      "_nanoseconds": 482000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680917,
+      "_nanoseconds": 482000000
+    }
+  },
+  {
+    "_id": "MYTOWN_KAREN",
+    "branchId": "MYTOWN_KAREN",
+    "name": "Karen - My Town Mall Opp Karen Hosp",
+    "contactPhone": "+254 769 718 906",
+    "location": {
+      "address": "My Town Mall, Karen (Opposite Karen Hospital), Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680940,
+      "_nanoseconds": 219000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680940,
+      "_nanoseconds": 219000000
+    }
+  },
+  {
+    "_id": "NAIVAS_KILIMANI",
+    "branchId": "NAIVAS_KILIMANI",
+    "name": "Naivas Kilimani Mall (Ground Floor)",
+    "contactPhone": "+254 742 122 985",
+    "location": {
+      "address": "Naivas Kilimani Mall, Ground Floor, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680920,
+      "_nanoseconds": 156000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680920,
+      "_nanoseconds": 156000000
+    }
+  },
+  {
+    "_id": "NEXTGEN_SOUTH_C",
+    "branchId": "NEXTGEN_SOUTH_C",
+    "name": "Nextgen Mall- South C (Ground Floor)",
+    "contactPhone": "+254 799 224 299",
+    "location": {
+      "address": "Nextgen Mall South C, Ground Floor, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680934,
+      "_nanoseconds": 866000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680934,
+      "_nanoseconds": 866000000
+    }
+  },
+  {
+    "_id": "NGONG_SHELL",
+    "branchId": "NGONG_SHELL",
+    "name": "Ngong Shell Kerarapon",
+    "contactPhone": "+254 114 445 902",
+    "location": {
+      "address": "Shell Kerarapon, Ngong, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680932,
+      "_nanoseconds": 176000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680932,
+      "_nanoseconds": 176000000
+    }
+  },
+  {
+    "_id": "SHUJAH_MALL",
+    "branchId": "SHUJAH_MALL",
+    "name": "Kilimani - Shujah Mall Opposite Adlife",
+    "contactPhone": "+254 769 717 450",
+    "location": {
+      "address": "Shujah Mall, Kilimani (Opposite Adlife), Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680938,
+      "_nanoseconds": 860000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680938,
+      "_nanoseconds": 860000000
+    }
+  },
+  {
+    "_id": "SOUTH_C_NAIVAS",
+    "branchId": "SOUTH_C_NAIVAS",
+    "name": "South C Naivas- South C",
+    "contactPhone": "+254 700 765 223",
+    "location": {
+      "address": "Naivas South C, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680925,
+      "_nanoseconds": 533000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680925,
+      "_nanoseconds": 533000000
+    }
+  },
+  {
+    "_id": "VILLAGE_MARKET",
+    "branchId": "VILLAGE_MARKET",
+    "name": "Village Market Courtyard",
+    "contactPhone": "+254 113 499 854",
+    "location": {
+      "address": "Village Market, Gigiri, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680913,
+      "_nanoseconds": 463000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680913,
+      "_nanoseconds": 463000000
+    }
+  },
+  {
+    "_id": "WATERFRONT_KAREN",
+    "branchId": "WATERFRONT_KAREN",
+    "name": "Waterfront Karen (Ground Floor)",
+    "contactPhone": "+254 748 259 918",
+    "location": {
+      "address": "Waterfront Mall Karen, Ground Floor, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680929,
+      "_nanoseconds": 523000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680929,
+      "_nanoseconds": 523000000
+    }
+  },
+  {
+    "_id": "WESTGATE",
+    "branchId": "WESTGATE",
+    "name": "Westgate Mall 2nd Floor",
+    "contactPhone": "+254 794 592 392",
+    "location": {
+      "address": "Westgate Shopping Mall, 2nd Floor, Nairobi, Kenya",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "branchType": "main",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680914,
+      "_nanoseconds": 805000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763680914,
+      "_nanoseconds": 805000000
+    }
+  },
+  {
+    "_id": "WESTLANDS",
+    "branchId": "WESTLANDS",
+    "name": "Westlands Main Store",
+    "branchType": "main",
+    "location": {
+      "address": "Westlands, Nairobi, Kenya",
+      "coordinates": {
+        "lat": -1.2674,
+        "lng": 36.8108
+      }
+    },
+    "contactPhone": "+254725462859",
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763822909,
+      "_nanoseconds": 526000000
+    }
+  }
+]

@@ -11,15 +11,16 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import { getOrdersByCustomer } from '@/lib/db/orders';
+import { getCustomerByPhoneOrEmail } from '@/lib/db/customers';
 import { ModernCard, ModernCardContent } from '@/components/modern/ModernCard';
 import { ModernSection } from '@/components/modern/ModernLayout';
 import { FloatingOrbs } from '@/components/auth/FloatingOrbs';
 import { motion } from 'framer-motion';
 import { Loader2, AlertCircle } from 'lucide-react';
 import type { OrderExtended } from '@/lib/db/schema';
-import { collection, query, where, getDocs, limit } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 import Link from 'next/link';
 
 export default function CustomerPortalPage() {
@@ -33,32 +34,36 @@ export default function CustomerPortalPage() {
     uid: user?.uid
   });
 
-  // Fetch customer record by email or phone
+  // Fetch customer record by phone OR email (Issue 81 Fix)
+  // Supports both phone-authenticated and email-authenticated users
   const { data: customer, isLoading: customerLoading } = useQuery({
-    queryKey: ['customer-profile', user?.email],
+    queryKey: ['customer-profile', user?.phoneNumber, user?.email],
     queryFn: async () => {
-      if (!user?.email) {
-        console.log('[Customer Portal] No user email found');
+      if (!user?.email && !user?.phoneNumber) {
+        console.log('[Customer Portal] No user email or phone found');
         return null;
       }
 
-      console.log('[Customer Portal] Looking for customer with email:', user.email);
+      console.log('[Customer Portal] Looking for customer with:', {
+        phone: user?.phoneNumber,
+        email: user?.email
+      });
 
-      // Try to find customer by email
-      const customersRef = collection(db, 'customers');
-      const q = query(customersRef, where('email', '==', user.email), limit(1));
-      const snapshot = await getDocs(q);
+      // Use the new combined lookup function that supports both phone and email
+      const customerData = await getCustomerByPhoneOrEmail(
+        user?.phoneNumber,
+        user?.email
+      );
 
-      if (!snapshot.empty) {
-        const customerData = { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as any;
+      if (customerData) {
         console.log('[Customer Portal] Found customer:', customerData.customerId);
         return customerData;
       }
 
-      console.log('[Customer Portal] No customer record found for email:', user.email);
+      console.log('[Customer Portal] No customer record found for phone/email');
       return null;
     },
-    enabled: !!user?.email,
+    enabled: !!(user?.email || user?.phoneNumber),
   });
 
   // Fetch all orders for this customer
@@ -123,7 +128,7 @@ export default function CustomerPortalPage() {
 
   if (error) {
     return (
-      <ModernCard className="bg-gradient-to-br from-red-50 to-red-100/50 border-red-200">
+      <ModernCard className="bg-linear-to-br from-red-50 to-red-100/50 border-red-200">
         <ModernCardContent className="flex items-start space-x-3">
           <div className="p-2 rounded-full bg-red-100">
             <AlertCircle className="h-5 w-5 text-red-600" />
@@ -143,7 +148,7 @@ export default function CustomerPortalPage() {
   if (!customerLoading && !customer) {
     return (
       <ModernSection>
-        <ModernCard className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+        <ModernCard className="bg-linear-to-br from-amber-50 to-orange-50 border-amber-200">
           <ModernCardContent className="p-8">
             <div className="text-center space-y-4">
               <div className="p-3 rounded-full bg-amber-100 w-16 h-16 mx-auto flex items-center justify-center">
@@ -200,7 +205,7 @@ export default function CustomerPortalPage() {
       >
         {/* Total Orders */}
         <ModernCard className="hover:shadow-glow-blue transition-all cursor-pointer">
-          <ModernCardContent className="!p-6">
+          <ModernCardContent className="p-6!">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Total Orders</p>
@@ -217,7 +222,7 @@ export default function CustomerPortalPage() {
 
         {/* Active Orders */}
         <ModernCard className="hover:shadow-glow-blue transition-all cursor-pointer">
-          <ModernCardContent className="!p-6">
+          <ModernCardContent className="p-6!">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Active Orders</p>
@@ -234,7 +239,7 @@ export default function CustomerPortalPage() {
 
         {/* Pending Payments */}
         <ModernCard className="hover:shadow-glow-blue transition-all cursor-pointer">
-          <ModernCardContent className="!p-6">
+          <ModernCardContent className="p-6!">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Pending Payments</p>
@@ -272,7 +277,7 @@ export default function CustomerPortalPage() {
 
         {activeOrders.length === 0 ? (
           <ModernCard>
-            <ModernCardContent className="!p-8 text-center">
+            <ModernCardContent className="p-8! text-center">
               <svg className="h-12 w-12 mx-auto text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
               </svg>
@@ -290,13 +295,13 @@ export default function CustomerPortalPage() {
                 transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
               >
                 <ModernCard className="hover:shadow-glow-blue transition-all cursor-pointer">
-                  <ModernCardContent className="!p-4">
+                  <ModernCardContent className="p-4!">
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
                           <h3 className="font-semibold text-gray-900">{order.orderId}</h3>
                           <span className={`text-xs px-2 py-1 rounded-full ${
-                            order.status === 'ready' ? 'bg-green-100 text-green-700' :
+                            order.status === 'queued_for_delivery' ? 'bg-green-100 text-green-700' :
                             order.status === 'out_for_delivery' ? 'bg-amber-100 text-amber-700' :
                             'bg-blue-100 text-blue-700'
                           }`}>
@@ -331,7 +336,7 @@ export default function CustomerPortalPage() {
       >
         <Link href="/portal/request-pickup">
           <ModernCard className="hover:shadow-glow-blue transition-all cursor-pointer h-full">
-            <ModernCardContent className="!p-6">
+            <ModernCardContent className="p-6!">
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-full bg-brand-blue text-white">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -349,7 +354,7 @@ export default function CustomerPortalPage() {
 
         <Link href="/portal/contact">
           <ModernCard className="hover:shadow-glow-blue transition-all cursor-pointer h-full">
-            <ModernCardContent className="!p-6">
+            <ModernCardContent className="p-6!">
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-full bg-green-100 text-green-600">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

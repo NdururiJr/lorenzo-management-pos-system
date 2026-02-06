@@ -272,7 +272,7 @@ Monitor service health:
 - Phone: Check website for support number
 
 ### Internal Support
-- Gachengoh Marugu: hello@ai-agentsplus.com
+- Gachengoh Marugu: jerry@ai-agentsplus.com
 - See CLAUDE.md for full team contacts
 
 ---

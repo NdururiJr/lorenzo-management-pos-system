@@ -17,7 +17,6 @@ import { Button } from '@/components/ui/button';
 import {
   Truck,
   Package,
-  MapPin,
   Clock,
   User,
   Calendar,
@@ -32,7 +31,9 @@ interface Delivery {
   driverId: string;
   orders: string[];
   status: 'pending' | 'in_progress' | 'completed';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   scheduledDate?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   startTime?: any;
   notes?: string;
 }

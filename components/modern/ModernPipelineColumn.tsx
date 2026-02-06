@@ -29,7 +29,7 @@ export function ModernPipelineColumn({
   status,
   orders,
   onOrderClick,
-  onStatusChange,
+  onStatusChange: _onStatusChange,
   className,
 }: ModernPipelineColumnProps) {
   const statusConfig = getStatusConfig(status);
@@ -78,7 +78,7 @@ export function ModernPipelineColumn({
           icon: AlertCircle,
           iconColor: 'text-amber-600',
         };
-      case 'ready':
+      case 'queued_for_delivery': // FR-008: Updated from 'ready'
       case 'out_for_delivery':
         return {
           bg: 'from-green-100 to-green-50',

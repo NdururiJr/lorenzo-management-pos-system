@@ -420,7 +420,7 @@ If you encounter issues:
 1. Check logs: `firebase functions:log`
 2. Review [TESTING.md](./TESTING.md)
 3. Check Firebase Status: https://status.firebase.google.com
-4. Contact: hello@ai-agentsplus.com
+4. Contact: jerry@ai-agentsplus.com
 
 ---
 

@@ -421,7 +421,7 @@ firebase deploy --only hosting
 - **Performance Optimizer:** Caching, query optimization, monitoring
 
 ### Coordination
-- **Lead Developer:** Gachengoh Marugu (hello@ai-agentsplus.com)
+- **Lead Developer:** Gachengoh Marugu (jerry@ai-agentsplus.com)
 - **Product Manager:** Jerry Nduriri (jerry@ai-agentsplus.com)
 - **Backend Developer:** Arthur Tutu (arthur@ai-agentsplus.com)
 
@@ -501,7 +501,7 @@ firebase deploy           # Deploy all Firebase resources
 ```
 
 ### Contact Information
-- **Technical Issues:** hello@ai-agentsplus.com
+- **Technical Issues:** jerry@ai-agentsplus.com
 - **Product Questions:** jerry@ai-agentsplus.com
 - **Backend Support:** arthur@ai-agentsplus.com
 - **Phone:** +254 725 462 859

@@ -234,7 +234,7 @@ This is the first frame users see before the video starts playing.
 ## Need Help?
 
 **Developer:** Gachengoh Marugu
-**Email:** hello@ai-agentsplus.com
+**Email:** jerry@ai-agentsplus.com
 **Phone:** +254 725 462 859
 
 ---

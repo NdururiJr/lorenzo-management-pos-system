@@ -53,15 +53,15 @@ describe('Pipeline Status Transitions', () => {
     });
 
     it('should allow packaging → ready transition', () => {
-      expect(canTransitionTo('packaging', 'ready')).toBe(true);
+      expect(canTransitionTo('packaging', 'queued_for_delivery')).toBe(true);
     });
 
     it('should allow ready → out_for_delivery transition', () => {
-      expect(canTransitionTo('ready', 'out_for_delivery')).toBe(true);
+      expect(canTransitionTo('queued_for_delivery', 'out_for_delivery')).toBe(true);
     });
 
     it('should allow ready → collected transition', () => {
-      expect(canTransitionTo('ready', 'collected')).toBe(true);
+      expect(canTransitionTo('queued_for_delivery', 'collected')).toBe(true);
     });
 
     it('should allow out_for_delivery → delivered transition', () => {
@@ -79,7 +79,7 @@ describe('Pipeline Status Transitions', () => {
     });
 
     it('should not allow queued → ready (skipping all processing stages)', () => {
-      expect(canTransitionTo('queued', 'ready')).toBe(false);
+      expect(canTransitionTo('queued', 'queued_for_delivery')).toBe(false);
     });
 
     it('should not allow backward transitions (washing → queued)', () => {
@@ -120,7 +120,7 @@ describe('Pipeline Status Transitions', () => {
     });
 
     it('should return [out_for_delivery, collected] for ready status', () => {
-      const nextStatuses = getValidNextStatuses('ready');
+      const nextStatuses = getValidNextStatuses('queued_for_delivery');
       expect(nextStatuses).toEqual(['out_for_delivery', 'collected']);
     });
 
@@ -144,7 +144,7 @@ describe('Pipeline Status Transitions', () => {
     });
 
     it('should return correct configuration for ready status', () => {
-      const config = getStatusConfig('ready');
+      const config = getStatusConfig('queued_for_delivery');
       expect(config.label).toBe('Ready');
       expect(config.color).toBe('green');
       expect(config.requiresNotification).toBe(true);
@@ -177,7 +177,7 @@ describe('Pipeline Status Transitions', () => {
 
   describe('Notification Requirements', () => {
     it('should require notification for ready status', () => {
-      expect(requiresNotification('ready')).toBe(true);
+      expect(requiresNotification('queued_for_delivery')).toBe(true);
     });
 
     it('should require notification for out_for_delivery status', () => {
@@ -215,7 +215,7 @@ describe('Pipeline Status Transitions', () => {
     });
 
     it('should not identify ready as terminal status', () => {
-      expect(isTerminalStatus('ready')).toBe(false);
+      expect(isTerminalStatus('queued_for_delivery')).toBe(false);
     });
 
     it('should not identify washing as terminal status', () => {
@@ -257,7 +257,7 @@ describe('Pipeline Status Transitions', () => {
     });
 
     it('should group ready as Ready', () => {
-      expect(getStatusGroup('ready')).toBe('Ready');
+      expect(getStatusGroup('queued_for_delivery')).toBe('Ready');
     });
 
     it('should group out_for_delivery as Ready', () => {
@@ -289,7 +289,7 @@ describe('Pipeline Status Transitions', () => {
       expect(statuses).toContain('ironing');
       expect(statuses).toContain('quality_check');
       expect(statuses).toContain('packaging');
-      expect(statuses).toContain('ready');
+      expect(statuses).toContain('queued_for_delivery');
       expect(statuses).toContain('out_for_delivery');
       expect(statuses).toContain('delivered');
       expect(statuses).toContain('collected');

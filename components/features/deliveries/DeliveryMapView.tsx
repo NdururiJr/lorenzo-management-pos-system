@@ -16,9 +16,8 @@ import {
   Marker,
   InfoWindow,
   Polyline,
-  DirectionsRenderer,
 } from '@react-google-maps/api';
-import { Loader2, MapPin, Navigation, Truck } from 'lucide-react';
+import { Loader2, MapPin, Navigation } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { RouteStop, Coordinates } from '@/services/google-maps';
@@ -33,7 +32,7 @@ const mapContainerStyle = {
 };
 
 // Default center (Kilimani, Nairobi)
-const defaultCenter: Coordinates = {
+const _defaultCenter: Coordinates = {
   lat: -1.2921,
   lng: 36.7872,
 };
@@ -75,7 +74,7 @@ export function DeliveryMapView({
   onNavigate,
 }: DeliveryMapViewProps) {
   const [selectedStop, setSelectedStop] = useState<RouteStop | null>(null);
-  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [_map, setMap] = useState<google.maps.Map | null>(null);
 
   // Load Google Maps script
   const { isLoaded, loadError } = useLoadScript({

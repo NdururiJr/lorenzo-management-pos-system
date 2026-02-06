@@ -21,8 +21,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatDuration } from '@/lib/pipeline/pipeline-helpers';
-import { formatCurrency } from '@/lib/utils/formatters';
-import { ModernStatCard, MiniStatCard } from './ModernStatCard';
+import { ModernStatCard } from './ModernStatCard';
 
 interface ModernPipelineStatsProps {
   stats: {

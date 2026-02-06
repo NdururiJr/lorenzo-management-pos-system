@@ -31,7 +31,7 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ModernCard, ModernCardHeader, ModernCardContent } from '@/components/modern/ModernCard';
+import { ModernCard, ModernCardContent } from '@/components/modern/ModernCard';
 import { ModernButton } from '@/components/modern/ModernButton';
 import { ModernSection } from '@/components/modern/ModernLayout';
 import { ModernStatCard } from '@/components/modern/ModernStatCard';
@@ -49,7 +49,8 @@ export interface Employee {
   role: 'front_desk' | 'workstation' | 'driver' | 'manager' | 'admin';
   branchId: string;
   status: 'active' | 'inactive';
-  createdAt: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  createdAt: Date | { toDate: () => Date } | any;
 }
 
 export default function EmployeesPage() {
@@ -218,7 +219,7 @@ export default function EmployeesPage() {
       >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent flex items-center gap-3">
+            <h1 className="text-4xl font-bold bg-linear-to-r from-brand-blue-dark via-brand-blue to-brand-blue-dark bg-clip-text text-transparent flex items-center gap-3">
               <motion.div
                 initial={{ rotate: -10 }}
                 animate={{ rotate: 0 }}
@@ -318,7 +319,7 @@ export default function EmployeesPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                 >
-                  <ModernCard className="bg-gradient-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
+                  <ModernCard className="bg-linear-to-br from-gray-50 to-gray-100/50 border-dashed border-2 border-gray-300">
                     <ModernCardContent className="py-12">
                       <div className="text-center space-y-4">
                         <motion.div
@@ -362,7 +363,7 @@ export default function EmployeesPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <AttendanceView employees={employees} />
+              <AttendanceView branchId={userData?.branchId} showTeamAttendance={true} />
             </motion.div>
           </TabsContent>
 

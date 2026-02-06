@@ -186,7 +186,7 @@ export const db = new Proxy({} as Firestore, {
     return Object.getPrototypeOf(getDb());
   },
   // Allow Object.keys() and other operations
-  ownKeys(target) {
+  ownKeys(_target) {
     return Reflect.ownKeys(getDb());
   },
   has(target, prop) {

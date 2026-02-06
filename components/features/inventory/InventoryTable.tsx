@@ -30,7 +30,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Card, CardContent } from '@/components/ui/card';
-import { MoreHorizontal, Edit, TrendingUp, TrendingDown, History, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Edit, TrendingUp, History, Trash2 } from 'lucide-react';
 import { EditItemModal } from './EditItemModal';
 import { StockAdjustmentModal } from './StockAdjustmentModal';
 import { AdjustmentHistoryModal } from './AdjustmentHistoryModal';

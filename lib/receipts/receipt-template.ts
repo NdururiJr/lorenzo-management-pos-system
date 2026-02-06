@@ -55,6 +55,7 @@ export const RECEIPT_CONFIG = {
 /**
  * Format Firestore timestamp to readable date string
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatDate(timestamp: Timestamp | Date | any): string {
   if (!timestamp) return 'N/A';
 
@@ -81,6 +82,7 @@ export function formatDate(timestamp: Timestamp | Date | any): string {
 /**
  * Format date for display without time
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatDateOnly(timestamp: Timestamp | Date | any): string {
   if (!timestamp) return 'N/A';
 
@@ -162,10 +164,10 @@ export function getStatusText(status: string): string {
  */
 export function getPaymentMethodText(method: string): string {
   const methodMap: Record<string, string> = {
-    cash: 'Cash',
     mpesa: 'M-Pesa',
     card: 'Credit/Debit Card',
     pesapal: 'Pesapal',
+    credit: 'Credit Account',
   };
 
   return methodMap[method] || method;
@@ -174,20 +176,82 @@ export function getPaymentMethodText(method: string): string {
 /**
  * Calculate totals from order
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function calculateOrderTotals(order: any) {
-  const subtotal = order.totalAmount || 0;
+  const subtotal = order.subtotal || order.totalAmount || 0;
+  const expressSurcharge = order.expressSurcharge || 0;
   const tax = order.tax || 0;
   const discount = order.discount || 0;
-  const total = subtotal + tax - discount;
-  const paid = order.amountPaid || 0;
+  const total = (order.totalAmount || subtotal + expressSurcharge) + tax - discount;
+  const paid = order.amountPaid || order.paidAmount || 0;
   const balance = Math.max(0, total - paid);
 
   return {
     subtotal,
+    expressSurcharge,
     tax,
     discount,
     total,
     paid,
     balance,
   };
+}
+
+/**
+ * V2.0: QR Code configuration for receipts
+ */
+export const QR_CODE_CONFIG = {
+  /** Size of QR code in mm for receipt */
+  receiptSize: 35,
+  /** Size of QR code in mm for garment tag */
+  garmentTagSize: 20,
+  /** Position from bottom of receipt (in mm) */
+  positionFromBottom: 60,
+};
+
+/**
+ * V2.0: Disclaimer text for receipts
+ */
+export const DISCLAIMER_CONFIG = {
+  /** Main disclaimer notice - must be displayed prominently */
+  cleanedAtOwnersRisk: 'CLEANED AT OWNER\'S RISK',
+  /** Supporting text for disclaimer */
+  disclaimerNote: 'We take utmost care with your garments. However, certain fabrics may react differently to cleaning processes.',
+  /** Terms and conditions link */
+  termsUrl: '/terms',
+  /** Full terms reference text */
+  termsReference: 'See full Terms & Conditions at',
+};
+
+/**
+ * Get the service type display text
+ */
+export function getServiceTypeText(serviceType: string): string {
+  const typeMap: Record<string, string> = {
+    Normal: 'Normal Service',
+    Express: 'Express Service (+50%)',
+  };
+  return typeMap[serviceType] || serviceType;
+}
+
+/**
+ * Get the delivery classification display text
+ */
+export function getDeliveryClassificationText(classification: string): string {
+  const classMap: Record<string, string> = {
+    Small: 'Small (Motorcycle)',
+    Bulk: 'Bulk (Van)',
+  };
+  return classMap[classification] || classification;
+}
+
+/**
+ * Format garment category for display
+ */
+export function getGarmentCategoryText(category: string): string {
+  const categoryMap: Record<string, string> = {
+    Adult: 'Adult',
+    Children: 'Children',
+  };
+  return categoryMap[category] || category;
 }

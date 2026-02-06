@@ -23,9 +23,6 @@ import {
   startAfter,
   type QueryConstraint,
   type DocumentData,
-  type DocumentReference,
-  type CollectionReference,
-  type QuerySnapshot,
   type DocumentSnapshot,
   Timestamp,
   runTransaction,
@@ -63,6 +60,28 @@ export class DatabaseError extends Error {
     super(message);
     this.name = 'DatabaseError';
   }
+}
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+
+/**
+ * Generate a unique document ID
+ *
+ * Uses Firestore's built-in ID generation for consistency.
+ *
+ * @returns A unique document ID
+ *
+ * @example
+ * const id = generateId();
+ * // Returns something like 'a1B2c3D4e5F6g7H8i9J0'
+ */
+export function generateId(): string {
+  // Create a reference to a new document without actually creating it
+  // This generates a unique Firestore-compatible ID
+  const newDocRef = doc(collection(db, '_temp'));
+  return newDocRef.id;
 }
 
 // ============================================
@@ -601,3 +620,6 @@ export * from './customers';
 export * from './orders';
 export * from './transactions';
 export * from './pricing';
+export * from './verification';
+export * from './pickup-requests';
+export * from './config';

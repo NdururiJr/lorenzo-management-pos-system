@@ -21,7 +21,7 @@ export function FloatingOrbs() {
             ease: "easeInOut"
           }
         }}
-        className="absolute -top-24 -left-24 w-96 h-96 bg-brand-blue rounded-full blur-3xl"
+        className="absolute -top-24 -left-24 w-96 h-96 bg-lorenzo-accent-teal rounded-full blur-3xl"
       />
 
       {/* Top right orb */}
@@ -41,7 +41,7 @@ export function FloatingOrbs() {
             ease: "easeInOut"
           }
         }}
-        className="absolute -top-32 -right-32 w-80 h-80 bg-brand-blue-100 rounded-full blur-3xl"
+        className="absolute -top-32 -right-32 w-80 h-80 bg-lorenzo-cream rounded-full blur-3xl"
       />
 
       {/* Bottom left orb */}
@@ -61,7 +61,7 @@ export function FloatingOrbs() {
             ease: "easeInOut"
           }
         }}
-        className="absolute -bottom-24 -left-24 w-72 h-72 bg-brand-blue-light rounded-full blur-3xl"
+        className="absolute -bottom-24 -left-24 w-72 h-72 bg-lorenzo-light-teal rounded-full blur-3xl"
       />
 
       {/* Bottom right orb */}
@@ -87,7 +87,7 @@ export function FloatingOrbs() {
             ease: "easeInOut"
           }
         }}
-        className="absolute -bottom-32 -right-32 w-96 h-96 bg-gradient-to-br from-brand-blue to-brand-blue-100 rounded-full blur-3xl"
+        className="absolute -bottom-32 -right-32 w-96 h-96 bg-linear-to-br from-lorenzo-teal to-lorenzo-cream rounded-full blur-3xl"
       />
 
       {/* Center accent orb */}
@@ -107,7 +107,7 @@ export function FloatingOrbs() {
             ease: "linear"
           }
         }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-radial from-brand-blue/20 to-transparent rounded-full blur-2xl"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-radial from-lorenzo-accent-teal/20 to-transparent rounded-full blur-2xl"
       />
     </div>
   );

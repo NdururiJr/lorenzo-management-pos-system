@@ -21,7 +21,7 @@ import { BlogGrid } from '@/components/marketing/BlogGrid';
 
 export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [_searchQuery, setSearchQuery] = useState('');
 
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);

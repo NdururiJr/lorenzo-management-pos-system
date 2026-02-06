@@ -428,7 +428,7 @@ Visa (Fail):
 ### Development Team
 
 - **Gachengoh Marugu** (Lead Dev)
-  - Email: hello@ai-agentsplus.com
+  - Email: jerry@ai-agentsplus.com
   - Phone: +254 725 462 859
 
 - **Arthur Tutu** (Backend Dev)

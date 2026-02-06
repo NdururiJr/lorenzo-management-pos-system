@@ -49,7 +49,7 @@ const faqCategories = [
       {
         id: 'delivery-times',
         question: 'How long does delivery take?',
-        answer: 'Standard service takes 2-3 days from pickup to delivery. We also offer Express Service with 24-hour turnaround for urgent needs. You can select your preferred service level when creating your order.',
+        answer: 'Standard service takes 2-3 days from pickup to delivery. We also offer Express Service with 2-hour turnaround for urgent needs at no extra cost. You can select your preferred service level when creating your order.',
       },
       {
         id: 'schedule-pickup',
@@ -75,7 +75,7 @@ const faqCategories = [
       {
         id: 'pricing',
         question: 'How much do your services cost?',
-        answer: 'Our pricing varies by service and garment type. Dry cleaning starts from KSh 150 per garment, Wash & Fold from KSh 150, and Express Service from KSh 250. Visit our Services page for detailed pricing or get a free quote through your customer account.',
+        answer: 'Our pricing varies by service and garment type. Dry cleaning starts from KSh 150 per garment, Wash & Fold from KSh 150. Express Service (2-hour turnaround) is FREE with any service. Visit our Services page for detailed pricing or get a free quote through your customer account.',
       },
       {
         id: 'price-changes',
@@ -151,7 +151,7 @@ export default function FAQPage() {
       {/* FAQ Categories */}
       <section className="relative py-24 overflow-hidden bg-white">
         {/* Light Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-blue-50 via-white to-brand-blue-100" />
+        <div className="absolute inset-0 bg-linear-to-br from-brand-blue-50 via-white to-brand-blue-100" />
 
         {/* Decorative blur elements */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-brand-blue-light rounded-full blur-3xl opacity-15" />
@@ -182,7 +182,7 @@ export default function FAQPage() {
                         </span>
                         <ChevronDown
                           className={cn(
-                            'w-6 h-6 flex-shrink-0 transition-transform duration-300',
+                            'w-6 h-6 shrink-0 transition-transform duration-300',
                             openId === faq.id && 'rotate-180'
                           )}
                           style={{ color: '#22BBFF' }}
@@ -218,8 +218,8 @@ function FAQHero() {
   return (
     <section className="relative pt-32 pb-20 overflow-hidden bg-white">
       {/* Blue Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-blue via-brand-blue-dark to-brand-blue-900" />
-      <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue-50 via-transparent to-brand-blue-900 opacity-40" />
+      <div className="absolute inset-0 bg-linear-to-br from-brand-blue via-brand-blue-dark to-brand-blue-900" />
+      <div className="absolute inset-0 bg-linear-to-tr from-brand-blue-50 via-transparent to-brand-blue-900 opacity-40" />
 
       {/* Decorative blur elements */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-brand-blue-light rounded-full blur-3xl opacity-30" />
@@ -254,7 +254,7 @@ function FAQFooterCTA() {
   return (
     <section className="relative py-16 overflow-hidden bg-white">
       {/* Blue Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-brand-blue-50 to-brand-blue-100" />
+      <div className="absolute inset-0 bg-linear-to-br from-white via-brand-blue-50 to-brand-blue-100" />
 
       {/* Decorative blur elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-blue-light rounded-full blur-3xl opacity-20" />

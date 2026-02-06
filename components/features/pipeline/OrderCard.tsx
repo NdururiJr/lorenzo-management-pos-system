@@ -77,6 +77,7 @@ export const OrderCard = memo(function OrderCard({
       'packaging',
     ];
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (!workstationStages.includes(order.status as any)) return null;
 
     // Get handlers for current stage from garments

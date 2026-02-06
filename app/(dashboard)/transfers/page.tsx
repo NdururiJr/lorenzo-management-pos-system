@@ -12,20 +12,18 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useQuery } from '@tanstack/react-query';
-import { Truck, Package, ArrowRight, Inbox, Building2, Loader2, Send } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Truck, Package, ArrowRight, Inbox, Send } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TransferBatchForm } from '@/components/features/transfers/TransferBatchForm';
 import { TransferBatchCard } from '@/components/features/transfers/TransferBatchCard';
 import { IncomingBatchesList } from '@/components/features/transfers/IncomingBatchesList';
 import { ModernSection } from '@/components/modern/ModernLayout';
-import { ModernCard, ModernCardContent, ModernCardHeader } from '@/components/modern/ModernCard';
+import { ModernCard, ModernCardContent } from '@/components/modern/ModernCard';
 import { ModernStatCard } from '@/components/modern/ModernStatCard';
 import { ModernButton } from '@/components/modern/ModernButton';
-import { ModernBadge } from '@/components/modern/ModernBadge';
 import {
   getTransferBatchesBySatellite,
-  getTransferBatchesByStatus,
   getPendingTransferBatches,
 } from '@/lib/db/transfers';
 import { getOrdersByBranchAndStatus } from '@/lib/db/orders';
@@ -33,7 +31,7 @@ import { getDocument } from '@/lib/db/index';
 import type { Branch } from '@/lib/db/schema';
 
 export default function TransfersPage() {
-  const { user, userData } = useAuth();
+  const { user: _user, userData } = useAuth();
   const [selectedOrderIds, setSelectedOrderIds] = useState<string[]>([]);
   const [showBatchForm, setShowBatchForm] = useState(false);
 
@@ -298,6 +296,7 @@ export default function TransfersPage() {
         {showBatchForm && userData?.branchId && (
           <TransferBatchForm
             satelliteBranchId={userData.branchId}
+            satelliteBranch={branch}
             selectedOrderIds={selectedOrderIds}
             onCancel={handleCancelBatchForm}
             onSuccess={handleBatchCreated}

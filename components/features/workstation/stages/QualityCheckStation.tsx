@@ -3,6 +3,9 @@
  *
  * Interface for quality check staff to inspect and approve garments.
  * Quality check is handled per-order, not in batches.
+ * Includes FR-002 redo item functionality for flagging garments that need reprocessing.
+ * Includes FR-003 defect notification functionality for reporting defects to customers.
+ * Includes FR-004 QC handover functionality for escalating issues to Customer Service.
  *
  * @module components/features/workstation/stages/QualityCheckStation
  */
@@ -13,7 +16,7 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { Loader2, Eye, Inbox, CheckCircle, ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react';
+import { Loader2, Eye, Inbox, CheckCircle, ChevronDown, ChevronUp, AlertTriangle, RefreshCw, AlertCircle, PhoneForwarded } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -23,13 +26,29 @@ import { getOrdersByBranchAndStatus } from '@/lib/db/orders';
 import { completeStageForGarment } from '@/lib/db/workstation';
 import { updateOrderStatus } from '@/lib/db/orders';
 import { Timestamp } from 'firebase/firestore';
-import type { Order } from '@/lib/db/schema';
+import type { Order, Garment } from '@/lib/db/schema';
 import { format } from 'date-fns';
+import { RedoItemForm } from '@/components/features/qc/RedoItemForm';
+import { DefectNotificationForm } from '@/components/features/qc/DefectNotificationForm';
+import { QCHandoverForm } from '@/components/features/qc/QCHandoverForm';
 
 export function QualityCheckStation() {
   const { user, userData } = useAuth();
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const [processingGarments, setProcessingGarments] = useState<Set<string>>(new Set());
+  const [redoModalOpen, setRedoModalOpen] = useState(false);
+  const [selectedOrderForRedo, setSelectedOrderForRedo] = useState<Order | null>(null);
+  const [selectedGarmentForRedo, setSelectedGarmentForRedo] = useState<Garment | null>(null);
+
+  // FR-003: Defect notification state
+  const [defectModalOpen, setDefectModalOpen] = useState(false);
+  const [selectedOrderForDefect, setSelectedOrderForDefect] = useState<Order | null>(null);
+  const [selectedGarmentForDefect, setSelectedGarmentForDefect] = useState<Garment | null>(null);
+
+  // FR-004: QC handover state
+  const [handoverModalOpen, setHandoverModalOpen] = useState(false);
+  const [selectedOrderForHandover, setSelectedOrderForHandover] = useState<Order | null>(null);
+  const [selectedGarmentForHandover, setSelectedGarmentForHandover] = useState<Garment | null>(null);
 
   // Fetch orders at quality_check stage
   const { data: qualityCheckOrders = [], refetch, isLoading } = useQuery({
@@ -43,6 +62,60 @@ export function QualityCheckStation() {
 
   const handleToggleOrder = (orderId: string) => {
     setExpandedOrder(expandedOrder === orderId ? null : orderId);
+  };
+
+  /**
+   * Open redo modal for a specific garment (FR-002)
+   */
+  const handleOpenRedoModal = (order: Order, garment: Garment) => {
+    setSelectedOrderForRedo(order);
+    setSelectedGarmentForRedo(garment);
+    setRedoModalOpen(true);
+  };
+
+  /**
+   * Close redo modal and clear selection
+   */
+  const handleCloseRedoModal = () => {
+    setRedoModalOpen(false);
+    setSelectedOrderForRedo(null);
+    setSelectedGarmentForRedo(null);
+  };
+
+  /**
+   * Open defect notification modal for a specific garment (FR-003)
+   */
+  const handleOpenDefectModal = (order: Order, garment: Garment) => {
+    setSelectedOrderForDefect(order);
+    setSelectedGarmentForDefect(garment);
+    setDefectModalOpen(true);
+  };
+
+  /**
+   * Close defect notification modal and clear selection
+   */
+  const handleCloseDefectModal = () => {
+    setDefectModalOpen(false);
+    setSelectedOrderForDefect(null);
+    setSelectedGarmentForDefect(null);
+  };
+
+  /**
+   * Open handover modal for a specific garment (FR-004)
+   */
+  const handleOpenHandoverModal = (order: Order, garment: Garment) => {
+    setSelectedOrderForHandover(order);
+    setSelectedGarmentForHandover(garment);
+    setHandoverModalOpen(true);
+  };
+
+  /**
+   * Close handover modal and clear selection
+   */
+  const handleCloseHandoverModal = () => {
+    setHandoverModalOpen(false);
+    setSelectedOrderForHandover(null);
+    setSelectedGarmentForHandover(null);
   };
 
   const handleCompleteGarment = async (order: Order, garmentId: string) => {
@@ -69,7 +142,7 @@ export function QualityCheckStation() {
       );
 
       // Check if all garments in order are complete for quality check
-      const garment = order.garments.find((g) => g.garmentId === garmentId);
+      const _garment = order.garments.find((g) => g.garmentId === garmentId);
       const allComplete = order.garments.every((g) => {
         if (g.garmentId === garmentId) return true; // Current garment we just completed
         return g.stageHandlers?.quality_check && g.stageHandlers.quality_check.length > 0;
@@ -290,26 +363,65 @@ export function QualityCheckStation() {
                                   </div>
                                 )}
 
-                                {/* Complete Button */}
+                                {/* Action Buttons */}
                                 {!isComplete && (
-                                  <Button
-                                    onClick={() => handleCompleteGarment(order, garment.garmentId)}
-                                    disabled={isProcessing}
-                                    className="w-full mt-3 bg-green-600 text-white hover:bg-green-700"
-                                    size="sm"
-                                  >
-                                    {isProcessing ? (
-                                      <>
-                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                        Approving...
-                                      </>
-                                    ) : (
-                                      <>
-                                        <CheckCircle className="w-4 h-4 mr-2" />
-                                        Pass Quality Check
-                                      </>
-                                    )}
-                                  </Button>
+                                  <div className="space-y-2 mt-3">
+                                    {/* Issue Buttons Row (FR-002 & FR-003) */}
+                                    <div className="flex gap-2">
+                                      {/* Flag for Redo Button (FR-002) */}
+                                      <Button
+                                        onClick={() => handleOpenRedoModal(order, garment)}
+                                        variant="outline"
+                                        className="flex-1 border-amber-300 text-amber-700 hover:bg-amber-50"
+                                        size="sm"
+                                      >
+                                        <RefreshCw className="w-4 h-4 mr-2" />
+                                        Redo
+                                      </Button>
+
+                                      {/* Report Defect Button (FR-003) */}
+                                      <Button
+                                        onClick={() => handleOpenDefectModal(order, garment)}
+                                        variant="outline"
+                                        className="flex-1 border-red-300 text-red-700 hover:bg-red-50"
+                                        size="sm"
+                                      >
+                                        <AlertCircle className="w-4 h-4 mr-2" />
+                                        Defect
+                                      </Button>
+                                    </div>
+
+                                    {/* Send to Customer Service Button (FR-004) */}
+                                    <Button
+                                      onClick={() => handleOpenHandoverModal(order, garment)}
+                                      variant="outline"
+                                      className="w-full border-blue-300 text-blue-700 hover:bg-blue-50"
+                                      size="sm"
+                                    >
+                                      <PhoneForwarded className="w-4 h-4 mr-2" />
+                                      Send to Customer Service
+                                    </Button>
+
+                                    {/* Pass Quality Check Button */}
+                                    <Button
+                                      onClick={() => handleCompleteGarment(order, garment.garmentId)}
+                                      disabled={isProcessing}
+                                      className="w-full bg-green-600 text-white hover:bg-green-700"
+                                      size="sm"
+                                    >
+                                      {isProcessing ? (
+                                        <>
+                                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                          Approving...
+                                        </>
+                                      ) : (
+                                        <>
+                                          <CheckCircle className="w-4 h-4 mr-2" />
+                                          Pass Quality Check
+                                        </>
+                                      )}
+                                    </Button>
+                                  </div>
                                 )}
                               </div>
                             );
@@ -324,6 +436,48 @@ export function QualityCheckStation() {
           )}
         </CardContent>
       </Card>
+
+      {/* Redo Item Modal (FR-002) */}
+      {selectedOrderForRedo && selectedGarmentForRedo && (
+        <RedoItemForm
+          open={redoModalOpen}
+          onOpenChange={handleCloseRedoModal}
+          order={selectedOrderForRedo}
+          garment={selectedGarmentForRedo}
+          onSuccess={() => {
+            refetch();
+            handleCloseRedoModal();
+          }}
+        />
+      )}
+
+      {/* Defect Notification Modal (FR-003) */}
+      {selectedOrderForDefect && selectedGarmentForDefect && (
+        <DefectNotificationForm
+          open={defectModalOpen}
+          onOpenChange={handleCloseDefectModal}
+          order={selectedOrderForDefect}
+          garment={selectedGarmentForDefect}
+          onSuccess={() => {
+            refetch();
+            handleCloseDefectModal();
+          }}
+        />
+      )}
+
+      {/* QC Handover Modal (FR-004) */}
+      {selectedOrderForHandover && selectedGarmentForHandover && (
+        <QCHandoverForm
+          open={handoverModalOpen}
+          onOpenChange={handleCloseHandoverModal}
+          order={selectedOrderForHandover}
+          garment={selectedGarmentForHandover}
+          onSuccess={() => {
+            refetch();
+            handleCloseHandoverModal();
+          }}
+        />
+      )}
     </div>
   );
 }

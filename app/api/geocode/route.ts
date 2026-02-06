@@ -3,12 +3,14 @@
  *
  * Server-side endpoint for geocoding addresses.
  * Use this from server components or when client-side geocoding isn't suitable.
+ * Rate limited to protect Google Maps API quota.
  *
  * @module app/api/geocode/route
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { geocodeAddress, reverseGeocode, type Coordinates } from '@/services/google-maps';
+import { rateLimit } from '@/lib/api/rate-limit';
 
 /**
  * POST /api/geocode
@@ -32,6 +34,12 @@ import { geocodeAddress, reverseGeocode, type Coordinates } from '@/services/goo
  * }
  */
 export async function POST(request: NextRequest) {
+  // Apply rate limiting (30 requests per minute to protect Google API quota)
+  const rateLimitResponse = rateLimit(request, 'geocode');
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     const body = await request.json();
     const { address } = body;
@@ -83,6 +91,12 @@ export async function POST(request: NextRequest) {
  * }
  */
 export async function GET(request: NextRequest) {
+  // Apply rate limiting (30 requests per minute to protect Google API quota)
+  const rateLimitResponse = rateLimit(request, 'geocode');
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const lat = searchParams.get('lat');

@@ -29,7 +29,6 @@ import {
   MapPin,
   Plus,
   CheckCircle,
-  AlertCircle,
   X,
 } from 'lucide-react';
 import { getCustomer } from '@/lib/db/customers';
@@ -64,6 +63,7 @@ export function AddressSelector({
   // Load customer addresses
   useEffect(() => {
     loadCustomerAddresses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customerId]);
 
   const loadCustomerAddresses = async () => {
@@ -121,7 +121,7 @@ export function AddressSelector({
     try {
       // TODO: Implement WhatsApp message sending via Wati.io
       // This will be implemented in Phase 2 (WhatsApp Integration)
-      const message = `Hi! Could you please share your location with us?\n\nTo share:\n1. Tap the attachment icon (📎)\n2. Select "Location"\n3. Choose your address\n\nOr simply send us a Google Maps link of your address.\n\nThank you!`;
+      const _message = `Hi! Could you please share your location with us?\n\nTo share:\n1. Tap the attachment icon (📎)\n2. Select "Location"\n3. Choose your address\n\nOr simply send us a Google Maps link of your address.\n\nThank you!`;
 
       // For now, show a placeholder
       toast.info('WhatsApp integration coming soon!', {

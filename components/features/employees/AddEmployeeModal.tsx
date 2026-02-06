@@ -183,6 +183,7 @@ export function AddEmployeeModal({ open, onOpenChange }: AddEmployeeModalProps) 
       form.reset();
       onOpenChange(false);
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
       console.error('Error creating employee:', error);
       const message =

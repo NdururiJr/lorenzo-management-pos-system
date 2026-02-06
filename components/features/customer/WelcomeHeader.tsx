@@ -8,7 +8,7 @@
 
 'use client';
 
-import { ModernCard, ModernCardContent } from '@/components/modern/ModernCard';
+import { ModernCardContent } from '@/components/modern/ModernCard';
 import { formatRelativeTime } from '@/lib/utils/formatters';
 import { Package, Clock } from 'lucide-react';
 import type { Timestamp } from 'firebase/firestore';

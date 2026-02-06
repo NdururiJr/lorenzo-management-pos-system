@@ -27,8 +27,8 @@ export function ModernBadge({
 
   const variants = {
     primary: gradient
-      ? 'bg-gradient-to-r from-brand-blue to-brand-blue-dark text-white shadow-glow-blue/30'
-      : 'bg-brand-blue text-white shadow-md',
+      ? 'bg-gradient-to-r from-lorenzo-accent-teal to-lorenzo-light-teal text-lorenzo-dark-teal shadow-glow-teal/30'
+      : 'bg-lorenzo-accent-teal text-lorenzo-dark-teal shadow-md',
     secondary: gradient
       ? 'bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800 border border-gray-300'
       : 'bg-gray-100 text-gray-800 border border-gray-300',
@@ -159,7 +159,7 @@ export function CountBadge({
     <ModernBadge
       variant={variant}
       size="sm"
-      className={cn('min-w-[20px] h-5', className)}
+      className={cn('min-w-5 h-5', className)}
       animate={true}
     >
       {displayCount}

@@ -367,7 +367,7 @@ await sendTestEmail('your-email@example.com');
 
 ### Support
 - **Resend Support:** support@resend.com
-- **Development Team:** hello@ai-agentsplus.com
+- **Development Team:** Jerry Ndururi in collaboration with AI Agents Plus
 
 ---
 

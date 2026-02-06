@@ -27,7 +27,6 @@ import { Separator } from '@/components/ui/separator';
 import { getOrdersPendingInspection, completeGarmentInspection, markMajorIssue } from '@/lib/db/workstation';
 import { updateOrderStatus } from '@/lib/db/orders';
 import type { Order, StainDetail, RipDetail } from '@/lib/db/schema';
-import { format } from 'date-fns';
 
 export function InspectionQueue() {
   const { user, userData } = useAuth();
@@ -136,6 +135,7 @@ export function InspectionQueue() {
     try {
       const garment = order.garments[garmentIndex];
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const inspectionData: any = {
         conditionAssessment,
       };
@@ -145,6 +145,7 @@ export function InspectionQueue() {
       if (rips.length > 0) inspectionData.ripDetails = rips;
       if (photos.length > 0) inspectionData.damagePhotos = photos;
       if (recommendedActions.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         inspectionData.recommendedActions = recommendedActions as any;
       }
       if (otherAction && recommendedActions.includes('other')) {
@@ -322,6 +323,7 @@ export function InspectionQueue() {
                       {/* Condition Assessment */}
                       <div className="space-y-2">
                         <Label htmlFor="condition">Condition Assessment *</Label>
+                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                         <Select value={conditionAssessment} onValueChange={(value: any) => setConditionAssessment(value)}>
                           <SelectTrigger>
                             <SelectValue />
@@ -369,6 +371,7 @@ export function InspectionQueue() {
                             />
                             <Select
                               value={stain.severity}
+                              // eslint-disable-next-line @typescript-eslint/no-explicit-any
                               onValueChange={(value: any) => handleUpdateStain(idx, 'severity', value)}
                             >
                               <SelectTrigger>

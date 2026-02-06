@@ -124,6 +124,7 @@ export function getBranchFilterDescription(allowedBranches: string[] | null): st
  * @param idField - Field name to use for deduplication (default: 'id')
  * @returns Deduplicated merged results
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function mergeQueryResults<T extends Record<string, any>>(
   resultArrays: T[][],
   idField: string = 'id'

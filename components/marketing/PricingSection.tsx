@@ -177,7 +177,7 @@ interface PricingCardProps {
   index: number;
 }
 
-function PricingCard({ tier, index }: PricingCardProps) {
+function PricingCard({ tier, index: _index }: PricingCardProps) {
   return (
     <motion.article
       whileHover={{

@@ -3,12 +3,14 @@
  *
  * Handles contact form submissions.
  * Validates data and processes the contact request.
+ * Rate limited to prevent spam.
  *
  * @module app/api/contact/route
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+import { rateLimit } from '@/lib/api/rate-limit';
 
 // Validation schema (matches the frontend)
 const contactSchema = z.object({
@@ -24,6 +26,12 @@ const contactSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  // Apply rate limiting (3 requests per hour to prevent spam)
+  const rateLimitResponse = rateLimit(request, 'contact');
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     // Parse request body
     const body = await request.json();

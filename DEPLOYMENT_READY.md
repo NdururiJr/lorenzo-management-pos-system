@@ -503,7 +503,7 @@ NODE_ENV=production
 - `npx playwright test` - Run E2E tests
 
 **Team Contact:**
-- **Lead Developer:** Gachengoh Marugu - hello@ai-agentsplus.com
+- **Lead Developer:** Gachengoh Marugu - jerry@ai-agentsplus.com
 - **Product Manager:** Jerry Nduriri - jerry@ai-agentsplus.com
 
 ---

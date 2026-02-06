@@ -26,7 +26,6 @@ import {
   DollarSign,
   BarChart3,
   Calendar,
-  ClipboardList,
   Boxes,
   Menu,
   X,
@@ -40,7 +39,6 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import {
   DropdownMenu,
   DropdownMenuContent,

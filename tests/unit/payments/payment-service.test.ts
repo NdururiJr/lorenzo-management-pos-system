@@ -31,7 +31,6 @@ jest.mock('@/services/pesapal', () => ({
 }));
 
 import {
-  processCashPayment,
   initiateDigitalPayment,
   processCreditPayment,
   handlePaymentCallback,
@@ -40,7 +39,6 @@ import {
   getAvailablePaymentMethods,
 } from '@/lib/payments/payment-service';
 import type {
-  CashPaymentData,
   DigitalPaymentData,
   CreditPaymentData,
   PaymentCallbackData,
@@ -56,151 +54,6 @@ const { submitOrderRequest, getTransactionStatus, mapPesapalStatus } = require('
 describe('Payment Service', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  describe('EC-PAY-001: Cash Payment Processing', () => {
-    it('should process valid cash payment successfully', async () => {
-      const mockOrder: any = {
-        ...createTestOrder({
-          orderId: 'ORD-001',
-          totalAmount: 1000,
-          paidAmount: 0,
-          branchId: TEST_BRANCHES.mainStore.branchId,
-        }),
-      };
-
-      const paymentData: CashPaymentData = {
-        orderId: 'ORD-001',
-        customerId: 'CUST-001',
-        amount: 1000,
-        userId: TEST_USERS.frontDesk.uid,
-      };
-
-      getOrder.mockResolvedValueOnce(mockOrder);
-      createTransaction.mockResolvedValueOnce('TXN-001');
-
-      const result = await processCashPayment(paymentData);
-
-      expect(result.success).toBe(true);
-      expect(result.transactionId).toBe('TXN-001');
-      expect(createTransaction).toHaveBeenCalledWith(
-        expect.objectContaining({
-          orderId: 'ORD-001',
-          customerId: 'CUST-001',
-          amount: 1000,
-          method: 'cash',
-          status: 'completed',
-        })
-      );
-    });
-
-    it('should calculate change when amount tendered is provided', async () => {
-      const mockOrder: any = {
-        ...createTestOrder({
-          orderId: 'ORD-001',
-          totalAmount: 1000,
-          paidAmount: 0,
-          branchId: TEST_BRANCHES.mainStore.branchId,
-        }),
-      };
-
-      const paymentData: CashPaymentData = {
-        orderId: 'ORD-001',
-        customerId: 'CUST-001',
-        amount: 1000,
-        amountTendered: 1500,
-        userId: TEST_USERS.frontDesk.uid,
-      };
-
-      getOrder.mockResolvedValueOnce(mockOrder);
-      createTransaction.mockResolvedValueOnce('TXN-001');
-
-      const result = await processCashPayment(paymentData);
-
-      expect(result.success).toBe(true);
-      expect(result.message).toContain('Change: KES 500');
-    });
-
-    it('should reject invalid payment amount (zero)', async () => {
-      const paymentData: CashPaymentData = {
-        orderId: 'ORD-001',
-        customerId: 'CUST-001',
-        amount: 0,
-        userId: TEST_USERS.frontDesk.uid,
-      };
-
-      const result = await processCashPayment(paymentData);
-
-      expect(result.success).toBe(false);
-      expect(result.error).toContain('Invalid payment amount');
-    });
-
-    it('should reject negative payment amount', async () => {
-      const paymentData: CashPaymentData = {
-        orderId: 'ORD-001',
-        customerId: 'CUST-001',
-        amount: -100,
-        userId: TEST_USERS.frontDesk.uid,
-      };
-
-      const result = await processCashPayment(paymentData);
-
-      expect(result.success).toBe(false);
-      expect(result.error).toContain('Invalid payment amount');
-    });
-
-    it('should reject payment exceeding balance due', async () => {
-      const mockOrder: any = {
-        ...createTestOrder({
-          orderId: 'ORD-001',
-          totalAmount: 1000,
-          paidAmount: 600,
-          branchId: TEST_BRANCHES.mainStore.branchId,
-        }),
-      };
-
-      const paymentData: CashPaymentData = {
-        orderId: 'ORD-001',
-        customerId: 'CUST-001',
-        amount: 500, // Balance due is 400, payment is 500
-        userId: TEST_USERS.frontDesk.uid,
-      };
-
-      getOrder.mockResolvedValueOnce(mockOrder);
-
-      const result = await processCashPayment(paymentData);
-
-      expect(result.success).toBe(false);
-      expect(result.error).toContain('exceeds balance due');
-      expect(result.error).toContain('KES 500');
-      expect(result.error).toContain('KES 400');
-    });
-
-    it('should handle partial payment correctly', async () => {
-      const mockOrder: any = {
-        ...createTestOrder({
-          orderId: 'ORD-001',
-          totalAmount: 1000,
-          paidAmount: 300,
-          branchId: TEST_BRANCHES.mainStore.branchId,
-        }),
-      };
-
-      const paymentData: CashPaymentData = {
-        orderId: 'ORD-001',
-        customerId: 'CUST-001',
-        amount: 500, // Partial payment (balance due is 700)
-        userId: TEST_USERS.frontDesk.uid,
-      };
-
-      getOrder.mockResolvedValueOnce(mockOrder);
-      createTransaction.mockResolvedValueOnce('TXN-001');
-
-      const result = await processCashPayment(paymentData);
-
-      expect(result.success).toBe(true);
-      expect(result.transactionId).toBe('TXN-001');
-    });
   });
 
   describe('EC-PAY-002: Digital Payment Initiation (M-Pesa/Card)', () => {
@@ -533,7 +386,7 @@ describe('Payment Service', () => {
         orderId: 'ORD-001',
         customerId: 'CUST-001',
         amount: 1000,
-        method: 'cash' as const,
+        method: 'credit' as const,
         status: 'completed' as const,
         timestamp: createMockTimestamp(new Date()),
       };
@@ -547,7 +400,7 @@ describe('Payment Service', () => {
         orderId: 'ORD-001',
         status: 'completed',
         amount: 1000,
-        method: 'cash',
+        method: 'credit',
       });
     });
 
@@ -669,7 +522,6 @@ describe('Payment Service', () => {
     it('should return all methods for normal order amount', () => {
       const methods = getAvailablePaymentMethods(1000);
 
-      expect(methods.cash).toBe(true);
       expect(methods.mpesa).toBe(true);
       expect(methods.card).toBe(true);
       expect(methods.credit).toBe(true);
@@ -678,7 +530,6 @@ describe('Payment Service', () => {
     it('should disable M-Pesa for amount below minimum (10 KES)', () => {
       const methods = getAvailablePaymentMethods(5);
 
-      expect(methods.cash).toBe(true);
       expect(methods.mpesa).toBe(false);
       expect(methods.card).toBe(false);
       expect(methods.credit).toBe(true);
@@ -687,7 +538,6 @@ describe('Payment Service', () => {
     it('should disable M-Pesa for amount above maximum (500,000 KES)', () => {
       const methods = getAvailablePaymentMethods(600000);
 
-      expect(methods.cash).toBe(true);
       expect(methods.mpesa).toBe(false);
       expect(methods.card).toBe(true);
       expect(methods.credit).toBe(true);
@@ -707,13 +557,11 @@ describe('Payment Service', () => {
       expect(methods.card).toBe(true);
     });
 
-    it('should always allow cash and credit regardless of amount', () => {
+    it('should always allow credit regardless of amount', () => {
       const methods1 = getAvailablePaymentMethods(1);
       const methods2 = getAvailablePaymentMethods(1000000);
 
-      expect(methods1.cash).toBe(true);
       expect(methods1.credit).toBe(true);
-      expect(methods2.cash).toBe(true);
       expect(methods2.credit).toBe(true);
     });
   });

@@ -34,27 +34,27 @@ export const ModernButton = forwardRef<HTMLButtonElement, ModernButtonProps>(
 
     const variants = {
       primary: `
-        bg-gradient-to-r from-brand-blue to-brand-blue-dark
-        text-white
-        shadow-glow-blue
-        hover:shadow-glow-blue-intense
-        hover:from-brand-blue-dark hover:to-brand-blue
+        bg-gradient-to-r from-lorenzo-accent-teal to-lorenzo-light-teal
+        text-lorenzo-dark-teal
+        shadow-glow-teal
+        hover:shadow-glow-teal
+        hover:from-lorenzo-light-teal hover:to-lorenzo-teal
         active:scale-95
       `,
       secondary: `
         bg-white/80
         backdrop-blur-sm
-        text-brand-blue
-        border-2 border-brand-blue/20
-        hover:border-brand-blue/40
-        hover:bg-brand-blue/10
-        hover:shadow-glow-blue/20
+        text-lorenzo-teal
+        border-2 border-lorenzo-teal/20
+        hover:border-lorenzo-accent-teal/40
+        hover:bg-lorenzo-teal/10
+        hover:shadow-glow-teal/20
         active:scale-95
       `,
       ghost: `
         bg-transparent
-        text-brand-blue
-        hover:bg-brand-blue/10
+        text-lorenzo-teal
+        hover:bg-lorenzo-teal/10
         hover:shadow-sm
         active:scale-95
       `,

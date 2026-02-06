@@ -317,7 +317,7 @@ export async function registerUser(
         success: false,
         error: 'Email already in use',
       };
-    } catch (_error) {
+    } catch {
       // Email doesn't exist, proceed with registration
     }
 

@@ -20,12 +20,12 @@ import { ModernStatCard } from '@/components/modern/ModernStatCard';
 import { ModernBadge } from '@/components/modern/ModernBadge';
 import { PickupTable } from '@/components/features/pickups/PickupTable';
 import { getDocuments } from '@/lib/db';
-import { where, orderBy, Timestamp, type QueryConstraint } from 'firebase/firestore';
+import { where, orderBy, type QueryConstraint } from 'firebase/firestore';
 import type { Order } from '@/lib/db/schema';
 import { toast } from 'sonner';
 
 export default function PickupsPage() {
-  const { userData } = useAuth();
+  const { userData: _userData } = useAuth();
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('pending');
 
@@ -37,6 +37,7 @@ export default function PickupsPage() {
   // Load pickups on mount and tab change
   useEffect(() => {
     loadPickups();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
   const loadPickups = async () => {
@@ -122,7 +123,7 @@ export default function PickupsPage() {
     }
   };
 
-  const currentData = getCurrentTabData();
+  const _currentData = getCurrentTabData();
 
   // Calculate today's counts
   const scheduledToday = scheduledPickups.filter((p) => {

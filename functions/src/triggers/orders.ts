@@ -137,8 +137,8 @@ export const onOrderStatusChanged = functions.firestore
 
       const customerData = customerDoc.data()!;
 
-      // Send notification when order is ready
-      if (afterData.status === 'ready') {
+      // Send notification when order is ready (FR-008: Updated to queued_for_delivery)
+      if (afterData.status === 'queued_for_delivery') {
         const notificationData = {
           orderId,
           customerName: customerData.name,
@@ -240,5 +240,148 @@ export const updateOrderEstimate = functions.firestore
       }
     } catch (error) {
       console.error(`Error updating estimate for ${orderId}:`, error);
+    }
+  });
+
+// ============================================================================
+// DAILY STATS - Pre-computed Aggregates (PR-060, PR-061)
+// ============================================================================
+
+/**
+ * Update daily stats when a new order is created
+ * This pre-computes aggregates to improve dashboard load times
+ */
+export const updateDailyStatsOnOrderCreated = functions.firestore
+  .document('orders/{orderId}')
+  .onCreate(async (snap, context) => {
+    const orderData = snap.data();
+    const branchId = orderData.branchId;
+
+    if (!branchId) {
+      console.warn('Order missing branchId, skipping daily stats update');
+      return;
+    }
+
+    const today = format(new Date(), 'yyyy-MM-dd');
+    const hour = format(new Date(), 'HH');
+    const statsId = `${branchId}_${today}`;
+
+    try {
+      const statsRef = admin.firestore().collection('dailyStats').doc(statsId);
+
+      await statsRef.set(
+        {
+          branchId,
+          date: today,
+          orderCount: admin.firestore.FieldValue.increment(1),
+          lastUpdated: admin.firestore.FieldValue.serverTimestamp(),
+        },
+        { merge: true }
+      );
+
+      console.log(`Updated daily stats for ${statsId}: +1 order`);
+    } catch (error) {
+      console.error(`Error updating daily stats for ${statsId}:`, error);
+    }
+  });
+
+/**
+ * Update daily stats when a transaction is completed
+ * Tracks revenue by hour for analytics
+ */
+export const updateDailyStatsOnTransactionCompleted = functions.firestore
+  .document('transactions/{transactionId}')
+  .onCreate(async (snap, context) => {
+    const txnData = snap.data();
+
+    // Only count completed transactions
+    if (txnData.status !== 'completed') {
+      return;
+    }
+
+    const branchId = txnData.branchId;
+    const amount = txnData.amount || 0;
+
+    if (!branchId || amount <= 0) {
+      return;
+    }
+
+    const today = format(new Date(), 'yyyy-MM-dd');
+    const hour = format(new Date(), 'HH');
+    const statsId = `${branchId}_${today}`;
+
+    try {
+      const statsRef = admin.firestore().collection('dailyStats').doc(statsId);
+
+      await statsRef.set(
+        {
+          branchId,
+          date: today,
+          revenue: admin.firestore.FieldValue.increment(amount),
+          [`hourlyRevenue.${hour}`]: admin.firestore.FieldValue.increment(amount),
+          lastUpdated: admin.firestore.FieldValue.serverTimestamp(),
+        },
+        { merge: true }
+      );
+
+      console.log(`Updated daily stats for ${statsId}: +KES ${amount} revenue`);
+    } catch (error) {
+      console.error(`Error updating daily stats revenue for ${statsId}:`, error);
+    }
+  });
+
+/**
+ * Update daily stats when an order is completed
+ */
+export const updateDailyStatsOnOrderCompleted = functions.firestore
+  .document('orders/{orderId}')
+  .onUpdate(async (change, context) => {
+    const beforeData = change.before.data();
+    const afterData = change.after.data();
+
+    // Only process when status changes to completed
+    const completedStatuses = ['delivered', 'collected'];
+    if (
+      completedStatuses.includes(beforeData.status) ||
+      !completedStatuses.includes(afterData.status)
+    ) {
+      return;
+    }
+
+    const branchId = afterData.branchId;
+    if (!branchId) {
+      return;
+    }
+
+    const today = format(new Date(), 'yyyy-MM-dd');
+    const statsId = `${branchId}_${today}`;
+
+    // Calculate turnaround time in minutes
+    let turnaroundMinutes = 0;
+    if (afterData.createdAt && afterData.actualCompletion) {
+      const created = afterData.createdAt.toDate();
+      const completed = afterData.actualCompletion.toDate();
+      turnaroundMinutes = Math.round((completed.getTime() - created.getTime()) / (1000 * 60));
+    }
+
+    try {
+      const statsRef = admin.firestore().collection('dailyStats').doc(statsId);
+
+      await statsRef.set(
+        {
+          branchId,
+          date: today,
+          completedCount: admin.firestore.FieldValue.increment(1),
+          // Note: For avgTurnaroundMinutes, we'd need to recalculate the average
+          // This is a simplified implementation that just tracks latest
+          lastTurnaroundMinutes: turnaroundMinutes,
+          lastUpdated: admin.firestore.FieldValue.serverTimestamp(),
+        },
+        { merge: true }
+      );
+
+      console.log(`Updated daily stats for ${statsId}: +1 completed order`);
+    } catch (error) {
+      console.error(`Error updating daily stats completed for ${statsId}:`, error);
     }
   });

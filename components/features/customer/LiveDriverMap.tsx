@@ -18,7 +18,7 @@ import { getDelivery } from '@/lib/db/deliveries';
 import { getUser } from '@/lib/db/users';
 import { getOrder } from '@/lib/db/orders';
 import type { DriverLocation, Delivery, User } from '@/lib/db/schema';
-import { Loader2, MapPin, Phone, Clock, AlertCircle, Car } from 'lucide-react';
+import { Loader2, MapPin, Phone, Clock, AlertCircle } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
 interface LiveDriverMapProps {
@@ -59,6 +59,7 @@ export function LiveDriverMap({ orderId, deliveryAddress }: LiveDriverMapProps) 
         // Fetch delivery details
         const deliveryData = await getDelivery(order.deliveryId);
         setDelivery(deliveryData);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         console.error('Failed to fetch delivery:', err);
         setError(err.message || 'Failed to load delivery information.');
@@ -105,6 +106,7 @@ export function LiveDriverMap({ orderId, deliveryAddress }: LiveDriverMapProps) 
             .then(setEta)
             .catch((err) => console.error('Failed to calculate ETA:', err));
         }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         console.error('Failed to fetch driver location:', err);
       }

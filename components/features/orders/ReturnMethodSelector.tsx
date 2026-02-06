@@ -47,7 +47,7 @@ export function ReturnMethodSelector({
     <Card className="p-6">
       <div className="space-y-4">
         <div>
-          <h3 className="text-lg font-semibold mb-2">How will clean garments be returned?</h3>
+          <h3 className="text-lg font-semibold text-lorenzo-dark-teal mb-2">How will clean garments be returned?</h3>
           <p className="text-sm text-muted-foreground mb-4">
             Select whether the customer will collect garments from the shop or if staff will deliver them.
           </p>
@@ -56,12 +56,11 @@ export function ReturnMethodSelector({
         <RadioGroup value={value} onValueChange={(val) => onChange(val as 'customer_collects' | 'delivery_required')}>
           <div className="space-y-3">
             {/* Customer Will Collect Option */}
-            <div className="flex items-start space-x-3 p-4 rounded-lg border-2 transition-colors hover:border-primary cursor-pointer"
-                 style={{ borderColor: value === 'customer_collects' ? 'hsl(var(--primary))' : 'transparent' }}>
+            <div className={`flex items-start space-x-3 p-4 rounded-lg border-2 transition-colors hover:border-lorenzo-teal cursor-pointer ${value === 'customer_collects' ? 'border-lorenzo-teal bg-lorenzo-cream/50' : 'border-transparent'}`}>
               <RadioGroupItem value="customer_collects" id="customer_collects" className="mt-1" />
               <Label htmlFor="customer_collects" className="flex-1 cursor-pointer">
                 <div className="flex items-center gap-2 mb-1">
-                  <Store className="w-5 h-5 text-primary" />
+                  <Store className="w-5 h-5 text-lorenzo-teal" />
                   <span className="font-medium">Customer Will Collect</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -71,12 +70,11 @@ export function ReturnMethodSelector({
             </div>
 
             {/* Deliver to Customer Option */}
-            <div className="flex items-start space-x-3 p-4 rounded-lg border-2 transition-colors hover:border-primary cursor-pointer"
-                 style={{ borderColor: value === 'delivery_required' ? 'hsl(var(--primary))' : 'transparent' }}>
+            <div className={`flex items-start space-x-3 p-4 rounded-lg border-2 transition-colors hover:border-lorenzo-teal cursor-pointer ${value === 'delivery_required' ? 'border-lorenzo-teal bg-lorenzo-cream/50' : 'border-transparent'}`}>
               <RadioGroupItem value="delivery_required" id="delivery_required" className="mt-1" />
               <Label htmlFor="delivery_required" className="flex-1 cursor-pointer">
                 <div className="flex items-center gap-2 mb-1">
-                  <Truck className="w-5 h-5 text-primary" />
+                  <Truck className="w-5 h-5 text-lorenzo-teal" />
                   <span className="font-medium">Deliver to Customer</span>
                 </div>
                 <p className="text-sm text-muted-foreground">

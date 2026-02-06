@@ -329,7 +329,7 @@ All functions documented with:
 ### Resources
 - **Documentation:** See `/docs/` folder
 - **Google Maps Docs:** https://developers.google.com/maps
-- **Support Email:** hello@ai-agentsplus.com
+- **Support Email:** jerry@ai-agentsplus.com
 
 ### Common Issues
 All documented in `/docs/GOOGLE_MAPS_INTEGRATION.md` with solutions.

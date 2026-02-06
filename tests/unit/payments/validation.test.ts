@@ -13,18 +13,6 @@ import {
 
 describe('Payment Validation', () => {
   describe('EC-PAY-VAL-001: Transaction Schema Validation', () => {
-    it('should validate cash transaction', () => {
-      const validTransaction = {
-        orderId: 'ORD-001',
-        customerId: 'CUST-001',
-        amount: 1000,
-        method: 'cash' as const,
-      };
-
-      const result = createTransactionSchema.safeParse(validTransaction);
-      expect(result.success).toBe(true);
-    });
-
     it('should validate M-Pesa transaction', () => {
       const validTransaction = {
         orderId: 'ORD-001',
@@ -98,16 +86,6 @@ describe('Payment Validation', () => {
   });
 
   describe('EC-PAY-VAL-002: Update Payment Schema Validation', () => {
-    it('should validate cash payment update', () => {
-      const validPayment = {
-        amount: 500,
-        method: 'cash' as const,
-      };
-
-      const result = updateOrderPaymentSchema.safeParse(validPayment);
-      expect(result.success).toBe(true);
-    });
-
     it('should validate M-Pesa payment update', () => {
       const validPayment = {
         amount: 1000,
@@ -121,7 +99,7 @@ describe('Payment Validation', () => {
     it('should reject zero amount', () => {
       const invalidPayment = {
         amount: 0,
-        method: 'cash' as const,
+        method: 'mpesa' as const,
       };
 
       const result = updateOrderPaymentSchema.safeParse(invalidPayment);
@@ -134,7 +112,7 @@ describe('Payment Validation', () => {
     it('should reject negative amount', () => {
       const invalidPayment = {
         amount: -100,
-        method: 'cash' as const,
+        method: 'mpesa' as const,
       };
 
       const result = updateOrderPaymentSchema.safeParse(invalidPayment);
@@ -156,7 +134,7 @@ describe('Payment Validation', () => {
 
     it('should reject missing amount', () => {
       const invalidPayment = {
-        method: 'cash' as const,
+        method: 'mpesa' as const,
       };
 
       const result = updateOrderPaymentSchema.safeParse(invalidPayment);
@@ -177,7 +155,7 @@ describe('Payment Validation', () => {
     it('should accept minimum valid amount (1 KES)', () => {
       const validPayment = {
         amount: 1,
-        method: 'cash' as const,
+        method: 'credit' as const,
       };
 
       const result = updateOrderPaymentSchema.safeParse(validPayment);
@@ -207,8 +185,7 @@ describe('Payment Validation', () => {
 
   describe('EC-PAY-VAL-004: Payment Method Combinations', () => {
     it('should validate all supported payment methods', () => {
-      const methods: Array<'cash' | 'mpesa' | 'card' | 'credit'> = [
-        'cash',
+      const methods: Array<'mpesa' | 'card' | 'credit'> = [
         'mpesa',
         'card',
         'credit',

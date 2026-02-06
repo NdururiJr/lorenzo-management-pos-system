@@ -1,0 +1,1041 @@
+[
+  {
+    "_id": "CUST-001",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Lavington Green, Nairobi",
+        "coordinates": {
+          "lat": -1.2804,
+          "lng": 36.7664
+        }
+      },
+      {
+        "label": "Office",
+        "address": "Westlands Office Park, Nairobi",
+        "coordinates": {
+          "lat": -1.2656,
+          "lng": 36.8088
+        }
+      }
+    ],
+    "preferences": {
+      "language": "en",
+      "notifications": true
+    },
+    "phone": "+254712345001",
+    "customerId": "CUST-001",
+    "name": "Jane Customer",
+    "email": "customer1@test.com",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274149,
+      "_nanoseconds": 586000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274149,
+      "_nanoseconds": 586000000
+    },
+    "totalSpent": 12850,
+    "orderCount": 6
+  },
+  {
+    "_id": "CUST-002",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Karen Hardy Estate, Nairobi",
+        "coordinates": {
+          "lat": -1.3186,
+          "lng": 36.7014
+        }
+      }
+    ],
+    "preferences": {
+      "language": "en",
+      "notifications": true
+    },
+    "totalSpent": 5000,
+    "phone": "+254712345002",
+    "customerId": "CUST-002",
+    "name": "Mark Customer",
+    "orderCount": 2,
+    "email": "customer2@test.com",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274152,
+      "_nanoseconds": 330000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765274152,
+      "_nanoseconds": 330000000
+    }
+  },
+  {
+    "_id": "CUST-MH1QJ4JL-5ULGV",
+    "customerId": "CUST-MH1QJ4JL-5ULGV",
+    "name": "John Kamau",
+    "phone": "+254700075810",
+    "email": "",
+    "addresses": [],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761121939,
+      "_nanoseconds": 238000000
+    },
+    "totalSpent": 2175,
+    "orderCount": 6
+  },
+  {
+    "_id": "CUST-MI7TQ5ND-RODHV",
+    "customerId": "CUST-MI7TQ5ND-RODHV",
+    "name": "Gachengoh Marugu",
+    "phone": "+254725462859",
+    "email": "gachengomarugu@gmail.com",
+    "addresses": [],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763666885,
+      "_nanoseconds": 46000000
+    },
+    "totalSpent": 150,
+    "orderCount": 1
+  },
+  {
+    "_id": "CUST-MIG470I9-23IZK",
+    "customerId": "CUST-MIG470I9-23IZK",
+    "name": "Arthur",
+    "phone": "+254722488508",
+    "email": "",
+    "addresses": [],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764168197,
+      "_nanoseconds": 340000000
+    },
+    "totalSpent": 650,
+    "orderCount": 2
+  },
+  {
+    "_id": "CUST-MIYMP2CB-MX24O",
+    "customerId": "CUST-MIYMP2CB-MX24O",
+    "name": "Jane Smith",
+    "phone": "+254733445566",
+    "email": "jane.smith@test.lorenzo.com",
+    "addresses": [],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765287664,
+      "_nanoseconds": 208000000
+    },
+    "totalSpent": 1100,
+    "orderCount": 3
+  },
+  {
+    "_id": "CUST-MIYN8W4G-L78PQ",
+    "customerId": "CUST-MIYN8W4G-L78PQ",
+    "name": "Maniac",
+    "phone": "+254790732448",
+    "email": "wycliffmasharia@gmail.com",
+    "addresses": [],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765288588,
+      "_nanoseconds": 821000000
+    },
+    "totalSpent": 1405,
+    "orderCount": 3
+  },
+  {
+    "_id": "CUST-MK3SCJ4X-J7064",
+    "customerId": "CUST-MK3SCJ4X-J7064",
+    "name": "Alex Mwakideu",
+    "phone": "+254722336699",
+    "email": "",
+    "addresses": [],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767776269,
+      "_nanoseconds": 941000000
+    },
+    "totalSpent": 8900,
+    "orderCount": 3
+  },
+  {
+    "_id": "CUST-TEST-001",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Riverside Drive, Westlands, Nairobi",
+        "coordinates": {
+          "lat": -1.2686,
+          "lng": 36.8086
+        }
+      }
+    ],
+    "preferences": {
+      "language": "en",
+      "notifications": true
+    },
+    "phone": "+254722111222",
+    "customerId": "CUST-TEST-001",
+    "name": "Sarah Wanjiru",
+    "email": "sarah.w@example.com",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912187,
+      "_nanoseconds": 678000000
+    },
+    "totalSpent": 1200,
+    "orderCount": 1
+  },
+  {
+    "_id": "CUST-TEST-002",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Wood Avenue, Kilimani, Nairobi",
+        "coordinates": {
+          "lat": -1.2899,
+          "lng": 36.7836
+        }
+      }
+    ],
+    "preferences": {
+      "language": "en",
+      "notifications": true
+    },
+    "totalSpent": 0,
+    "phone": "+254733444555",
+    "customerId": "CUST-TEST-002",
+    "name": "David Kamau",
+    "orderCount": 0,
+    "email": "david.k@example.com",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912188,
+      "_nanoseconds": 468000000
+    }
+  },
+  {
+    "_id": "CUST-TEST-003",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Karen Road, Karen, Nairobi",
+        "coordinates": {
+          "lat": -1.3196,
+          "lng": 36.7073
+        }
+      }
+    ],
+    "preferences": {
+      "language": "en",
+      "notifications": true
+    },
+    "totalSpent": 0,
+    "phone": "+254744666777",
+    "customerId": "CUST-TEST-003",
+    "name": "Grace Achieng",
+    "orderCount": 0,
+    "email": "grace.a@example.com",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912189,
+      "_nanoseconds": 842000000
+    }
+  },
+  {
+    "_id": "CUST-TEST-004",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Ngong Road, Kilimani, Nairobi",
+        "coordinates": {
+          "lat": -1.2949,
+          "lng": 36.7813
+        }
+      }
+    ],
+    "preferences": {
+      "language": "en",
+      "notifications": true
+    },
+    "totalSpent": 0,
+    "phone": "+254755888999",
+    "customerId": "CUST-TEST-004",
+    "name": "James Omondi",
+    "orderCount": 0,
+    "email": "james.o@example.com",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912190,
+      "_nanoseconds": 142000000
+    }
+  },
+  {
+    "_id": "CUST-TEST-005",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Dennis Pritt Road, Kilimani, Nairobi",
+        "coordinates": {
+          "lat": -1.2908,
+          "lng": 36.7864
+        }
+      }
+    ],
+    "preferences": {
+      "language": "en",
+      "notifications": true
+    },
+    "phone": "+254766000111",
+    "customerId": "CUST-TEST-005",
+    "name": "Mary Njeri",
+    "email": "mary.n@example.com",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763912191,
+      "_nanoseconds": 215000000
+    },
+    "totalSpent": 1500,
+    "orderCount": 1
+  },
+  {
+    "_id": "CUST-TEST001",
+    "customerId": "CUST-TEST001",
+    "name": "John Kamau",
+    "phone": "+254712345678",
+    "email": "john.kamau@example.com",
+    "addresses": [
+      {
+        "id": "ADDR-001",
+        "label": "Home",
+        "address": "Westlands, Nairobi",
+        "coordinates": {
+          "lat": -1.2676,
+          "lng": 36.8103
+        },
+        "isDefault": true
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "orderCount": 0,
+    "totalSpent": 0,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507926,
+      "_nanoseconds": 431000000
+    }
+  },
+  {
+    "_id": "CUST-TEST002",
+    "customerId": "CUST-TEST002",
+    "name": "Mary Wanjiru",
+    "phone": "+254723456789",
+    "email": "mary.wanjiru@example.com",
+    "addresses": [
+      {
+        "id": "ADDR-002",
+        "label": "Office",
+        "address": "Upperhill, Nairobi",
+        "coordinates": {
+          "lat": -1.2914,
+          "lng": 36.8221
+        },
+        "isDefault": true
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "orderCount": 0,
+    "totalSpent": 0,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507926,
+      "_nanoseconds": 431000000
+    }
+  },
+  {
+    "_id": "CUST-TEST003",
+    "customerId": "CUST-TEST003",
+    "name": "Peter Omondi",
+    "phone": "+254734567890",
+    "email": "peter.omondi@example.com",
+    "addresses": [
+      {
+        "id": "ADDR-003",
+        "label": "Home",
+        "address": "Lavington, Nairobi",
+        "coordinates": {
+          "lat": -1.2794,
+          "lng": 36.7686
+        },
+        "isDefault": true
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507926,
+      "_nanoseconds": 431000000
+    },
+    "totalSpent": 180,
+    "orderCount": 1
+  },
+  {
+    "_id": "CUST-TEST004",
+    "customerId": "CUST-TEST004",
+    "name": "Grace Njeri",
+    "phone": "+254745678901",
+    "email": "grace.njeri@example.com",
+    "addresses": [
+      {
+        "id": "ADDR-004",
+        "label": "Home",
+        "address": "Kileleshwa, Nairobi",
+        "coordinates": {
+          "lat": -1.2857,
+          "lng": 36.7833
+        },
+        "isDefault": true
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507926,
+      "_nanoseconds": 431000000
+    },
+    "totalSpent": 1760,
+    "orderCount": 3
+  },
+  {
+    "_id": "CUST-TEST005",
+    "customerId": "CUST-TEST005",
+    "name": "David Mutua",
+    "phone": "+254756789012",
+    "email": "david.mutua@example.com",
+    "addresses": [
+      {
+        "id": "ADDR-005",
+        "label": "Home",
+        "address": "Parklands, Nairobi",
+        "coordinates": {
+          "lat": -1.2642,
+          "lng": 36.8156
+        },
+        "isDefault": true
+      }
+    ],
+    "preferences": {
+      "notifications": false,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507926,
+      "_nanoseconds": 431000000
+    },
+    "totalSpent": 375,
+    "orderCount": 1
+  },
+  {
+    "_id": "CUST1763815885782607",
+    "customerId": "CUST1763815885782607",
+    "name": "Dev Super Admin",
+    "phone": "+254725462859",
+    "email": "dev@lorenzo.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763815885,
+      "_nanoseconds": 782000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763815886823001",
+    "customerId": "CUST1763815886823001",
+    "name": "Rachel Wangare",
+    "phone": "+254712345001",
+    "email": "rachel.wangare@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763815886,
+      "_nanoseconds": 823000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763815887285090",
+    "customerId": "CUST1763815887285090",
+    "name": "Kelvin Kamau",
+    "phone": "+254723456002",
+    "email": "kelvin.kamau@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763815887,
+      "_nanoseconds": 285000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763815887744035",
+    "customerId": "CUST1763815887744035",
+    "name": "Rose Reeves Wangechi",
+    "phone": "+254734567003",
+    "email": "rose.wangechi@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763815887,
+      "_nanoseconds": 744000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763815888212579",
+    "customerId": "CUST1763815888212579",
+    "name": "David Mwangi",
+    "phone": "+254745678004",
+    "email": "david.mwangi@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763815888,
+      "_nanoseconds": 212000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763815888684639",
+    "customerId": "CUST1763815888684639",
+    "name": "Grace Njeri",
+    "phone": "+254756789005",
+    "email": "grace.njeri@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763815888,
+      "_nanoseconds": 684000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763816042132810",
+    "customerId": "CUST1763816042132810",
+    "name": "Dev Super Admin",
+    "phone": "+254725462859",
+    "email": "dev@lorenzo.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763816042,
+      "_nanoseconds": 132000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763816043313660",
+    "customerId": "CUST1763816043313660",
+    "name": "Rachel Wangare",
+    "phone": "+254712345001",
+    "email": "rachel.wangare@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763816043,
+      "_nanoseconds": 313000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763816043808132",
+    "customerId": "CUST1763816043808132",
+    "name": "Kelvin Kamau",
+    "phone": "+254723456002",
+    "email": "kelvin.kamau@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763816043,
+      "_nanoseconds": 808000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763816044274430",
+    "customerId": "CUST1763816044274430",
+    "name": "Rose Reeves Wangechi",
+    "phone": "+254734567003",
+    "email": "rose.wangechi@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763816044,
+      "_nanoseconds": 274000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763816044741949",
+    "customerId": "CUST1763816044741949",
+    "name": "David Mwangi",
+    "phone": "+254745678004",
+    "email": "david.mwangi@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763816044,
+      "_nanoseconds": 741000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763816045213600",
+    "customerId": "CUST1763816045213600",
+    "name": "Grace Njeri",
+    "phone": "+254756789005",
+    "email": "grace.njeri@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763816045,
+      "_nanoseconds": 213000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763819772608591",
+    "customerId": "CUST1763819772608591",
+    "name": "Dev Super Admin",
+    "phone": "+254725462859",
+    "email": "dev@lorenzo.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763819772,
+      "_nanoseconds": 608000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763819773691489",
+    "customerId": "CUST1763819773691489",
+    "name": "Rachel Wangare",
+    "phone": "+254712345001",
+    "email": "rachel.wangare@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763819773,
+      "_nanoseconds": 691000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763819774177441",
+    "customerId": "CUST1763819774177441",
+    "name": "Kelvin Kamau",
+    "phone": "+254723456002",
+    "email": "kelvin.kamau@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763819774,
+      "_nanoseconds": 177000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763819774647807",
+    "customerId": "CUST1763819774647807",
+    "name": "Rose Reeves Wangechi",
+    "phone": "+254734567003",
+    "email": "rose.wangechi@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763819774,
+      "_nanoseconds": 647000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763819775125290",
+    "customerId": "CUST1763819775125290",
+    "name": "David Mwangi",
+    "phone": "+254745678004",
+    "email": "david.mwangi@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763819775,
+      "_nanoseconds": 125000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "CUST1763819775676278",
+    "customerId": "CUST1763819775676278",
+    "name": "Grace Njeri",
+    "phone": "+254756789005",
+    "email": "grace.njeri@example.com",
+    "addresses": [
+      {
+        "label": "Home",
+        "address": "Westlands, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2674,
+          "lng": 36.8108
+        }
+      }
+    ],
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763819775,
+      "_nanoseconds": 676000000
+    },
+    "orderCount": 0,
+    "totalSpent": 0
+  },
+  {
+    "_id": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "customerId": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "name": "Dev Super Admin",
+    "phone": "+254725462859",
+    "email": "dev@lorenzo.com",
+    "preferences": {
+      "notifications": true,
+      "language": "en"
+    },
+    "orderCount": 5,
+    "totalSpent": 15000,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1763808395,
+      "_nanoseconds": 384000000
+    },
+    "addresses": [
+      {
+        "address": "Kilimani, Nairobi",
+        "coordinates": {
+          "lng": 36.7856,
+          "lat": -1.2921
+        },
+        "source": "manual",
+        "label": "Home"
+      },
+      {
+        "source": "manual",
+        "label": "Office",
+        "address": "Westlands, Nairobi",
+        "coordinates": {
+          "lat": -1.2676,
+          "lng": 36.8108
+        }
+      },
+      {
+        "label": "Parents Home",
+        "coordinates": {
+          "lng": 36.7076,
+          "lat": -1.3197
+        },
+        "address": "Karen, Nairobi",
+        "source": "manual"
+      },
+      {
+        "label": "home",
+        "address": "Ruaka Rd, Nairobi, Kenya",
+        "coordinates": {
+          "lat": -1.2204433,
+          "lng": 36.8145871
+        },
+        "source": "google_autocomplete",
+        "id": "ADDR-1763810231893"
+      }
+    ]
+  }
+]

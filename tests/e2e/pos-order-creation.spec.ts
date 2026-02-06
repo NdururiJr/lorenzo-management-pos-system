@@ -55,7 +55,7 @@ test.describe('POS Order Creation Flow', () => {
     await expect(page.locator('[data-testid="order-total"]')).toContainText('450');
 
     // Select payment method
-    await page.selectOption('[data-testid="payment-method"]', 'cash');
+    await page.selectOption('[data-testid="payment-method"]', 'mpesa');
     await page.fill('[data-testid="amount-paid"]', '450');
 
     // Submit order
@@ -131,7 +131,7 @@ test.describe('POS Order Creation Flow', () => {
     await expect(page.locator('[data-testid="order-total"]')).toContainText('600');
 
     // Pay only partial amount
-    await page.selectOption('[data-testid="payment-method"]', 'cash');
+    await page.selectOption('[data-testid="payment-method"]', 'credit');
     await page.fill('[data-testid="amount-paid"]', '300');
 
     // Create order

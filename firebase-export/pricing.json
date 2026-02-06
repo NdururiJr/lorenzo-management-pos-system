@@ -1,0 +1,246 @@
+[
+  {
+    "_id": "MAIN_Blouse",
+    "branchId": "MAIN",
+    "garmentType": "Blouse",
+    "services": {
+      "wash": 150,
+      "dryClean": 225,
+      "iron": 45,
+      "starch": 50,
+      "express": 0.5
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507924,
+      "_nanoseconds": 944000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507924,
+      "_nanoseconds": 944000000
+    }
+  },
+  {
+    "_id": "MAIN_Coat",
+    "branchId": "MAIN",
+    "garmentType": "Coat",
+    "services": {
+      "wash": 300,
+      "dryClean": 450,
+      "iron": 90,
+      "starch": 50,
+      "express": 0.5
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507925,
+      "_nanoseconds": 321000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507925,
+      "_nanoseconds": 321000000
+    }
+  },
+  {
+    "_id": "MAIN_Dress",
+    "branchId": "MAIN",
+    "garmentType": "Dress",
+    "services": {
+      "wash": 250,
+      "dryClean": 375,
+      "iron": 75,
+      "starch": 50,
+      "express": 0.5
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507923,
+      "_nanoseconds": 461000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507923,
+      "_nanoseconds": 461000000
+    }
+  },
+  {
+    "_id": "MAIN_Jacket",
+    "branchId": "MAIN",
+    "garmentType": "Jacket",
+    "services": {
+      "wash": 200,
+      "dryClean": 300,
+      "iron": 60,
+      "starch": 50,
+      "express": 0.5
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507924,
+      "_nanoseconds": 217000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507924,
+      "_nanoseconds": 217000000
+    }
+  },
+  {
+    "_id": "MAIN_Pants",
+    "branchId": "MAIN",
+    "garmentType": "Pants",
+    "services": {
+      "wash": 150,
+      "dryClean": 225,
+      "iron": 45,
+      "starch": 50,
+      "express": 0.5
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507922,
+      "_nanoseconds": 264000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507922,
+      "_nanoseconds": 264000000
+    }
+  },
+  {
+    "_id": "MAIN_Scarf",
+    "branchId": "MAIN",
+    "garmentType": "Scarf",
+    "services": {
+      "wash": 100,
+      "dryClean": 150,
+      "iron": 30,
+      "starch": 50,
+      "express": 0.5
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507926,
+      "_nanoseconds": 72000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507926,
+      "_nanoseconds": 72000000
+    }
+  },
+  {
+    "_id": "MAIN_Shirt",
+    "branchId": "MAIN",
+    "garmentType": "Shirt",
+    "services": {
+      "wash": 150,
+      "dryClean": 225,
+      "iron": 45,
+      "starch": 50,
+      "express": 0.5
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507921,
+      "_nanoseconds": 204000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507921,
+      "_nanoseconds": 204000000
+    }
+  },
+  {
+    "_id": "MAIN_Skirt",
+    "branchId": "MAIN",
+    "garmentType": "Skirt",
+    "services": {
+      "wash": 150,
+      "dryClean": 225,
+      "iron": 45,
+      "starch": 50,
+      "express": 0.5
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507924,
+      "_nanoseconds": 572000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507924,
+      "_nanoseconds": 572000000
+    }
+  },
+  {
+    "_id": "MAIN_Suit",
+    "branchId": "MAIN",
+    "garmentType": "Suit",
+    "services": {
+      "wash": 400,
+      "dryClean": 600,
+      "iron": 120,
+      "starch": 50,
+      "express": 0.5
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507923,
+      "_nanoseconds": 826000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507923,
+      "_nanoseconds": 826000000
+    }
+  },
+  {
+    "_id": "MAIN_Tie",
+    "branchId": "MAIN",
+    "garmentType": "Tie",
+    "services": {
+      "wash": 100,
+      "dryClean": 150,
+      "iron": 30,
+      "starch": 50,
+      "express": 0.5
+    },
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507925,
+      "_nanoseconds": 705000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1760507925,
+      "_nanoseconds": 705000000
+    }
+  },
+  {
+    "_id": "PRICE-FREEDOM_HEIGHTS-PANTS",
+    "pricingId": "PRICE-FREEDOM_HEIGHTS-PANTS",
+    "branchId": "FREEDOM_HEIGHTS",
+    "garmentType": "pants",
+    "services": {
+      "wash": 100,
+      "dryClean": 150,
+      "iron": 200,
+      "starch": 250,
+      "express": 50
+    },
+    "active": true,
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764170060,
+      "_nanoseconds": 967000000
+    },
+    "updatedAt": {
+      "_type": "Timestamp",
+      "_seconds": 1764170060,
+      "_nanoseconds": 967000000
+    }
+  }
+]

@@ -27,6 +27,7 @@ interface TriggerNotificationParams {
     branchPhone?: string;
     trackingUrl?: string;
     receiptUrl?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     garments?: any[];
   };
   customer: {
@@ -48,6 +49,7 @@ interface TriggerNotificationParams {
  */
 export async function triggerOrderNotification(
   params: TriggerNotificationParams
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<{ success: boolean; error?: string; data?: any }> {
   try {
     const webhookUrl =
@@ -80,6 +82,7 @@ export async function triggerOrderNotification(
       success: true,
       data,
     };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Failed to trigger notification:', error);
     return {

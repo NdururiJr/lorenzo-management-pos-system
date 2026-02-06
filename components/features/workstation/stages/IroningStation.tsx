@@ -69,7 +69,7 @@ export function IroningStation() {
       );
 
       // Check if all garments in order are complete for ironing
-      const garment = order.garments.find((g) => g.garmentId === garmentId);
+      const _garment = order.garments.find((g) => g.garmentId === garmentId);
       const allComplete = order.garments.every((g) => {
         if (g.garmentId === garmentId) return true; // Current garment we just completed
         return g.stageHandlers?.ironing && g.stageHandlers.ironing.length > 0;

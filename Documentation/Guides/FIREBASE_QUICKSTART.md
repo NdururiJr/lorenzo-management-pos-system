@@ -320,7 +320,7 @@ console.log('Customer created:', customerId);
 - **Database Documentation**: See `lib/db/README.md`
 - **Firebase Docs**: https://firebase.google.com/docs
 - **Project Team**:
-  - Gachengoh Marugu - hello@ai-agentsplus.com
+  - Gachengoh Marugu - jerry@ai-agentsplus.com
   - Arthur Tutu - arthur@ai-agentsplus.com
 
 ---

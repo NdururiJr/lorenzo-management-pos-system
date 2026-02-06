@@ -103,8 +103,8 @@ export default function PricingPage() {
       accessor: (item) => formatCurrency(item.services.starch),
     },
     {
-      header: 'Express (+%)',
-      accessor: (item) => `${item.services.express}%`,
+      header: 'Express',
+      accessor: () => 'FREE',
     },
     {
       header: 'Actions',

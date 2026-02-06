@@ -1,10 +1,10 @@
 # Lorenzo Dry Cleaners Management System - Tasks
 
 **Project Timeline:** October 14 - December 19, 2025 (6 weeks)
-**Last Updated:** October 28, 2025
+**Last Updated:** January 8, 2026
 **Status Legend:** ❌ Not Started | 🔄 In Progress | ✅ Completed | ⚠️ Blocked/Partial
 
-**✅ UPDATE (October 28, 2025):** Documentation audit completed. POS page `/app/(dashboard)/pos/page.tsx` EXISTS and is fully functional (587 lines, production-ready). Milestone completion percentages have been corrected to reflect actual codebase status.
+**✅ UPDATE (January 8, 2026):** Executive Dashboards development in progress. Director Dashboard complete at `/dashboard`. Security rules fix needed for GM Dashboard (missing collection rules for attendance, equipment, issues, customerFeedback). Director Strategic Sidebar plan created with 8 new pages. See `docs/DIRECTOR-SECURITY-SIDEBAR-PLAN.md` for full implementation details.
 
 ---
 
@@ -849,6 +849,68 @@
 - [x] Branches (director+)
 - [x] Settings (managers only)
 
+### 3.5.2 Executive Dashboards (Director & GM)
+**Estimated Time:** 20-25 hours
+**Status:** 🔄 In Progress
+**Reference:** See `docs/DIRECTOR-SECURITY-SIDEBAR-PLAN.md` for full implementation details.
+
+#### Phase 1: Firebase Security Rules Fix (P0 - Critical)
+- [ ] Add `isExecutive()` helper function to `firestore.rules`
+- [ ] Add `attendance` collection security rules
+- [ ] Add `equipment` collection security rules
+- [ ] Add `issues` collection security rules
+- [ ] Add `customerFeedback` collection security rules
+- [ ] Add `permissionRequests` collection security rules
+- [ ] Update `users` collection rules for executive cross-branch read
+- [ ] Update `branches` collection rules for executive access
+- [ ] Deploy rules: `firebase deploy --only firestore:rules`
+
+#### Phase 2: Director Dashboard (P0) ✅
+- [x] Create Director Dashboard with dark theme at `/dashboard`
+- [x] Implement role-based dashboard routing (director → DirectorDashboard)
+- [x] Create InsightsHeader with filters (timeframe, branch)
+- [x] Create ExecutiveNarrative / Morning Briefing component
+- [x] Create DirectorKPICards with real-time data
+- [x] Create PredictivePerformanceChart
+- [x] Create KeyDriversChart
+- [x] Create RiskRadar component
+- [x] Create AIRecommendations with agent system integration
+- [x] Create BranchComparison analytics
+- [x] Create OperationalHealth indicators
+- [x] Create DirectorFooterInline
+
+#### Phase 3: Director Strategic Sidebar (P0)
+- [ ] Create directorNavigationItems array with 9 strategic pages
+- [ ] Update ModernSidebar.tsx with role-based navigation
+- [ ] Add section headers (MAIN, FINANCIAL, GOVERNANCE, AI-POWERED)
+- [ ] Create `/director/intelligence` page (Strategic Intelligence)
+- [ ] Create `/director/financial` page (Financial Command)
+- [ ] Create `/director/growth` page (Growth Hub)
+- [ ] Create `/director/performance` page (Performance Deep Dive)
+- [ ] Create `/director/risk` page (Risk & Compliance)
+- [ ] Create `/director/leadership` page (Leadership & People)
+- [ ] Create `/director/board` page (Board Room)
+- [ ] Create `/director/ai-lab` page (AI Strategy Lab)
+
+#### Phase 4: GM Operations Dashboard (P1)
+- [x] Create GM Operations Dashboard at `/dashboard` for general_manager role
+- [ ] Fix Firebase permission errors for GM Dashboard queries
+- [ ] Verify cross-branch data access for executives
+
+#### Phase 5: Permission Approval System (P1)
+- [ ] Create `permissionRequests` collection schema
+- [ ] Create `lib/db/permission-requests.ts` database functions
+- [ ] Create `/admin/permission-requests` page for Director approval queue
+- [ ] Create PermissionRequestCard component
+- [ ] Add notification badge on sidebar for pending approvals
+- [ ] Implement approval/rejection workflow
+
+#### Phase 6: Custom Claims Setup
+- [ ] Set Director (Lawrence) custom claims: `{ role: 'director', branchId: 'HQ' }`
+- [ ] Set GM (Grace) custom claims: `{ role: 'general_manager', branchId: 'HQ' }`
+- [ ] Create "HQ" branch document in `branches` collection
+- [ ] Verify executives can query cross-branch data
+
 ### 3.6 Employee Management & Tracking
 
 #### Employee Management
@@ -1227,10 +1289,10 @@ If a task depends on another, note it:
 ### Milestone Progress
 - **Milestone 1 (Foundation):** ✅ 100% (108/108 tasks)
 - **Milestone 2 (Core Modules):** ✅ ~85% (112/132 tasks) - Customer Portal ✅ | Pipeline ✅ | **POS System ✅**
-- **Milestone 3 (Advanced Features):** 🔄 ~70% (115/164 tasks) - **Workstation System ✅ | Sidebar Navigation ✅ | POS Complete ✅ | Delivery ⚠️ | Maps ⚠️**
+- **Milestone 3 (Advanced Features):** 🔄 ~75% (140/186 tasks) - **Workstation System ✅ | Sidebar Navigation ✅ | POS Complete ✅ | Executive Dashboards 🔄 | Delivery ⚠️ | Maps ⚠️**
 - **Milestone 4 (Testing & Refinement):** ❌ 0% (0/97 tasks)
 
-**Overall Progress:** ~60% (335/501 estimated tasks) - **POS System Production Ready ✅ | Workstation System Complete ✅ | Sidebar Navigation ✅**
+**Overall Progress:** ~65% (360/523 estimated tasks) - **POS System Production Ready ✅ | Workstation System Complete ✅ | Director Dashboard ✅ | GM Dashboard 🔄**
 
 ### Weekly Velocity
 - **Week 1 (Oct 10-17):** 108 tasks completed ✅ (Milestone 1 - Foundation)
@@ -1239,12 +1301,13 @@ If a task depends on another, note it:
 - **Week 4 (Oct 21-27):** 115 tasks completed ✅ (Milestone 3 - Workstation System Complete + Sidebar Navigation)
 - **Week 5 (Oct 28-Nov 3):** TBD (Focus: Delivery System + Google Maps)
 - **Week 6 (Nov 4-10):** TBD (Focus: Testing & UAT)
+- **Jan 2026:** Executive Dashboards 🔄 (Director Dashboard ✅, Security Rules 🔄, Strategic Sidebar 🔄)
 
 ---
 
-**Last Updated:** October 28, 2025
-**Next Review:** November 1, 2025 (Weekly)
-**Status:** Milestone 1 Complete ✅ | Milestone 2 Complete (~85%) ✅ | **Milestone 3 In Progress (~70%)** 🔄 | **Next Priority: Delivery System + Google Maps** 🎯
+**Last Updated:** January 8, 2026
+**Next Review:** January 15, 2026 (Weekly)
+**Status:** Milestone 1 Complete ✅ | Milestone 2 Complete (~85%) ✅ | **Milestone 3 In Progress (~75%)** 🔄 | **Next Priority: Firebase Security Rules Fix + Director Strategic Sidebar** 🎯
 
 ---
 

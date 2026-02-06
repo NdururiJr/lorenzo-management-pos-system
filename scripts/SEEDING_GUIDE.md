@@ -268,7 +268,7 @@ If you encounter issues:
 1. Check [Troubleshooting](#troubleshooting) section
 2. Review Firebase Console logs
 3. Contact development team:
-   - Gachengoh Marugu: hello@ai-agentsplus.com
+   - Gachengoh Marugu: jerry@ai-agentsplus.com
    - Phone: +254 725 462 859
 
 ---

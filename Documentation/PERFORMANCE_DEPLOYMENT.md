@@ -352,7 +352,7 @@ vercel --prod
 ## Support
 
 For deployment issues:
-- Gachengoh Marugu: hello@ai-agentsplus.com
+- Gachengoh Marugu: jerry@ai-agentsplus.com
 - Emergency hotline: +254 725 462 859
 
 ## Conclusion

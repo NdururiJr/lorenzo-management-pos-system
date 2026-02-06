@@ -294,3 +294,39 @@ export async function getTransferBatchesByDriver(
     limit(limitCount)
   );
 }
+
+/**
+ * Get active transfer batches assigned to driver
+ * Only returns batches with status 'pending' or 'in_transit'
+ *
+ * @param driverId - UID of driver
+ * @param limitCount - Maximum number of batches to return
+ * @returns Array of active transfer batches
+ */
+export async function getActiveTransferBatchesByDriver(
+  driverId: string,
+  limitCount = 20
+): Promise<TransferBatch[]> {
+  // Get pending batches
+  const pendingBatches = await getDocuments<TransferBatch>(
+    'transferBatches',
+    where('assignedDriverId', '==', driverId),
+    where('status', '==', 'pending'),
+    orderBy('createdAt', 'desc'),
+    limit(limitCount)
+  );
+
+  // Get in_transit batches
+  const inTransitBatches = await getDocuments<TransferBatch>(
+    'transferBatches',
+    where('assignedDriverId', '==', driverId),
+    where('status', '==', 'in_transit'),
+    orderBy('createdAt', 'desc'),
+    limit(limitCount)
+  );
+
+  // Combine and sort by createdAt (most recent first)
+  return [...pendingBatches, ...inTransitBatches]
+    .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis())
+    .slice(0, limitCount);
+}

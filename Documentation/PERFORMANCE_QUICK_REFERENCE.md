@@ -164,7 +164,7 @@ firebase firestore:indexes:list
 **Questions?** Check:
 1. PERFORMANCE_OPTIMIZATION.md
 2. PERFORMANCE_SUMMARY.md
-3. Email: hello@ai-agentsplus.com
+3. Email: jerry@ai-agentsplus.com
 
 ---
 

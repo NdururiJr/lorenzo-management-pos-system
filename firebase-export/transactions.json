@@ -1,0 +1,291 @@
+[
+  {
+    "_id": "TXN-MH5WBGLA-YI9BU",
+    "transactionId": "TXN-MH5WBGLA-YI9BU",
+    "orderId": "ORD-main-branch-20251025-0001",
+    "customerId": "CUST-MH1QJ4JL-5ULGV",
+    "amount": 375,
+    "method": "cash",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1761373523,
+      "_nanoseconds": 134000000
+    },
+    "processedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761373523,
+      "_nanoseconds": 134000000
+    }
+  },
+  {
+    "_id": "TXN-MH5X7MR0-ONFRX",
+    "transactionId": "TXN-MH5X7MR0-ONFRX",
+    "orderId": "ORD-main-branch-20251025-0001",
+    "customerId": "CUST-TEST005",
+    "amount": 375,
+    "method": "cash",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1761375024,
+      "_nanoseconds": 108000000
+    },
+    "processedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761375024,
+      "_nanoseconds": 108000000
+    }
+  },
+  {
+    "_id": "TXN-MH6ER2LU-BT145",
+    "transactionId": "TXN-MH6ER2LU-BT145",
+    "orderId": "ORD-main-branch-20251025-0001",
+    "customerId": "CUST-TEST004",
+    "amount": 880,
+    "method": "cash",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1761404484,
+      "_nanoseconds": 594000000
+    },
+    "processedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761404484,
+      "_nanoseconds": 594000000
+    }
+  },
+  {
+    "_id": "TXN-MH964ROR-KJG81",
+    "transactionId": "TXN-MH964ROR-KJG81",
+    "orderId": "ORD-main-branch-20251027-0001",
+    "customerId": "CUST-TEST003",
+    "amount": 180,
+    "method": "cash",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1761571405,
+      "_nanoseconds": 611000000
+    },
+    "processedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761571405,
+      "_nanoseconds": 611000000
+    }
+  },
+  {
+    "_id": "TXN-MHAK8DMD-MFW3E",
+    "transactionId": "TXN-MHAK8DMD-MFW3E",
+    "orderId": "ORD-main-branch-20251028-0001",
+    "customerId": "CUST-MH1QJ4JL-5ULGV",
+    "amount": 300,
+    "method": "cash",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1761655554,
+      "_nanoseconds": 805000000
+    },
+    "processedBy": "bAoQKeZp4lg4NwWd8ExtZ3ZnAXz2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1761655554,
+      "_nanoseconds": 805000000
+    }
+  },
+  {
+    "_id": "TXN-MIYMLTAU-8QKOD",
+    "transactionId": "TXN-MIYMLTAU-8QKOD",
+    "orderId": "ORD-BR-MAIN-001-20251209-0001",
+    "customerId": "CUST-001",
+    "branchId": "BR-MAIN-001",
+    "amount": 350,
+    "method": "cash",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1765287511,
+      "_nanoseconds": 446000000
+    },
+    "processedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765287511,
+      "_nanoseconds": 446000000
+    }
+  },
+  {
+    "_id": "TXN-MIYNAKFR-MHAUY",
+    "transactionId": "TXN-MIYNAKFR-MHAUY",
+    "orderId": "ORD-BR-MAIN-001-20251209-0004",
+    "customerId": "CUST-MIYN8W4G-L78PQ",
+    "branchId": "BR-MAIN-001",
+    "amount": 200,
+    "method": "cash",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1765288666,
+      "_nanoseconds": 359000000
+    },
+    "processedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1765288666,
+      "_nanoseconds": 359000000
+    }
+  },
+  {
+    "_id": "TXN-MK0SQB92-KYTYQ",
+    "transactionId": "TXN-MK0SQB92-KYTYQ",
+    "orderId": "ORD-BR-MAIN-001-20260105-0001",
+    "customerId": "CUST-MIG470I9-23IZK",
+    "branchId": "BR-MAIN-001",
+    "amount": 500,
+    "method": "credit",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767595513,
+      "_nanoseconds": 718000000
+    },
+    "processedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767595513,
+      "_nanoseconds": 718000000
+    }
+  },
+  {
+    "_id": "TXN-MK0ULAOB-MCCK5",
+    "transactionId": "TXN-MK0ULAOB-MCCK5",
+    "orderId": "ORD-BR-MAIN-001-20260105-0002",
+    "customerId": "CUST-TEST-001",
+    "branchId": "BR-MAIN-001",
+    "amount": 1200,
+    "method": "credit",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767598638,
+      "_nanoseconds": 923000000
+    },
+    "processedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767598638,
+      "_nanoseconds": 924000000
+    }
+  },
+  {
+    "_id": "TXN-MK0UZRAD-TTDDT",
+    "transactionId": "TXN-MK0UZRAD-TTDDT",
+    "orderId": "ORD-BR-MAIN-001-20260105-0003",
+    "customerId": "CUST-TEST-005",
+    "branchId": "BR-MAIN-001",
+    "amount": 1500,
+    "method": "credit",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767599313,
+      "_nanoseconds": 637000000
+    },
+    "processedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767599313,
+      "_nanoseconds": 637000000
+    }
+  },
+  {
+    "_id": "TXN-MK0VWRNA-91V5W",
+    "transactionId": "TXN-MK0VWRNA-91V5W",
+    "orderId": "ORD-BR-MAIN-001-20260105-0004",
+    "customerId": "CUST-MIYMP2CB-MX24O",
+    "branchId": "BR-MAIN-001",
+    "amount": 600,
+    "method": "credit",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767600853,
+      "_nanoseconds": 750000000
+    },
+    "processedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767600853,
+      "_nanoseconds": 750000000
+    }
+  },
+  {
+    "_id": "TXN-MK3SDPG2-CTSYK",
+    "transactionId": "TXN-MK3SDPG2-CTSYK",
+    "orderId": "ORD-HURLINGHAM-20260107-0001",
+    "customerId": "CUST-MK3SCJ4X-J7064",
+    "branchId": "HURLINGHAM",
+    "amount": 1750,
+    "method": "credit",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767776324,
+      "_nanoseconds": 114000000
+    },
+    "processedBy": "9y7IbJW4snO7tzpIpQ9mqcXUrsf2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767776324,
+      "_nanoseconds": 114000000
+    }
+  },
+  {
+    "_id": "TXN-MK3V3STV-15D8D",
+    "transactionId": "TXN-MK3V3STV-15D8D",
+    "orderId": "ORD-HURLINGHAM-20260107-0002",
+    "customerId": "CUST-MK3SCJ4X-J7064",
+    "branchId": "HURLINGHAM",
+    "amount": 4350,
+    "method": "credit",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767780900,
+      "_nanoseconds": 788000000
+    },
+    "processedBy": "9y7IbJW4snO7tzpIpQ9mqcXUrsf2",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767780900,
+      "_nanoseconds": 788000000
+    }
+  },
+  {
+    "_id": "TXN-MK6Y51RA-KWIUW",
+    "transactionId": "TXN-MK6Y51RA-KWIUW",
+    "orderId": "ORD-BR-MAIN-001-20260109-0001",
+    "customerId": "CUST-MK3SCJ4X-J7064",
+    "branchId": "BR-MAIN-001",
+    "amount": 2800,
+    "method": "credit",
+    "status": "completed",
+    "timestamp": {
+      "_type": "Timestamp",
+      "_seconds": 1767967396,
+      "_nanoseconds": 390000000
+    },
+    "processedBy": "TlNhqFTnQte4APRexIXrFFIZNXx1",
+    "createdAt": {
+      "_type": "Timestamp",
+      "_seconds": 1767967396,
+      "_nanoseconds": 390000000
+    }
+  }
+]

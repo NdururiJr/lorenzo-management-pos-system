@@ -14,7 +14,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Play } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 interface HeroVideoProps {
   /** Video source (MP4) */
@@ -40,7 +39,7 @@ interface HeroVideoProps {
 export function HeroVideo({
   videoSrcMp4,
   videoSrcWebm,
-  posterImage = '/images/marketing/hero-poster.jpg',
+  posterImage: _posterImage = '/images/marketing/hero-poster.jpg',
   headline,
   subheading,
   primaryCtaText,
@@ -49,9 +48,9 @@ export function HeroVideo({
   secondaryCtaHref,
 }: HeroVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [videoError, setVideoError] = useState<string | null>(null);
+  const [_isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [_isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [_videoError, setVideoError] = useState<string | null>(null);
 
   // Attempt to play video on mount
   useEffect(() => {

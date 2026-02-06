@@ -14,7 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ClipboardList, Loader2, Package, Layers, Activity, Clock } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getOrdersPendingInspection } from '@/lib/db/workstation';
-import { getProcessingBatchesByStatus, getActiveBatchesByBranch } from '@/lib/db/processing-batches';
+import { getActiveBatchesByBranch } from '@/lib/db/processing-batches';
 import { getOrdersByBranchAndStatus } from '@/lib/db/orders';
 
 export function WorkstationOverview() {

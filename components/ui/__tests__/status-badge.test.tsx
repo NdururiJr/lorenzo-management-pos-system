@@ -33,14 +33,14 @@ describe('StatusBadge Component', () => {
     });
 
     it('renders icon by default', () => {
-      const { container } = render(<StatusBadge status="ready" />);
+      const { container } = render(<StatusBadge status="queued_for_delivery" />);
       const svg = container.querySelector('svg');
       expect(svg).toBeInTheDocument();
     });
 
     it('hides icon when showIcon is false', () => {
       const { container } = render(
-        <StatusBadge status="ready" showIcon={false} />
+        <StatusBadge status="queued_for_delivery" showIcon={false} />
       );
       const svg = container.querySelector('svg');
       expect(svg).not.toBeInTheDocument();
@@ -49,19 +49,19 @@ describe('StatusBadge Component', () => {
 
   describe('Size Variants', () => {
     it('renders small size', () => {
-      const { container } = render(<StatusBadge status="ready" size="sm" />);
+      const { container } = render(<StatusBadge status="queued_for_delivery" size="sm" />);
       const badge = container.firstChild;
       expect(badge).toHaveClass('text-xs');
     });
 
     it('renders medium size (default)', () => {
-      const { container } = render(<StatusBadge status="ready" size="md" />);
+      const { container } = render(<StatusBadge status="queued_for_delivery" size="md" />);
       const badge = container.firstChild;
       expect(badge).toHaveClass('text-sm');
     });
 
     it('renders large size', () => {
-      const { container } = render(<StatusBadge status="ready" size="lg" />);
+      const { container } = render(<StatusBadge status="queued_for_delivery" size="lg" />);
       const badge = container.firstChild;
       expect(badge).toHaveClass('text-base');
     });
@@ -82,8 +82,8 @@ describe('StatusBadge Component', () => {
       expect(badge).toHaveClass('text-blue-700');
     });
 
-    it('applies green color for ready status', () => {
-      const { container } = render(<StatusBadge status="ready" />);
+    it('applies green color for queued_for_delivery status', () => { // FR-008
+      const { container } = render(<StatusBadge status="queued_for_delivery" />);
       const badge = container.firstChild;
       expect(badge).toHaveClass('bg-green-100');
       expect(badge).toHaveClass('text-green-700');
@@ -107,13 +107,14 @@ describe('StatusBadge Component', () => {
   describe('Status Labels', () => {
     const statusLabels: Record<OrderStatus, string> = {
       received: 'Received',
+      inspection: 'Inspection', // Added missing status
       queued: 'Queued',
       washing: 'Washing',
       drying: 'Drying',
       ironing: 'Ironing',
       quality_check: 'Quality Check',
       packaging: 'Packaging',
-      ready: 'Ready',
+      queued_for_delivery: 'Ready', // FR-008: Updated key
       out_for_delivery: 'Out for Delivery',
       delivered: 'Delivered',
       collected: 'Collected',
@@ -162,7 +163,7 @@ describe('StatusBadge Component', () => {
   describe('Custom ClassName', () => {
     it('applies custom className', () => {
       const { container } = render(
-        <StatusBadge status="ready" className="custom-class" />
+        <StatusBadge status="queued_for_delivery" className="custom-class" />
       );
       const badge = container.firstChild;
       expect(badge).toHaveClass('custom-class');
@@ -170,7 +171,7 @@ describe('StatusBadge Component', () => {
 
     it('preserves default classes with custom className', () => {
       const { container } = render(
-        <StatusBadge status="ready" className="custom-class" />
+        <StatusBadge status="queued_for_delivery" className="custom-class" />
       );
       const badge = container.firstChild;
       expect(badge).toHaveClass('custom-class');
@@ -181,20 +182,20 @@ describe('StatusBadge Component', () => {
 
 describe('StatusIcon Component', () => {
   it('renders icon without badge wrapper', () => {
-    const { container } = render(<StatusIcon status="ready" />);
+    const { container } = render(<StatusIcon status="queued_for_delivery" />);
     const svg = container.querySelector('svg');
     expect(svg).toBeInTheDocument();
   });
 
   it('applies correct size classes', () => {
-    const { container } = render(<StatusIcon status="ready" size="sm" />);
+    const { container } = render(<StatusIcon status="queued_for_delivery" size="sm" />);
     const svg = container.querySelector('svg');
     expect(svg).toHaveClass('w-4');
     expect(svg).toHaveClass('h-4');
   });
 
   it('applies status color', () => {
-    const { container } = render(<StatusIcon status="ready" />);
+    const { container } = render(<StatusIcon status="queued_for_delivery" />);
     const svg = container.querySelector('svg');
     expect(svg).toHaveClass('text-green-700');
   });
@@ -207,7 +208,7 @@ describe('StatusIcon Component', () => {
 
   it('accepts custom className', () => {
     const { container } = render(
-      <StatusIcon status="ready" className="custom-icon" />
+      <StatusIcon status="queued_for_delivery" className="custom-icon" />
     );
     const svg = container.querySelector('svg');
     expect(svg).toHaveClass('custom-icon');
@@ -228,8 +229,8 @@ describe('getStatusConfig', () => {
     expect(config.animated).toBe(true);
   });
 
-  it('returns config for ready status', () => {
-    const config = getStatusConfig('ready');
+  it('returns config for queued_for_delivery status', () => { // FR-008
+    const config = getStatusConfig('queued_for_delivery');
     expect(config.label).toBe('Ready');
     expect(config.color).toBe('green');
     expect(config.animated).toBeUndefined();
