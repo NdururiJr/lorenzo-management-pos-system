@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { PageContainer } from '@/components/ui/page-container';
@@ -24,17 +24,13 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import {
-  Users,
   TrendingUp,
-  TrendingDown,
   Award,
-  AlertTriangle,
   Download,
   Loader2,
   RefreshCw,
   BarChart3,
   Target,
-  Clock,
   Star,
 } from 'lucide-react';
 import {
@@ -96,13 +92,7 @@ export default function StaffPerformanceReportPage() {
     }
   }, [userData, router]);
 
-  useEffect(() => {
-    if (userData && ALLOWED_ROLES.includes(userData.role)) {
-      fetchData();
-    }
-  }, [userData, dateRange, selectedBranchId]);
-
-  const getDateFilter = (): Date => {
+  const getDateFilter = useCallback((): Date => {
     const now = new Date();
     switch (dateRange) {
       case 'today':
@@ -122,38 +112,17 @@ export default function StaffPerformanceReportPage() {
         now.setDate(now.getDate() - 30);
         return now;
     }
-  };
+  }, [dateRange]);
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const [branchesData, usersData, ordersData] = await Promise.all([
-        getActiveBranches(),
-        fetchUsers(),
-        fetchOrders(),
-      ]);
-
-      setBranches(branchesData);
-
-      // Calculate metrics for each staff member
-      const metrics = calculateMetrics(usersData, ordersData);
-      setStaffMetrics(metrics);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchUsers = async (): Promise<User[]> => {
+  const fetchUsers = useCallback(async (): Promise<User[]> => {
     const usersRef = collection(db, 'users');
     const snapshot = await getDocs(usersRef);
     return snapshot.docs
       .map((doc) => doc.data() as User)
       .filter((user) => user.role !== 'customer' && user.active);
-  };
+  }, []);
 
-  const fetchOrders = async (): Promise<Order[]> => {
+  const fetchOrders = useCallback(async (): Promise<Order[]> => {
     const ordersRef = collection(db, 'orders');
     const startDate = Timestamp.fromDate(getDateFilter());
 
@@ -165,9 +134,23 @@ export default function StaffPerformanceReportPage() {
 
     const snapshot = await getDocs(ordersQuery);
     return snapshot.docs.map((doc) => doc.data() as Order);
-  };
+  }, [getDateFilter, selectedBranchId]);
 
-  const calculateMetrics = (users: User[], orders: Order[]): StaffMetrics[] => {
+  const calculateScore = useCallback((orders: number, aov: number, rewashRate: number, onTimeRate: number): number => {
+    // Weighted scoring:
+    // - Orders volume: 30%
+    // - AOV performance: 20%
+    // - Rewash rate (lower is better): 25%
+    // - On-time rate: 25%
+    const ordersScore = Math.min(100, orders * 2); // 50 orders = 100 score
+    const aovScore = Math.min(100, (aov / 2000) * 100); // 2000 KES avg = 100 score
+    const rewashScore = Math.max(0, 100 - rewashRate * 10); // 0% rewash = 100, 10% = 0
+    const onTimeScore = onTimeRate;
+
+    return Math.round(ordersScore * 0.3 + aovScore * 0.2 + rewashScore * 0.25 + onTimeScore * 0.25);
+  }, []);
+
+  const calculateMetrics = useCallback((users: User[], orders: Order[]): StaffMetrics[] => {
     return users.map((user) => {
       const userOrders = orders.filter((o) => o.createdBy === user.uid);
       const rewashOrders = userOrders.filter((o) => o.isRewash);
@@ -206,21 +189,34 @@ export default function StaffPerformanceReportPage() {
       };
     }).filter((m) => m.ordersBooked > 0 || m.ordersProcessed > 0) // Only include staff with activity
       .sort((a, b) => b.score - a.score);
-  };
+  }, [calculateScore]);
 
-  const calculateScore = (orders: number, aov: number, rewashRate: number, onTimeRate: number): number => {
-    // Weighted scoring:
-    // - Orders volume: 30%
-    // - AOV performance: 20%
-    // - Rewash rate (lower is better): 25%
-    // - On-time rate: 25%
-    const ordersScore = Math.min(100, orders * 2); // 50 orders = 100 score
-    const aovScore = Math.min(100, (aov / 2000) * 100); // 2000 KES avg = 100 score
-    const rewashScore = Math.max(0, 100 - rewashRate * 10); // 0% rewash = 100, 10% = 0
-    const onTimeScore = onTimeRate;
+  const fetchData = useCallback(async () => {
+    try {
+      setLoading(true);
+      const [branchesData, usersData, ordersData] = await Promise.all([
+        getActiveBranches(),
+        fetchUsers(),
+        fetchOrders(),
+      ]);
 
-    return Math.round(ordersScore * 0.3 + aovScore * 0.2 + rewashScore * 0.25 + onTimeScore * 0.25);
-  };
+      setBranches(branchesData);
+
+      // Calculate metrics for each staff member
+      const metrics = calculateMetrics(usersData, ordersData);
+      setStaffMetrics(metrics);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [fetchUsers, fetchOrders, calculateMetrics]);
+
+  useEffect(() => {
+    if (userData && ALLOWED_ROLES.includes(userData.role)) {
+      fetchData();
+    }
+  }, [userData, dateRange, selectedBranchId, fetchData]);
 
   const handleRefresh = async () => {
     setRefreshing(true);

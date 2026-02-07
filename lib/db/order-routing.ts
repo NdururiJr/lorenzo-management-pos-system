@@ -12,13 +12,11 @@ import {
   getDocument,
   getDocuments,
   updateDocument,
-  DatabaseError,
 } from './index';
 import type {
   Order,
   Branch,
   RoutingStatus,
-  WorkstationAssignment,
 } from './schema';
 import { updateOrderStatus } from './orders';
 import { getActiveStaffAssignments } from './workstation';
@@ -50,8 +48,8 @@ export async function routeOrderToWorkstation(
     processingBranchId = sourceBranch.mainStoreId;
   }
 
-  // Get the processing branch details
-  const processingBranch = await getDocument<Branch>('branches', processingBranchId);
+  // Get the processing branch details (validate it exists)
+  const _processingBranch = await getDocument<Branch>('branches', processingBranchId);
 
   // Determine routing status based on whether transfer is needed
   const needsTransfer = order.branchId !== processingBranchId;

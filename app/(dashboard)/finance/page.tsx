@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { PageContainer } from '@/components/ui/page-container';
@@ -13,7 +13,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import {
   DollarSign,
   TrendingUp,
-  TrendingDown,
   AlertTriangle,
   Clock,
   CheckCircle,
@@ -29,13 +28,12 @@ import {
   ArrowDownRight,
   Loader2,
 } from 'lucide-react';
-import { collection, getDocs, query, where, Timestamp, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, where, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { formatCurrency } from '@/lib/utils';
 import {
   getCashOutStats,
   getPendingCashOuts,
-  getUnprocessedCashOuts,
   type CashOutTransaction,
 } from '@/lib/db/cash-out';
 import { getActiveBranches } from '@/lib/db/index';
@@ -133,7 +131,7 @@ export default function FinanceDashboardPage() {
     return { today, monthStart, rangeStart, weekAgo, monthAgo };
   }, [dateRange]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!userData) return;
 
     try {
@@ -245,11 +243,11 @@ export default function FinanceDashboardPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [userData, dateFilters, selectedBranchId]);
 
   useEffect(() => {
     fetchData();
-  }, [userData, dateRange, selectedBranchId, dateFilters]);
+  }, [userData, dateRange, selectedBranchId, dateFilters, fetchData]);
 
   const handleRefresh = () => {
     setRefreshing(true);

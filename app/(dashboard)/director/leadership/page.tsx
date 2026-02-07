@@ -60,7 +60,7 @@ export default function LeadershipPeoplePage() {
   const [hasRealData, setHasRealData] = useState(false);
   const [managers, setManagers] = useState<Manager[]>([]);
   const [successionCandidates, setSuccessionCandidates] = useState<SuccessionCandidate[]>([]);
-  const [compensationBenchmarks, setCompensationBenchmarks] = useState<CompensationBenchmark[]>([]);
+  const [compensationBenchmarks, _setCompensationBenchmarks] = useState<CompensationBenchmark[]>([]);
 
   useEffect(() => {
     async function fetchLeadershipData() {

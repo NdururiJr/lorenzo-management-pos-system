@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { Progress } from '@/components/ui/progress';
 import { getOrdersByBranch, getPipelineStats } from '@/lib/db/orders';
-import type { Order, OrderStatus } from '@/lib/db/schema';
+import type { Order } from '@/lib/db/schema';
 import { formatDistanceToNow } from 'date-fns';
 
 interface OrdersBreakdownContentProps {

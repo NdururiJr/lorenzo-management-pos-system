@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { PageContainer } from '@/components/ui/page-container';
@@ -36,7 +36,6 @@ import {
   Search,
   Filter,
   Download,
-  Calendar,
   RefreshCw,
   Loader2,
   ChevronLeft,
@@ -140,7 +139,7 @@ export default function AuditLogsPage() {
     fetchBranches();
   }, []);
 
-  const fetchLogs = async () => {
+  const fetchLogs = useCallback(async () => {
     try {
       let fetchedLogs: AuditLog[];
 
@@ -165,13 +164,13 @@ export default function AuditLogsPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [selectedBranchId, actionFilter]);
 
   useEffect(() => {
     if (userData) {
       fetchLogs();
     }
-  }, [userData, selectedBranchId, actionFilter]);
+  }, [userData, selectedBranchId, actionFilter, fetchLogs]);
 
   const handleRefresh = () => {
     setRefreshing(true);

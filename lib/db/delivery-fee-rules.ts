@@ -15,7 +15,6 @@ import {
   setDocument,
   updateDocument,
   deleteDocument,
-  DatabaseError,
 } from './index';
 import type { DeliveryFeeRule, DeliveryFeeType, CustomerSegment } from './schema';
 

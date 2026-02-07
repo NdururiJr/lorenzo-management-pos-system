@@ -16,14 +16,12 @@ import {
   setDocument,
   updateDocument,
   deleteDocument,
-  DatabaseError,
 } from './index';
 import type {
   DriverPayout,
   CommissionRule,
   PayoutStatus,
   PayoutMethod,
-  CommissionType,
   Delivery,
   User,
 } from './schema';

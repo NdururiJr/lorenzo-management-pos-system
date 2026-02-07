@@ -9,8 +9,8 @@
  * @module lib/reminders/scheduler
  */
 
-import type { Reminder, ReminderType, ReminderStatus } from '@/lib/db/reminders';
-import type { Order, Customer } from '@/lib/db/schema';
+import type { Reminder, ReminderType } from '@/lib/db/reminders';
+import type { Order } from '@/lib/db/schema';
 
 /**
  * Result of processing a single reminder

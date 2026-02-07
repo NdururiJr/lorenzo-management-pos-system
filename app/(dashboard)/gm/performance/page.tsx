@@ -1,13 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { ModernCard } from '@/components/modern/ModernCard';
-import { ModernBadge } from '@/components/modern/ModernBadge';
 import { Button } from '@/components/ui/button';
 import {
-  BarChart3,
   TrendingUp,
   TrendingDown,
   Building2,
@@ -17,12 +15,9 @@ import {
   DollarSign,
   Star,
   RefreshCw,
-  ChevronRight
 } from 'lucide-react';
 import { collection, getDocs, query, where, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { SetupRequired, SETUP_CONFIGS } from '@/components/ui/setup-required';
-import { NoDataAvailable, DATA_GUIDANCE } from '@/components/ui/no-data-available';
 
 interface BranchPerformance {
   branchId: string;
@@ -72,7 +67,7 @@ export default function GMPerformancePage() {
    * Calculate branch efficiency only when all required data is available.
    * Returns null if any component is missing real data.
    */
-  const calculateBranchEfficiency = (metrics: {
+  const calculateBranchEfficiency = useCallback((metrics: {
     turnaroundScore: number;
     staffProductivity: number | null;
     equipmentUtilization: number | null;
@@ -95,9 +90,9 @@ export default function GMPerformancePage() {
       (metrics.revenueAchievement * EFFICIENCY_WEIGHTS.revenueAchievement) +
       (metrics.customerSatisfaction * EFFICIENCY_WEIGHTS.customerSatisfaction)
     );
-  };
+  }, []);
 
-  const fetchPerformanceData = async () => {
+  const fetchPerformanceData = useCallback(async () => {
     try {
       // Fetch branches
       const branchesSnap = await getDocs(collection(db, 'branches'));
@@ -304,11 +299,11 @@ export default function GMPerformancePage() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [calculateBranchEfficiency]);
 
   useEffect(() => {
     fetchPerformanceData();
-  }, []);
+  }, [fetchPerformanceData]);
 
   const handleRefresh = () => {
     setRefreshing(true);

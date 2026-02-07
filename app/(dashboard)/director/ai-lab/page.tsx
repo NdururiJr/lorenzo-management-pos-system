@@ -10,16 +10,13 @@ import {
   FlaskConical,
   Brain,
   Lightbulb,
-  TrendingUp,
   Play,
-  Pause,
   RotateCcw,
   Sliders,
   Target,
   DollarSign,
   Users,
   Clock,
-  ChevronRight,
   Sparkles,
 } from 'lucide-react';
 
@@ -56,7 +53,6 @@ interface Simulation {
 
 export default function AIStrategyLabPage() {
   const [selectedTab, setSelectedTab] = useState<'scenarios' | 'recommendations' | 'simulations'>('recommendations');
-  const [runningScenario, setRunningScenario] = useState<string | null>(null);
 
   // Mock data - In production, fetch from API/Firestore
   const scenarios: Scenario[] = [

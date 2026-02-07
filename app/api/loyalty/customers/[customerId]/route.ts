@@ -11,6 +11,16 @@ import { adminDb, verifyIdToken } from '@/lib/firebase-admin';
 import { Timestamp } from 'firebase-admin/firestore';
 import { z } from 'zod';
 
+/**
+ * Loyalty tier definition
+ */
+interface LoyaltyTier {
+  tierId: string;
+  name: string;
+  minPoints: number;
+  [key: string]: unknown;
+}
+
 const LOYALTY_COLLECTION = 'customerLoyalty';
 const PROGRAMS_COLLECTION = 'loyaltyPrograms';
 
@@ -101,15 +111,15 @@ export async function GET(
 
     // Find current tier details
     const currentTier = program?.tiers?.find(
-      (t: any) => t.tierId === loyalty.currentTierId
+      (t: LoyaltyTier) => t.tierId === loyalty.currentTierId
     );
 
     // Find next tier
-    const sortedTiers = program?.tiers
-      ? [...program.tiers].sort((a: any, b: any) => a.minPoints - b.minPoints)
+    const sortedTiers: LoyaltyTier[] = program?.tiers
+      ? [...program.tiers].sort((a: LoyaltyTier, b: LoyaltyTier) => a.minPoints - b.minPoints)
       : [];
     const currentTierIndex = sortedTiers.findIndex(
-      (t: any) => t.tierId === loyalty.currentTierId
+      (t: LoyaltyTier) => t.tierId === loyalty.currentTierId
     );
     const nextTier =
       currentTierIndex < sortedTiers.length - 1
@@ -244,7 +254,7 @@ export async function POST(
 
     // Find initial tier based on welcome bonus
     const sortedTiers = [...program.tiers].sort(
-      (a: any, b: any) => b.minPoints - a.minPoints
+      (a: LoyaltyTier, b: LoyaltyTier) => b.minPoints - a.minPoints
     );
     let initialTier = program.tiers[0];
     for (const tier of sortedTiers) {

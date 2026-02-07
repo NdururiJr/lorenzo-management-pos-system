@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { PageContainer } from '@/components/ui/page-container';
@@ -14,11 +14,8 @@ import {
   FileText,
   Shield,
   TrendingUp,
-  AlertTriangle,
-  Clock,
   Download,
   Calendar,
-  Search,
   RefreshCw,
   DollarSign,
   Package,
@@ -28,7 +25,7 @@ import {
   ArrowUpRight,
   ArrowDownRight,
 } from 'lucide-react';
-import { collection, getDocs, query, where, Timestamp, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, where, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { formatCurrency } from '@/lib/utils';
 import { getRecentAuditLogs } from '@/lib/db/audit-logs';
@@ -159,7 +156,7 @@ export default function AuditorDashboardPage() {
     return { today, monthStart, rangeStart, previousStart };
   }, [dateRange]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!userData) return;
 
     try {
@@ -241,11 +238,11 @@ export default function AuditorDashboardPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [userData, dateFilters, selectedBranchId]);
 
   useEffect(() => {
     fetchData();
-  }, [userData, dateRange, selectedBranchId, dateFilters]);
+  }, [userData, dateRange, selectedBranchId, dateFilters, fetchData]);
 
   const handleRefresh = () => {
     setRefreshing(true);

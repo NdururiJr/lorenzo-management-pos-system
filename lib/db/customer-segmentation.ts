@@ -16,7 +16,6 @@ import {
   getDocuments,
   setDocument,
   updateDocument,
-  deleteDocument,
   DatabaseError,
 } from './index';
 import type {
@@ -25,7 +24,6 @@ import type {
   CorporateAgreement,
   CustomerStatistics,
   Order,
-  BillingCycle,
 } from './schema';
 
 // ============================================

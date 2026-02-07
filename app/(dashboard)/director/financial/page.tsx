@@ -6,7 +6,7 @@ import { ModernCard } from '@/components/modern/ModernCard';
 import { ModernStatCard } from '@/components/modern/ModernStatCard';
 import { ModernButton } from '@/components/modern/ModernButton';
 import { SetupRequired } from '@/components/ui/setup-required';
-import { NoDataAvailable, NoDataValue } from '@/components/ui/no-data-available';
+import { NoDataAvailable } from '@/components/ui/no-data-available';
 import {
   DollarSign,
   TrendingUp,
@@ -30,26 +30,6 @@ interface PLData {
   netProfit: number;
 }
 
-interface CashFlowProjection {
-  period: string;
-  balance: number;
-  status: 'healthy' | 'caution' | 'critical';
-}
-
-interface BudgetItem {
-  category: string;
-  budget: number;
-  actual: number;
-  variance: number;
-}
-
-interface Investment {
-  item: string;
-  cost: number;
-  date: string;
-  roi: string;
-  status: 'achieved' | 'on-track' | 'at-risk';
-}
 
 export default function FinancialCommandPage() {
   const [selectedPeriod, setSelectedPeriod] = useState('quarter');
@@ -129,32 +109,8 @@ export default function FinancialCommandPage() {
         netProfit: 0,
       };
 
-  const cashFlowProjection: CashFlowProjection[] = [];
-  const budgetVsActual: BudgetItem[] = [];
-  const investments: Investment[] = [];
-
   const totalOpex = Object.values(plData.opex).reduce((a, b) => a + b, 0);
   const grossMargin = plData.revenue > 0 ? ((plData.grossProfit / plData.revenue) * 100).toFixed(0) : '0';
-  const netMargin = plData.revenue > 0 ? ((plData.netProfit / plData.revenue) * 100).toFixed(0) : '0';
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'healthy':
-        return 'text-teal-600 bg-teal-50';
-      case 'caution':
-        return 'text-amber-600 bg-amber-50';
-      case 'critical':
-        return 'text-red-600 bg-red-50';
-      case 'achieved':
-        return 'text-teal-600 bg-teal-50';
-      case 'on-track':
-        return 'text-blue-600 bg-blue-50';
-      case 'at-risk':
-        return 'text-red-600 bg-red-50';
-      default:
-        return 'text-gray-600 bg-gray-50';
-    }
-  };
 
   if (loading) {
     return (

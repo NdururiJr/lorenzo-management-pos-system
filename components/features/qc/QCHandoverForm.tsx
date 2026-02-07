@@ -235,7 +235,7 @@ export function QCHandoverForm({
     setPhotos((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const selectedPriority = form.watch('priority');
+  const _selectedPriority = form.watch('priority');
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -453,6 +453,7 @@ export function QCHandoverForm({
                     key={index}
                     className="relative w-20 h-20 rounded-lg border overflow-hidden group"
                   >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={photo}
                       alt={`Issue photo ${index + 1}`}

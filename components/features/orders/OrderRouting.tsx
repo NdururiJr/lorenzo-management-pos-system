@@ -13,7 +13,6 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import {
   Route,
-  ArrowRight,
   CheckCircle2,
   Clock,
   Truck,

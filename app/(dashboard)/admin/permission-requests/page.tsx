@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { ModernLayout } from '@/components/modern/ModernLayout';
@@ -24,7 +24,6 @@ import {
   Building2,
   Calendar,
   RefreshCw,
-  AlertCircle,
   Loader2,
   FileText,
   MessageSquare,
@@ -52,7 +51,7 @@ export default function PermissionRequestsPage() {
     }
   }, [userData, router]);
 
-  const fetchRequests = async () => {
+  const fetchRequests = useCallback(async () => {
     try {
       let data: PermissionRequest[];
       if (filterStatus === 'pending') {
@@ -69,13 +68,13 @@ export default function PermissionRequestsPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [filterStatus]);
 
   useEffect(() => {
     if (userData && ['director', 'super_admin'].includes(userData.role)) {
       fetchRequests();
     }
-  }, [userData, filterStatus]);
+  }, [userData, filterStatus, fetchRequests]);
 
   const handleRefresh = () => {
     setRefreshing(true);

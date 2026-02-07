@@ -22,10 +22,8 @@ import {
 import type {
   LoyaltyProgram,
   LoyaltyTier,
-  LoyaltyTierName,
   CustomerLoyalty,
   LoyaltyTransaction,
-  LoyaltyTransactionType,
 } from './schema';
 
 // ============================================

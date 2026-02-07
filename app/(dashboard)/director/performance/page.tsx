@@ -4,14 +4,12 @@ import { useState, useEffect } from 'react';
 import { ModernLayout } from '@/components/modern/ModernLayout';
 import { ModernCard } from '@/components/modern/ModernCard';
 import { ModernStatCard } from '@/components/modern/ModernStatCard';
-import { ModernBadge } from '@/components/modern/ModernBadge';
 import { ModernButton } from '@/components/modern/ModernButton';
 import { SetupRequired } from '@/components/ui/setup-required';
 import {
   TrendingUp,
   TrendingDown,
   Building2,
-  Calendar,
   BarChart3,
   LineChart,
   Users,
@@ -20,7 +18,6 @@ import {
   Star,
   Download,
   Loader2,
-  AlertTriangle,
 } from 'lucide-react';
 import { collection, query, where, getDocs, Timestamp, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';

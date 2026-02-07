@@ -14,6 +14,18 @@ import { z } from 'zod';
 const COLLECTION_NAME = 'deliveryFeeRules';
 
 /**
+ * Delivery fee rule document shape from Firestore
+ */
+interface DeliveryFeeRuleDoc {
+  id: string;
+  branchId?: string;
+  active?: boolean;
+  validFrom?: Timestamp;
+  validUntil?: Timestamp;
+  [key: string]: unknown;
+}
+
+/**
  * Roles allowed to manage delivery fee rules
  */
 const MANAGE_ALLOWED_ROLES = ['admin', 'director', 'general_manager', 'store_manager'];
@@ -92,22 +104,22 @@ export async function GET(request: NextRequest) {
     // Note: We filter in memory because Firestore doesn't support OR queries well
     const snapshot = await query.get();
 
-    let rules = snapshot.docs.map((doc) => ({
+    let rules: DeliveryFeeRuleDoc[] = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    }));
+    } as DeliveryFeeRuleDoc));
 
     // Filter by branch (include 'ALL' branch rules)
     if (branchId) {
       rules = rules.filter(
-        (rule: any) => rule.branchId === branchId || rule.branchId === 'ALL'
+        (rule) => rule.branchId === branchId || rule.branchId === 'ALL'
       );
     }
 
     // Filter active only
     if (activeOnly) {
       const now = Timestamp.now();
-      rules = rules.filter((rule: any) => {
+      rules = rules.filter((rule) => {
         if (!rule.active) return false;
         if (rule.validFrom && rule.validFrom.toMillis() > now.toMillis()) return false;
         if (rule.validUntil && rule.validUntil.toMillis() < now.toMillis()) return false;

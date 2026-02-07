@@ -166,6 +166,7 @@ export function GarmentInitialInspection({
               <div className="grid grid-cols-3 gap-2">
                 {value.initialInspectionPhotos.map((photo, index) => (
                   <div key={index} className="relative aspect-square">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={photo}
                       alt={`Damage photo ${index + 1}`}

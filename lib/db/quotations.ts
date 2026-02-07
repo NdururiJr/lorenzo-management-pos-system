@@ -20,7 +20,6 @@ import type {
   Quotation,
   QuotationItem,
   QuotationStatus,
-  Customer,
 } from './schema';
 import { getCustomer } from './customers';
 

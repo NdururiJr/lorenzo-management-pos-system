@@ -14,6 +14,16 @@ import { z } from 'zod';
 const COLLECTION_NAME = 'loyaltyPrograms';
 
 /**
+ * Loyalty program document shape from Firestore
+ */
+interface LoyaltyProgramDoc {
+  id: string;
+  branchId?: string;
+  active?: boolean;
+  [key: string]: unknown;
+}
+
+/**
  * Roles allowed to manage loyalty programs
  */
 const MANAGE_ALLOWED_ROLES = ['admin', 'director', 'general_manager'];
@@ -100,21 +110,21 @@ export async function GET(request: NextRequest) {
 
     const snapshot = await query.get();
 
-    let programs = snapshot.docs.map((doc) => ({
+    let programs: LoyaltyProgramDoc[] = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    }));
+    } as LoyaltyProgramDoc));
 
     // Filter by branch
     if (branchId) {
       programs = programs.filter(
-        (p: any) => p.branchId === branchId || p.branchId === 'ALL'
+        (p) => p.branchId === branchId || p.branchId === 'ALL'
       );
     }
 
     // Filter active only
     if (activeOnly) {
-      programs = programs.filter((p: any) => p.active);
+      programs = programs.filter((p) => p.active);
     }
 
     return NextResponse.json({

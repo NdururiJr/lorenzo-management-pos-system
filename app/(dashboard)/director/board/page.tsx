@@ -7,7 +7,6 @@ import { ModernStatCard } from '@/components/modern/ModernStatCard';
 import { ModernBadge } from '@/components/modern/ModernBadge';
 import { ModernButton } from '@/components/modern/ModernButton';
 import { SetupRequired } from '@/components/ui/setup-required';
-import { NoDataAvailable } from '@/components/ui/no-data-available';
 import {
   FileText,
   Download,
@@ -15,7 +14,6 @@ import {
   Video,
   Folder,
   Clock,
-  CheckCircle,
   Plus,
   Eye,
   Mail,

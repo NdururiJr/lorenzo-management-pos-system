@@ -1,9 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Temporarily disable static optimization to debug build error
-  output: 'standalone',
-
   // Performance optimizations
   compiler: {
     // Remove console logs in production

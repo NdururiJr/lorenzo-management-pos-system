@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { PageContainer } from '@/components/ui/page-container';
@@ -43,19 +43,17 @@ import {
 import {
   Users,
   Search,
-  Filter,
   Loader2,
   RefreshCw,
   UserPlus,
   MoreHorizontal,
-  Shield,
   Edit,
   Trash2,
   CheckCircle,
   XCircle,
   Building2,
 } from 'lucide-react';
-import { collection, getDocs, query, where, doc, updateDoc, addDoc, deleteDoc, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, addDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { getActiveBranches } from '@/lib/db/index';
 import { createAuditLog } from '@/lib/db/audit-logs';
@@ -114,14 +112,7 @@ export default function UserManagementPage() {
     }
   }, [userData, router]);
 
-  // Fetch data
-  useEffect(() => {
-    if (userData && ALLOWED_ROLES.includes(userData.role)) {
-      fetchData();
-    }
-  }, [userData]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       const [usersData, branchesData] = await Promise.all([
@@ -136,7 +127,14 @@ export default function UserManagementPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  // Fetch data
+  useEffect(() => {
+    if (userData && ALLOWED_ROLES.includes(userData.role)) {
+      fetchData();
+    }
+  }, [userData, fetchData]);
 
   const fetchUsers = async (): Promise<UserWithId[]> => {
     const usersRef = collection(db, 'users');
@@ -352,13 +350,6 @@ export default function UserManagementPage() {
   // Stats
   const totalUsers = users.length;
   const activeUsers = users.filter((u) => u.active).length;
-  const roleDistribution = users.reduce(
-    (acc, user) => {
-      acc[user.role] = (acc[user.role] || 0) + 1;
-      return acc;
-    },
-    {} as Record<string, number>
-  );
 
   if (!userData || !ALLOWED_ROLES.includes(userData.role)) {
     return null;

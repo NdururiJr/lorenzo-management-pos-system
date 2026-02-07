@@ -71,7 +71,7 @@ export function ApprovalQueue({
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [filterType, setFilterType] = useState<ApprovalType | 'all'>(initialType);
-  const [filterStatus, setFilterStatus] = useState<ApprovalStatus | 'all'>(
+  const [filterStatus, _setFilterStatus] = useState<ApprovalStatus | 'all'>(
     pendingOnly ? 'pending' : 'all'
   );
   const [searchQuery, setSearchQuery] = useState('');

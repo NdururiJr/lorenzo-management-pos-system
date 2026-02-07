@@ -22,12 +22,6 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const kenyaPhoneRegex = /^\+254[17]\d{8}$/;
 
 /**
- * International phone number regex (basic format check)
- * Allows: +[country code][number] format
- */
-const internationalPhoneRegex = /^\+[1-9]\d{6,14}$/;
-
-/**
  * Password validation rules:
  * - Minimum 8 characters
  * - At least one uppercase letter

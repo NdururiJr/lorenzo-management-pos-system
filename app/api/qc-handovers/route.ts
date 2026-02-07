@@ -10,7 +10,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { adminDb, verifyIdToken } from '@/lib/firebase-admin';
 import { Timestamp } from 'firebase-admin/firestore';
-import type { QCHandoverType, QCHandoverStatus, RecommendedAction } from '@/lib/db/schema';
+import type { QCHandoverType, QCHandoverStatus } from '@/lib/db/schema';
 
 const COLLECTION_NAME = 'qcHandovers';
 

@@ -9,13 +9,11 @@ import { Button } from '@/components/ui/button';
 import {
   Users,
   UserCheck,
-  Clock,
   Building2,
   TrendingUp,
   RefreshCw,
   Search,
-  Award,
-  AlertTriangle
+  Award
 } from 'lucide-react';
 import { collection, getDocs, query, where, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';

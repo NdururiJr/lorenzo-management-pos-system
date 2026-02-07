@@ -11,12 +11,11 @@ import { Timestamp, where, orderBy } from 'firebase/firestore';
 import {
   getDocument,
   getDocuments,
-  setDocument,
   updateDocument,
   DatabaseError,
 } from './index';
-import { createOrder, generateOrderId, generateGarmentId } from './orders';
-import type { Order, Garment, OrderExtended } from './schema';
+import { createOrder } from './orders';
+import type { Order, Garment } from './schema';
 
 /**
  * Rewash eligibility window in hours
@@ -220,7 +219,7 @@ export async function createRewashOrder(request: RewashRequest): Promise<string>
     }
 
     // Create rewash garments with zero price and link to original
-    const rewashGarments: Garment[] = garmentsToRewash.map((garment, index) => ({
+    const rewashGarments: Garment[] = garmentsToRewash.map((garment, _index) => ({
       ...garment,
       garmentId: '', // Will be regenerated
       price: 0, // Rewash is free

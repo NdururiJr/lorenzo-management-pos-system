@@ -12,7 +12,6 @@ import { adminDb } from '@/lib/firebase-admin';
 import { z } from 'zod';
 import {
   validateEncodedToken,
-  decodeToken,
   EXTERNAL_SYSTEM_CONFIG,
 } from '@/lib/auth/sso-manager';
 import type { ExternalSystem } from '@/lib/db/schema';

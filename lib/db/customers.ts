@@ -21,7 +21,6 @@ import type { Customer, Address, CustomerPreferences } from './schema';
 import {
   validatePhoneNumber,
   formatPhoneE164,
-  isKenyanNumber,
 } from '@/lib/utils/phone-validator';
 
 /**

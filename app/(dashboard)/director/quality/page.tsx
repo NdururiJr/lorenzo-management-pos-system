@@ -7,7 +7,6 @@ import { ModernCard } from '@/components/modern/ModernCard';
 import { ModernBadge } from '@/components/modern/ModernBadge';
 import { Button } from '@/components/ui/button';
 import {
-  Target,
   Star,
   AlertTriangle,
   CheckCircle,
@@ -15,8 +14,7 @@ import {
   TrendingDown,
   RefreshCw,
   Building2,
-  Package,
-  MessageSquare
+  Package
 } from 'lucide-react';
 import { collection, getDocs, query, where, Timestamp, orderBy, limit } from 'firebase/firestore';
 import { db } from '@/lib/firebase';

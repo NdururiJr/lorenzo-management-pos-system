@@ -20,13 +20,11 @@ import {
 } from './index';
 import type {
   PricingRule,
-  PricingType,
   CustomerSegment,
   PriceBreakdown,
   LoadMetrics,
   WorkstationCapacity,
   Order,
-  Garment,
   Customer,
 } from './schema';
 

@@ -22,7 +22,6 @@ import type {
   RedoReasonCode,
   RedoMetrics,
   Order,
-  Customer,
 } from './schema';
 import { getOrder, createOrder } from './orders';
 import { getCustomer } from './customers';

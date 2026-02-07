@@ -431,7 +431,6 @@ export default function BiometricDevicesPage() {
   // Stats
   const totalDevices = devices?.length || 0;
   const onlineDevices = devices?.filter(isDeviceOnline).length || 0;
-  const activeDevices = devices?.filter((d) => d.active).length || 0;
   const totalEnrolled = enrollments?.length || 0;
   const todayEvents = biometricEvents?.filter(
     (e) => e.timestamp.toDateString() === new Date().toDateString()
@@ -764,11 +763,9 @@ export default function BiometricDevicesPage() {
                         {device.lastHeartbeat ? (
                           <span className="text-sm text-gray-600">
                             {formatDistanceToNow(
-                              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                              (device.lastHeartbeat as any)?.toDate
-                                ? (device.lastHeartbeat as any).toDate()
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                : new Date(device.lastHeartbeat as any),
+                              device.lastHeartbeat && typeof (device.lastHeartbeat as Timestamp).toDate === 'function'
+                                ? (device.lastHeartbeat as Timestamp).toDate()
+                                : new Date(device.lastHeartbeat as unknown as string | number),
                               { addSuffix: true }
                             )}
                           </span>

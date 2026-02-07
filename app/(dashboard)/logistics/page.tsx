@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { PageContainer } from '@/components/ui/page-container';
@@ -13,7 +13,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Progress } from '@/components/ui/progress';
 import {
   Truck,
-  Package,
   MapPin,
   Clock,
   CheckCircle,
@@ -22,16 +21,11 @@ import {
   TrendingUp,
   Calendar,
   RefreshCw,
-  Download,
-  Navigation,
-  Route,
   Phone,
   Loader2,
-  ArrowUpRight,
 } from 'lucide-react';
 import { collection, getDocs, query, where, Timestamp, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { formatCurrency } from '@/lib/utils';
 import { getActiveBranches } from '@/lib/db/index';
 import type { Branch, Order, Delivery, User } from '@/lib/db/schema';
 import Link from 'next/link';
@@ -135,7 +129,7 @@ export default function LogisticsDashboardPage() {
     return { today, rangeStart };
   }, [dateRange]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!userData) return;
 
     try {
@@ -256,11 +250,11 @@ export default function LogisticsDashboardPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [userData, dateFilters, selectedBranchId]);
 
   useEffect(() => {
     fetchData();
-  }, [userData, dateRange, selectedBranchId, dateFilters]);
+  }, [userData, dateRange, selectedBranchId, dateFilters, fetchData]);
 
   const handleRefresh = () => {
     setRefreshing(true);

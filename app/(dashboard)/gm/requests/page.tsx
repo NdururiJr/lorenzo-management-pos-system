@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { ModernCard } from '@/components/modern/ModernCard';
@@ -16,7 +16,7 @@ import {
   Calendar,
   DollarSign
 } from 'lucide-react';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import {
   getMyPermissionRequests,
@@ -43,7 +43,7 @@ export default function GMRequestsPage() {
     }
   }, [userData, router]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!user) return;
     try {
       // Fetch branches
@@ -63,11 +63,11 @@ export default function GMRequestsPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchData();
-  }, [user]);
+  }, [user, fetchData]);
 
   const handleRefresh = () => {
     setRefreshing(true);

@@ -16,6 +16,16 @@ const PROGRAMS_COLLECTION = 'loyaltyPrograms';
 const TRANSACTIONS_COLLECTION = 'loyaltyTransactions';
 
 /**
+ * Loyalty tier definition
+ */
+interface LoyaltyTier {
+  tierId: string;
+  name: string;
+  minPoints: number;
+  [key: string]: unknown;
+}
+
+/**
  * Validation schema for points operations
  */
 const pointsOperationSchema = z.object({
@@ -29,7 +39,7 @@ const pointsOperationSchema = z.object({
 /**
  * Determine tier based on total points earned
  */
-function determineTier(totalPoints: number, tiers: any[]): any {
+function determineTier(totalPoints: number, tiers: LoyaltyTier[]): LoyaltyTier {
   const sortedTiers = [...tiers].sort((a, b) => b.minPoints - a.minPoints);
   for (const tier of sortedTiers) {
     if (totalPoints >= tier.minPoints) {
@@ -136,7 +146,7 @@ export async function POST(
       expiresAt.setFullYear(expiresAt.getFullYear() + (program?.pointsExpiryYears || 2));
 
       // Update loyalty account
-      const updates: any = {
+      const updates: Record<string, unknown> = {
         totalPointsEarned: newTotalEarned,
         currentBalance: newBalance,
         lastActivityAt: now,

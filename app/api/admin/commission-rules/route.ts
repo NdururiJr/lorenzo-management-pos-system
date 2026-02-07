@@ -42,11 +42,6 @@ const createCommissionRuleSchema = z.object({
 });
 
 /**
- * Validation schema for updating a commission rule
- */
-const updateCommissionRuleSchema = createCommissionRuleSchema.partial();
-
-/**
  * Generate unique rule ID
  */
 function generateRuleId(): string {

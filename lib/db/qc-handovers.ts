@@ -21,8 +21,6 @@ import type {
   QCHandoverStatus,
   QCHandoverType,
   QCHandoverMetrics,
-  RecommendedAction,
-  Order,
 } from './schema';
 import { getOrder } from './orders';
 import { getCustomer } from './customers';

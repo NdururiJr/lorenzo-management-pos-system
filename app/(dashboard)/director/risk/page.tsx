@@ -12,7 +12,6 @@ import {
   FileText,
   Clock,
   CheckCircle,
-  XCircle,
   Calendar,
   TrendingUp,
   Plus,

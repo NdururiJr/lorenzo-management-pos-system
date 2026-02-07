@@ -31,7 +31,7 @@ import {
 import { Package, Truck, Zap, Clock, User } from 'lucide-react';
 import { CollectionMethodSelector } from '@/components/features/orders/CollectionMethodSelector';
 import { ReturnMethodSelector } from '@/components/features/orders/ReturnMethodSelector';
-import type { Address, ServiceType, User as UserType } from '@/lib/db/schema';
+import type { Address, ServiceType } from '@/lib/db/schema';
 
 export interface OrderOptions {
   collectionMethod: 'dropped_off' | 'pickup_required';
@@ -82,7 +82,7 @@ export function OrderOptionsModal({
   serviceType,
   onServiceTypeChange,
   checkedBy,
-  checkedByName,
+  checkedByName: _checkedByName,
   onCheckedByChange,
   availableStaff,
 }: OrderOptionsModalProps) {

@@ -8,7 +8,7 @@
  * @module lib/db/cash-out
  */
 
-import { Timestamp, where, orderBy, limit } from 'firebase/firestore';
+import { Timestamp, where, orderBy } from 'firebase/firestore';
 import {
   getDocument,
   getDocuments,
@@ -16,7 +16,6 @@ import {
   updateDocument,
   DatabaseError,
 } from './index';
-import type { Order } from './schema';
 
 /**
  * Cash out transaction type

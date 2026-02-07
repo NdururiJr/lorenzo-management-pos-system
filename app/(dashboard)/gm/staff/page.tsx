@@ -15,8 +15,6 @@ import {
   RefreshCw,
   Search,
   Award,
-  AlertCircle,
-  Play,
   Pause
 } from 'lucide-react';
 import { collection, getDocs, query, where, Timestamp } from 'firebase/firestore';

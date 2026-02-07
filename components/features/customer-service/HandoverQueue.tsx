@@ -478,6 +478,7 @@ export function HandoverQueue({ branchId }: HandoverQueueProps) {
                               <Label className="text-xs text-gray-500">Photos</Label>
                               <div className="flex flex-wrap gap-2">
                                 {handover.photos.map((photo, index) => (
+                                  // eslint-disable-next-line @next/next/no-img-element
                                   <img
                                     key={index}
                                     src={photo}

@@ -169,7 +169,6 @@ async function fetchLogisticsMetrics(): Promise<{
   totalPickups: number;
 }> {
   try {
-    const now = new Date();
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 

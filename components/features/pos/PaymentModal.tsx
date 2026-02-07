@@ -58,7 +58,7 @@ export function PaymentModal({
   const [customerCreditBalance, setCustomerCreditBalance] = useState(0);
   const [useCustomerCredit, setUseCustomerCredit] = useState(false);
   const [creditAmountToApply, setCreditAmountToApply] = useState(0);
-  const [loadingCredit, setLoadingCredit] = useState(false);
+  const [_loadingCredit, setLoadingCredit] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Digital payment state
@@ -455,7 +455,7 @@ export function PaymentModal({
                       const data = await response.json();
                       setError(data.error || 'Failed to apply credit');
                     }
-                  } catch (err) {
+                  } catch {
                     setError('Failed to apply customer credit');
                   } finally {
                     setLoading(false);

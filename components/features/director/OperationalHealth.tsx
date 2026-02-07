@@ -25,9 +25,7 @@ import {
   Users,
   ArrowRight,
 } from 'lucide-react';
-import { ModernCard, ModernCardContent, ModernCardHeader } from '@/components/modern/ModernCard';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import Link from 'next/link';
 import type { Order } from '@/lib/db/schema';
 
@@ -172,12 +170,6 @@ export function OperationalHealth({ branchId }: OperationalHealthProps) {
       metrics.pipelineStatus.queuedForDelivery +
       metrics.pipelineStatus.outForDelivery
     : 0;
-
-  const getUtilizationColor = (value: number) => {
-    if (value >= 90) return 'bg-red-500';
-    if (value >= 70) return 'bg-amber-500';
-    return 'bg-emerald-500';
-  };
 
   return (
     <motion.div

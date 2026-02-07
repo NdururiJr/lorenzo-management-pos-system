@@ -15,7 +15,6 @@ import {
   updateDocument,
   DatabaseError,
 } from './index';
-import type { Order, Garment } from './schema';
 
 /**
  * Delivery note type

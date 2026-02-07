@@ -15,7 +15,6 @@ import {
   X,
   Sparkles,
   TrendingUp,
-  TrendingDown,
   Package,
   Users,
   DollarSign,

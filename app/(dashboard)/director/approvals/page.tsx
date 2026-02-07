@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { ModernCard } from '@/components/modern/ModernCard';
@@ -11,11 +11,9 @@ import {
   CheckCircle,
   XCircle,
   Clock,
-  AlertTriangle,
   User,
   Building2,
   Calendar,
-  MessageSquare,
   RefreshCw
 } from 'lucide-react';
 import { collection, getDocs, query, where, orderBy, doc, updateDoc, Timestamp } from 'firebase/firestore';
@@ -63,7 +61,7 @@ export default function DirectorApprovalsPage() {
     }
   }, [userData, router]);
 
-  const fetchRequests = async () => {
+  const fetchRequests = useCallback(async () => {
     try {
       // Fetch branches for name mapping
       const branchesSnap = await getDocs(collection(db, 'branches'));
@@ -122,11 +120,11 @@ export default function DirectorApprovalsPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [filter]);
 
   useEffect(() => {
     fetchRequests();
-  }, [filter]);
+  }, [filter, fetchRequests]);
 
   const handleRefresh = () => {
     setRefreshing(true);

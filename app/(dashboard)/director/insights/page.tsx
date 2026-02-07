@@ -10,7 +10,6 @@ import {
   Activity,
   Lightbulb,
   TrendingUp,
-  TrendingDown,
   AlertTriangle,
   CheckCircle,
   RefreshCw,

@@ -315,6 +315,7 @@ export function DefectNotificationForm({
                     key={index}
                     className="relative w-20 h-20 rounded-lg border overflow-hidden group"
                   >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={photo}
                       alt={`Defect photo ${index + 1}`}

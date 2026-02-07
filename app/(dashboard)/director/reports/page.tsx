@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { ModernCard } from '@/components/modern/ModernCard';
 import { Button } from '@/components/ui/button';
 import {
-  PieChart,
   BarChart3,
   TrendingUp,
   Download,

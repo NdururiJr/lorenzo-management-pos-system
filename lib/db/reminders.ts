@@ -13,7 +13,6 @@ import {
   getDocuments,
   setDocument,
   updateDocument,
-  deleteDocument,
   DatabaseError,
 } from './index';
 import type { Order, Customer } from './schema';

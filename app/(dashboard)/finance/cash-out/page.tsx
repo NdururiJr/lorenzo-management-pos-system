@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { PageContainer } from '@/components/ui/page-container';
@@ -48,8 +48,6 @@ import {
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
 import {
-  getPendingCashOuts,
-  getUnprocessedCashOuts,
   getCashOutsByDateRange,
   approveCashOut,
   rejectCashOut,
@@ -118,7 +116,7 @@ export default function CashOutManagementPage() {
     }
   }, [userData, router]);
 
-  const fetchCashOuts = async () => {
+  const fetchCashOuts = useCallback(async () => {
     try {
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -137,13 +135,13 @@ export default function CashOutManagementPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [userData]);
 
   useEffect(() => {
     if (userData) {
       fetchCashOuts();
     }
-  }, [userData]);
+  }, [userData, fetchCashOuts]);
 
   const handleRefresh = () => {
     setRefreshing(true);

@@ -159,7 +159,6 @@ export function GarmentEntryForm({
 
   const watchType = watch('type');
   const watchCategory = watch('category');
-  const watchBrand = watch('brand');
 
   // Handle "No Brand" checkbox toggle
   const handleNoBrandToggle = (checked: boolean) => {
@@ -532,6 +531,7 @@ export function GarmentEntryForm({
             <div className="grid grid-cols-5 gap-3">
               {photos.map((photo, index) => (
                 <div key={index} className="relative aspect-square group">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={photo}
                     alt={`Garment ${index + 1}`}

@@ -30,7 +30,6 @@ import {
   Target,
   Activity,
   PieChart,
-  Clock,
   AlertTriangle,
   PhoneForwarded,
   Wallet,

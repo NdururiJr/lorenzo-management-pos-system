@@ -14,7 +14,6 @@ import {
   Briefcase,
   TrendingUp,
   MapPin,
-  Target,
   Plus,
   ArrowRight,
   Calendar,

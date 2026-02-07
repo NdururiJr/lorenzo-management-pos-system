@@ -306,10 +306,6 @@ export default function TransactionsPage() {
   const handleExportExcel = () => {
     if (filteredTransactions.length === 0) return;
 
-    const branchName = selectedBranchId !== 'all'
-      ? branches.find((b) => b.branchId === selectedBranchId)?.name
-      : undefined;
-
     exportTransactionsToExcel(filteredTransactions, {
       filename: `transactions-${new Date().toISOString().split('T')[0]}.xlsx`,
       sheetName: 'Transactions',

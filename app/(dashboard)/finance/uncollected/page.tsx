@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { PageContainer } from '@/components/ui/page-container';
@@ -102,7 +102,7 @@ export default function UncollectedOrdersPage() {
     fetchBranches();
   }, []);
 
-  const fetchUncollectedOrders = async () => {
+  const fetchUncollectedOrders = useCallback(async () => {
     try {
       const daysThreshold = parseInt(ageFilter);
       const thresholdDate = new Date();
@@ -143,13 +143,13 @@ export default function UncollectedOrdersPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [ageFilter, selectedBranchId]);
 
   useEffect(() => {
     if (userData) {
       fetchUncollectedOrders();
     }
-  }, [userData, selectedBranchId, ageFilter]);
+  }, [userData, selectedBranchId, ageFilter, fetchUncollectedOrders]);
 
   const handleRefresh = () => {
     setRefreshing(true);

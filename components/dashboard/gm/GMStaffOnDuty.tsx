@@ -198,6 +198,7 @@ export function GMStaffOnDuty({
                     )}
                   >
                     {member.avatarUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={member.avatarUrl}
                         alt={member.name}

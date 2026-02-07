@@ -7,9 +7,6 @@ import { ModernCard } from '@/components/modern/ModernCard';
 import { Button } from '@/components/ui/button';
 import {
   DollarSign,
-  TrendingUp,
-  TrendingDown,
-  PieChart,
   BarChart3,
   Calendar,
   Download,
@@ -19,7 +16,7 @@ import {
   ArrowUpRight,
   ArrowDownRight
 } from 'lucide-react';
-import { collection, getDocs, query, where, Timestamp, orderBy, limit } from 'firebase/firestore';
+import { collection, getDocs, query, where, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 interface FinancialSummary {

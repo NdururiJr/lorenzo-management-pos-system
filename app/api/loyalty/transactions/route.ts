@@ -9,6 +9,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { adminDb, verifyIdToken } from '@/lib/firebase-admin';
 
+/**
+ * Loyalty transaction document shape from Firestore
+ */
+interface LoyaltyTransactionDoc {
+  id: string;
+  type?: string;
+  points?: number;
+  [key: string]: unknown;
+}
+
 const TRANSACTIONS_COLLECTION = 'loyaltyTransactions';
 
 /**
@@ -77,14 +87,14 @@ export async function GET(request: NextRequest) {
 
     const snapshot = await query.get();
 
-    const allTransactions = snapshot.docs.map((doc) => ({
+    const allTransactions: LoyaltyTransactionDoc[] = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    }));
+    } as LoyaltyTransactionDoc));
 
     // Filter by type if specified
     const transactions = type
-      ? allTransactions.filter((t: any) => t.type === type)
+      ? allTransactions.filter((t) => t.type === type)
       : allTransactions;
 
     // Calculate summary stats
@@ -95,19 +105,19 @@ export async function GET(request: NextRequest) {
       totalBonus: 0,
     };
 
-    transactions.forEach((t: any) => {
+    transactions.forEach((t) => {
       switch (t.type) {
         case 'earned':
-          summary.totalEarned += Math.abs(t.points);
+          summary.totalEarned += Math.abs(t.points || 0);
           break;
         case 'redeemed':
-          summary.totalRedeemed += Math.abs(t.points);
+          summary.totalRedeemed += Math.abs(t.points || 0);
           break;
         case 'expired':
-          summary.totalExpired += Math.abs(t.points);
+          summary.totalExpired += Math.abs(t.points || 0);
           break;
         case 'bonus':
-          summary.totalBonus += Math.abs(t.points);
+          summary.totalBonus += Math.abs(t.points || 0);
           break;
       }
     });

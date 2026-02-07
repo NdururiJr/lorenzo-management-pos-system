@@ -15,7 +15,6 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Star,
-  AlertCircle,
 } from 'lucide-react';
 
 interface Competitor {

@@ -15,7 +15,6 @@ import {
   updateDocument,
   DatabaseError,
 } from './index';
-import type { Customer, Order } from './schema';
 
 /**
  * Voucher discount type

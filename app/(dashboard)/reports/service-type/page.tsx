@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { PageContainer } from '@/components/ui/page-container';
@@ -21,10 +21,8 @@ import {
   Download,
   Loader2,
   RefreshCw,
-  TrendingUp,
   DollarSign,
   Package,
-  Percent,
 } from 'lucide-react';
 import {
   BarChart,
@@ -84,13 +82,7 @@ export default function ServiceTypeReportPage() {
     }
   }, [userData, router]);
 
-  useEffect(() => {
-    if (userData && ALLOWED_ROLES.includes(userData.role)) {
-      fetchData();
-    }
-  }, [userData, dateRange, selectedBranchId]);
-
-  const getDateFilter = (): Date => {
+  const getDateFilter = useCallback((): Date => {
     const now = new Date();
     switch (dateRange) {
       case 'today':
@@ -110,9 +102,23 @@ export default function ServiceTypeReportPage() {
         now.setDate(now.getDate() - 30);
         return now;
     }
-  };
+  }, [dateRange]);
 
-  const fetchData = async () => {
+  const fetchOrders = useCallback(async (): Promise<Order[]> => {
+    const ordersRef = collection(db, 'orders');
+    const startDate = Timestamp.fromDate(getDateFilter());
+
+    let ordersQuery = query(ordersRef, where('createdAt', '>=', startDate));
+
+    if (selectedBranchId !== 'all') {
+      ordersQuery = query(ordersRef, where('createdAt', '>=', startDate), where('branchId', '==', selectedBranchId));
+    }
+
+    const snapshot = await getDocs(ordersQuery);
+    return snapshot.docs.map((doc) => doc.data() as Order);
+  }, [getDateFilter, selectedBranchId]);
+
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       const [branchesData, ordersData] = await Promise.all([getActiveBranches(), fetchOrders()]);
@@ -155,21 +161,13 @@ export default function ServiceTypeReportPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [fetchOrders]);
 
-  const fetchOrders = async (): Promise<Order[]> => {
-    const ordersRef = collection(db, 'orders');
-    const startDate = Timestamp.fromDate(getDateFilter());
-
-    let ordersQuery = query(ordersRef, where('createdAt', '>=', startDate));
-
-    if (selectedBranchId !== 'all') {
-      ordersQuery = query(ordersRef, where('createdAt', '>=', startDate), where('branchId', '==', selectedBranchId));
+  useEffect(() => {
+    if (userData && ALLOWED_ROLES.includes(userData.role)) {
+      fetchData();
     }
-
-    const snapshot = await getDocs(ordersQuery);
-    return snapshot.docs.map((doc) => doc.data() as Order);
-  };
+  }, [userData, dateRange, selectedBranchId, fetchData]);
 
   const calculateTrendData = (orders: Order[]) => {
     const dateMap: Record<string, { express: number; normal: number }> = {};
@@ -234,19 +232,6 @@ export default function ServiceTypeReportPage() {
   const revenueData = [
     { name: 'Normal', value: normalMetrics?.revenue || 0 },
     { name: 'Express', value: expressMetrics?.revenue || 0 },
-  ];
-
-  const comparisonData = [
-    {
-      metric: 'Avg Order Value',
-      normal: normalMetrics?.avgOrderValue || 0,
-      express: expressMetrics?.avgOrderValue || 0,
-    },
-    {
-      metric: 'Avg Garments',
-      normal: (normalMetrics?.avgGarments || 0) * 100, // Scale for visibility
-      express: (expressMetrics?.avgGarments || 0) * 100,
-    },
   ];
 
   if (!userData || !ALLOWED_ROLES.includes(userData.role)) {

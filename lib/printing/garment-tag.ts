@@ -237,14 +237,9 @@ export async function generateBatchTagsHtml(
   tags: GarmentTagData[],
   options: TagGenerationOptions = DEFAULT_TAG_OPTIONS
 ): Promise<string> {
-  const dimensions = TAG_DIMENSIONS[options.tagSize];
   const tagsHtml = await Promise.all(
     tags.map(tag => generateTagHtml(tag, options))
   );
-
-  // Calculate how many tags fit per row
-  const pageWidth = 800; // Approximate printable width
-  const tagsPerRow = Math.floor(pageWidth / (dimensions.width + 16));
 
   return `
     <!DOCTYPE html>

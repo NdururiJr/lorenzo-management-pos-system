@@ -134,6 +134,7 @@ export function InternationalPhoneInput({
       setLocalValue(value);
       validatePhone(value, selectedCountry);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   return (

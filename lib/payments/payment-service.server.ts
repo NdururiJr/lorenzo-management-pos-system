@@ -17,7 +17,6 @@ import {
   updateTransactionStatus,
 } from '../db/transactions';
 import { getTransactionStatus, mapPesapalStatus } from '../../services/pesapal';
-import type { TransactionStatus } from '../db/schema';
 import type {
   PaymentStatusResult,
   PaymentCallbackData,

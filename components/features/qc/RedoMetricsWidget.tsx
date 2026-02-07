@@ -20,7 +20,6 @@ import {
   Minus,
   Clock,
   CheckCircle2,
-  XCircle,
   Loader2,
   BarChart3,
 } from 'lucide-react';

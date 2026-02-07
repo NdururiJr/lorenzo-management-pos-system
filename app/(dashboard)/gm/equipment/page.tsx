@@ -16,13 +16,11 @@ import {
   Clock,
   Thermometer,
   Zap,
-  Play,
-  Pause
 } from 'lucide-react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { SetupRequired, SETUP_CONFIGS } from '@/components/ui/setup-required';
-import { NoDataAvailable, DATA_GUIDANCE } from '@/components/ui/no-data-available';
+import { SetupRequired } from '@/components/ui/setup-required';
+import { NoDataAvailable } from '@/components/ui/no-data-available';
 
 interface Equipment {
   id: string;
