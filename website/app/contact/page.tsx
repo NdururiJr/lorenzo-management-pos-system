@@ -11,6 +11,7 @@ import { Header } from '@/components/marketing/Header';
 import { Footer } from '@/components/marketing/Footer';
 import { ContactInfo } from '@/components/marketing/ContactInfo';
 import { ContactForm } from '@/components/marketing/ContactForm';
+import { ContactPageJsonLd } from '@/components/seo/JsonLd';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -21,6 +22,8 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main className="min-h-screen">
+      <ContactPageJsonLd />
+
       {/* Header */}
       <Header />
 

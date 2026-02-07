@@ -14,6 +14,7 @@ import { Header } from '@/components/marketing/Header';
 import { Footer } from '@/components/marketing/Footer';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { FAQPageJsonLd } from '@/components/seo/JsonLd';
 
 const faqCategories = [
   {
@@ -142,6 +143,11 @@ export default function FAQPage() {
 
   return (
     <main className="min-h-screen">
+      <FAQPageJsonLd
+        faqs={faqCategories.flatMap((cat) =>
+          cat.questions.map((q) => ({ question: q.question, answer: q.answer }))
+        )}
+      />
       {/* Header */}
       <Header />
 

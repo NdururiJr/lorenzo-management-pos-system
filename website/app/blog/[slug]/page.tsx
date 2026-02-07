@@ -12,6 +12,7 @@ import { Footer } from '@/components/marketing/Footer';
 import { BlogPostHero } from '@/components/marketing/BlogPostHero';
 import { BlogPostContent, sampleBlogContent } from '@/components/marketing/BlogPostContent';
 import { BlogPostFooter } from '@/components/marketing/BlogPostFooter';
+import { BlogPostingJsonLd } from '@/components/seo/JsonLd';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -110,6 +111,15 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen">
+      <BlogPostingJsonLd
+        title={post.title}
+        description={post.title}
+        datePublished={post.date}
+        author={post.author}
+        image={post.image}
+        url={`https://lorenzo-dry-cleaners-website.vercel.app/blog/${slug}`}
+      />
+
       {/* Header */}
       <Header />
 

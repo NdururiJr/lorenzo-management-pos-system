@@ -12,6 +12,7 @@ import { Footer } from '@/components/marketing/Footer';
 import { ServicesGrid } from '@/components/marketing/ServicesGrid';
 import { PricingSection } from '@/components/marketing/PricingSection';
 import { Testimonials } from '@/components/marketing/Testimonials';
+import { ServiceJsonLd } from '@/components/seo/JsonLd';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -22,6 +23,17 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <main className="min-h-screen">
+      <ServiceJsonLd
+        services={[
+          { name: 'Dry Cleaning', description: 'Professional dry cleaning for suits, dresses, coats, and delicate garments.' },
+          { name: 'Wash & Fold', description: 'Convenient wash, dry, and fold service for everyday laundry.' },
+          { name: 'Express Service', description: 'Same-day and 2-hour turnaround for urgent cleaning needs.' },
+          { name: 'Pickup & Delivery', description: 'Free pickup and delivery across Nairobi.' },
+          { name: 'Stain Removal', description: 'Specialized stain treatment for stubborn and set-in stains.' },
+          { name: 'Ironing & Pressing', description: 'Professional pressing for a crisp, polished finish.' },
+        ]}
+      />
+
       {/* Header */}
       <Header />
 

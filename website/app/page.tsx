@@ -7,6 +7,7 @@
  * @module app/page
  */
 
+import type { Metadata } from 'next';
 import { HeroVideo } from '@/components/marketing/HeroVideo';
 import { AboutLorenzo } from '@/components/marketing/AboutLorenzo';
 import { FeaturesGrid } from '@/components/marketing/FeaturesGrid';
@@ -16,10 +17,22 @@ import { Testimonials } from '@/components/marketing/Testimonials';
 import { Newsletter } from '@/components/marketing/Newsletter';
 import { Header } from '@/components/marketing/Header';
 import { Footer } from '@/components/marketing/Footer';
+import { LocalBusinessJsonLd } from '@/components/seo/JsonLd';
+
+export const metadata: Metadata = {
+  title: 'Lorenzo Dry Cleaners - Premium Dry Cleaning Services in Nairobi',
+  description:
+    'Professional dry cleaning services across Nairobi with 21+ branches. Expert garment care, same-day service, free pickup & delivery. Kenya\'s trusted partner since 2013.',
+  alternates: {
+    canonical: '/',
+  },
+};
 
 export default function Home() {
   return (
     <main className="min-h-screen">
+      <LocalBusinessJsonLd />
+
       {/* Header */}
       <Header />
 
