@@ -39,7 +39,8 @@ export default function Home() {
       {/* Hero Section */}
       <HeroVideo
         videoSrcMp4="/videos/hero-video.mp4"
-        headline="Premium Dry Cleaning"
+        headline="Premium"
+        headlineHighlight="Dry Cleaning"
         subheading="Professional garment care"
       />
 

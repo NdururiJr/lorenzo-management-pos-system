@@ -24,6 +24,8 @@ interface HeroVideoProps {
   posterImage?: string;
   /** Main headline */
   headline: string;
+  /** Highlighted portion of headline (rendered in gold on new line) */
+  headlineHighlight?: string;
   /** Subheading / description */
   subheading: string;
   /** Primary CTA text */
@@ -41,6 +43,7 @@ export function HeroVideo({
   videoSrcWebm,
   posterImage: _posterImage = '/images/marketing/hero-poster.jpg',
   headline,
+  headlineHighlight,
   subheading,
   primaryCtaText,
   primaryCtaHref,
@@ -130,11 +133,11 @@ export function HeroVideo({
           </video>
 
           {/* Gradient Overlay for text legibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-lorenzo-dark/70 via-lorenzo-dark/50 to-lorenzo-dark/80" />
         </>
       ) : (
         /* Fallback gradient background if no video */
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-blue via-brand-blue-dark to-brand-blue-900" />
+        <div className="absolute inset-0 bg-gradient-to-br from-lorenzo-dark via-lorenzo-teal to-lorenzo-dark-900" />
       )}
 
       {/* Content */}
@@ -148,17 +151,21 @@ export function HeroVideo({
           {/* Headline */}
           <motion.h1
             variants={itemVariants}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-            style={{ color: '#FFFFFF' }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-white"
           >
             {headline}
+            {headlineHighlight && (
+              <>
+                <br />
+                <span className="text-lorenzo-gold">{headlineHighlight}</span>
+              </>
+            )}
           </motion.h1>
 
           {/* Subheading */}
           <motion.p
             variants={itemVariants}
-            className="text-lg sm:text-xl md:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed"
-            style={{ color: '#FFFFFF' }}
+            className="text-lg sm:text-xl md:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed text-white/90"
           >
             {subheading}
           </motion.p>
@@ -174,7 +181,7 @@ export function HeroVideo({
                 <Button
                   asChild
                   size="lg"
-                  className="bg-brand-blue hover:bg-brand-blue-dark text-white text-lg px-8 py-6 rounded-full shadow-glow-blue transition-all hover:scale-105"
+                  className="bg-lorenzo-accent-teal hover:bg-lorenzo-accent-teal-dark text-white text-lg px-8 py-6 rounded-full shadow-lg transition-all hover:scale-105"
                 >
                   <Link href={primaryCtaHref} className="flex items-center gap-2">
                     {primaryCtaText}
@@ -203,9 +210,11 @@ export function HeroVideo({
           {/* Trust Badge */}
           <motion.div
             variants={itemVariants}
-            className="mt-8 text-white/90 text-sm sm:text-base font-medium"
+            className="mt-8"
           >
-            Trusted by thousands across the country
+            <span className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-sm font-medium border-2 border-white/30">
+              Trusted by thousands across the country
+            </span>
           </motion.div>
 
         </motion.div>
