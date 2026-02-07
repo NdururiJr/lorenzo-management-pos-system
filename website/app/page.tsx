@@ -41,10 +41,6 @@ export default function Home() {
         videoSrcMp4="/videos/hero-video.mp4"
         headline="Premium Dry Cleaning"
         subheading="Professional garment care"
-        primaryCtaText="Get Started"
-        primaryCtaHref="/customer-login"
-        secondaryCtaText="Learn More"
-        secondaryCtaHref="#services"
       />
 
       {/* About Lorenzo Section */}

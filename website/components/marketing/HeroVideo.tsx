@@ -27,9 +27,9 @@ interface HeroVideoProps {
   /** Subheading / description */
   subheading: string;
   /** Primary CTA text */
-  primaryCtaText: string;
+  primaryCtaText?: string;
   /** Primary CTA link */
-  primaryCtaHref: string;
+  primaryCtaHref?: string;
   /** Secondary CTA text */
   secondaryCtaText?: string;
   /** Secondary CTA link */
@@ -164,37 +164,41 @@ export function HeroVideo({
           </motion.p>
 
           {/* CTAs */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            {/* Primary CTA */}
-            <Button
-              asChild
-              size="lg"
-              className="bg-brand-blue hover:bg-brand-blue-dark text-white text-lg px-8 py-6 rounded-full shadow-glow-blue transition-all hover:scale-105"
+          {(primaryCtaText || secondaryCtaText) && (
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
-              <Link href={primaryCtaHref} className="flex items-center gap-2">
-                {primaryCtaText}
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </Button>
+              {/* Primary CTA */}
+              {primaryCtaText && primaryCtaHref && (
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-brand-blue hover:bg-brand-blue-dark text-white text-lg px-8 py-6 rounded-full shadow-glow-blue transition-all hover:scale-105"
+                >
+                  <Link href={primaryCtaHref} className="flex items-center gap-2">
+                    {primaryCtaText}
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </Button>
+              )}
 
-            {/* Secondary CTA */}
-            {secondaryCtaText && secondaryCtaHref && (
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="bg-white/10 backdrop-blur-md border-white/30 text-white hover:bg-white/20 hover:border-white/50 text-lg px-8 py-6 rounded-full transition-all hover:scale-105"
-              >
-                <Link href={secondaryCtaHref} className="flex items-center gap-2">
-                  {secondaryCtaText}
-                  <Play className="w-5 h-5" />
-                </Link>
-              </Button>
-            )}
-          </motion.div>
+              {/* Secondary CTA */}
+              {secondaryCtaText && secondaryCtaHref && (
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="bg-white/10 backdrop-blur-md border-white/30 text-white hover:bg-white/20 hover:border-white/50 text-lg px-8 py-6 rounded-full transition-all hover:scale-105"
+                >
+                  <Link href={secondaryCtaHref} className="flex items-center gap-2">
+                    {secondaryCtaText}
+                    <Play className="w-5 h-5" />
+                  </Link>
+                </Button>
+              )}
+            </motion.div>
+          )}
 
           {/* Trust Badge */}
           <motion.div
