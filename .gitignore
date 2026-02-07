@@ -48,5 +48,5 @@ node_modules/.cache
 # firebase admin credentials
 *-firebase-adminsdk-*.json
 
-# Standalone website (local development only)
-/website/
+# Standalone marketing website (deployed separately to Vercel)
+# /website/

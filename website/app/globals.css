@@ -1,0 +1,120 @@
+@config "../tailwind.config.ts";
+@import "tailwindcss";
+
+/* Black & White Theme - Lorenzo Dry Cleaners */
+:root {
+  /* Background Colors */
+  --background: #ffffff;
+  --foreground: #000000;
+
+  /* Text Colors */
+  --primary: #000000;
+  --primary-dark: #1f2937;
+  --secondary: #6b7280;
+
+  /* Borders & Dividers */
+  --border: #e5e7eb;
+  --light-gray: #f9fafb;
+
+  /* Accent Colors (use sparingly) */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+
+  /* shadcn/ui compatible colors */
+  --card: #ffffff;
+  --card-foreground: #000000;
+
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+
+  --muted: #f9fafb;
+  --muted-foreground: #6b7280;
+
+  --accent: #f9fafb;
+  --accent-foreground: #000000;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  --input: #e5e7eb;
+  --ring: #000000;
+
+  --radius: 0.5rem;
+}
+
+/* Tailwind v4 Theme - Direct color values (generates utility classes) */
+@theme {
+  /* Lorenzo Teal/Gold Theme - Primary brand colors */
+  --color-lorenzo-dark: #0A2F2C;
+  --color-lorenzo-dark-50: #0F3D38;
+  --color-lorenzo-dark-100: #0A2F2C;
+  --color-lorenzo-dark-900: #051815;
+  --color-lorenzo-teal: #14524A;
+  --color-lorenzo-light-teal: #1E6B5E;
+  --color-lorenzo-accent-teal: #2DD4BF;
+  --color-lorenzo-cream: #F5F5F0;
+  --color-lorenzo-gold: #C9A962;
+  --color-lorenzo-gold-dark: #A68B4B;
+
+  /* Legacy brand-blue mapped to teal theme for compatibility */
+  --color-brand-blue: #2DD4BF;
+  --color-brand-blue-dark: #14524A;
+  --color-brand-blue-light: #1E6B5E;
+  --color-brand-blue-50: #F5F5F0;
+  --color-brand-blue-100: #E8E8E3;
+  --color-brand-blue-900: #051815;
+
+  /* Shadows */
+  --shadow-glow-teal: 0 0 24px rgba(45, 212, 191, 0.4);
+  --shadow-glow-gold: 0 0 24px rgba(201, 169, 98, 0.4);
+  --shadow-glow-blue: 0 0 24px rgba(45, 212, 191, 0.4);
+  --shadow-card-teal: 0 12px 30px rgba(10, 47, 44, 0.12);
+  --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Tailwind v4 Theme Inline - For CSS variable references */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+}
+
+/* Remove dark mode - This system uses only light mode with black & white theme */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* High contrast for accessibility (WCAG AA - 4.5:1) */
+* {
+  border-color: var(--border);
+}
+
+/* Base styles for better typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Note: Removed hardcoded colors from h1-h6 and p tags
+   to allow Tailwind text-* classes to work properly */
+
+/* Utility classes */
+.text-secondary {
+  color: var(--secondary);
+}
+
+.bg-light-gray {
+  background-color: var(--light-gray);
+}
+
+/* Focus states for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
