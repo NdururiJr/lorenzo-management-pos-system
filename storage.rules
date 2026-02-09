@@ -133,6 +133,27 @@ service firebase.storage {
     }
 
     // ============================================
+    // DATABASE BACKUPS (Admin & Service Account Only)
+    // ============================================
+
+    // Firestore backup exports - Admin access only
+    match /backups/{allPaths=**} {
+      // Only allow admin users with custom claim
+      allow read, write: if isAuthenticated() && hasRole('admin');
+    }
+
+    // Firestore exports via gcloud - Service account access only
+    match /firestore-exports/{allPaths=**} {
+      // Service account only (via Firebase CLI or Admin SDK)
+      allow read, write: if false;
+    }
+
+    // Manual backup files uploaded by admins
+    match /manual-backups/{backupId}/{fileName} {
+      allow read, write: if isAuthenticated() && hasRole('admin');
+    }
+
+    // ============================================
     // DENY ALL OTHER ACCESS
     // ============================================
 
