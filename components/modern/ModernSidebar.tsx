@@ -404,6 +404,12 @@ const navigationItems: NavItem[] = [
     roles: ['admin', 'director'],
   },
   {
+    label: 'Staff Management',
+    href: '/admin/staff-management',
+    icon: Users,
+    roles: ['admin', 'director'],
+  },
+  {
     label: 'System Settings',
     href: '/admin/settings',
     icon: Shield,
