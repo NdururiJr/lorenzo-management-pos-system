@@ -20,7 +20,9 @@ import { Footer } from '@/components/marketing/Footer';
 import { OrganizationSchema } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
-  title: 'Lorenzo Dry Cleaners - Premium Dry Cleaning Services in Nairobi',
+  title: {
+    absolute: 'Lorenzo Dry Cleaners - Premium Dry Cleaning Services in Nairobi',
+  },
   description:
     'Professional dry cleaning services across Nairobi with 21+ branches. Expert garment care, same-day service, free pickup & delivery. Kenya\'s trusted partner since 2013.',
   alternates: {

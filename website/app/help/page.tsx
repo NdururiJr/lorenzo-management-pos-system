@@ -17,7 +17,7 @@ import Link from 'next/link';
 const CUSTOMER_LOGIN_URL = `${process.env.NEXT_PUBLIC_POS_API_URL || 'http://localhost:3000'}/customer-login`;
 
 export const metadata: Metadata = {
-  title: 'Help Center | Lorenzo Dry Cleaners',
+  title: 'Help Center',
   description: 'Get help with your orders, payments, delivery, and more. Find answers to common questions and contact our support team.',
 };
 

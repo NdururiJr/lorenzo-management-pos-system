@@ -12,7 +12,7 @@ import { Footer } from '@/components/marketing/Footer';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Lorenzo Dry Cleaners',
+  title: 'Privacy Policy',
   description: 'Learn how Lorenzo Dry Cleaners collects, uses, and protects your personal information.',
 };
 

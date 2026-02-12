@@ -267,14 +267,9 @@ service cloud.firestore {
     // ============================================
 
     match /branches/{branchId} {
-      // All authenticated users can read branches they have access to
-      // Super admins can read all branches
-      // Executives can read all branches (cross-branch access)
-      allow read: if isAuthenticated() && (
-        isSuperAdmin() ||
-        isExecutive() ||
-        canAccessBranch(branchId)
-      );
+      // Allow public read access for website location pages (SSG)
+      // This enables the marketing website to fetch branch data during build
+      allow read: if true;
 
       // Only super admins can create, update, or delete branches
       allow create, update, delete: if isSuperAdmin();

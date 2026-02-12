@@ -223,3 +223,64 @@ export function OrganizationSchema() {
 
   return <JsonLd data={data} />;
 }
+
+/**
+ * LocalBusiness Schema for individual location pages
+ */
+export function LocalBusinessSchema({
+  branch,
+  neighborhoodName,
+  slug,
+}: {
+  branch: {
+    branchId: string;
+    name: string;
+    location: {
+      address: string;
+      coordinates: { lat: number; lng: number };
+    };
+    contactPhone: string;
+  };
+  neighborhoodName: string;
+  slug: string;
+}) {
+  const baseUrl = getBaseUrl();
+
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'DryCleaningOrLaundry',
+    '@id': `${baseUrl}/locations/${slug}`,
+    name: `Lorenzo Dry Cleaners - ${neighborhoodName}`,
+    url: `${baseUrl}/locations/${slug}`,
+    telephone: branch.contactPhone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: branch.location.address,
+      addressLocality: neighborhoodName,
+      addressRegion: 'Nairobi',
+      addressCountry: 'KE',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: branch.location.coordinates.lat,
+      longitude: branch.location.coordinates.lng,
+    },
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '08:00',
+        closes: '18:00',
+      },
+    ],
+    priceRange: 'KSh 150-400',
+    image: `${baseUrl}/images/branches/${slug}.jpg`,
+    parentOrganization: {
+      '@type': 'Organization',
+      name: 'Lorenzo Dry Cleaners',
+      url: baseUrl,
+    },
+  };
+
+  return <JsonLd data={data} />;
+}

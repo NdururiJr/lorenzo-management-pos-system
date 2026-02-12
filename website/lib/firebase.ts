@@ -38,16 +38,12 @@ function hasValidConfig(): boolean {
 /**
  * Initialize Firebase app (singleton pattern)
  * Only initializes once, even if called multiple times
+ * Works on both client and server side (needed for SSG)
  */
 function getFirebaseApp(): FirebaseApp | null {
-  // Only initialize on client side
-  if (typeof window === 'undefined') {
-    return null;
-  }
-
   // Check if we have valid config
   if (!hasValidConfig()) {
-    console.warn('Firebase config not available. Auth features will be disabled.');
+    console.warn('Firebase config not available. Returning null.');
     return null;
   }
 
@@ -66,9 +62,10 @@ let firestoreInstance: Firestore | null = null;
 
 /**
  * Get Firebase app instance
+ * Works on both client and server side
  */
 export function getApp(): FirebaseApp | null {
-  if (!app && typeof window !== 'undefined') {
+  if (!app) {
     app = getFirebaseApp();
   }
   return app;
@@ -77,6 +74,7 @@ export function getApp(): FirebaseApp | null {
 /**
  * Get Firebase Authentication instance
  * Returns null if Firebase is not configured
+ * Note: Auth only works on client side
  */
 export function getAuthInstance(): Auth | null {
   if (!authInstance && typeof window !== 'undefined') {
@@ -91,9 +89,10 @@ export function getAuthInstance(): Auth | null {
 /**
  * Get Firestore instance
  * Returns null if Firebase is not configured
+ * Works on both client and server side (needed for SSG)
  */
 export function getFirestoreInstance(): Firestore | null {
-  if (!firestoreInstance && typeof window !== 'undefined') {
+  if (!firestoreInstance) {
     const firebaseApp = getApp();
     if (firebaseApp) {
       firestoreInstance = getFirestore(firebaseApp);

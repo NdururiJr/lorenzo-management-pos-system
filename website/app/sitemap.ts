@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { slugMap } from '@/lib/utils/location-helpers';
 
 // Blog post slugs for sitemap
 const blogSlugs = [
@@ -79,5 +80,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...routes, ...blogPosts];
+  // Location hub page
+  const locationsHub: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/locations`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+  ];
+
+  // Location pages (all 21 branches)
+  const locationPages: MetadataRoute.Sitemap = Object.values(slugMap).map((slug) => ({
+    url: `${baseUrl}/locations/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.9, // High priority for local SEO
+  }));
+
+  return [...routes, ...blogPosts, ...locationsHub, ...locationPages];
 }

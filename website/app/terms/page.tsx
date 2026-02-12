@@ -12,7 +12,7 @@ import { Footer } from '@/components/marketing/Footer';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | Lorenzo Dry Cleaners',
+  title: 'Terms of Service',
   description: 'Read the terms and conditions for using Lorenzo Dry Cleaners services.',
 };
 
