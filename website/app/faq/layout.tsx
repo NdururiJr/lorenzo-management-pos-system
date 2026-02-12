@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'FAQ - Frequently Asked Questions',
+  title: 'FAQs - Dry Cleaning Questions Answered | Lorenzo',
   description:
     'Find answers to common questions about Lorenzo Dry Cleaners services, pricing, pickup & delivery, payment methods, and account management.',
   alternates: {

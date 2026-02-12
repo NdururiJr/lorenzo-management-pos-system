@@ -16,8 +16,11 @@ import { Testimonials } from '@/components/marketing/Testimonials';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'About Us | Lorenzo Dry Cleaners',
+  title: 'About Lorenzo - Nairobi\'s Trusted Dry Cleaners Since 2013',
   description: 'Lorenzo Dry Cleaners - Kenya\'s distinguished premium dry-cleaning brand. Established in 2013 with 21+ branches across Nairobi, delivering exceptional fabric care.',
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 export default function AboutPage() {

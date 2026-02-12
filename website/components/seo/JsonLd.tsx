@@ -184,3 +184,42 @@ export function ContactPageJsonLd() {
 
   return <JsonLd data={data} />;
 }
+
+export function OrganizationSchema() {
+  const baseUrl = getBaseUrl();
+
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'DryCleaningOrLaundry',
+    name: 'Lorenzo Dry Cleaners',
+    url: baseUrl,
+    logo: `${baseUrl}/logo.png`,
+    description: 'Premium dry cleaning and laundry services in Nairobi with 21+ locations and free pickup & delivery.',
+    telephone: '+254728400200',
+    email: 'hello@lorenzo.co.ke',
+    foundingDate: '2013',
+    areaServed: {
+      '@type': 'City',
+      name: 'Nairobi',
+      '@id': 'https://www.wikidata.org/wiki/Q3870',
+    },
+    priceRange: 'KSh 150-400',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '5.0',
+      reviewCount: '500',
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Nairobi',
+      addressCountry: 'KE',
+    },
+    sameAs: [
+      'https://www.facebook.com/lorenzodrycleaners',
+      'https://www.instagram.com/lorenzodrycleaners',
+      'https://twitter.com/lorenzodryclean',
+    ],
+  };
+
+  return <JsonLd data={data} />;
+}

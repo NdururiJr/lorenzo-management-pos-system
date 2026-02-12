@@ -15,8 +15,11 @@ import { ContactPageJsonLd } from '@/components/seo/JsonLd';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Lorenzo Dry Cleaners',
+  title: 'Contact Us - 21+ Locations in Nairobi | Lorenzo Dry Cleaners',
   description: 'Get in touch with Lorenzo Dry Cleaners. Call 0728 400 200, email hello@lorenzo.co.ke, or visit any of our 21+ branches across Nairobi.',
+  alternates: {
+    canonical: '/contact',
+  },
 };
 
 export default function ContactPage() {

@@ -17,7 +17,7 @@ import { Testimonials } from '@/components/marketing/Testimonials';
 import { Newsletter } from '@/components/marketing/Newsletter';
 import { Header } from '@/components/marketing/Header';
 import { Footer } from '@/components/marketing/Footer';
-import { LocalBusinessJsonLd } from '@/components/seo/JsonLd';
+import { OrganizationSchema } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
   title: 'Lorenzo Dry Cleaners - Premium Dry Cleaning Services in Nairobi',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <LocalBusinessJsonLd />
+      <OrganizationSchema />
 
       {/* Header */}
       <Header />

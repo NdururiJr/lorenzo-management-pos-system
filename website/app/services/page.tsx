@@ -16,8 +16,11 @@ import { ServiceJsonLd } from '@/components/seo/JsonLd';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Services & Pricing | Lorenzo Dry Cleaners',
+  title: 'Dry Cleaning Services & Prices | Lorenzo Nairobi',
   description: 'Professional dry cleaning, wash & fold, express service, and free pickup & delivery across Nairobi. Transparent pricing, quality guaranteed.',
+  alternates: {
+    canonical: '/services',
+  },
 };
 
 export default function ServicesPage() {
