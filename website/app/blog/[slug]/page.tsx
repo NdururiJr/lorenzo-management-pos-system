@@ -109,6 +109,11 @@ export default async function BlogPostPage({ params }: PageProps) {
     notFound();
   }
 
+  const baseUrl =
+    process.env.NEXT_PUBLIC_WEBSITE_URL ||
+    process.env.NEXT_PUBLIC_APP_URL ||
+    'https://lorenzodrycleaners.co.ke';
+
   return (
     <main className="min-h-screen">
       <BlogPostingJsonLd
@@ -117,7 +122,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         datePublished={post.date}
         author={post.author}
         image={post.image}
-        url={`https://lorenzo-dry-cleaners-website.vercel.app/blog/${slug}`}
+        url={`${baseUrl}/blog/${slug}`}
       />
 
       {/* Header */}

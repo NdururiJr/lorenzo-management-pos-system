@@ -47,6 +47,7 @@ export function CompanyStory() {
     triggerOnce: true,
     threshold: 0.1,
   });
+  const POS_URL = process.env.NEXT_PUBLIC_POS_API_URL || 'http://localhost:3000';
 
   return (
     <section className="relative py-24 overflow-hidden bg-white">
@@ -96,7 +97,7 @@ export function CompanyStory() {
               </p>
               <div className="pt-4">
                 <a
-                  href="/customer-login"
+                  href={`${POS_URL}/customer-login`}
                   className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                   style={{ backgroundColor: '#2DD4BF' }}
                 >

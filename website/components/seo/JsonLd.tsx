@@ -5,6 +5,18 @@
  * Supports LocalBusiness, FAQPage, Service, BlogPosting, and ContactPoint schemas.
  */
 
+/**
+ * Get the base URL for the website from environment variables
+ * Falls back to production domain if not set
+ */
+const getBaseUrl = () => {
+  return (
+    process.env.NEXT_PUBLIC_WEBSITE_URL ||
+    process.env.NEXT_PUBLIC_APP_URL ||
+    'https://lorenzodrycleaners.co.ke'
+  );
+};
+
 interface JsonLdProps {
   data: Record<string, unknown>;
 }
@@ -19,13 +31,15 @@ export function JsonLd({ data }: JsonLdProps) {
 }
 
 export function LocalBusinessJsonLd() {
+  const baseUrl = getBaseUrl();
+
   const data = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    '@id': 'https://lorenzo-dry-cleaners-website.vercel.app',
+    '@id': baseUrl,
     name: 'Lorenzo Dry Cleaners',
     description: 'Professional dry cleaning services across Nairobi with 21+ branches. Expert garment care, fast delivery, and convenient pickup.',
-    url: 'https://lorenzo-dry-cleaners-website.vercel.app',
+    url: baseUrl,
     telephone: '+254700000000',
     address: {
       '@type': 'PostalAddress',
@@ -47,7 +61,7 @@ export function LocalBusinessJsonLd() {
       },
     ],
     priceRange: 'KSh 150 - KSh 5000',
-    image: 'https://lorenzo-dry-cleaners-website.vercel.app/og-image.jpg',
+    image: `${baseUrl}/og-image.jpg`,
     sameAs: [],
     areaServed: {
       '@type': 'City',
@@ -134,7 +148,7 @@ export function BlogPostingJsonLd({
       '@type': 'Organization',
       name: 'Lorenzo Dry Cleaners',
     },
-    image: image || 'https://lorenzo-dry-cleaners-website.vercel.app/og-image.jpg',
+    image: image || `${getBaseUrl()}/og-image.jpg`,
     url,
     mainEntityOfPage: {
       '@type': 'WebPage',
@@ -146,12 +160,14 @@ export function BlogPostingJsonLd({
 }
 
 export function ContactPageJsonLd() {
+  const baseUrl = getBaseUrl();
+
   const data = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: 'Contact Lorenzo Dry Cleaners',
     description: 'Get in touch with Lorenzo Dry Cleaners for professional dry cleaning services in Nairobi.',
-    url: 'https://lorenzo-dry-cleaners-website.vercel.app/contact',
+    url: `${baseUrl}/contact`,
     mainEntity: {
       '@type': 'LocalBusiness',
       name: 'Lorenzo Dry Cleaners',

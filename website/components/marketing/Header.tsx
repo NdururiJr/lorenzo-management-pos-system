@@ -28,6 +28,7 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const POS_URL = process.env.NEXT_PUBLIC_POS_API_URL || 'http://localhost:3000';
 
   // Handle scroll for sticky header effect
   useEffect(() => {
@@ -106,7 +107,7 @@ export function Header() {
                   : "border-2 border-lorenzo-gold/70 text-white bg-white/10 backdrop-blur-md hover:bg-lorenzo-gold hover:text-white hover:border-lorenzo-gold"
               )}
             >
-              <Link href="/customer-login">Book Now</Link>
+              <Link href={`${POS_URL}/customer-login`}>Book Now</Link>
             </Button>
           </nav>
 
@@ -153,7 +154,7 @@ export function Header() {
                 asChild
                 className="w-full mt-4 bg-lorenzo-gold hover:bg-lorenzo-gold-dark text-white"
               >
-                <Link href="/customer-login">Book Now</Link>
+                <Link href={`${POS_URL}/customer-login`}>Book Now</Link>
               </Button>
             </nav>
           </div>

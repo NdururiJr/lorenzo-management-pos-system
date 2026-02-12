@@ -35,6 +35,7 @@ export function AboutLorenzo() {
     triggerOnce: true,
     threshold: 0.1,
   });
+  const POS_URL = process.env.NEXT_PUBLIC_POS_API_URL || 'http://localhost:3000';
 
   // Animation variants
   const imageVariants: Variants = {
@@ -281,7 +282,7 @@ export function AboutLorenzo() {
                 size="lg"
                 className="text-white font-semibold px-8 py-6 rounded-full shadow-glow-teal hover:shadow-xl transition-all duration-300 hover:scale-105 bg-lorenzo-gold hover:bg-lorenzo-gold-dark"
               >
-                <Link href="/customer-login" className="flex items-center gap-2">
+                <Link href={`${POS_URL}/customer-login`} className="flex items-center gap-2">
                   Get Started Today
                   <ArrowRight className="w-5 h-5" />
                 </Link>

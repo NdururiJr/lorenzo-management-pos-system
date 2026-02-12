@@ -9,6 +9,7 @@
 
 import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
 import { getAuth, type Auth } from 'firebase/auth';
+import { getFirestore, type Firestore } from 'firebase/firestore';
 
 /**
  * Firebase configuration object constructed from environment variables
@@ -61,6 +62,7 @@ function getFirebaseApp(): FirebaseApp | null {
 // Lazy initialization - only when accessed
 let app: FirebaseApp | null = null;
 let authInstance: Auth | null = null;
+let firestoreInstance: Firestore | null = null;
 
 /**
  * Get Firebase app instance
@@ -87,8 +89,28 @@ export function getAuthInstance(): Auth | null {
 }
 
 /**
+ * Get Firestore instance
+ * Returns null if Firebase is not configured
+ */
+export function getFirestoreInstance(): Firestore | null {
+  if (!firestoreInstance && typeof window !== 'undefined') {
+    const firebaseApp = getApp();
+    if (firebaseApp) {
+      firestoreInstance = getFirestore(firebaseApp);
+    }
+  }
+  return firestoreInstance;
+}
+
+/**
  * Check if Firebase Auth is available
  */
 export function isFirebaseAuthAvailable(): boolean {
   return hasValidConfig() && typeof window !== 'undefined';
 }
+
+/**
+ * Simplified exports for common usage
+ */
+export const auth = getAuthInstance();
+export const db = getFirestoreInstance();

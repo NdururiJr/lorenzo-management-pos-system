@@ -97,6 +97,13 @@ export function PricingSection() {
     triggerOnce: true,
     threshold: 0.1,
   });
+  const POS_URL = process.env.NEXT_PUBLIC_POS_API_URL || 'http://localhost:3000';
+
+  // Update hrefs with POS_URL
+  const tiersWithPosUrl = pricingTiers.map((tier) => ({
+    ...tier,
+    href: `${POS_URL}/customer-login`,
+  }));
 
   return (
     <section className="relative py-24 overflow-hidden bg-white">
@@ -136,7 +143,7 @@ export function PricingSection() {
           animate={inView ? 'visible' : 'hidden'}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto"
         >
-          {pricingTiers.map((tier, index) => (
+          {tiersWithPosUrl.map((tier, index) => (
             <motion.div key={tier.id} variants={cardVariants}>
               <PricingCard tier={tier} index={index} />
             </motion.div>
@@ -152,7 +159,7 @@ export function PricingSection() {
         >
           All prices are starting rates. Final cost depends on garment type, fabric, and services required.
           <br />
-          <Link href="/customer-login" className="text-lorenzo-accent-teal-dark font-semibold hover:underline">
+          <Link href={`${POS_URL}/customer-login`} className="text-lorenzo-accent-teal-dark font-semibold hover:underline">
             Get a free quote today
           </Link>
         </motion.p>
