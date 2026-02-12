@@ -21,6 +21,8 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
+  const POS_URL = process.env.NEXT_PUBLIC_POS_API_URL || 'http://localhost:3000';
+
   return (
     <main className="min-h-screen">
       <ServiceJsonLd
@@ -50,7 +52,7 @@ export default function ServicesPage() {
       <Testimonials />
 
       {/* Final CTA */}
-      <ServicesCTA />
+      <ServicesCTA posUrl={POS_URL} />
 
       {/* Footer */}
       <Footer />
@@ -110,7 +112,7 @@ function ServicesHero() {
   );
 }
 
-function ServicesCTA() {
+function ServicesCTA({ posUrl }: { posUrl: string }) {
   return (
     <section className="relative py-16 overflow-hidden bg-white">
       {/* Blue Gradient Background */}
@@ -133,7 +135,7 @@ function ServicesCTA() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href="/customer-login"
+                href={`${posUrl}/customer-login`}
                 className="inline-flex items-center justify-center px-8 py-4 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                 style={{ backgroundColor: '#2DD4BF' }}
               >
