@@ -116,17 +116,15 @@ export function Footer() {
                   </div>
                   <span>hello@lorenzo.co.ke</span>
                 </a>
-                <a
-                  href="https://www.google.com/maps/search/Lorenzo+Dry+Cleaners+Nairobi"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/locations"
                   className="flex items-start space-x-3 text-white/80 hover:text-white hover:translate-x-1 transition-all duration-300 group"
                 >
                   <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center flex-shrink-0 group-hover:bg-white/20 transition-all duration-300">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <span>21+ Branches across Nairobi</span>
-                </a>
+                </Link>
               </div>
             </div>
 
