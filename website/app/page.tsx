@@ -12,12 +12,16 @@ import { HeroVideo } from '@/components/marketing/HeroVideo';
 import { AboutLorenzo } from '@/components/marketing/AboutLorenzo';
 import { FeaturesGrid } from '@/components/marketing/FeaturesGrid';
 import { ProcessSteps } from '@/components/marketing/ProcessSteps';
+import { ProcessStepsV2 } from '@/components/marketing/ProcessStepsV2';
 import { FeaturedBlogs } from '@/components/marketing/FeaturedBlogs';
 import { Testimonials } from '@/components/marketing/Testimonials';
 import { Newsletter } from '@/components/marketing/Newsletter';
 import { Header } from '@/components/marketing/Header';
 import { Footer } from '@/components/marketing/Footer';
 import { LocalBusinessJsonLd } from '@/components/seo/JsonLd';
+
+/** Feature flag to toggle between ProcessSteps versions */
+const USE_NEW_PROCESS_STEPS = false; // Set to false to revert to original design
 
 export const metadata: Metadata = {
   title: 'Lorenzo Dry Cleaners - Premium Dry Cleaning Services in Nairobi',
@@ -51,7 +55,7 @@ export default function Home() {
       <FeaturesGrid />
 
       {/* How It Works Section */}
-      <ProcessSteps />
+      {USE_NEW_PROCESS_STEPS ? <ProcessStepsV2 /> : <ProcessSteps />}
 
       {/* Featured Blogs Section */}
       <FeaturedBlogs />

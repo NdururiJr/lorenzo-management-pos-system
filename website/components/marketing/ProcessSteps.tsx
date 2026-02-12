@@ -74,14 +74,11 @@ export function ProcessSteps() {
 
   return (
     <section className="relative py-24 overflow-hidden">
-      {/* Enhanced Blue Gradient Background with #2DD4BF */}
-      <div className="absolute inset-0 bg-gradient-to-br from-lorenzo-accent-teal via-lorenzo-accent-teal-100 via-40% to-white" />
-      <div className="absolute inset-0 bg-gradient-to-tr from-lorenzo-accent-teal-50 via-transparent to-lorenzo-accent-teal-100 opacity-60" />
+      {/* Simplified solid background for better text contrast */}
+      <div className="absolute inset-0 bg-white" />
 
-      {/* Decorative blur elements with more blue */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-lorenzo-accent-teal rounded-full blur-3xl opacity-40" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-lorenzo-accent-teal-light rounded-full blur-3xl opacity-35" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lorenzo-accent-teal/20 rounded-full blur-3xl" />
+      {/* Subtle teal accent - bottom only, reduced opacity */}
+      <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-lorenzo-accent-teal/10 to-transparent" />
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -96,16 +93,15 @@ export function ProcessSteps() {
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mb-4">
             Laundry Services in
-            <span className="text-lorenzo-accent-teal"> Four Simple Steps</span>
+            <span className="text-lorenzo-accent-teal-dark"> Four Simple Steps</span>
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
+          <p className="text-lg text-gray-700 mb-8">
             Doing laundry has never been this easy. Just follow these four steps and enjoy fresh, clean clothes—hassle-free.
           </p>
           <Button
             asChild
             size="lg"
-            className="text-white font-semibold rounded-full px-8 shadow-glow-blue hover:shadow-xl transition-all duration-300 hover:scale-105"
-            style={{ backgroundColor: '#2DD4BF' }}
+            className="bg-lorenzo-accent-teal-dark text-white font-semibold rounded-full px-8 shadow-glow-blue hover:shadow-xl hover:bg-lorenzo-accent-teal transition-all duration-300 hover:scale-105"
           >
             <Link href="/contact">Start Your First Order</Link>
           </Button>
@@ -146,10 +142,9 @@ export function ProcessSteps() {
               asChild
               size="lg"
               variant="outline"
-              className="rounded-full border-2 font-semibold transition-all duration-300 hover:scale-105"
-              style={{ borderColor: '#2DD4BF', color: '#2DD4BF' }}
+              className="rounded-full border-2 border-lorenzo-accent-teal-dark text-lorenzo-accent-teal-dark hover:bg-lorenzo-accent-teal-dark hover:text-white font-semibold transition-all duration-300 hover:scale-105"
             >
-              <Link href="/services" className="hover:bg-[#2DD4BF] hover:text-white transition-all">
+              <Link href="/services">
                 Explore All Services
               </Link>
             </Button>
@@ -189,8 +184,8 @@ function StepCard({ number, icon: Icon, title, description, index, isLast }: Ste
         }}
         className={cn(
           'group relative rounded-3xl p-6',
-          'bg-white/70 backdrop-blur-xl',
-          'border-2 border-white/60',
+          'bg-white/95 backdrop-blur-lg',
+          'border-2 border-gray-200',
           'shadow-card hover:shadow-2xl',
           'transition-all duration-300',
           'overflow-hidden',
@@ -207,17 +202,13 @@ function StepCard({ number, icon: Icon, title, description, index, isLast }: Ste
         <div className="relative z-10">
           {/* Step Number Badge and Icon */}
           <div className="flex items-center justify-between mb-4">
-            <span
-              className="inline-flex items-center justify-center w-12 h-12 rounded-full text-xs font-bold text-white shadow-lg"
-              style={{ backgroundColor: '#2DD4BF' }}
-            >
+            <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-lorenzo-accent-teal-dark text-xs font-bold text-white shadow-lg">
               STEP {number}
             </span>
 
             {/* Icon with rotation animation */}
             <motion.div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg"
-              style={{ backgroundColor: '#2DD4BF' }}
+              className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg bg-lorenzo-accent-teal-dark"
               whileHover={{
                 scale: 1.15,
                 rotate: 360,
@@ -234,7 +225,7 @@ function StepCard({ number, icon: Icon, title, description, index, isLast }: Ste
           </h3>
 
           {/* Description */}
-          <p className="text-gray-600 leading-relaxed text-sm">
+          <p className="text-gray-800 leading-relaxed text-sm">
             {description}
           </p>
         </div>

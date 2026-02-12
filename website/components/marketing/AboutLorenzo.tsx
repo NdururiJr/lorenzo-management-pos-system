@@ -148,30 +148,6 @@ export function AboutLorenzo() {
                 </div>
               </div>
             </motion.div>
-
-            {/* Floating decorative elements */}
-            <motion.div
-              animate={{
-                y: [0, -20, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: [0.42, 0.0, 0.58, 1.0] as [number, number, number, number],
-              }}
-              className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-lorenzo-accent-teal/20 backdrop-blur-lg blur-sm"
-            />
-            <motion.div
-              animate={{
-                y: [0, 20, 0],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: [0.42, 0.0, 0.58, 1.0] as [number, number, number, number],
-              }}
-              className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-lorenzo-gold/30 backdrop-blur-lg blur-md"
-            />
           </motion.div>
 
           {/* Right Column: Content */}
