@@ -1,10 +1,12 @@
 # Lorenzo Dry Cleaners Management System - Tasks
 
 **Project Timeline:** October 14 - December 19, 2025 (6 weeks)
-**Last Updated:** January 8, 2026
+**Last Updated:** February 12, 2026
 **Status Legend:** ❌ Not Started | 🔄 In Progress | ✅ Completed | ⚠️ Blocked/Partial
 
-**✅ UPDATE (January 8, 2026):** Executive Dashboards development in progress. Director Dashboard complete at `/dashboard`. Security rules fix needed for GM Dashboard (missing collection rules for attendance, equipment, issues, customerFeedback). Director Strategic Sidebar plan created with 8 new pages. See `docs/DIRECTOR-SECURITY-SIDEBAR-PLAN.md` for full implementation details.
+**✅ UPDATE (February 12, 2026):** v2.0 Feature Spec Pack complete — 7 implementation-ready specifications (648KB total) in `docs/upgrades/lorenzo_feature_spec_pack_v1/`. Visual mockups created for Director & GM dashboards. Navigation restructure planned: Director 14 sidebar items (grouped), GM 9 items (grouped). See Milestone 5 for implementation tasks.
+
+**Previous (January 8, 2026):** Executive Dashboards development in progress. Director Dashboard complete at `/dashboard`. Security rules fix needed for GM Dashboard. Director Strategic Sidebar plan created. See `docs/DIRECTOR-SECURITY-SIDEBAR-PLAN.md`.
 
 ---
 
@@ -14,6 +16,7 @@
 - [Milestone 2: Core Modules (Weeks 3-4)](#milestone-2-core-modules-weeks-3-4)
 - [Milestone 3: Advanced Features (Week 5)](#milestone-3-advanced-features-week-5)
 - [Milestone 4: Testing & Refinement (Week 6)](#milestone-4-testing--refinement-week-6)
+- [Milestone 5: v2.0 Feature Modules](#milestone-5-v20-feature-modules)
 - [Ongoing Tasks](#ongoing-tasks)
 - [Backlog / Future Enhancements](#backlog--future-enhancements)
 
@@ -1144,6 +1147,157 @@
 
 ---
 
+## Milestone 5: v2.0 Feature Modules
+**Target:** February - April 2026
+**Status:** 🔄 Specification Complete | Implementation Not Started
+**Spec Pack:** `docs/upgrades/lorenzo_feature_spec_pack_v1/` (7 docs, 648KB)
+**Visual Mockups:** `docs/upgrades/lorenzo_feature_spec_pack_v1/mockups.pen`
+
+### 5.0 v2.0 Specification & Planning ✅
+**Status:** ✅ Complete (February 12, 2026)
+
+#### Specification Documents
+- [x] Write Master Feature Spec (`lorenzo_master_feature_spec.md`, 57KB)
+- [x] Write Module 1: Order Management spec (`lorenzo_module1_order_management_spec.md`, 90KB)
+- [x] Write Module 2: Driver & Logistics spec (`lorenzo_module2_driver_logistics_spec.md`, 91KB)
+- [x] Write Module 3: Proximity Offers spec (`lorenzo_module3_proximity_spec.md`, 107KB)
+- [x] Write Module 4: Customer Preferences spec (`lorenzo_module4_preferences_spec.md`, 103KB)
+- [x] Write Module 5: AI Insights spec (`lorenzo_module5_ai_insights_spec.md`, 107KB)
+- [x] Write Module 6: Voucher & Approval spec (`lorenzo_module6_voucher_spec.md`, 94KB)
+
+#### Visual Mockups
+- [x] Create Director Executive Dashboard mockup (.pen file)
+- [x] Create GM Operations Dashboard mockup (.pen file)
+
+#### Planning Updates
+- [x] Update PLANNING.md with v2.0 roadmap and navigation restructure
+- [x] Update TASKS.md with Milestone 5 implementation tasks
+
+### 5.1 Phase 5a: Foundation — M1 Order Enhancements + M6 Voucher Enhancements
+**Status:** ❌ Not Started
+**Estimated Time:** 4-6 weeks
+**Dependencies:** None (builds on existing foundation)
+**Spec References:** `lorenzo_module1_order_management_spec.md` Sections 5-8, 20; `lorenzo_module6_voucher_spec.md` Sections 5-8, 20
+
+#### M1: Order Management Enhancements `[ENHANCE]`
+- [ ] Add batch status update API endpoint and UI (select multiple orders, change status)
+- [ ] Enhance order search with advanced filters (garment type, service, date range, staff)
+- [ ] Add order analytics hooks for Module 5 data pipeline
+- [ ] Implement order timeline audit trail UI (show all status changes with who/when)
+- [ ] Add order priority system (standard, rush, VIP)
+- [ ] Enhance order notes with staff @mentions and timestamps
+- [ ] Create order export functionality (CSV/Excel with multi-sheet support)
+- [ ] Add order duplication (re-order) from order history
+- [ ] Implement order split/merge operations for complex orders
+- [ ] Wire up all 6 WhatsApp notification triggers to status transitions
+
+#### M6: Voucher & Approval Enhancements `[ENHANCE]`
+- [ ] Create VoucherTemplate interface and `voucherTemplates` Firestore collection
+- [ ] Create VoucherCampaign interface and `voucherCampaigns` Firestore collection
+- [ ] Build bulk voucher generation UI (generate N vouchers from template)
+- [ ] Build campaign management page (`/director/vouchers`)
+- [ ] Add voucher usage analytics dashboard (redemption rate, revenue impact)
+- [ ] Enhance approval workflow with multi-tier approval (manager → director)
+- [ ] Add voucher QR code generation for customer portal
+- [ ] Create customer portal voucher wallet (view, apply, history)
+- [ ] Add WhatsApp notification when voucher issued + expiry reminder
+- [ ] Implement voucher auto-expiry Cloud Function (scheduled daily)
+
+### 5.2 Phase 5b: Extensions — M2 Driver & Logistics + M4 Customer Preferences
+**Status:** ❌ Not Started
+**Estimated Time:** 6-8 weeks
+**Dependencies:** Phase 5a (M1 order enhancements)
+**Spec References:** `lorenzo_module2_driver_logistics_spec.md` Sections 5-8, 20; `lorenzo_module4_preferences_spec.md` Sections 5-8, 20
+
+#### M2: Driver & Logistics `[ENHANCE]`
+- [ ] Implement driver performance scoring algorithm (on-time %, deliveries/day, customer rating)
+- [ ] Build driver leaderboard dashboard widget
+- [ ] Add ETA recalculation on route deviation or delay
+- [ ] Implement failed delivery workflow (photo proof, reschedule, customer notification)
+- [ ] Add multi-stop batch optimization with time windows
+- [ ] Create delivery analytics page (`/director/logistics`)
+- [ ] Build GM deliveries page (`/gm/deliveries`) with active deliveries and urgent issues
+- [ ] Enhance satellite transfer routing (auto-assign driver, optimize batch transfers)
+- [ ] Add delivery-specific WhatsApp templates (failed/rescheduled notification)
+- [ ] Implement real-time driver location subscription (onSnapshot)
+
+#### M4: Customer Preferences & AI `[ENHANCE/NEW]`
+- [ ] Create `customerConversations` Firestore collection (WhatsApp + staff notes)
+- [ ] Create `customerPreferenceProfiles` Firestore collection (AI-extracted)
+- [ ] Build Wati.io webhook endpoint to capture inbound customer WhatsApp messages
+- [ ] Build staff notes capture UI at POS order creation (observations, verbal requests)
+- [ ] Implement AI preference extraction pipeline (LLM analyzes conversations → structured preferences)
+- [ ] Create CustomerBrief card component (AI summary shown at POS during order creation)
+- [ ] Build customer intelligence page (`/director/customers`) with retention, segments, preference coverage
+- [ ] Enhance customer portal with preferences editor (service prefs, communication prefs)
+- [ ] Add AI-generated "your profile" summary to customer portal
+- [ ] Create preference-driven POS auto-fill (suggest services based on customer history)
+
+### 5.3 Phase 5c: Intelligence — M3 Proximity Offers + M5 AI Insights
+**Status:** ❌ Not Started
+**Estimated Time:** 8-10 weeks
+**Dependencies:** Phase 5b (M4 customer preferences, M2 logistics)
+**Spec References:** `lorenzo_module3_proximity_spec.md` Sections 5-8, 14, 20; `lorenzo_module5_ai_insights_spec.md` Sections 5-8, 14, 20
+
+#### M3: Proximity Pickup Offers `[NEW]` (Pattern-Based, NOT GPS)
+- [ ] Create ProximityOffer interface and `proximityOffers` Firestore collection
+- [ ] Create OfferSchedule interface and `offerSchedules` Firestore collection
+- [ ] Build pattern detection engine (analyze customer order frequency, timing, branch visited)
+- [ ] Implement eligibility scoring algorithm (recency-weighted frequency analysis)
+- [ ] Build cooldown system to prevent offer fatigue (configurable per-customer)
+- [ ] Create proactive offer scheduling Cloud Function (daily batch processing)
+- [ ] Register new WhatsApp templates with Meta (proactive_pickup_offer, special_deal_offer)
+- [ ] Build offer response tracking (accepted/declined/ignored via webhook)
+- [ ] Create customer portal offer inbox (pending offers, opt-in/out toggle, history)
+- [ ] Build offer analytics dashboard (`/director/customers` tab)
+- [ ] Implement opt-in management (customer portal + staff override)
+
+#### M5: AI Insights & Dashboard Intelligence `[ENHANCE]`
+- [ ] Create AIInsight interface and `aiInsights` Firestore collection
+- [ ] Create AIRecommendation interface and `aiRecommendations` Firestore collection
+- [ ] Create AnalyticsSnapshot interface and `analyticsSnapshots` Firestore collection
+- [ ] Build data pipeline: Orders (M1) → revenue/volume metrics for AI analysis
+- [ ] Build data pipeline: Logistics (M2) → delivery performance for AI analysis
+- [ ] Build data pipeline: Preferences (M4) → retention/churn signals for AI analysis
+- [ ] Build data pipeline: Proximity (M3) → campaign effectiveness for AI analysis
+- [ ] Build data pipeline: Vouchers (M6) → discount impact for AI analysis
+- [ ] Implement automated insight scheduling (Cloud Function, configurable frequency)
+- [ ] Build recommendation approval workflow (AI generates → director approves/rejects)
+- [ ] Implement anomaly detection (statistical + LLM-based)
+- [ ] Build demand forecasting (predictive analytics using historical patterns)
+- [ ] Enhance Director Executive Dashboard with AI-powered widgets
+- [ ] Build AI Insights detail page (`/director/insights`) with predictions, anomalies, recommendations
+- [ ] Implement impact tracking (track recommendation outcomes over time)
+- [ ] Create exportable insight reports (PDF/Excel, scheduled weekly/monthly)
+- [ ] Implement LLM fallback chain (OpenAI → Anthropic → Google → Local)
+
+### 5.4 Phase 5d: Integration & Navigation Restructure
+**Status:** ❌ Not Started
+**Estimated Time:** 2-3 weeks
+**Dependencies:** Phases 5a-5c
+**Spec References:** `lorenzo_master_feature_spec.md` Sections 7-8
+
+#### Navigation Restructure
+- [ ] Update `components/modern/ModernSidebar.tsx` — Director navigation (14 items, 4 groups)
+- [ ] Update `components/modern/ModernSidebar.tsx` — GM navigation (9 items, 3 groups)
+- [ ] Migrate/absorb 7 orphaned director pages into new module detail pages
+- [ ] Add section headers (OVERVIEW, MODULES, OPERATIONS, GOVERNANCE) to sidebar
+- [ ] Add notification badges for pending approvals on sidebar items
+
+#### Cross-Module Integration Testing
+- [ ] Test data flow: Order creation → all module pipelines → dashboard widgets
+- [ ] Test notification flows: status changes → WhatsApp templates → delivery tracking
+- [ ] Test audit trail: all CRUD operations → audit log entries with before/after
+- [ ] Test customer portal: order tracking + voucher wallet + preferences + offer inbox
+- [ ] Test branch scoping: main vs satellite behavior across all modules
+- [ ] Test RBAC: verify 14 roles × module access permissions
+- [ ] Test real-time subscriptions: onSnapshot for critical, polling for non-critical
+- [ ] Test LLM fallback chain: provider failures → graceful degradation
+- [ ] Performance test: dashboard load times with full module data (<2s target)
+- [ ] E2E test: complete customer journey (order → process → deliver → offer → re-order)
+
+---
+
 ## Ongoing Tasks
 
 ### Daily
@@ -1288,26 +1442,29 @@ If a task depends on another, note it:
 
 ### Milestone Progress
 - **Milestone 1 (Foundation):** ✅ 100% (108/108 tasks)
-- **Milestone 2 (Core Modules):** ✅ ~85% (112/132 tasks) - Customer Portal ✅ | Pipeline ✅ | **POS System ✅**
-- **Milestone 3 (Advanced Features):** 🔄 ~75% (140/186 tasks) - **Workstation System ✅ | Sidebar Navigation ✅ | POS Complete ✅ | Executive Dashboards 🔄 | Delivery ⚠️ | Maps ⚠️**
+- **Milestone 2 (Core Modules):** ✅ ~85% (112/132 tasks) - Customer Portal ✅ | Pipeline ✅ | POS System ✅
+- **Milestone 3 (Advanced Features):** 🔄 ~75% (140/186 tasks) - Workstation ✅ | Sidebar ✅ | POS ✅ | Executive Dashboards 🔄 | Delivery ⚠️ | Maps ⚠️
 - **Milestone 4 (Testing & Refinement):** ❌ 0% (0/97 tasks)
+- **Milestone 5 (v2.0 Feature Modules):** 🔄 Specs ✅ (7/7 docs + mockups) | Implementation ❌ (0/~81 tasks)
 
-**Overall Progress:** ~65% (360/523 estimated tasks) - **POS System Production Ready ✅ | Workstation System Complete ✅ | Director Dashboard ✅ | GM Dashboard 🔄**
+**v1.x Progress:** ~65% (360/523 tasks) - POS ✅ | Workstation ✅ | Director Dashboard ✅ | GM Dashboard 🔄
+**v2.0 Progress:** Specification 100% | Implementation 0%
 
 ### Weekly Velocity
 - **Week 1 (Oct 10-17):** 108 tasks completed ✅ (Milestone 1 - Foundation)
-- **Week 2 (Oct 11-14):** ~112 tasks completed ✅ (Milestone 2 - Customer Portal ✅, Pipeline ✅, **POS System ✅**)
+- **Week 2 (Oct 11-14):** ~112 tasks completed ✅ (Milestone 2 - Customer Portal ✅, Pipeline ✅, POS ✅)
 - **Week 3 (Oct 14-21):** 0 tasks completed (Testing & Documentation)
-- **Week 4 (Oct 21-27):** 115 tasks completed ✅ (Milestone 3 - Workstation System Complete + Sidebar Navigation)
+- **Week 4 (Oct 21-27):** 115 tasks completed ✅ (Milestone 3 - Workstation System + Sidebar Navigation)
 - **Week 5 (Oct 28-Nov 3):** TBD (Focus: Delivery System + Google Maps)
 - **Week 6 (Nov 4-10):** TBD (Focus: Testing & UAT)
 - **Jan 2026:** Executive Dashboards 🔄 (Director Dashboard ✅, Security Rules 🔄, Strategic Sidebar 🔄)
+- **Feb 12, 2026:** v2.0 Feature Spec Pack complete ✅ (7 docs, 648KB, 2 visual mockups)
 
 ---
 
-**Last Updated:** January 8, 2026
-**Next Review:** January 15, 2026 (Weekly)
-**Status:** Milestone 1 Complete ✅ | Milestone 2 Complete (~85%) ✅ | **Milestone 3 In Progress (~75%)** 🔄 | **Next Priority: Firebase Security Rules Fix + Director Strategic Sidebar** 🎯
+**Last Updated:** February 12, 2026
+**Next Review:** February 19, 2026 (Weekly)
+**Status:** Milestones 1-2 ✅ | Milestone 3 🔄 (~75%) | Milestone 4 ❌ | **Milestone 5 v2.0 Specs ✅ — Next: Complete M3 remaining tasks (Delivery, Maps) then begin Phase 5a implementation** 🎯
 
 ---
 

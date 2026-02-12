@@ -55,7 +55,7 @@ export function ServiceGrid({
   return (
     <div
       className={cn(
-        'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 overflow-y-auto pr-2',
+        'grid grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto pr-1',
         className
       )}
     >

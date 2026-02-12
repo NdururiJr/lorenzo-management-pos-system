@@ -544,7 +544,7 @@ export function PredictivePerformanceChart({ timeframe, branchId, branchName }: 
                 fontSize="11"
                 textAnchor="middle"
                 fontWeight="500"
-                fontFamily="'JetBrains Mono', monospace"
+                fontFamily="var(--font-jetbrains-mono), monospace"
               >
                 {projectedVsGoal > 0
                   ? `↑ Projected +KES ${Math.round(Math.abs(projectedVsGoal) / 1000)}K vs goal`

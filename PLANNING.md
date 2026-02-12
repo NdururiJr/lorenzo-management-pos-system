@@ -333,35 +333,85 @@ Permissions checked on:
 - UI level (Component visibility)
 ```
 
-### Executive Dashboard Architecture
+### Executive Dashboard Architecture (v2.0 — Summary + Detail Pages)
 
-#### Director Dashboard (Strategic View)
+The v2.0 navigation follows a **"Summary dashboard + detail pages"** pattern. The main dashboard shows 5-8 top-level KPIs only. Each module gets its own sidebar page with full analytics, charts, and actions. This follows SaaS IA best practices: progressive disclosure reduces cognitive overload.
+
+#### Director Dashboard (Strategic View — 14 Sidebar Items)
 The Director sees a completely different navigation and dashboard focused on strategic clarity:
 
 ```
-Director Navigation:
-├── Command Center          → /dashboard (main KPIs, AI insights)
-├── Strategic Intelligence  → /director/intelligence (market analysis)
-├── Financial Command       → /director/financial (P&L, cash flow)
-├── Growth Hub              → /director/growth (expansion, pipeline)
-├── Performance Deep Dive   → /director/performance (KPI history)
-├── Risk & Compliance       → /director/risk (risk register)
-├── Leadership & People     → /director/leadership (manager scorecards)
-├── Board Room              → /director/board (reports, documents)
-└── AI Strategy Lab         → /director/ai-lab (simulations)
+Director Navigation (Grouped):
+
+OVERVIEW
+  Executive Dashboard      → /dashboard           (Summary: 5-8 KPI cards, AI narrative, risk radar)
+
+MODULES
+  Orders & Pipeline        → /director/orders     (M1: order analytics, pipeline stats, status breakdown)
+  Logistics & Delivery     → /director/logistics  (M2: delivery metrics, driver performance, route efficiency)
+  Customer Intelligence    → /director/customers  (M3+M4: proximity offers, preferences, retention, segments)
+  AI Insights              → /director/insights   (M5: predictions, anomalies, recommendations)
+  Vouchers & Campaigns     → /director/vouchers   (M6: redemption rates, campaign ROI, approval queue)
+
+OPERATIONS
+  Branch Performance       → /director/branches   (existing — enhanced with per-module branch breakdown)
+  Financial Overview       → /director/financials  (existing)
+  Staff Overview           → /director/staff       (existing)
+  Quality Metrics          → /director/quality     (existing)
+
+GOVERNANCE
+  Approvals                → /director/approvals   (existing — enhanced with voucher + AI recommendation approvals)
+  Strategic Reports        → /director/reports     (existing — enhanced with module-specific report types)
+  Settings                 → /settings             (existing)
 ```
 
-#### GM Dashboard (Operations View)
+**Pages absorbed into new module pages (v1 → v2 migration):**
+- `/director/growth` → merged into Executive Dashboard KPIs
+- `/director/risk` → merged into AI Insights (RiskRadar widget)
+- `/director/intelligence` → merged into Customer Intelligence
+- `/director/leadership` → merged into Staff Overview
+- `/director/performance` → merged into Executive Dashboard
+- `/director/ai-lab` → merged into AI Insights (experimental tab)
+- `/director/board` → merged into Executive Dashboard
+
+#### GM Dashboard (Operations View — 9 Sidebar Items)
 The General Manager sees operational dashboards with cross-branch visibility:
 
 ```
-GM Navigation:
-├── Operations Dashboard    → Real-time KPIs across all branches
-├── Branch Comparison       → Performance metrics by branch
-├── Staff Management        → Cross-branch staff overview
-├── Issue Resolution        → Urgent issues across branches
-└── Equipment Status        → Equipment health all branches
+GM Navigation (Grouped):
+
+OVERVIEW
+  Operations Dashboard     → /dashboard           (Summary: real-time KPIs — order count, revenue, turnaround)
+
+OPERATIONS
+  Live Orders              → /gm/orders           (existing — real-time order queue)
+  Deliveries               → /gm/deliveries       (NEW: active deliveries, driver status, urgent issues)
+  Staff                    → /gm/staff            (existing)
+  Equipment                → /gm/equipment        (existing)
+
+ANALYTICS
+  Performance              → /gm/performance      (existing — enhanced with module metrics)
+  Voucher Approvals        → /gm/vouchers         (NEW: pending voucher approvals, active vouchers)
+
+ADMIN
+  My Requests              → /gm/requests         (existing)
+  Settings                 → /settings            (existing)
 ```
+
+#### Dashboard Widget → Module Data Flow Matrix
+
+| Dashboard Widget | M1 Orders | M2 Logistics | M3 Proximity | M4 Preferences | M5 AI | M6 Vouchers |
+|-----------------|-----------|-------------|--------------|----------------|-------|-------------|
+| **Director KPI Cards** | Revenue, AOV | On-time delivery % | — | Customer retention | — | — |
+| **Executive Narrative** | Order trends | Delivery metrics | Offer conversion | Churn signals | Generates narrative | Discount impact |
+| **Key Drivers Chart** | Revenue breakdown | Delivery revenue | Proximity revenue | Corporate/VIP trends | Analysis engine | — |
+| **Risk Radar** | Delayed orders | Failed deliveries | — | Walk-in decline | Anomaly detection | — |
+| **AI Recommendations** | Staffing needs | Route improvements | Campaign suggestions | Engagement tactics | Generates recommendations | Campaign ROI |
+| **Predictive Chart** | Volume forecast | Delivery demand | — | — | Prediction engine | — |
+| **GM Live Order Queue** | Real-time orders | Delivery status | — | — | — | — |
+| **GM Metrics Row** | Order count, revenue | — | — | — | — | — |
+| **GM Urgent Issues** | Overdue orders | Driver issues | — | — | Alert generation | — |
+| **Staff Dashboard** | Daily count, rank | — | — | — | — | — |
 
 #### Permission Approval Workflow
 ```
@@ -375,7 +425,10 @@ GM creates new staff → Permission Request created (status: pending)
                     If rejected: GM notified with reason
 ```
 
-**Reference:** See `docs/DIRECTOR-SECURITY-SIDEBAR-PLAN.md` for full implementation details.
+**References:**
+- `docs/DIRECTOR-SECURITY-SIDEBAR-PLAN.md` — Original implementation plan
+- `docs/upgrades/lorenzo_feature_spec_pack_v1/` — Full v2.0 feature specifications (7 documents, 648KB)
+- `docs/upgrades/lorenzo_feature_spec_pack_v1/mockups.pen` — Visual mockups (Director & GM dashboards)
 
 ---
 
@@ -1194,6 +1247,52 @@ firebase deploy --only firestore:rules
 - Deployment to production
 - Post-launch monitoring
 
+### Phase 5: v2.0 Feature Modules (February - April 2026) 🆕
+**Status:** Specification Complete (February 12, 2026) | Implementation Not Started
+**Spec Pack:** `docs/upgrades/lorenzo_feature_spec_pack_v1/` (7 documents, 648KB total)
+**Visual Mockups:** `docs/upgrades/lorenzo_feature_spec_pack_v1/mockups.pen`
+
+Six feature modules that extend the existing system. Each has a full implementation-ready spec (21 sections) with requirements, data models, API specs, UI specs, dashboard outputs, notifications, audit rules, customer portal impact, branch scoping, and implementation sequences.
+
+#### Module Overview
+
+| Module | Name | Maturity | Est. Effort | Dependencies |
+|--------|------|----------|-------------|-------------|
+| M1 | Order Management Enhancements | `[EXTENSIVELY BUILT]` | 2-3 weeks | None (foundation) |
+| M2 | Driver & Logistics | `[PARTIALLY BUILT]` | 3-4 weeks | M1 |
+| M3 | Proximity Pickup Offers | `[NEW]` | 4-5 weeks | M1, M4 |
+| M4 | Customer Preferences & AI | `[PARTIALLY BUILT]` | 3-4 weeks | M1 |
+| M5 | AI Insights & Dashboard Intelligence | `[PARTIALLY BUILT]` | 4-5 weeks | M1, M2, M3, M4, M6 |
+| M6 | Voucher & Approval System | `[BUILT]` | 2-3 weeks | M1 |
+
+#### Implementation Order (Dependency-Driven)
+
+```
+Phase 5a (Foundation):    M1 Order Enhancements + M6 Voucher Enhancements
+Phase 5b (Extensions):    M2 Driver & Logistics + M4 Customer Preferences
+Phase 5c (Intelligence):  M3 Proximity Offers + M5 AI Insights
+Phase 5d (Integration):   Cross-module testing, navigation restructure, dashboard wiring
+```
+
+#### Key Architectural Changes
+1. **Navigation Restructure**: Director sidebar expands from 9 → 14 items (grouped). GM sidebar restructured to 9 items (grouped). 7 orphaned director pages absorbed into new module detail pages.
+2. **New Firestore Collections**: `customerConversations`, `customerPreferenceProfiles`, `proximityOffers`, `offerSchedules`, `aiInsights`, `aiRecommendations`, `analyticsSnapshots`, `voucherCampaigns`, `voucherTemplates`
+3. **New API Endpoints**: ~40 new endpoints across all modules
+4. **Customer Portal Enhancements**: Voucher wallet, preference editor, offer inbox, AI-generated profile summary
+5. **AI Pipeline**: Data from all modules → AI analysis engine → Dashboard widgets + notifications + recommendations
+
+#### Spec Documents
+
+| Document | Size | Sections |
+|----------|------|----------|
+| `lorenzo_master_feature_spec.md` | 57KB | System architecture, shared patterns, RBAC matrix, standards |
+| `lorenzo_module1_order_management_spec.md` | 90KB | 21 sections + 3 appendices |
+| `lorenzo_module2_driver_logistics_spec.md` | 91KB | 21 sections |
+| `lorenzo_module3_proximity_spec.md` | 107KB | 21 sections |
+| `lorenzo_module4_preferences_spec.md` | 103KB | 21 sections |
+| `lorenzo_module5_ai_insights_spec.md` | 107KB | 21 sections |
+| `lorenzo_module6_voucher_spec.md` | 94KB | 21 sections |
+
 ---
 
 ## 📝 Key Technical Decisions
@@ -1258,6 +1357,8 @@ firebase deploy --only firestore:rules
 - [Tasks List](./TASKS.md)
 - [Director Security & Sidebar Plan](./docs/DIRECTOR-SECURITY-SIDEBAR-PLAN.md)
 - [Director Dashboard Production Plan](./docs/DIRECTOR-DASHBOARD-PRODUCTION-PLAN.md)
+- [v2.0 Feature Spec Pack](./docs/upgrades/lorenzo_feature_spec_pack_v1/) — 7 implementation-ready specifications
+- [v2.0 Visual Mockups](./docs/upgrades/lorenzo_feature_spec_pack_v1/mockups.pen) — Director & GM dashboard designs
 - [API Documentation](./docs/API.md) *(to be created)*
 - [Component Library](./docs/COMPONENTS.md) *(to be created)*
 
@@ -1357,9 +1458,9 @@ Before starting development, ensure:
 
 ---
 
-**Last Updated:** October 10, 2025  
-**Next Review:** October 17, 2025 (Weekly)  
-**Document Version:** 1.0
+**Last Updated:** February 12, 2026
+**Next Review:** February 19, 2026 (Weekly)
+**Document Version:** 2.0
 
 ---
 

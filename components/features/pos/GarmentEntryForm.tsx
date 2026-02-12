@@ -62,18 +62,42 @@ interface Service {
 }
 
 const GARMENT_TYPES = [
-  'Shirt',
-  'Pants',
-  'Dress',
-  'Suit',
-  'Jacket',
-  'Skirt',
-  'Blouse',
-  'Coat',
-  'Tie',
-  'Scarf',
   'Bedding',
+  'Blazer',
+  'Blouse',
+  'Cap',
+  'Cardigan',
+  'Carpet',
+  'Coat',
   'Curtains',
+  'Dress',
+  'Gown',
+  'Handkerchief',
+  'Jacket',
+  'Jumpsuit',
+  'Jumper',
+  'Kimono',
+  'Leather',
+  'Linens',
+  'Petticoat',
+  'Sari',
+  'Scarf',
+  'Shawl',
+  'Shirt',
+  'Short',
+  'Skirt',
+  'Suit',
+  'Sweater',
+  'Tie',
+  'Top',
+  'Towel',
+  'Toy',
+  'Traditional',
+  'Trouser',
+  'Undergarments',
+  'Veil',
+  'Vest',
+  'Wedding',
   'Other',
 ];
 
@@ -174,8 +198,8 @@ export function GarmentEntryForm({
   // Effect to apply prefill data when a service card is selected
   useEffect(() => {
     if (prefillData) {
-      // Set the garment type
-      setValue('type', prefillData.type);
+      // Set the garment type (shouldDirty + shouldValidate to trigger Select re-render)
+      setValue('type', prefillData.type, { shouldDirty: true, shouldValidate: true });
 
       // Store the pricing object from the catalog
       setPrefillPricing(prefillData.pricing);
@@ -190,7 +214,7 @@ export function GarmentEntryForm({
       // Only auto-select dry-clean as default if available
       const defaultServices = prefillData.pricing.dryClean ? ['dry-clean'] : availableServiceIds.slice(0, 1);
       setSelectedServices(defaultServices);
-      setValue('services', defaultServices);
+      setValue('services', defaultServices, { shouldDirty: true });
 
       // Store the icon for the cart item
       setPrefillIcon(prefillData.icon);
@@ -205,7 +229,7 @@ export function GarmentEntryForm({
   // Calculate total price based on selected services and catalog pricing
   // Prices come from the prefill pricing object (from service catalog)
   // Multiple services can be selected and their prices sum up
-  // Note: Express (2hrs) is FREE - no price impact
+  // Note: Express (2hrs) adds a 50% surcharge at the order level, not per-garment
   const calculatePrice = () => {
     if (!prefillPricing) {
       // No catalog item selected - return 0 (user must select from catalog)
@@ -301,7 +325,7 @@ export function GarmentEntryForm({
               <SelectTrigger className="h-10 border-gray-300 focus:border-lorenzo-teal focus:ring-lorenzo-teal/20">
                 <SelectValue placeholder="Select garment type" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-[300px]">
                 {GARMENT_TYPES.map((type) => (
                   <SelectItem key={type} value={type}>
                     {type}
@@ -448,7 +472,7 @@ export function GarmentEntryForm({
                   );
                 })}
 
-                {/* Express toggle - always available and FREE */}
+                {/* Express toggle - always available, adds 50% surcharge at order level */}
                 <div className="flex items-center justify-between p-3 rounded-lg border border-lorenzo-accent-teal/30 bg-lorenzo-accent-teal/5">
                   <div className="flex items-center gap-3">
                     <Checkbox
@@ -464,7 +488,7 @@ export function GarmentEntryForm({
                       Express (2hrs)
                     </Label>
                   </div>
-                  <span className="text-sm font-semibold text-green-600">FREE</span>
+                  <span className="text-sm font-semibold text-lorenzo-gold">+50%</span>
                 </div>
 
                 {/* Pricing breakdown */}
@@ -484,9 +508,9 @@ export function GarmentEntryForm({
                         );
                       })}
                     {selectedServices.includes('express') && (
-                      <div className="flex justify-between text-green-600">
+                      <div className="flex justify-between text-lorenzo-gold">
                         <span>Express (2hrs):</span>
-                        <span>FREE</span>
+                        <span>+50% surcharge</span>
                       </div>
                     )}
                     <div className="flex justify-between font-semibold text-lorenzo-deep-teal pt-2 border-t border-gray-200 mt-2">

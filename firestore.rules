@@ -162,16 +162,16 @@ service cloud.firestore {
     // ============================================
 
     match /users/{userId} {
-      // Users can read their own profile
-      // Super admins can read all profiles
-      // Executives can read all profiles (cross-branch access)
-      // Managers can read profiles in their allowed branches
-      allow read: if isAuthenticated() && (
+      // Single-document reads: own profile, super admins, executives, branch managers
+      allow get: if isAuthenticated() && (
         currentUserId() == userId ||
         isSuperAdmin() ||
         isExecutive() ||
         (isManagement() && canAccessBranch(resource.data.branchId))
       );
+
+      // Collection queries: staff need to list users for assignments, dropdowns, etc.
+      allow list: if isAuthenticated() && isStaff();
 
       // Only super admins can create new users
       allow create: if isSuperAdmin();
@@ -703,6 +703,18 @@ service cloud.firestore {
 
       // Only super admins can delete permission requests
       allow delete: if isSuperAdmin();
+    }
+
+    // ============================================
+    // SYSTEM SETTINGS COLLECTION
+    // ============================================
+
+    match /system_settings/{settingId} {
+      // All authenticated users can read system settings (e.g., inactivity timeout)
+      allow read: if isAuthenticated();
+
+      // Only super admins can modify system settings
+      allow create, update, delete: if isSuperAdmin();
     }
 
     // ============================================

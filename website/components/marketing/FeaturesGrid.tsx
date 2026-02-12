@@ -35,7 +35,7 @@ const features = [
   {
     icon: Zap,
     title: 'Express Service',
-    description: '2-hour turnaround available at no extra cost when you need your garments cleaned fast.',
+    description: '2-hour turnaround available for Express Service!',
   },
   {
     icon: Truck,

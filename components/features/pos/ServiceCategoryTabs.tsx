@@ -24,7 +24,7 @@ export function ServiceCategoryTabs({
   className,
 }: ServiceCategoryTabsProps) {
   return (
-    <div className={cn('flex gap-2 overflow-x-auto pb-2', className)}>
+    <div className={cn('flex gap-2 overflow-x-auto pb-1', className)}>
       {SERVICE_CATEGORIES.map((category) => (
         <CategoryTab
           key={category.id}
@@ -48,13 +48,13 @@ function CategoryTab({ category, isActive, onClick }: CategoryTabProps) {
     <button
       onClick={onClick}
       className={cn(
-        'flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm whitespace-nowrap transition-all duration-200',
+        'flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-all duration-200 h-9',
         isActive
-          ? 'bg-linear-to-r from-lorenzo-deep-teal to-lorenzo-teal text-white shadow-md'
-          : 'bg-white text-gray-700 border border-gray-200 hover:border-lorenzo-teal/30 hover:bg-lorenzo-cream hover:shadow-sm'
+          ? 'bg-lorenzo-deep-teal text-white shadow-sm'
+          : 'bg-white text-gray-600 border border-gray-200 hover:border-lorenzo-teal/30 hover:bg-lorenzo-cream'
       )}
     >
-      <span className="text-lg">{category.icon}</span>
+      <span className="text-base">{category.icon}</span>
       <span>{category.name}</span>
     </button>
   );

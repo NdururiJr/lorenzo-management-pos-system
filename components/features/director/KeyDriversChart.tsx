@@ -354,7 +354,7 @@ export function KeyDriversChart({ timeframe, branchId }: KeyDriversChartProps) {
                 className="font-mono font-medium"
                 style={{
                   color: driver.type === 'positive' ? '#2DD4BF' : '#FF6B6B',
-                  fontFamily: "'JetBrains Mono', monospace",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
                 }}
               >
                 {driver.type === 'positive' ? '+' : ''}
@@ -413,7 +413,7 @@ export function KeyDriversChart({ timeframe, branchId }: KeyDriversChartProps) {
               className="font-mono font-medium"
               style={{
                 color: drivers.reduce((sum, d) => sum + d.value, 0) >= 0 ? '#2DD4BF' : '#FF6B6B',
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "var(--font-jetbrains-mono), monospace",
               }}
             >
               {drivers.reduce((sum, d) => sum + d.value, 0) >= 0 ? '+' : ''}

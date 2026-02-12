@@ -117,9 +117,8 @@ export function GMOperationsDashboard({
       {/* Custom font for operations mode */}
       {isDark && (
         <style jsx global>{`
-          @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
           .gm-number {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: var(--font-jetbrains-mono), monospace;
           }
         `}</style>
       )}

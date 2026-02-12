@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @config "../tailwind.config.ts";
 @import "tailwindcss";
 
@@ -125,7 +124,7 @@ h1, h2, h3, h4, h5, h6 {
 .director-dark {
   min-height: 100vh;
   background: linear-gradient(135deg, #0A1A1F 0%, #0D2329 50%, #0A1A1F 100%);
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, sans-serif;
   color: #E8F0F2;
 }
 
@@ -354,7 +353,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Monospace Numbers (for KPI values) */
 .director-mono {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
 }
 
 /* =============================================================================

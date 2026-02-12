@@ -43,7 +43,11 @@
       "Bash(quotation:*)",
       "Bash(driver \")",
       "Bash(gm:*)",
-      "Bash(modern \")"
+      "Bash(modern \")",
+      "Bash(npx vercel env ls)",
+      "Bash(npx vercel link:*)",
+      "Bash(npx vercel:*)",
+      "Bash(npm run seed:dev:*)"
     ],
     "deny": [],
     "ask": []
