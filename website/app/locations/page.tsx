@@ -23,6 +23,12 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Force dynamic rendering to avoid Firebase connection issues at build time
+ */
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Revalidate every hour
+
 export default async function LocationsPage() {
   const branches = await getActiveBranches();
 

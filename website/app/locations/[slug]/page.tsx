@@ -28,13 +28,11 @@ interface PageProps {
 }
 
 /**
- * Generate static params for all 21 location pages
+ * Force dynamic rendering to avoid Firebase connection issues at build time
+ * Location data will be fetched at request time instead
  */
-export async function generateStaticParams() {
-  return Object.values(slugMap).map((slug) => ({
-    slug,
-  }));
-}
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Revalidate every hour
 
 /**
  * Generate SEO-optimized metadata for each location page
