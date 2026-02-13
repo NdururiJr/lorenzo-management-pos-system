@@ -8,8 +8,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import { collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { adminDb } from '@/lib/firebase-admin';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // Cache for 1 hour
@@ -35,14 +34,7 @@ interface Branch {
  */
 export async function GET(request: Request) {
   try {
-    // Check if Firebase is initialized
-    if (!db) {
-      console.error('[API] Firestore not initialized');
-      return NextResponse.json(
-        { error: 'Database connection unavailable', branches: [] },
-        { status: 503 }
-      );
-    }
+    // Firebase Admin SDK is initialized automatically
 
     // Parse query parameters
     const { searchParams } = new URL(request.url);
@@ -51,10 +43,10 @@ export async function GET(request: Request) {
 
     // If specific branch ID requested
     if (branchId) {
-      const branchRef = doc(db, 'branches', branchId);
-      const branchSnap = await getDoc(branchRef);
+      const branchRef = adminDb.collection('branches').doc(branchId);
+      const branchSnap = await branchRef.get();
 
-      if (!branchSnap.exists()) {
+      if (!branchSnap.exists) {
         return NextResponse.json(
           { error: 'Branch not found', branch: null },
           { status: 404 }
@@ -62,6 +54,13 @@ export async function GET(request: Request) {
       }
 
       const data = branchSnap.data();
+      if (!data) {
+        return NextResponse.json(
+          { error: 'Branch data unavailable', branch: null },
+          { status: 404 }
+        );
+      }
+
       const branch: Branch = {
         branchId: branchSnap.id,
         name: data.name,
@@ -81,11 +80,11 @@ export async function GET(request: Request) {
     }
 
     // Get branches (active only or all based on query param)
-    const branchesRef = collection(db, 'branches');
+    const branchesRef = adminDb.collection('branches');
     const q = includeInactive
-      ? query(branchesRef)
-      : query(branchesRef, where('active', '==', true));
-    const snapshot = await getDocs(q);
+      ? branchesRef
+      : branchesRef.where('active', '==', true);
+    const snapshot = await q.get();
 
     const branches: Branch[] = [];
     snapshot.forEach((doc) => {
