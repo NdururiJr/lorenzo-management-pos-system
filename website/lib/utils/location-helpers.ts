@@ -16,6 +16,7 @@
 export const slugMap: Record<string, string> = {
   VILLAGE_MARKET: 'village-market',
   WESTGATE: 'westgate',
+  WESTLANDS: 'westlands',
   DENNIS_PRITT: 'dennis-pritt',
   MUTHAIGA: 'muthaiga',
   ADLIFE: 'adlife',
