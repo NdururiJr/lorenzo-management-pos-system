@@ -1,8 +1,8 @@
 /**
- * Firebase Admin SDK Configuration
+ * Firebase Admin SDK Configuration (Lazy Initialization)
  *
  * This file initializes Firebase Admin SDK for server-side operations.
- * Used in API routes, serverless functions, and server components.
+ * Uses lazy initialization to avoid build-time errors.
  *
  * @module lib/firebase-admin
  */
@@ -10,7 +10,6 @@
 import { initializeApp, getApps, cert, type App } from 'firebase-admin/app';
 import { getAuth, type Auth } from 'firebase-admin/auth';
 import { getFirestore, type Firestore } from 'firebase-admin/firestore';
-import { getStorage, type Storage } from 'firebase-admin/storage';
 
 /**
  * Parse service account credentials from environment variable
@@ -48,27 +47,31 @@ function getServiceAccountCredentials() {
 }
 
 /**
- * Initialize Firebase Admin SDK (singleton pattern)
- * Only initializes once, even if called multiple times
+ * Initialize Firebase Admin SDK (lazy, singleton pattern)
  */
-let adminApp: App;
+let adminApp: App | null = null;
 
-try {
-  if (getApps().length === 0) {
-    const credentials = getServiceAccountCredentials();
-
-    adminApp = initializeApp({
-      credential: cert(credentials),
-      storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    });
-
-    console.log('Firebase Admin SDK initialized successfully');
-  } else {
-    adminApp = getApps()[0];
+function getAdminApp(): App {
+  if (adminApp) {
+    return adminApp;
   }
-} catch (error) {
-  console.error('Failed to initialize Firebase Admin SDK:', error);
-  throw error;
+
+  // Check if already initialized
+  const apps = getApps();
+  if (apps.length > 0) {
+    adminApp = apps[0];
+    return adminApp;
+  }
+
+  // Initialize new app
+  const credentials = getServiceAccountCredentials();
+  adminApp = initializeApp({
+    credential: cert(credentials),
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  });
+
+  console.log('[Firebase Admin] Initialized successfully');
+  return adminApp;
 }
 
 /**
@@ -87,7 +90,18 @@ try {
  * // Get user by email
  * const user = await adminAuth.getUserByEmail(email);
  */
-export const adminAuth: Auth = getAuth(adminApp);
+/**
+ * Get Firebase Admin Auth instance (lazy)
+ */
+export function getAdminAuth(): Auth {
+  return getAuth(getAdminApp());
+}
+
+export const adminAuth: Auth = new Proxy({} as Auth, {
+  get(_target, prop) {
+    return getAdminAuth()[prop as keyof Auth];
+  },
+});
 
 /**
  * Firebase Admin Firestore instance
@@ -111,115 +125,28 @@ export const adminAuth: Auth = getAuth(adminApp);
  *   transaction.update(docRef, { status: 'completed' });
  * });
  */
-export const adminDb: Firestore = getFirestore(adminApp);
-
 /**
- * Firebase Admin Storage instance
- * Use for server-side file operations
- *
- * @example
- * import { adminStorage } from '@/lib/firebase-admin';
- *
- * // Get bucket
- * const bucket = adminStorage.bucket();
- *
- * // Upload file
- * await bucket.upload(localFilePath, {
- *   destination: 'garments/image.jpg',
- * });
- *
- * // Get download URL
- * const file = bucket.file('garments/image.jpg');
- * const [url] = await file.getSignedUrl({
- *   action: 'read',
- *   expires: Date.now() + 15 * 60 * 1000, // 15 minutes
- * });
+ * Get Firebase Admin Firestore instance (lazy)
  */
-export const adminStorage: Storage = getStorage(adminApp);
+export function getAdminDb(): Firestore {
+  return getFirestore(getAdminApp());
+}
 
-/**
- * Firebase Admin app instance
- * Export for advanced configuration if needed
- */
-export { adminApp };
+export const adminDb: Firestore = new Proxy({} as Firestore, {
+  get(_target, prop) {
+    return getAdminDb()[prop as keyof Firestore];
+  },
+});
 
 /**
  * Helper function to verify Firebase ID token
- * Commonly used in API route middleware
- *
- * @param idToken - The Firebase ID token from the client
- * @returns Decoded token with user information
- * @throws Error if token is invalid or expired
- *
- * @example
- * import { verifyIdToken } from '@/lib/firebase-admin';
- *
- * export async function GET(request: Request) {
- *   const token = request.headers.get('Authorization')?.split('Bearer ')[1];
- *   if (!token) {
- *     return new Response('Unauthorized', { status: 401 });
- *   }
- *
- *   try {
- *     const decodedToken = await verifyIdToken(token);
- *     const uid = decodedToken.uid;
- *     // Proceed with authenticated request
- *   } catch (error) {
- *     return new Response('Invalid token', { status: 401 });
- *   }
- * }
  */
 export async function verifyIdToken(idToken: string) {
   try {
-    return await adminAuth.verifyIdToken(idToken);
+    return await getAdminAuth().verifyIdToken(idToken);
   } catch (error) {
-    console.error('Error verifying ID token:', error);
+    console.error('[Firebase Admin] Error verifying ID token:', error);
     throw new Error('Invalid or expired token');
   }
 }
 
-/**
- * Helper function to get user by UID
- *
- * @param uid - The user's unique identifier
- * @returns User record from Firebase Auth
- * @throws Error if user not found
- *
- * @example
- * import { getUserById } from '@/lib/firebase-admin';
- *
- * const user = await getUserById('abc123');
- * console.log(user.email, user.displayName);
- */
-export async function getUserById(uid: string) {
-  try {
-    return await adminAuth.getUser(uid);
-  } catch (error) {
-    console.error('Error getting user by ID:', error);
-    throw new Error('User not found');
-  }
-}
-
-/**
- * Helper function to create custom claims for role-based access control
- *
- * @param uid - The user's unique identifier
- * @param claims - Custom claims object (e.g., { role: 'admin' })
- *
- * @example
- * import { setCustomClaims } from '@/lib/firebase-admin';
- *
- * await setCustomClaims('abc123', { role: 'admin', branchId: 'branch-001' });
- */
-export async function setCustomClaims(
-  uid: string,
-  claims: Record<string, unknown>
-) {
-  try {
-    await adminAuth.setCustomUserClaims(uid, claims);
-    console.log(`Custom claims set for user ${uid}:`, claims);
-  } catch (error) {
-    console.error('Error setting custom claims:', error);
-    throw new Error('Failed to set custom claims');
-  }
-}
