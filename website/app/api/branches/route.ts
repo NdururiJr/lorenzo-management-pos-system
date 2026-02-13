@@ -47,6 +47,7 @@ export async function GET(request: Request) {
     // Parse query parameters
     const { searchParams } = new URL(request.url);
     const branchId = searchParams.get('id');
+    const includeInactive = searchParams.get('all') === 'true';
 
     // If specific branch ID requested
     if (branchId) {
@@ -79,9 +80,11 @@ export async function GET(request: Request) {
       return NextResponse.json({ branch });
     }
 
-    // Get all active branches
+    // Get branches (active only or all based on query param)
     const branchesRef = collection(db, 'branches');
-    const q = query(branchesRef, where('active', '==', true));
+    const q = includeInactive
+      ? query(branchesRef)
+      : query(branchesRef, where('active', '==', true));
     const snapshot = await getDocs(q);
 
     const branches: Branch[] = [];

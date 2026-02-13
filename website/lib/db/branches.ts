@@ -81,35 +81,19 @@ export async function getBranchById(branchId: string): Promise<Branch | null> {
  * @returns Promise with array of all branches
  */
 export async function getAllBranches(): Promise<Branch[]> {
-  if (!db) {
-    console.warn('Firestore not initialized. Returning empty branches array.');
-    return [];
-  }
-
   try {
-    const branchesRef = collection(db, 'branches');
-    const snapshot = await getDocs(branchesRef);
-
-    const branches: Branch[] = [];
-    snapshot.forEach((doc) => {
-      const data = doc.data();
-      branches.push({
-        branchId: doc.id,
-        name: data.name,
-        branchType: data.branchType,
-        location: {
-          address: data.location?.address || '',
-          coordinates: {
-            lat: data.location?.coordinates?.lat || 0,
-            lng: data.location?.coordinates?.lng || 0,
-          },
-        },
-        contactPhone: data.contactPhone || '+254728400200',
-        active: data.active,
-      });
+    const baseUrl = getApiBaseUrl();
+    const response = await fetch(`${baseUrl}/api/branches?all=true`, {
+      cache: 'no-store',
     });
 
-    return branches;
+    if (!response.ok) {
+      console.error(`Failed to fetch all branches: ${response.status}`);
+      return [];
+    }
+
+    const data = await response.json();
+    return data.branches || [];
   } catch (error) {
     console.error('Error fetching all branches:', error);
     return [];
