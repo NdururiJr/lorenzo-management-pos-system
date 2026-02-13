@@ -1,51 +1,50 @@
 /**
  * Branch Database Functions
  *
- * Functions for fetching branch data from Firestore (read-only).
+ * Functions for fetching branch data via API routes (avoids SSR Firebase issues).
  * Used for location pages and branch listings on the website.
  *
  * @module website/lib/db/branches
  */
 
-import { collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
-import { db } from '../firebase';
 import type { Branch } from './types';
 
 /**
- * Get all active branches from Firestore
+ * Get the base API URL based on environment
+ */
+function getApiBaseUrl(): string {
+  // In production, use the production URL
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL;
+  }
+
+  // In Vercel preview deployments
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // Fallback to localhost for development
+  return 'http://localhost:3001';
+}
+
+/**
+ * Get all active branches from API
  * @returns Promise with array of active branches
  */
 export async function getActiveBranches(): Promise<Branch[]> {
-  if (!db) {
-    console.warn('Firestore not initialized. Returning empty branches array.');
-    return [];
-  }
-
   try {
-    const branchesRef = collection(db, 'branches');
-    const q = query(branchesRef, where('active', '==', true));
-    const snapshot = await getDocs(q);
-
-    const branches: Branch[] = [];
-    snapshot.forEach((doc) => {
-      const data = doc.data();
-      branches.push({
-        branchId: doc.id,
-        name: data.name,
-        branchType: data.branchType,
-        location: {
-          address: data.location?.address || '',
-          coordinates: {
-            lat: data.location?.coordinates?.lat || 0,
-            lng: data.location?.coordinates?.lng || 0,
-          },
-        },
-        contactPhone: data.contactPhone || '+254728400200',
-        active: data.active,
-      });
+    const baseUrl = getApiBaseUrl();
+    const response = await fetch(`${baseUrl}/api/branches`, {
+      cache: 'no-store', // Always get fresh data for SSR
     });
 
-    return branches;
+    if (!response.ok) {
+      console.error(`Failed to fetch branches: ${response.status}`);
+      return [];
+    }
+
+    const data = await response.json();
+    return data.branches || [];
   } catch (error) {
     console.error('Error fetching active branches:', error);
     return [];
@@ -53,39 +52,24 @@ export async function getActiveBranches(): Promise<Branch[]> {
 }
 
 /**
- * Get a single branch by ID
+ * Get a single branch by ID from API
  * @param branchId - The branch ID to fetch
  * @returns Promise with branch data or null if not found
  */
 export async function getBranchById(branchId: string): Promise<Branch | null> {
-  if (!db) {
-    console.warn('Firestore not initialized. Returning null.');
-    return null;
-  }
-
   try {
-    const branchRef = doc(db, 'branches', branchId);
-    const branchSnap = await getDoc(branchRef);
+    const baseUrl = getApiBaseUrl();
+    const response = await fetch(`${baseUrl}/api/branches?id=${branchId}`, {
+      cache: 'no-store', // Always get fresh data for SSR
+    });
 
-    if (!branchSnap.exists()) {
+    if (!response.ok) {
+      console.error(`Failed to fetch branch ${branchId}: ${response.status}`);
       return null;
     }
 
-    const data = branchSnap.data();
-    return {
-      branchId: branchSnap.id,
-      name: data.name,
-      branchType: data.branchType,
-      location: {
-        address: data.location?.address || '',
-        coordinates: {
-          lat: data.location?.coordinates?.lat || 0,
-          lng: data.location?.coordinates?.lng || 0,
-        },
-      },
-      contactPhone: data.contactPhone || '+254728400200',
-      active: data.active,
-    };
+    const data = await response.json();
+    return data.branch || null;
   } catch (error) {
     console.error(`Error fetching branch ${branchId}:`, error);
     return null;
