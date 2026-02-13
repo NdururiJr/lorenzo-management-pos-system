@@ -233,9 +233,9 @@ function BranchInfoSection({
 
 function ServicesSection({ neighborhoodName }: { neighborhoodName: string }) {
   const services = [
-    'Dry Cleaning - From KSh 150',
-    'Wash & Fold - From KSh 100',
-    '2-Hour Express Service - FREE',
+    'Dry Cleaning',
+    'Wash & Fold',
+    '2-Hour Express Service',
     'Free Pickup & Delivery',
     'Alterations & Repairs',
     'Stain Removal Treatment',
